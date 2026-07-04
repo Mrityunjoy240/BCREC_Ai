@@ -1265,5 +1265,40 @@
     "reason": "out_of_kb_deflection",
     "timestamp": "2026-07-03T16:10:06.484858Z",
     "count": 1
+  },
+  {
+    "query": "ami kichu bujhini",
+    "lang": "en",
+    "reason": "low_confidence_retrieval_0.145",
+    "timestamp": "2026-07-04T10:18:22.189980Z",
+    "count": 1
+  },
+  {
+    "query": "is hostel available for girls",
+    "lang": "en",
+    "reason": "hallucination_guard_stream: entities not found in context: ['600']",
+    "timestamp": "2026-07-04T12:27:38.433338Z",
+    "count": 1
+  },
+  {
+    "query": "is hostel available for girls",
+    "lang": "en",
+    "reason": "hallucination_guard_stream: entities not found in context: ['750']",
+    "timestamp": "2026-07-04T12:42:10.943814Z",
+    "count": 1
+  },
+  {
+    "query": "is hostel available for girls",
+    "lang": "en",
+    "reason": "hallucination_guard_stream: entities not found in context: ['750']",
+    "timestamp": "2026-07-04T13:34:51.528969Z",
+    "count": 1
+  },
+  {
+    "query": "what लड़कियों के लिए अलग hostel है",
+    "lang": "hi",
+    "reason": "hallucination_guard_stream: entities not found in context: ['750', '375', '375']",
+    "timestamp": "2026-07-04T13:51:14.262552Z",
+    "count": 1
   }
 ]

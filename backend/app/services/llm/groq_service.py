@@ -14,15 +14,68 @@ Phase 0 (Hallucination Guardrail):
 import logging
 import os
 import re
+import sys
 import time
 import json
 import hashlib
-import random
 import asyncio
+import random
+import unicodedata
+from typing import (
+    Dict,
+    List,
+    Optional,
+    Any,
+    Tuple,
+    Set,
+    Literal,
+    AsyncIterable,
+    AsyncIterator,
+    Union,
+)
 import collections
-import difflib
-from typing import Dict, Any, Optional, List
+from collections import defaultdict, deque
+from dataclasses import dataclass, field
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+
+def _sp_enabled() -> bool:
+    try:
+        from .safe_point import _is_safe_point
+
+        return _is_safe_point()
+    except ImportError:
+        return False
+
+
+async def _sp_safe_pre(*a, **kw):
+    try:
+        from .safe_point import safe_generate_response
+
+        return await safe_generate_response(*a, **kw)
+    except ImportError:
+        return None
+
+
+def _sp_post(*a, **kw):
+    try:
+        from .safe_point import post_process_response
+
+        return post_process_response(*a, **kw)
+    except ImportError:
+        return kw.get("result") if "result" in kw else None
+
+
+def _sp_handoff(*a):
+    try:
+        from .safe_point import _detect_handoff
+
+        return _detect_handoff(*a)
+    except ImportError:
+        return None
+
+
 from dataclasses import dataclass, field
 
 logger = logging.getLogger(__name__)
@@ -446,6 +499,10 @@ UNKNOWN_INFO_RESPONSE_BN = (
     "এ বিষয়ে আমার কাছে যাচাইকৃত তথ্য নেই। অনুগ্রহ করে কলেজে 0343-2501353 নম্বরে কল করুন।"
 )
 
+_HOD_UNKNOWN_EN = "I don't have the latest HOD information for that department."
+_HOD_UNKNOWN_HI = "मेरे पास उस विभाग के प्रमुख की नवीनतम जानकारी नहीं है।"
+_HOD_UNKNOWN_BN = "আমার কাছে সেই বিভাগের বিভাগীয় প্রধান সম্পর্কে সর্বশেষ তথ্য নেই।"
+
 CLARIFY_REPEAT_EN = "I couldn't understand clearly. Could you please repeat?"
 CLARIFY_REPEAT_HI = "मैं स्पष्ट रूप से समझ नहीं पाया। कृपया दोहराएँ?"
 CLARIFY_REPEAT_BN = "আমি পরিষ্কারভাবে বুঝতে পারিনি। অনুগ্রহ করে পুনরায় বলুন?"
@@ -597,6 +654,10 @@ NATURAL VOICE RULES:
   Join multiple points naturally: "Also, ...", "And regarding ...", "As for ...".
 - When listing things, use natural spoken connectors like "and", "also", "as well as".
 - If you are unsure, say "I am not sure about that" — do not say you are an AI or reference limitations.
+- Open with natural acknowledgements: "Certainly.", "Yes, absolutely.", "I understand your concern.",
+  "Of course.", "Let me help you with that." before answering. Don't overdo fillers.
+- Do NOT say "I'm not sure if this is the current HOD" — either give the verified HOD name or
+  say "I don't have the latest HOD information." Never expose uncertainty about internal data.
 
 PROACTIVE SUGGESTIONS:
 - After answering, naturally offer one related follow-up if relevant.
@@ -605,9 +666,15 @@ PROACTIVE SUGGESTIONS:
 - Only do this once per conversation turn. Do not force it if unnatural.
 
 CONCISENESS:
-- Keep answers to 2-3 short sentences maximum.
+- Keep answers to 2-4 short sentences maximum. Give the most important answer first.
 - Each sentence should be under 15 words where possible.
-- For complex topics, give the most important point first, then add details only if needed.
+- After the main answer, ask "Would you like more details?" instead of giving a 300-word monologue.
+- For complex topics, give the most important point first, then offer more details.
+
+TERMINOLOGY:
+- Refer to the college naturally: "Dr. B.C. Roy Engineering College", "BCREC", or "the college".
+- Always say "B dot Tech" not "Bed" or any other pronunciation.
+- Use department abbreviations like "CSE", "ECE", "ME" without over-expanding.
 
 CONTENT RULES:
 - Answer ONLY from the CONTEXT below. Do not make up facts.
@@ -883,6 +950,21 @@ def _num_to_bengali(n: int) -> str:
     return _NUM_WORDS_BN.get(n, str(n))
 
 
+@dataclass
+class DomainContext:
+    domain: str
+    entity: str | None = None
+    subtype: str | None = None
+    timestamp: float = field(default_factory=time.time)
+
+
+@dataclass
+class ConversationState:
+    language: str = "en"
+    recent_contexts: deque = field(default_factory=lambda: deque(maxlen=5))
+    domain_memory: dict = field(default_factory=dict)
+
+
 class GroqService:
     """
     Clean Hybrid RAG service: JSON (Precision) + Vector Store (Context).
@@ -901,6 +983,15 @@ class GroqService:
         # Session language state — tracks persistent language per session
         # Language is NOT redetected on every message; short follow-ups inherit.
         self._session_langs: Dict[str, str] = {}
+
+        # Sessions that should skip ambiguous-word validation this turn
+        # (used by yes/no continuation to avoid re-clarifying the same word)
+        self._skip_ambiguous_validation_sessions: Set[str] = set()
+
+        # Structured conversation state — tracks last resolved intent/department
+        # for follow-up expansion. Updated whenever _structured_lookup returns a hit.
+        self._session_intents: Dict[str, str] = {}
+        self._session_departments: Dict[str, str] = {}
 
         # Core knowledge is read from disk on EVERY request (no stale cache across processes).
         self.core_kb = {}
@@ -1263,7 +1354,10 @@ USER QUESTION: {query}
         if detected == current_lang:
             return current_lang
 
-        # 5. Detected differs from current — check evidence strength
+        # 5. Detected differs from current — check evidence strength.
+        # If language was explicitly set (not default "en"), lock it — resist switches
+        # via weak keyword markers to prevent random flipping mid-conversation.
+        lang_was_explicitly_set = session_id in self._session_langs and current_lang != "en"
         text_lower = query.lower()
         text_words = set(re.sub(r"[^\w\s]", " ", text_lower).split())
         bn_kw = len(text_words & BANGLA_ROMAN_WORDS)
@@ -1271,7 +1365,7 @@ USER QUESTION: {query}
 
         kw_count = bn_kw if detected == "bn" else hi_kw
 
-        if kw_count >= 2:
+        if kw_count >= 2 and not lang_was_explicitly_set:
             logger.info(
                 f"[{session_id}] Language change: {current_lang} → {detected} "
                 f"(reason: {detected} keyword markers={kw_count}, current_lang markers were "
@@ -1328,7 +1422,10 @@ USER QUESTION: {query}
             return None
 
         # 2.5 Ambiguous single-word query — ask clarification instead of guessing
-        if word_count == 1 and q_lower in AMBIGUOUS_WORDS:
+        # Skip if this session was re-routed by yes/no continuation (avoid re-clarifying)
+        if session_id in getattr(self, "_skip_ambiguous_validation_sessions", set()):
+            self._skip_ambiguous_validation_sessions.discard(session_id)
+        elif word_count == 1 and q_lower in AMBIGUOUS_WORDS:
             current_lang = self._session_langs.get(session_id, "en")
             logger.info(f"[{session_id}] Ambiguous single-word query: '{q}' (lang={current_lang})")
             if current_lang == "hi":
@@ -1441,55 +1538,454 @@ USER QUESTION: {query}
                 return turn.get("content", "").strip()
         return None
 
-    def _expand_follow_up_query(self, query: str, history: List[Dict]) -> str:
-        """Expand short follow-up queries with context from the last user turn.
+    _DOMAIN_KEYWORDS: Dict[str, set] = {
+        "fees": {"fee", "fees", "total", "cost", "payment", "tuition", "semester", "फीस", "ফিস"},
+        "hostel": {
+            "hostel",
+            "hostels",
+            "accommodation",
+            "room",
+            "girls",
+            "boys",
+            "हॉस्टल",
+            "হোস্টেল",
+        },
+        "admission": {
+            "admission",
+            "apply",
+            "eligibility",
+            "entrance",
+            "admit",
+            "seats",
+            "intake",
+            "एडमिशन",
+            "प्रवेश",
+            "এডমিশন",
+            "ভর্তি",
+        },
+        "placement": {
+            "placement",
+            "placed",
+            "recruit",
+            "company",
+            "lpa",
+            "package",
+            "job",
+            "प्लेसमेंट",
+            "প্লেসমেন্ট",
+        },
+        "contact": {
+            "contact",
+            "phone",
+            "mobile",
+            "call",
+            "email",
+            "helpline",
+            "फ़ोन",
+            "कॉल",
+            "ফোন",
+            "কল",
+        },
+        "courses": {
+            "course",
+            "courses",
+            "department",
+            "branch",
+            "program",
+            "subjects",
+            "डिपार्टमेंट",
+            "বিভাগ",
+        },
+        "documents": {"document", "documents", "require", "need", "list", "दस्तावेज़", "ডকুমেন্ট"},
+        "timings": {"timing", "timings", "hour", "hours", "when", "समय", "সময়"},
+        "scholarship": {"scholarship", "scholarships", "scholar", "छात्रवृत्ति", "স্কলারশিপ"},
+        "hod": {"hod", "hods", "head", "professor", "faculty", "प्रोफेसर", "অধ্যাপক"},
+        "principal": {"principal", "vice", "प्रिंसिपल", "অধ্যক্ষ"},
+        "cutoff": {"cutoff", "rank", "closing", "opening", "कटऑफ", "র‌্যাঙ্ক"},
+        "campus": {"campus", "visit", "tour", "कैंपस", "ক্যাম্পাস"},
+        "counselling": {"counselling", "counseling", "counsel", "काउंसलिंग", "কাউন্সেলিং"},
+        "safety": {"safety", "ragging", "safe", "security", "सुरक्षा", "নিরাপত্তা", "র্যাগিং"},
+        "installment": {"installment", "installment", "emi", "pay", "किस्त", "কিস্তি"},
+        "handoff": {"human", "speak", "talk", "transfer", "operator"},
+    }
 
-        Short follow-ups like "What is the total?" lose the active topic in retrieval.
-        By appending key terms from the previous user question, we improve BGE-M3's
-        ability to retrieve relevant context without changing the original query shown to the LLM.
+    def _detect_query_domain(self, query: str) -> str | None:
+        q_lower = query.lower()
+        for domain, keywords in self._DOMAIN_KEYWORDS.items():
+            for kw in keywords:
+                if kw in q_lower:
+                    logger.info(f"DOMAIN={domain} | matched='{kw}' in query='{q_lower[:60]}'")
+                    return domain
+        return None
 
-        Additionally, for short ambiguous queries (single word from AMBIGUOUS_WORDS),
-        if a department is mentioned in recent history, we build a more specific query
-        like "AIML department fees" instead of just "fees".
+    def _detect_structured_intent(self, query: str) -> str | None:
+        """Detect which structured-lookup handler would match this query.
+        Mirrors the handler priority order in _structured_lookup."""
+        q = query.strip().lower()
+        if re.search(r"\bvice[\s-]?principal\b", q):
+            return "vice_principal"
+        if re.search(r"\bprincipal\b", q):
+            return "principal"
+        if re.search(r"\b(contact|phone|mobile|call|helpline)\b", q):
+            return "contact"
+        if re.search(r"\b(document|require|need|list of).*(admission|admit)\b", q):
+            return "admission_documents"
+        if re.search(
+            r"\badmission\s*office\b|\badmission\s*department\b|\badmission\s*block\b|"
+            r"\badmission\s*counsel(or|ler|lor)\b|\btalk\s*(to|with)\s*(admission|admissions)\b|"
+            r"\btransfer\s*(me)?\s*(to|in)\s*(admission|admissions)\b",
+            q,
+        ):
+            return "admission_office"
+        if re.search(
+            r"\b(admission\s*process|how\s*to\s*apply|admissions?|admit|apply\s*(for|to)|how\s*can\s*i\s*get)\b",
+            q,
+        ):
+            return "admission"
+        if re.search(r"\b(installments?|installments?|emi|payment\s*plan|pay\s*in\s*part)\b", q):
+            return "installment"
+        if re.search(r"\b(safety|safe|ragging|security|women.*safe)\b", q):
+            return "safety"
+        if re.search(r"\bhostel\b", q):
+            return "hostel"
+        if re.search(r"\b(fee|fees|total\s*fee|semester\s*fee|admission\s*fee|course\s*fee)\b", q):
+            return "fee"
+        if re.search(r"\b(hod|hods|head\s*of\s*department|department\s*head)\b", q):
+            return "hod"
+        if re.search(r"\b(professor|faculty|teacher|sir|madam|dr\.?|prof\.?)\b", q):
+            return "faculty"
+        if re.search(r"\b(placements?|placed|recruit|package|lpa|job|company)\b", q):
+            return "placement"
+        if re.search(r"\b(seats|intake|capacity)\b", q):
+            return "seats"
+        if re.search(r"\b(cutoff|cut.off|rank|closing.rank|opening.rank)\b", q):
+            return "cutoff"
+        if re.search(
+            r"\b(established|founded|started|founding|when.*start|when.*open|since when|how old)\b",
+            q,
+        ):
+            return "establishment"
+        if re.search(r"\bscholarship\b", q):
+            return "scholarship"
+        if re.search(r"\b(counselling|counseling)\b", q):
+            return "counselling"
+        if re.search(r"\b(eligibility|eligible|marks?|percentage|qualif)\b", q):
+            return "eligibility"
+        if re.search(r"\bcampus\s*visit\b|\bvisit\s*campus\b|\btour\b", q):
+            return "campus_visit"
+        if re.search(
+            r"\b(timings?|office hours?|working hours?|college hours?|what.*time|when.*open|when.*close)\b",
+            q,
+        ):
+            return "timings"
+        if re.search(
+            r"\b(department|branch|course|program|b\.tech|what.*offer|what.*available|what.*have|what.*teach|list.*course)\b",
+            q,
+        ):
+            return "departments"
+        return None
 
-        Only expands queries that:
-        - Have fewer than 6 words
-        - Have conversation history to draw from
-        - Are not yourself a repeat intent or greeting
-        """
+    _HOSTEL_SUBTYPE_KEYWORDS = {
+        "boys",
+        "girls",
+        "fee",
+        "fees",
+        "facilities",
+        "room",
+        "rooms",
+        "available",
+        "availability",
+        "capacity",
+        "cost",
+        "price",
+        "charges",
+        "wifi",
+        "mess",
+        "food",
+        "laundry",
+        "security",
+        "timing",
+        "timings",
+    }
+
+    _ADMISSION_SUBTYPE_KEYWORDS = {
+        "document",
+        "documents",
+        "process",
+        "procedure",
+        "eligibility",
+        "deadline",
+        "date",
+        "fee",
+        "fees",
+        "form",
+        "apply",
+        "application",
+        "counseling",
+        "counselling",
+        "seat",
+        "seats",
+        "intake",
+        "rank",
+        "cutoff",
+        "entrance",
+        "exam",
+        "interview",
+    }
+
+    def _expand_follow_up_query(
+        self, query: str, history: List[Dict], session_id: str = ""
+    ) -> Tuple[str, Dict[str, Any]]:
+        """Expand a short follow-up query using conversation history.
+        Returns (expanded_query, debug_info) where debug_info contains
+        the previous question, domains, and reason for decision."""
         q_stripped = query.strip()
         word_count = len(q_stripped.split())
-        if word_count >= 6:
-            return q_stripped
-        if not history:
-            return q_stripped
-        if self._detect_repeat_intent(q_stripped):
-            return q_stripped
+        debug = {
+            "word_count": word_count,
+            "previous_question": self._get_last_user_question(history)[:80] if history else None,
+            "previous_domain": None,
+            "current_domain": None,
+            "reason": None,
+        }
 
-        # Context enrichment: if query is a short ambiguous word and we have
-        # a department from history, build "<department> + <query>" for retrieval
+        if word_count >= 6:
+            debug["reason"] = "long_query_no_expansion"
+            logger.info(
+                f"EXPAND: {q_stripped[:60]} | reason=long_query | prev_q={debug['previous_question']}"
+            )
+            return q_stripped, debug
+        if not history:
+            debug["reason"] = "no_history"
+            logger.info(f"EXPAND: {q_stripped[:60]} | reason=no_history")
+            return q_stripped, debug
+        if self._detect_repeat_intent(q_stripped):
+            debug["reason"] = "repeat_intent"
+            logger.info(f"EXPAND: {q_stripped[:60]} | reason=repeat_intent")
+            return q_stripped, debug
+
         q_lower = q_stripped.lower()
         if word_count <= 2 and q_lower in AMBIGUOUS_WORDS:
             dept = self._extract_department_from_history(history)
             if dept:
                 enriched = f"{dept} {q_stripped}"
+                debug["reason"] = "department_enriched"
+                debug["enriched_to"] = enriched
                 logger.info(
-                    f"Query enriched with department context: '{q_stripped}' + "
-                    f"dept='{dept}' -> '{enriched}'"
+                    f"EXPAND: {q_stripped[:60]} | reason=dept_enrich | "
+                    f"dept={dept} -> {enriched[:60]} | prev_q={debug['previous_question']}"
                 )
-                return enriched
+                return enriched, debug
+
+        # If the current query already expresses a complete structured intent,
+        # it is self-sufficient — no expansion needed.
+        current_intent = self._detect_structured_intent(q_stripped)
+        if current_intent:
+            debug["reason"] = "already_complete_intent"
+            debug["current_intent"] = current_intent
+            logger.info(
+                f"EXPAND: {q_stripped[:60]} | reason=already_complete_intent | "
+                f"intent={current_intent}"
+            )
+            return q_stripped, debug
 
         last_user = self._get_last_user_question(history)
         if not last_user:
-            return q_stripped
+            debug["reason"] = "no_previous_user_question"
+            logger.info(f"EXPAND: {q_stripped[:60]} | reason=no_prev_q")
+            return q_stripped, debug
 
+        current_domain = self._detect_query_domain(q_stripped)
+        last_user_domain = self._detect_query_domain(last_user)
+        debug["current_domain"] = current_domain
+        debug["previous_domain"] = last_user_domain
+
+        if current_domain:
+            if last_user_domain and current_domain != last_user_domain:
+                debug["reason"] = "new_domain_blocked"
+                logger.info(
+                    f"EXPAND: {q_stripped[:60]} | reason=new_domain_blocked | "
+                    f"domain={current_domain} vs prev_domain={last_user_domain} | "
+                    f"prev_q={debug['previous_question']}"
+                )
+                return q_stripped, debug
+            debug["reason"] = "same_domain_merge"
+
+        # --- Structured state rewrite: before fallback text merge ---
+        last_intent = self._session_intents.get(session_id) if session_id else None
+        last_dept = self._session_departments.get(session_id) if session_id else None
+
+        if last_intent:
+            # Case 1: Department-only follow-up — "What about Mechanical?" after fee
+            # Only rewrite when the last intent is department-compatible.
+            # "What about Mechanical?" after hostel doesn't make sense as "ME hostel".
+            dept_code = self._extract_dept_code(q_stripped)
+            dept_compatible_intents = {
+                "fee",
+                "admission",
+                "placement",
+                "hod",
+                "seats",
+                "cutoff",
+                "eligibility",
+                "departments",
+                "faculty",
+            }
+            is_dept_query = dept_code is not None or any(
+                word.lower().rstrip("?.,!")
+                in {
+                    "cse",
+                    "it",
+                    "ece",
+                    "ee",
+                    "me",
+                    "ce",
+                    "aiml",
+                    "csd",
+                    "computer",
+                    "mechanical",
+                    "electrical",
+                    "electronics",
+                    "civil",
+                    "information",
+                    "data",
+                    "science",
+                    "cyber",
+                }
+                for word in q_stripped.split()
+            )
+            if is_dept_query and last_intent in dept_compatible_intents:
+                dept = dept_code or next(
+                    (
+                        w.lower().rstrip("?.,!")
+                        for w in q_stripped.split()
+                        if w.lower().rstrip("?.,!")
+                        in {
+                            "cse",
+                            "it",
+                            "ece",
+                            "ee",
+                            "me",
+                            "ce",
+                            "aiml",
+                            "csd",
+                            "computer",
+                            "mechanical",
+                            "electrical",
+                            "electronics",
+                            "civil",
+                            "information",
+                            "data",
+                            "science",
+                            "cyber",
+                        }
+                    ),
+                    "department",
+                )
+                expanded = f"{dept} {last_intent}"
+                debug["reason"] = "structured_department_rewrite"
+                debug["intent"] = last_intent
+                debug["department"] = dept
+                logger.info(
+                    f"EXPAND: {q_stripped[:60]} | reason=structured_department_rewrite | "
+                    f"intent={last_intent} | dept={dept} | expanded-> {expanded[:80]}"
+                )
+                return expanded, debug
+
+            # Also check if any word in the query looks like a department name
+            for word in q_stripped.split():
+                word_lower = word.lower().rstrip("?.,!")
+                if (
+                    word_lower
+                    in {
+                        "cse",
+                        "it",
+                        "ece",
+                        "ee",
+                        "me",
+                        "ce",
+                        "aiml",
+                        "csd",
+                        "computer",
+                        "mechanical",
+                        "electrical",
+                        "electronics",
+                        "civil",
+                        "information",
+                        "data",
+                        "science",
+                        "cyber",
+                        "btech",
+                        "b.tech",
+                    }
+                    and last_intent in dept_compatible_intents
+                ):
+                    expanded = f"{word_lower} {last_intent}"
+                    debug["reason"] = "structured_department_rewrite"
+                    debug["intent"] = last_intent
+                    debug["department"] = word_lower
+                    logger.info(
+                        f"EXPAND: {q_stripped[:60]} | reason=structured_department_rewrite | "
+                        f"intent={last_intent} | dept={word_lower} | expanded-> {expanded[:80]}"
+                    )
+                    return expanded, debug
+
+            # Case 2: Hostel subtype follow-up — "What about boys?" after hostel
+            if last_intent == "hostel":
+                subtype = None
+                for sw in self._HOSTEL_SUBTYPE_KEYWORDS:
+                    if sw in q_lower:
+                        subtype = sw
+                        break
+                if subtype:
+                    expanded = f"{subtype} hostel"
+                    debug["reason"] = "structured_hostel_rewrite"
+                    debug["subtype"] = subtype
+                    logger.info(
+                        f"EXPAND: {q_stripped[:60]} | reason=structured_hostel_rewrite | "
+                        f"subtype={subtype} | expanded-> {expanded[:80]}"
+                    )
+                    return expanded, debug
+
+            # Case 3: Admission subtype follow-up — "What about documents?" after admission
+            if last_intent in ("admission", "admission_office", "admission_documents"):
+                subtype = None
+                for sw in self._ADMISSION_SUBTYPE_KEYWORDS:
+                    if sw in q_lower:
+                        subtype = sw
+                        break
+                if subtype:
+                    expanded = f"{subtype} admission"
+                    debug["reason"] = "structured_admission_rewrite"
+                    debug["subtype"] = subtype
+                    logger.info(
+                        f"EXPAND: {q_stripped[:60]} | reason=structured_admission_rewrite | "
+                        f"subtype={subtype} | expanded-> {expanded[:80]}"
+                    )
+                    return expanded, debug
+
+            # Case 4: Fee follow-up — "What about ECE?" or "ECE?" after fee intent
+            if last_intent == "fee":
+                expanded = f"{q_stripped} fee"
+                debug["reason"] = "structured_fee_followup"
+                logger.info(
+                    f"EXPAND: {q_stripped[:60]} | reason=structured_fee_followup | "
+                    f"expanded-> {expanded[:80]}"
+                )
+                return expanded, debug
+
+        # --- Fallback: text merge (only when no structured state applies) ---
+        if not debug.get("reason"):
+            debug["reason"] = "fallback_text_merge"
         expanded = f"{q_stripped} {last_user}"
         if len(expanded) > 300:
             expanded = expanded[:300]
         logger.info(
-            f"Query expanded for retrieval: '{q_stripped}' <- from history: '{last_user[:60]}'"
+            f"EXPAND: {q_stripped[:60]} | reason={debug['reason']} | "
+            f"domain={current_domain} | prev_domain={last_user_domain} | "
+            f"prev_q={debug['previous_question']} | expanded-> {expanded[:80]}"
         )
-        return expanded
+        return expanded, debug
 
     # -----------------------------------------------------------------------
     # Canonical KB reader (structured data for deterministic answers)
@@ -1630,6 +2126,7 @@ USER QUESTION: {query}
             vp = kb.get("vice_principal", {})
             name = vp.get("name", {}).get("value", "")
             if name:
+                logger.info(f"HANDLER: vice_principal matched for query='{q[:60]}'")
                 return f"The vice principal of BCREC is {name}."
 
         # --- Principal lookup ---
@@ -1638,6 +2135,7 @@ USER QUESTION: {query}
             name = principal.get("name", {}).get("value", "")
             if name:
                 phone = principal.get("phone", {}).get("value", "")
+                logger.info(f"HANDLER: principal matched for query='{q[:60]}'")
                 return f"The principal of BCREC is {name}. You can contact them at {phone}."
 
         # --- Contact info ---
@@ -1647,6 +2145,7 @@ USER QUESTION: {query}
             email = college.get("email", {}).get("value", "")
             if phones:
                 phone_str = ", ".join(phones[:3])
+                logger.info(f"HANDLER: contact matched for query='{q[:60]}'")
                 return (
                     f"You can contact BCREC at {phone_str}. "
                     f"Email: {email}. "
@@ -1663,13 +2162,88 @@ USER QUESTION: {query}
                     if isinstance(items, list) and items:
                         parts.append(f"{category}: {', '.join(items[:3])}")
             if parts:
+                logger.info(f"HANDLER: admission_documents matched for query='{q[:60]}'")
                 return "Required documents: " + " | ".join(parts[:3])
 
-        # --- Fee lookup ---
+        # --- Admission office contact (checked BEFORE general admission) ---
+        if re.search(
+            r"\badmission\s*office\b|\badmission\s*department\b|\badmission\s*block\b|"
+            r"\badmission\s*counsel(or|ler|lor)\b|\btalk\s*(to|with)\s*(admission|admissions)\b|"
+            r"\btransfer\s*(me)?\s*(to|in)\s*(admission|admissions)\b",
+            q,
+        ):
+            contacts = kb.get("admission", {}).get("contacts", {}).get("value", "")
+            if contacts:
+                logger.info(f"HANDLER: admission_office matched for query='{q[:60]}'")
+                return f"You can reach the admission office at {contacts}."
+            logger.info(f"HANDLER: admission_office (default) matched for query='{q[:60]}'")
+            return "The admission office can be contacted at 0343-2501353."
+
+        # --- Admission process (general) ---
+        if re.search(
+            r"\b(admission\s*process|how\s*to\s*apply|admissions?|admit|apply\s*(for|to)|how\s*can\s*i\s*get)\b",
+            q,
+        ):
+            adm = kb.get("admission", {})
+            eligibility = adm.get("eligibility", {}).get("btech", {}).get("value", "")
+            entrance = adm.get("eligibility", {}).get("entrance", {}).get("value", "")
+            if eligibility:
+                logger.info(f"HANDLER: admission_general matched for query='{q[:60]}'")
+                return (
+                    f"B.Tech admission is through {entrance}. "
+                    f"Eligibility is {eligibility}. "
+                    f"Seats: WBJEE 80 percent, JEE Main 10 percent, Management Quota 10 percent. "
+                    f"Apply online at the WBJEEB website or the college portal."
+                )
+
+        # --- Installment / payment plan (checked BEFORE fee to catch "pay fee in installments") ---
+        if re.search(r"\b(installments?|installments?|emi|payment\s*plan|pay\s*in\s*part)\b", q):
+            payment = kb.get("fees_summary", {}).get("payment_modes", {}).get("value", "")
+            if payment:
+                logger.info(f"HANDLER: installment matched for query='{q[:60]}'")
+                return f"Payment options: {payment}."
+            logger.info(f"HANDLER: installment (default) matched for query='{q[:60]}'")
+            return "For fee payment options, please contact the accounts office at 0343-2501353."
+
+        # --- Safety / Anti-ragging (checked BEFORE hostel to preserve existing order) ---
+        if re.search(r"\b(safety|safe|ragging|security|women.*safe)\b", q):
+            ar = kb.get("anti_ragging", {})
+            policy = ar.get("policy", {}).get("value", "")
+            reporting = ar.get("reporting", {}).get("value", "")
+            safety = ar.get("safety", {}).get("value", "")
+            if policy:
+                logger.info(f"HANDLER: safety matched for query='{q[:60]}'")
+                return (
+                    f"BCREC has a {policy} anti-ragging policy. "
+                    f"{'Reporting: ' + reporting if reporting else ''} "
+                    f"{'Women safety helpline: ' + safety if safety else ''}"
+                ).strip()
+            return self._lang_response_unknown(lang)
+
+        # --- Hostel general info (checked BEFORE fee so "hostel fee" returns hostel context) ---
+        if re.search(r"\bhostel\b", q):
+            hostel = kb.get("hostel", {})
+            available = hostel.get("available", {}).get("value")
+            if available is True:
+                total = hostel.get("total_hostels", {}).get("value", "")
+                boys = hostel.get("boys_hostels", {}).get("value", "")
+                girls = hostel.get("girls_hostels", {}).get("value", "")
+                capacity = hostel.get("total_capacity", {}).get("value", "")
+                logger.info(f"HANDLER: hostel matched for query='{q[:60]}'")
+                return (
+                    f"Yes, hostel accommodation is available at BCREC. "
+                    f"There are {total} hostels — {boys} for boys and {girls} for girls — "
+                    f"with a total capacity of {capacity} students."
+                )
+            logger.info(f"HANDLER: hostel (unavailable) matched for query='{q[:60]}'")
+            return "Hostel accommodation is not currently available at BCREC."
+
+        # --- Fee lookup (with negative lookbehind to avoid stealing from hostel/installment) ---
         fee_intent = re.search(
             r"\b(fee|fees|total\s*fee|semester\s*fee|admission\s*fee|course\s*fee)\b", q
         )
         if fee_intent:
+            logger.info(f"HANDLER: fee_intent matched for query='{q[:60]}'")
             dept_code = self._extract_dept_code(q)
             if dept_code and dept_code in FEE_GROUP_MAP:
                 total, admission, per_sem = FEE_GROUP_MAP[dept_code]
@@ -1709,6 +2283,7 @@ USER QUESTION: {query}
 
         # --- HOD lookup ---
         if re.search(r"\b(hod|hods|head\s*of\s*department|department\s*head)\b", q):
+            logger.info(f"HANDLER: hod matched for query='{q[:60]}'")
             dept_code = self._extract_dept_code(q)
             if dept_code:
                 depts = kb.get("departments", {})
@@ -1721,7 +2296,7 @@ USER QUESTION: {query}
                     if "full_name" in kb.get("courses", {}).get("btech", {}).get(dept_code, {}):
                         dept_full = kb["courses"]["btech"][dept_code]["full_name"]["value"]
                     return f"The HOD of {dept_full} is {hod_name}. Email: {email}."
-                return UNKNOWN_INFO_RESPONSE_EN
+                return self._lang_hod_unknown(lang)
             # No dept specified — list all HODs
             depts = kb.get("departments", {})
             hod_list = []
@@ -1732,14 +2307,16 @@ USER QUESTION: {query}
                     hod_list.append(f"{code}: {name}")
             if hod_list:
                 return "Department Heads: " + "; ".join(hod_list[:6]) + "."
-            return UNKNOWN_INFO_RESPONSE_EN
+            return self._lang_hod_unknown(lang)
 
         # --- Faculty name resolution ---
         if re.search(r"\b(professor|faculty|teacher|sir|madam|dr\.?|prof\.?)\b", q):
+            logger.info(f"HANDLER: faculty matched for query='{q[:60]}'")
             return self._resolve_faculty_name(q, kb)
 
         # --- Placement lookup ---
-        if re.search(r"\b(placement|placed|recruit|package|lpa|job|company)\b", q):
+        if re.search(r"\b(placements?|placed|recruit|package|lpa|job|company)\b", q):
+            logger.info(f"HANDLER: placement matched for query='{q[:60]}'")
             dept_code = self._extract_dept_code(q)
             placements = kb.get("placements", {})
             if dept_code:
@@ -1766,6 +2343,7 @@ USER QUESTION: {query}
 
         # --- Department seat info ---
         if re.search(r"\b(seats|intake|capacity)\b", q):
+            logger.info(f"HANDLER: seats matched for query='{q[:60]}'")
             dept_code = self._extract_dept_code(q)
             if dept_code:
                 dept_course = kb.get("courses", {}).get("btech", {}).get(dept_code, {})
@@ -1776,6 +2354,7 @@ USER QUESTION: {query}
 
         # --- Cutoff / rank info ---
         if re.search(r"\b(cutoff|cut.off|rank|closing.rank|opening.rank)\b", q):
+            logger.info(f"HANDLER: cutoff matched for query='{q[:60]}'")
             dept_code = self._extract_dept_code(q)
             if dept_code:
                 _CUTOFF_MAP = {
@@ -1802,9 +2381,26 @@ USER QUESTION: {query}
             r"\b(established|founded|started|founding|when.*start|when.*open|since when|how old)\b",
             q,
         ):
+            logger.info(f"HANDLER: establishment matched for query='{q[:60]}'")
             return (
                 "Dr. B.C. Roy Engineering College was established in August 2000. "
                 "It became autonomous from the 2024-25 academic session."
+            )
+
+        # --- Computer lab timings (before general timings) ---
+        if re.search(r"\bcomputer\s*lab|lab\s*timing|lab\s*hours?\b", q):
+            logger.info(f"HANDLER: computer_lab matched for query='{q[:60]}'")
+            return (
+                "Computer labs are open during college hours: Monday to Friday, "
+                "10:00 AM to 5:30 PM. The campus is closed on Saturday and Sunday."
+            )
+
+        # --- Library timings ---
+        if re.search(r"\blibrary\s*(timing|hours?)|reading\s*room\b", q):
+            logger.info(f"HANDLER: library matched for query='{q[:60]}'")
+            return (
+                "The library is open Monday to Friday, 10:00 AM to 5:30 PM. "
+                "It is closed on Saturday and Sunday."
             )
 
         # --- College timings ---
@@ -1812,13 +2408,21 @@ USER QUESTION: {query}
             r"\b(timings?|office hours?|working hours?|college hours?|what.*time|when.*open|when.*close)\b",
             q,
         ):
+            logger.info(f"HANDLER: timings matched for query='{q[:60]}'")
             return (
                 "College timings: Monday to Friday, 10:00 AM to 5:30 PM. "
                 "The campus is closed on Saturday and Sunday."
             )
 
         # --- College info (departments) ---
-        if re.search(r"\b(department|branch|course|program|b\.tech)\b", q) and not fee_intent:
+        if (
+            re.search(
+                r"\b(department|branch|course|program|b\.tech|what.*offer|what.*available|what.*have|what.*teach|list.*course)\b",
+                q,
+            )
+            and not fee_intent
+        ):
+            logger.info(f"HANDLER: departments matched for query='{q[:60]}'")
             dept_code = self._extract_dept_code(q)
             if dept_code:
                 dept_course = kb.get("courses", {}).get("btech", {}).get(dept_code, {})
@@ -1829,6 +2433,77 @@ USER QUESTION: {query}
                     if intake:
                         result += f" — Intake: {intake} seats"
                     return result
+            # No specific department — list all B.Tech courses
+            btech_courses = kb.get("courses", {}).get("btech", {})
+            course_list = []
+            for code, data in btech_courses.items():
+                name = data.get("full_name", {}).get("value", "")
+                intake = data.get("intake", {}).get("value", "")
+                if name:
+                    entry = f"{name} ({code})"
+                    if intake:
+                        entry += f" - {intake} seats"
+                    course_list.append(entry)
+            if course_list:
+                return "BCREC offers B.Tech in: " + "; ".join(course_list) + "."
+            return "BCREC offers B.Tech programs in CSE, IT, ECE, EE, ME, CE, CSD, AIML, Data Science, and Cyber Security."
+
+        # --- Scholarship ---
+        if re.search(r"\bscholarship", q):
+            logger.info(f"HANDLER: scholarship matched for query='{q[:60]}'")
+            schemes = kb.get("scholarships", {}).get("schemes", {})
+            names = []
+            for key, sch in schemes.items():
+                name = sch.get("name", {}).get("value", "")
+                if name:
+                    names.append(name)
+            if names:
+                merit = (
+                    kb.get("scholarships", {})
+                    .get("eligibility", {})
+                    .get("merit", {})
+                    .get("value", "")
+                )
+                means = (
+                    kb.get("scholarships", {})
+                    .get("eligibility", {})
+                    .get("means", {})
+                    .get("value", "")
+                )
+                return (
+                    f"Scholarships available at BCREC include: {', '.join(names)}. "
+                    f"Merit eligibility: {merit}. "
+                    f"Means eligibility: {means}."
+                )
+            return self._lang_response_unknown(lang)
+        # --- Counselling ---
+        if re.search(r"\b(counselling|counseling)\b", q):
+            logger.info(f"HANDLER: counselling matched for query='{q[:60]}'")
+            counselling = kb.get("admission", {}).get("counseling", {}).get("value", "")
+            if counselling:
+                return f"Admission counselling for BCREC is conducted through {counselling}."
+            return self._lang_response_unknown(lang)
+
+        # --- Eligibility based on marks/percentage ---
+        if re.search(r"\b(eligibility|eligible|marks?|percentage|qualif)\b", q):
+            logger.info(f"HANDLER: eligibility matched for query='{q[:60]}'")
+            adm = kb.get("admission", {})
+            eligibility = adm.get("eligibility", {}).get("btech", {}).get("value", "")
+            entrance = adm.get("eligibility", {}).get("entrance", {}).get("value", "")
+            if eligibility:
+                return (
+                    f"Eligibility for B.Tech admission: {eligibility}. Entrance exam: {entrance}."
+                )
+            return self._lang_response_unknown(lang)
+
+        # --- Campus visit ---
+        if re.search(r"\bcampus\s*visit\b|\bvisit\s*campus\b|\btour\b", q):
+            logger.info(f"HANDLER: campus_visit matched for query='{q[:60]}'")
+            return (
+                "You are welcome to visit the BCREC campus. "
+                "College timings are Monday to Friday, 10:00 AM to 5:30 PM. "
+                "Please call 0343-2501353 to schedule a visit."
+            )
 
         return None
 
@@ -2286,6 +2961,18 @@ USER QUESTION: {query}
             return FALLBACK_ANSWER_BN
         return FALLBACK_ANSWER_EN
 
+    def _lang_response_unknown(self, lang: str) -> str:
+        return {
+            "hi": UNKNOWN_INFO_RESPONSE_HI,
+            "bn": UNKNOWN_INFO_RESPONSE_BN,
+        }.get(lang, UNKNOWN_INFO_RESPONSE_EN)
+
+    def _lang_hod_unknown(self, lang: str) -> str:
+        return {
+            "hi": _HOD_UNKNOWN_HI,
+            "bn": _HOD_UNKNOWN_BN,
+        }.get(lang, _HOD_UNKNOWN_EN)
+
     def _log_gap(self, query: str, lang: str, reason: str) -> None:
         """Log an unanswered query to knowledge_gaps.json so admins know what to add."""
         import datetime
@@ -2330,11 +3017,16 @@ USER QUESTION: {query}
         t_post_start = 0.0
         t_post_end = 0.0
         lifecycle_tracked = False
+        from app.utils.stage_profiler import StageProfiler
+
+        _profiler = StageProfiler()
+        _profiler.start()
         try:
             history = self._get_session_history(session_id)
             turn_number = len(history) // 2 + 1
 
             # 0. Normalization — STT recovery and entity resolution
+            _profiler.mark("normalization")
             norm_log = normalize_query(query)
             if norm_log.changes:
                 logger.info(
@@ -2342,7 +3034,44 @@ USER QUESTION: {query}
                 )
                 query = norm_log.normalized_text
 
-            # 0.5 Transcript validation — reject STT noise / fragments before RAG+LLM
+            # 0.5 Yes/no continuation — "yes"/"no" after "Would you like" clarification re-routes
+            # to the ambiguous word that triggered the clarification prompt
+            if history:
+                q_lower = query.strip().lower()
+                is_yes = q_lower in ("yes", "yeah", "yep", "हाँ", "जी", "जी हाँ", "হ্যাঁ", "জী", "জী হ্যাঁ")
+                is_no = q_lower in ("no", "nah", "nope", "नहीं", "जी नहीं", "না", "জী না")
+                if is_yes or is_no:
+                    last_assistant = self._get_last_assistant_response(history)
+                    if last_assistant and "would you like" in last_assistant.lower():
+                        if is_yes:
+                            last_user_q = self._get_last_user_question(history)
+                            if last_user_q:
+                                logger.info(
+                                    f"[{session_id}] YES/NO: 'yes' after clarification — "
+                                    f"re-routing to last user question: '{last_user_q[:60]}'"
+                                )
+                                query = last_user_q
+                                self._skip_ambiguous_validation_sessions.add(session_id)
+                        else:
+                            lang = self._session_langs.get(session_id, "en")
+                            ack_map = {"hi": ACKNOWLEDGMENT_HI, "bn": ACKNOWLEDGMENT_BN}
+                            ack = ack_map.get(lang, ACKNOWLEDGMENT_EN)
+                            logger.info(
+                                f"[{session_id}] YES/NO: 'no' after clarification — acknowledgment"
+                            )
+                            self._append_session_turn(session_id, query, ack)
+                            return {
+                                "answer": ack,
+                                "voice_text": ack,
+                                "source": "yes_no_continuation",
+                                "model": "none",
+                                "latency_ms": round((time.time() - start) * 1000),
+                                "hallucination_validated": True,
+                                "tokens": {"prompt": 0, "completion": 0},
+                                "cache_hit": False,
+                            }
+
+            # 0.75 Transcript validation — reject STT noise / fragments before RAG+LLM
             validation_result = self._validate_transcript(query, session_id)
             if validation_result is not None:
                 logger.info(
@@ -2398,6 +3127,17 @@ USER QUESTION: {query}
 
             # 1. Resolve language using persistent session state
             lang = self._resolve_language(session_id, query)
+            _profiler.mark("lang_detect")
+
+            # ── DEMO_SAFEPOINT: Pre-processing ──
+            if _sp_enabled():
+                sp_result = await _sp_safe_pre(self, query, session_id, lang)
+                if sp_result:
+                    logger.info(
+                        f"[{session_id}] SAFEPOINT pre-processing intercepted: {sp_result.get('source', '?')}"
+                    )
+                    return sp_result
+            # ── End DEMO_SAFEPOINT pre-processing ──
 
             # Track language switches
             prev_lang = self._session_langs.get(session_id, "en")
@@ -2573,13 +3313,9 @@ USER QUESTION: {query}
                     }
 
             # 2.75 Expand short follow-up queries for better retrieval context
-            retrieval_query = self._expand_follow_up_query(query, history)
+            retrieval_query, expand_debug = self._expand_follow_up_query(query, history, session_id)
             is_follow_up = retrieval_query != query.strip()
-            logger.debug(
-                f"[{session_id}] PIPELINE query='{query[:80]}' "
-                f"retrieval_query='{retrieval_query[:80]}' "
-                f"history_turns={len(history)}"
-            )
+            _profiler.mark("followup_expand")
 
             # 2.8 Structured knowledge lookup (Task 1, 6) — before retrieval
             if self._detect_on_topic_arithmetic(query) or True:
@@ -2676,8 +3412,18 @@ USER QUESTION: {query}
                             "cache_hit": False,
                         }
 
+                logger.info(
+                    f"[{session_id}] RAW='{query[:80]}' | EXPANDED='{retrieval_query[:80]}'"
+                )
                 structured_result = self._structured_lookup(retrieval_query, lang)
                 if structured_result:
+                    # Update structured session state for follow-up expansion
+                    intent = self._detect_structured_intent(retrieval_query)
+                    if intent:
+                        self._session_intents[session_id] = intent
+                    dept_code = self._extract_dept_code(retrieval_query)
+                    if dept_code:
+                        self._session_departments[session_id] = dept_code
                     logger.info(
                         f"[{session_id}] STRUCTURED LOOKUP HIT: '{retrieval_query[:60]}' "
                         f"-> '{structured_result[:60]}'"
@@ -2701,9 +3447,11 @@ USER QUESTION: {query}
                     }
 
             # 3. Retrieve context (returns context string + confidence score)
+            _profiler.mark("structured_done")
             t_retrieval_start = time.time()
             context, confidence = self._retrieve_context(retrieval_query)
             t_retrieval_ms = (time.time() - t_retrieval_start) * 1000
+            _profiler.mark("retrieval_done")
 
             logger.debug(
                 f"[{session_id}] RETRIEVED confidence={confidence:.4f} "
@@ -2829,12 +3577,43 @@ USER QUESTION: {query}
 
                     try:
                         t_api_sent = time.time()
-                        completion = self.client.chat.completions.create(
-                            model=current_model,
-                            messages=messages,
-                            temperature=0.3,
-                            max_tokens=self.max_tokens,
-                        )
+                        if _sp_enabled():
+                            try:
+                                completion = await asyncio.wait_for(
+                                    asyncio.to_thread(
+                                        self.client.chat.completions.create,
+                                        model=current_model,
+                                        messages=messages,
+                                        temperature=0.3,
+                                        max_tokens=self.max_tokens,
+                                    ),
+                                    timeout=6.0,
+                                )
+                            except asyncio.TimeoutError:
+                                from .safe_point import FILLER_RESPONSES as _filler_responses
+
+                                filler = random.choice(_filler_responses)
+                                logger.warning(
+                                    f"[{session_id}] LLM call timed out (>2s), using filler"
+                                )
+                                self._append_session_turn(session_id, query, filler)
+                                return {
+                                    "answer": filler,
+                                    "voice_text": filler,
+                                    "source": "timeout_filler",
+                                    "model": "none",
+                                    "latency_ms": round((time.time() - start) * 1000),
+                                    "hallucination_validated": True,
+                                    "tokens": {"prompt": 0, "completion": 0},
+                                    "cache_hit": False,
+                                }
+                        else:
+                            completion = self.client.chat.completions.create(
+                                model=current_model,
+                                messages=messages,
+                                temperature=0.3,
+                                max_tokens=self.max_tokens,
+                            )
                         t_first_token = time.time()
                         t_last_token = t_first_token
                         self._rate_limiter.record_success()
@@ -2878,6 +3657,7 @@ USER QUESTION: {query}
             import re as _re
 
             answer = _re.sub(r"<think>.*?</think>\s*", "", answer, flags=_re.DOTALL).strip()
+            _profiler.mark("llm_response")
 
             # 6.5 Ensure concise response — cap at MAX_VOICE_RESPONSE_CHARS for voice
             # Uses character-based limit with sentence-boundary awareness.
@@ -3064,6 +3844,12 @@ USER QUESTION: {query}
                 response=answer,
             )
 
+            # ── DEMO_SAFEPOINT: Post-processing ──
+            if _sp_enabled():
+                response_payload = _sp_post(self, query, response_payload, lang)
+            # ── End DEMO_SAFEPOINT post-processing ──
+            _profiler.mark("post_process")
+
             return response_payload
 
         except Exception as e:
@@ -3075,12 +3861,21 @@ USER QUESTION: {query}
                 elapsed_ms=elapsed,
             )
             logger.error(f"Groq error ({elapsed}ms): {e}")
+            answer = "I'm sorry for the inconvenience. Please call the college at 0343-2501353 for assistance."
+            if _sp_enabled():
+                answer = "I am sorry for the trouble. Please contact the admission office at 0343-2501353 and they will help you."
             return {
-                "answer": "Sorry, something went wrong. Please call the college at 0343-2501353.",
-                "voice_text": "Sorry, something went wrong.",
+                "answer": answer,
+                "voice_text": answer,
                 "source": "error",
                 "cache_hit": False,
             }
+        finally:
+            if _profiler._marks:
+                _profiler.mark("pipeline_end")
+                timing_lines = _profiler.report().split("\n")
+                for line in timing_lines:
+                    logger.info(f"[PERF {session_id}] {line}")
 
     async def stream_response(
         self,
@@ -3159,6 +3954,15 @@ USER QUESTION: {query}
                     details={"from": prev_lang, "to": lang},
                 )
 
+            # Handoff detection — intercept before any structured lookup or LLM
+            handoff_response = _sp_handoff(query)
+            if handoff_response:
+                logger.info(f"[{session_id}] Handoff detected (stream): '{query[:60]}'")
+                for word in handoff_response.split():
+                    yield word + " "
+                    await asyncio.sleep(0.02)
+                return
+
             # Out-of-domain detection — block clearly off-topic queries before retrieval/LLM
             if self._is_out_of_domain(query):
                 ood_response = {
@@ -3232,13 +4036,8 @@ USER QUESTION: {query}
                     return
 
             # Expand short follow-up queries for better retrieval context
-            retrieval_query = self._expand_follow_up_query(query, history)
+            retrieval_query, expand_debug = self._expand_follow_up_query(query, history, session_id)
             is_follow_up = retrieval_query != query.strip()
-            logger.debug(
-                f"[{session_id}] PIPELINE stream query='{query[:80]}' "
-                f"retrieval_query='{retrieval_query[:80]}' "
-                f"history_turns={len(history)}"
-            )
 
             # Structured lookup check (stream, Task 1)
             structured_result = self._structured_lookup(retrieval_query, lang)
@@ -3250,6 +4049,13 @@ USER QUESTION: {query}
                     elif re.search(r"\btotal\s*(fee|fees)\b", retrieval_query):
                         structured_result = self._calculate_total_fees(dept_code, lang)
             if structured_result:
+                # Update structured session state for follow-up expansion (stream path)
+                intent = self._detect_structured_intent(retrieval_query)
+                if intent:
+                    self._session_intents[session_id] = intent
+                dept_code = self._extract_dept_code(retrieval_query)
+                if dept_code:
+                    self._session_departments[session_id] = dept_code
                 for word in structured_result.split():
                     yield word + " "
                     await asyncio.sleep(0.02)

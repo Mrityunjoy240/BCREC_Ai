@@ -61,3 +61,1892 @@
 2026-07-04 10:49:13,204 - livekit-agent - INFO - Prewarm complete — agent is ready to accept jobs.
 2026-07-04 10:49:13,204 - livekit.agents - INFO - job runner initialized
 2026-07-04 10:49:13,653 - livekit.agents - INFO - registered worker
+2026-07-04 10:49:49,780 - livekit.agents - INFO - received job request
+2026-07-04 10:49:50,639 - livekit.agents - INFO - initializing job runner
+2026-07-04 10:49:50,640 - livekit-agent - INFO - Prewarming agent components (VAD, STT, LLM, TTS)...
+2026-07-04 10:49:50,763 - livekit-agent - INFO - Prewarm complete — agent is ready to accept jobs.
+2026-07-04 10:49:50,764 - livekit.agents - INFO - job runner initialized
+2026-07-04 10:49:50,772 - livekit-agent - INFO - Starting agent job AJ_7W4K336Lq6HW
+2026-07-04 10:49:53,518 - livekit-agent - INFO - Connected to room: console-496d2f4e
+2026-07-04 10:49:53,519 - livekit-agent - INFO - Session key: console-496d2f4e
+2026-07-04 10:49:53,520 - app.utils.conversation_logger - INFO - Conversation telemetry dir: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\data\logs\conversations
+2026-07-04 10:49:53,521 - app.utils.conversation_logger - INFO - [TELEMETRY] SESSION_START console-496d2f4e conv=c0bc92f087fb
+2026-07-04 10:49:53,522 - livekit-agent - INFO - [TELEMETRY] Session started: console-496d2f4e conv=c0bc92f087fb
+2026-07-04 10:49:53,544 - livekit-agent - INFO - Agent session started
+2026-07-04 10:49:54,045 - livekit-agent - INFO - Sending greeting...
+2026-07-04 10:49:54,052 - livekit-agent - INFO - SarvamTTS.synthesize called for: Hello! BCREC AI assistant here....
+2026-07-04 10:49:54,065 - app.services.normalization.normalizer - INFO - Loaded entity dictionary (8 sections)
+2026-07-04 10:49:56,885 - livekit-agent - INFO - Synthesizing: Hello! B C Roy Engineering College AI assistant here.... (lang=en-IN, speaker=shubh)
+2026-07-04 10:49:56,889 - app.services.sarvam_service - INFO - Normalized TTS text: 'Hello! B. C. Roy Engineering College AI assistant here.'
+2026-07-04 10:49:59,797 - app.services.sarvam_service - INFO - TTS generated: 192556 bytes, lang=en-IN, speaker=shubh
+2026-07-04 10:49:59,797 - livekit-agent - INFO - Finished pushing audio chunk
+2026-07-04 10:49:59,987 - livekit-agent - INFO - SarvamTTS.synthesize called for: How can I help you today?...
+2026-07-04 10:49:59,993 - livekit-agent - INFO - Synthesizing: How can I help you today?... (lang=en-IN, speaker=shubh)
+2026-07-04 10:49:59,994 - app.services.sarvam_service - INFO - Normalized TTS text: 'How can I help you today?'
+2026-07-04 10:50:01,157 - app.services.sarvam_service - INFO - TTS generated: 65580 bytes, lang=en-IN, speaker=shubh
+2026-07-04 10:50:01,158 - livekit-agent - INFO - Finished pushing audio chunk
+2026-07-04 10:50:01,159 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:50:01,166 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:50:41,392 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 10:50:43,895 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 10:51:42,625 - app.services.sarvam_service - INFO - STT request: audio_size=91628 bytes, model=saaras:v3, language=None
+2026-07-04 10:51:55,166 - app.services.sarvam_service - ERROR - STT error: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-07-04 10:52:30,346 - app.services.sarvam_service - INFO - STT request: audio_size=102380 bytes, model=saaras:v3, language=None
+2026-07-04 10:52:47,606 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+2026-07-04 10:52:47,607 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260704_721d36b9-785f-43f4-854e-b0700515b26c' transcript='Hello Hello' timestamps=None diarized_transcript=None language_code='en-IN' language_probability=1.0
+2026-07-04 10:52:47,607 - app.services.sarvam_service - INFO - Extracted transcript: 'Hello Hello'
+2026-07-04 10:52:47,607 - app.services.sarvam_service - INFO - STT result: 'Hello Hello...' detected_lang=en-IN
+2026-07-04 10:52:47,614 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:52:47,730 - livekit-agent - INFO - LLM Query: 'Hello Hello...' History: 2 turns
+2026-07-04 10:52:47,772 - app.utils.language_detect - INFO - fasttext not installed — using keyword-only detection
+2026-07-04 10:52:47,772 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+2026-07-04 10:52:50,549 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:52:50,559 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:52:51,048 - app.services.sarvam_service - INFO - STT request: audio_size=153068 bytes, model=saaras:v3, language=None
+2026-07-04 10:52:56,453 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+2026-07-04 10:52:56,453 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260704_da0bb84e-73aa-4270-8851-24462914485a' transcript='Who is the principal of this college?' timestamps=None diarized_transcript=None language_code='en-IN' language_probability=1.0
+2026-07-04 10:52:56,454 - app.services.sarvam_service - INFO - Extracted transcript: 'Who is the principal of this college?'
+2026-07-04 10:52:56,454 - app.services.sarvam_service - INFO - STT result: 'Who is the principal of this college?...' detected_lang=en-IN
+2026-07-04 10:52:56,454 - livekit-agent - INFO - STT corrected: 'Who is the principal of this college?' -> 'Who is the Principal of this college?'
+2026-07-04 10:52:56,454 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:52:56,457 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:52:56,484 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 0.483286 seconds
+2026-07-04 10:52:56,515 - livekit-agent - INFO - LLM Query: 'Who is the Principal of this college?...' History: 3 turns
+2026-07-04 10:52:56,526 - app.services.normalization.normalizer - INFO - Normalization: 'Who is the Principal of this college?' -> 'who is the principal of this college' (1 changes: ['cleanup'])
+2026-07-04 10:52:56,527 - app.services.llm.groq_service - INFO - [console-496d2f4e] Query normalized (stream): 'Who is the Principal of this college?' -> 'who is the principal of this college'
+2026-07-04 10:52:56,527 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+2026-07-04 10:52:56,528 - livekit-agent - INFO - TURN TTFT=14ms (user speech → LLM first token)
+2026-07-04 10:52:56,713 - livekit-agent - INFO - SarvamTTS.synthesize called for: The principal of BCREC is Dr. Sanjay S. Pawar....
+2026-07-04 10:52:56,716 - livekit-agent - INFO - Synthesizing: The principal of B C Roy Engineering College is Dr. Sanjay S... (lang=en-IN, speaker=shubh)
+2026-07-04 10:52:56,717 - app.services.sarvam_service - INFO - Normalized TTS text: 'The principal of B. C. Roy Engineering College is Doctor Sanjay S. Pawar.'
+2026-07-04 10:53:19,741 - app.services.sarvam_service - INFO - TTS generated: 213036 bytes, lang=en-IN, speaker=shubh
+2026-07-04 10:53:19,742 - livekit-agent - INFO - Finished pushing audio chunk
+2026-07-04 10:53:19,744 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:53:19,745 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:53:19,950 - livekit-agent - INFO - TURN COMPLETE total=23435ms (user speech → LLM done)
+2026-07-04 10:53:19,995 - livekit-agent - INFO - SarvamTTS.synthesize called for: You can contact them at 0343-2501353....
+2026-07-04 10:53:20,004 - livekit-agent - INFO - Synthesizing: You can contact them at 0 3 4 3 2 5 0 1 3 5 3.... (lang=en-IN, speaker=shubh)
+2026-07-04 10:53:20,005 - app.services.sarvam_service - INFO - Normalized TTS text: 'You can contact them at 0 3 4 3 2 5 0 1 3 5 3.'
+2026-07-04 10:53:25,380 - app.services.sarvam_service - INFO - TTS generated: 184364 bytes, lang=en-IN, speaker=shubh
+2026-07-04 10:53:25,380 - livekit-agent - INFO - Finished pushing audio chunk
+2026-07-04 10:53:25,389 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:53:25,390 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:53:48,547 - app.services.sarvam_service - INFO - STT request: audio_size=242156 bytes, model=saaras:v3, language=None
+2026-07-04 10:53:58,177 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+2026-07-04 10:53:58,178 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260704_0a43f800-f351-4794-87f0-5f156bbfb297' transcript='ছিলাম এই কলেজে কোন কোন ডিপার্টমেন্ট আছে বিটেকের জন্য অ্যাডমিশন নেব।' timestamps=None diarized_transcript=None language_code='bn-IN' language_probability=1.0
+2026-07-04 10:53:58,178 - app.services.sarvam_service - INFO - Extracted transcript: 'ছিলাম এই কলেজে কোন কোন ডিপার্টমেন্ট আছে বিটেকের জন্য অ্যাডমিশন নেব।'
+2026-07-04 10:53:58,178 - app.services.sarvam_service - INFO - STT result: 'ছিলাম এই কলেজে কোন কোন ডিপার্টমেন্ট আছে বিটেকের জন্য অ্যাডমিশন নেব।...' detected_lang=bn-IN
+2026-07-04 10:53:58,215 - livekit-agent - INFO - LLM Query: 'ছিলাম এই কলেজে কোন কোন ডিপার্টমেন্ট আছে বিটেকের জন্য অ্যাডমিশন নেব।...' History: 5 turns
+2026-07-04 10:53:58,222 - app.services.normalization.normalizer - INFO - Normalization: 'ছিলাম এই কলেজে কোন কোন ডিপার্টমেন্ট আছে বিটেকের জন্য অ্যাডমি' -> 'ছিলাম এই কলেজে কোন কোন ডিপার্টমেন্ট আছে বিটেwhoর জন্য অ্যাডম' (1 changes: ['language_mapping'])
+2026-07-04 10:53:58,222 - app.services.llm.groq_service - INFO - [console-496d2f4e] Query normalized (stream): 'ছিলাম এই কলেজে কোন কোন ডিপার্টমেন্ট আছে বিটেকের জন্য অ্যাডমি' -> 'ছিলাম এই কলেজে কোন কোন ডিপার্টমেন্ট আছে বিটেwhoর জন্য অ্যাডম'
+2026-07-04 10:53:58,222 - app.services.llm.groq_service - INFO - [console-496d2f4e] Language change: en → bn (reason: Bengali script detected in query)
+2026-07-04 10:53:58,572 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:53:58,582 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:54:00,309 - app.services.llm.groq_service - INFO - STREAM TTFT=2094ms prep=352ms llm_setup=1513ms lang=bn q='ছিলাম এই কলেজে কোন কোন ডিপার্টমেন্ট আছে বিটেwhoর জন্য অ্যাডম'
+2026-07-04 10:54:00,310 - livekit-agent - INFO - TURN TTFT=2095ms (user speech → LLM first token)
+2026-07-04 10:54:00,749 - app.services.llm.groq_service - INFO - STREAM COMPLETE total=2533ms chars=350 ~138.2cps lang=bn
+2026-07-04 10:54:00,751 - livekit-agent - INFO - TURN COMPLETE total=2536ms (user speech → LLM done)
+2026-07-04 10:54:00,754 - livekit-agent - INFO - SarvamTTS.synthesize called for: আপনার প্রশ্নের উত্তর হলো আমাদের কলেজে নিম্নলিখিত ব...
+2026-07-04 10:54:00,756 - livekit-agent - INFO - Synthesizing: আপনার প্রশ্নের উত্তর হলো আমাদের কলেজে নিম্নলিখিত বিভাগ রয়েছ... (lang=bn-IN, speaker=ritu)
+2026-07-04 10:54:00,757 - app.services.sarvam_service - INFO - Normalized TTS text: 'আপনার প্রশ্নের উত্তর হলো আমাদের কলেজে নিম্নলিখিত বিভাগ রয়েছে: কম্পিউটার সায়েন্স এবং ইঞ্জিনিয়ারিং (Computer Science and Engineering), ইনফরমেশন টেকনোলজি (Information Technology), ইলেকট্রনিক্স এবং কমিউনিকেশন ইঞ্জিনিয়ারিং (Electronics and Communication Engineering), ইলেকট্রিক্যাল ইঞ্জিনিয়ারিং (Electrical Engineering), মেকানিক্যাল ইঞ্জিনিয়ারিং (Mechanical Engineering), সিভিল ইঞ্জিনিয়ারিং (Civil Engineering), মাস্টার অফ বিজনেস অ্যাডমিনিস্ট্রেশন (M B A), এবং মাস্টার অফ কম্পিউটার অ্যাপ্লিকে'
+2026-07-04 10:54:14,399 - app.services.sarvam_service - INFO - TTS generated: 1606380 bytes, lang=bn-IN, speaker=ritu
+2026-07-04 10:54:14,401 - livekit-agent - INFO - Finished pushing audio chunk
+2026-07-04 10:54:14,401 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:54:14,408 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:55:05,748 - app.services.sarvam_service - INFO - STT request: audio_size=378860 bytes, model=saaras:v3, language=None
+2026-07-04 10:55:15,700 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+2026-07-04 10:55:15,701 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260704_237138d7-5e52-46b2-aa3e-860e7ec3017b' transcript='কোনটাতে কত কি ফিস আছে একটু ভালো করে বলো প্লাস বলো যে কোনটার নিলে ভালো আমার ফিউচার আছে' timestamps=None diarized_transcript=None language_code='bn-IN' language_probability=1.0
+2026-07-04 10:55:15,701 - app.services.sarvam_service - INFO - Extracted transcript: 'কোনটাতে কত কি ফিস আছে একটু ভালো করে বলো প্লাস বলো যে কোনটার নিলে ভালো আমার ফিউচার আছে'
+2026-07-04 10:55:15,701 - app.services.sarvam_service - INFO - STT result: 'কোনটাতে কত কি ফিস আছে একটু ভালো করে বলো প্লাস বলো যে কোনটার নিলে ভালো আমার ফিউচার আছে...' detected_lang=bn-IN
+2026-07-04 10:55:15,748 - livekit-agent - INFO - LLM Query: 'কোনটাতে কত কি ফিস আছে একটু ভালো করে বলো প্লাস বলো যে কোনটার নিলে ভালো আমার ফিউচার আছে...' History: 7 turns
+2026-07-04 10:55:15,754 - app.services.normalization.normalizer - INFO - Normalization: 'কোনটাতে কত কি ফিস আছে একটু ভালো করে বলো প্লাস বলো যে কোনটার ' -> 'কোনটাতে how much কি feeস আছে একটু ভালো করে বলো প্লাস বলো যে ' (1 changes: ['language_mapping'])
+2026-07-04 10:55:15,755 - app.services.llm.groq_service - INFO - [console-496d2f4e] Query normalized (stream): 'কোনটাতে কত কি ফিস আছে একটু ভালো করে বলো প্লাস বলো যে কোনটার ' -> 'কোনটাতে how much কি feeস আছে একটু ভালো করে বলো প্লাস বলো যে '
+2026-07-04 10:55:16,160 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:55:16,161 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:55:19,228 - app.services.llm.groq_service - INFO - STREAM TTFT=3480ms prep=406ms llm_setup=2894ms lang=bn q='কোনটাতে how much কি feeস আছে একটু ভালো করে বলো প্লাস বলো যে '
+2026-07-04 10:55:19,229 - livekit-agent - INFO - TURN TTFT=3481ms (user speech → LLM first token)
+2026-07-04 10:55:19,700 - app.services.llm.groq_service - INFO - STREAM COMPLETE total=3951ms chars=332 ~84.0cps lang=bn
+2026-07-04 10:55:19,702 - livekit-agent - INFO - TURN COMPLETE total=3954ms (user speech → LLM done)
+2026-07-04 10:55:19,708 - livekit-agent - INFO - SarvamTTS.synthesize called for: আপনার প্রশ্নের উত্তর হলো, আমাদের কলেজে বিভিন্ন বিভ...
+2026-07-04 10:55:19,718 - livekit-agent - INFO - Synthesizing: আপনার প্রশ্নের উত্তর হলো, আমাদের কলেজে বিভিন্ন বিভাগের ফি নি... (lang=bn-IN, speaker=ritu)
+2026-07-04 10:55:19,719 - app.services.sarvam_service - INFO - Normalized TTS text: 'আপনার প্রশ্নের উত্তর হলো, আমাদের কলেজে বিভিন্ন বিভাগের ফি নিম্নরূপ: Computer Science and Engineering/Information Technology/Electronics and Communication Engineering বিভাগের ফি: ছয় লাখ চার হাজার সাতশো টাকা। Electrical Engineering/Artificial Intelligence and Machine Learning/D S/CS/C S D বিভাগের ফি: পাঁচ লাখ পঞ্চাশ হাজার একশত একশো টাকা। Mechanical Engineering/Civil Engineering বিভাগের ফি: চার লাখ চুয়াল্লিশ হাজার একশত টাকা। আপনার ফি উচার আছে তাই আমি বলতে পারি যে আপনার জন্য Computer Science and Engineering/Information Technology/Electronics and Communication Engineering বিভাগ ভালো হতে পারে।'
+2026-07-04 10:55:34,115 - app.services.sarvam_service - INFO - TTS generated: 2028972 bytes, lang=bn-IN, speaker=ritu
+2026-07-04 10:55:34,116 - livekit-agent - INFO - Finished pushing audio chunk
+2026-07-04 10:55:34,117 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:55:34,123 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:56:34,833 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 10:56:37,343 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 10:56:37,906 - app.services.sarvam_service - INFO - STT request: audio_size=269804 bytes, model=saaras:v3, language=None
+2026-07-04 10:56:39,852 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 10:56:40,266 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+2026-07-04 10:56:40,266 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260704_d658e7c4-1157-4292-813a-c6ab06e2ed8c' transcript='বলছি আর্টিফিশিয়াল ইন্টেলিজেন্স বলে কি কোন কিছু নেই তোমার এই কলেজে?' timestamps=None diarized_transcript=None language_code='bn-IN' language_probability=1.0
+2026-07-04 10:56:40,266 - app.services.sarvam_service - INFO - Extracted transcript: 'বলছি আর্টিফিশিয়াল ইন্টেলিজেন্স বলে কি কোন কিছু নেই তোমার এই কলেজে?'
+2026-07-04 10:56:40,266 - app.services.sarvam_service - INFO - STT result: 'বলছি আর্টিফিশিয়াল ইন্টেলিজেন্স বলে কি কোন কিছু নেই তোমার এই কলেজে?...' detected_lang=bn-IN
+2026-07-04 10:56:40,269 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:56:40,288 - livekit-agent - INFO - LLM Query: 'বলছি আর্টিফিশিয়াল ইন্টেলিজেন্স বলে কি কোন কিছু নেই তোমার এই কলেজে?...' History: 9 turns
+2026-07-04 10:56:40,296 - app.services.normalization.normalizer - INFO - Normalization: 'বলছি আর্টিফিশিয়াল ইন্টেলিজেন্স বলে কি কোন কিছু নেই তোমার এই' -> 'বলছি আর্টিfeeশিয়াল ইন্টেলিজেন্স বলে কি কোন কিছু নেই তোমার এ' (2 changes: ['cleanup', 'language_mapping'])
+2026-07-04 10:56:40,296 - app.services.llm.groq_service - INFO - [console-496d2f4e] Query normalized (stream): 'বলছি আর্টিফিশিয়াল ইন্টেলিজেন্স বলে কি কোন কিছু নেই তোমার এই' -> 'বলছি আর্টিfeeশিয়াল ইন্টেলিজেন্স বলে কি কোন কিছু নেই তোমার এ'
+2026-07-04 10:56:40,983 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:56:41,614 - app.services.llm.groq_service - INFO - STREAM TTFT=1325ms prep=680ms llm_setup=408ms lang=bn q='বলছি আর্টিfeeশিয়াল ইন্টেলিজেন্স বলে কি কোন কিছু নেই তোমার এ'
+2026-07-04 10:56:41,614 - livekit-agent - INFO - TURN TTFT=1326ms (user speech → LLM first token)
+2026-07-04 10:56:41,893 - livekit-agent - INFO - SarvamTTS.synthesize called for: আপনার প্রশ্নের উত্তর হলো, আমাদের কলেজে আর্টিফিশিয়...
+2026-07-04 10:56:41,894 - livekit-agent - INFO - Synthesizing: আপনার প্রশ্নের উত্তর হলো, আমাদের কলেজে আর্টিফিশিয়াল ইন্টেলি... (lang=bn-IN, speaker=ritu)
+2026-07-04 10:56:41,895 - app.services.sarvam_service - INFO - Normalized TTS text: 'আপনার প্রশ্নের উত্তর হলো, আমাদের কলেজে আর্টিফিশিয়াল ইন্টেলিজেন্স বিভাগের ফি ছয় লাখ চার হাজার সাতশো টাকা। এই ফি স্বচ্ছভাবে আমাদের অফিসিয়াল বি.'
+2026-07-04 10:56:44,880 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 10:56:47,699 - app.services.sarvam_service - INFO - TTS generated: 479276 bytes, lang=bn-IN, speaker=ritu
+2026-07-04 10:56:47,699 - livekit-agent - INFO - Finished pushing audio chunk
+2026-07-04 10:56:47,740 - app.services.llm.groq_service - INFO - STREAM COMPLETE total=7452ms chars=179 ~24.0cps lang=bn
+2026-07-04 10:56:47,743 - livekit-agent - INFO - TURN COMPLETE total=7455ms (user speech → LLM done)
+2026-07-04 10:56:48,147 - livekit-agent - INFO - SarvamTTS.synthesize called for: টেক ফি ব্রোশারে তালিকাভুক্ত রয়েছে।...
+2026-07-04 10:56:48,150 - livekit-agent - INFO - Synthesizing: টেক ফি ব্রোশারে তালিকাভুক্ত রয়েছে।... (lang=bn-IN, speaker=ritu)
+2026-07-04 10:56:48,150 - app.services.sarvam_service - INFO - Normalized TTS text: 'টেক ফি ব্রোশারে তালিকাভুক্ত রয়েছে।'
+2026-07-04 10:56:49,714 - app.services.sarvam_service - INFO - TTS generated: 110636 bytes, lang=bn-IN, speaker=ritu
+2026-07-04 10:56:49,714 - livekit-agent - INFO - Finished pushing audio chunk
+2026-07-04 10:56:49,720 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:56:49,723 - livekit.plugins.silero - WARNING - inference is slower than realtime
+2026-07-04 10:57:06,689 - livekit.agents - INFO - closing agent session due to participant disconnect (disable via `RoomInputOptions.close_on_disconnect=False`)
+2026-07-04 10:57:30,669 - livekit - WARNING - livekit_api::signal_client:530:livekit_api::signal_client - dropping pass-through signal — no stream available
+2026-07-04 10:57:30,826 - app.utils.conversation_logger - INFO - [TELEMETRY] SESSION_SUMMARY console-496d2f4e: {"type": "SESSION_SUMMARY", "session_id": "console-496d2f4e", "conversation_id": "c0bc92f087fb", "timestamp": "2026-07-04T05:27:30.825623+00:00", "timestamp_unix": 1783142850.8256414, "total_turns": 0, "duration_seconds": 457.3, "average_retrieval_score": 0.35, "average_retrieval_latency_ms": 1020.76, "average_llm_latency_ms": 4646.32, "average_ttft_ms": 2299.67, "average_tts_latency_ms": 0.0, "average_confidence": 0.35, "maximum_latency_ms": 0.0, "minimum_latency_ms": 0.0, "median_llm_latency_ms": 3953.0, "maximum_llm_latency_ms": 7454.1, "minimum_llm_latency_ms": 2533, "total_llm_tokens": 0, "average_tokens_per_second": 0.0, "interruptions": 0, "clarification_prompts": 0, "language_switches": 0, "follow_up_queries": 0, "repeat_requests": 0, "multi_topic_queries": 0, "confidence_rejections": 0, "empty_retrievals": 0, "low_confidence_retrievals": 0, "retrieval_failures": 0, "hallucination_guards_triggered": 0, "ambiguous_queries": 0, "out_of_kb": 0, "total_errors": 0}
+2026-07-04 10:57:30,826 - livekit-agent - INFO - Room disconnected, session cleared, exiting entrypoint
+2026-07-04 11:29:30,865 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 11:29:33,361 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 14:52:56,152 - livekit.agents - WARNING - failed to connect to livekit, retrying in 0s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1085, in _connection_task
+    await self._run_ws(ws)
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1167, in _run_ws
+    await asyncio.gather(*tasks)
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1139, in _recv_task
+    raise Exception("worker connection closed unexpectedly")
+Exception: worker connection closed unexpectedly
+2026-07-04 14:52:56,541 - livekit.agents - WARNING - failed to connect to livekit, retrying in 2s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11004] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 14:53:00,554 - livekit.agents - INFO - registered worker
+2026-07-04 14:53:00,561 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 14:53:03,063 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 14:54:27,122 - livekit.agents - WARNING - unexpected message type: 258
+2026-07-04 14:54:27,200 - livekit.agents - WARNING - failed to connect to livekit, retrying in 0s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1085, in _connection_task
+    await self._run_ws(ws)
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1167, in _run_ws
+    await asyncio.gather(*tasks)
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1139, in _recv_task
+    raise Exception("worker connection closed unexpectedly")
+Exception: worker connection closed unexpectedly
+2026-07-04 14:54:27,209 - livekit.agents - WARNING - failed to connect to livekit, retrying in 2s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11004] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 14:54:29,234 - livekit.agents - WARNING - failed to connect to livekit, retrying in 4s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11004] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 14:54:33,259 - livekit.agents - WARNING - failed to connect to livekit, retrying in 6s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11004] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 14:54:39,273 - livekit.agents - WARNING - failed to connect to livekit, retrying in 8s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11004] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 14:54:58,447 - livekit.agents - WARNING - failed to connect to livekit, retrying in 10s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 14:55:08,469 - livekit.agents - WARNING - failed to connect to livekit, retrying in 10s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11004] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 14:55:18,491 - livekit.agents - WARNING - failed to connect to livekit, retrying in 10s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11004] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 14:55:28,519 - livekit.agents - WARNING - failed to connect to livekit, retrying in 10s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11004] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 14:55:38,531 - livekit.agents - WARNING - failed to connect to livekit, retrying in 10s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11004] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 14:55:48,554 - livekit.agents - WARNING - failed to connect to livekit, retrying in 10s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11004] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 14:55:58,572 - livekit.agents - WARNING - failed to connect to livekit, retrying in 10s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11004] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 14:56:08,595 - livekit.agents - WARNING - failed to connect to livekit, retrying in 10s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11004] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 14:56:18,610 - livekit.agents - WARNING - failed to connect to livekit, retrying in 10s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11004] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 14:56:28,623 - livekit.agents - WARNING - failed to connect to livekit, retrying in 10s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11004] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 14:56:50,699 - livekit.agents - WARNING - failed to connect to livekit, retrying in 10s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 14:57:02,050 - livekit.agents - INFO - registered worker
+2026-07-04 14:57:12,062 - livekit.agents - WARNING - failed to connect to livekit, retrying in 0s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1085, in _connection_task
+    await self._run_ws(ws)
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1167, in _run_ws
+    await asyncio.gather(*tasks)
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1122, in _send_task
+    await ws.send_bytes(msg.SerializeToString())
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client_ws.py", line 252, in send_bytes
+    await self._writer.send_frame(data, WSMsgType.BINARY, compress=compress)
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\_websocket\writer.py", line 83, in send_frame
+    self._write_websocket_frame(message, opcode, 0)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\_websocket\writer.py", line 151, in _write_websocket_frame
+    raise ClientConnectionResetError("Cannot write to closing transport")
+aiohttp.client_exceptions.ClientConnectionResetError: Cannot write to closing transport
+2026-07-04 14:57:12,276 - livekit.agents - WARNING - failed to connect to livekit, retrying in 2s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11004] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 14:57:14,302 - livekit.agents - WARNING - failed to connect to livekit, retrying in 4s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11004] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 14:57:18,528 - livekit.agents - INFO - registered worker
+2026-07-04 14:57:43,570 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 14:57:46,083 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:00:59,298 - livekit.agents - WARNING - failed to connect to livekit, retrying in 0s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1085, in _connection_task
+    await self._run_ws(ws)
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1167, in _run_ws
+    await asyncio.gather(*tasks)
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1139, in _recv_task
+    raise Exception("worker connection closed unexpectedly")
+Exception: worker connection closed unexpectedly
+2026-07-04 15:01:01,038 - livekit.agents - INFO - registered worker
+2026-07-04 15:04:01,534 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:04:04,035 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:04:06,535 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:04:11,541 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:04:14,042 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:04:46,556 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:04:51,560 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:04:56,561 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:04:59,064 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:05:11,575 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:05:14,076 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:05:19,079 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:05:21,583 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:05:26,586 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:05:29,086 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:05:36,589 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:05:39,090 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:05:46,591 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:05:49,091 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:06:06,605 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:06:09,111 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:06:21,619 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:06:24,120 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:06:51,641 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:06:54,146 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:07:14,151 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:07:16,651 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:07:44,167 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:07:46,671 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:09:19,237 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:09:21,747 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:09:54,273 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:09:56,775 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:10:16,786 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:10:19,295 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:10:44,345 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:10:46,846 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:11:11,862 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:11:14,363 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:12:09,408 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:12:11,909 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:12:34,418 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:12:36,919 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:12:54,446 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:12:56,948 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:13:14,466 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:13:16,967 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:13:39,481 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:13:41,981 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:14:02,028 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:14:04,530 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:14:11,441 - livekit.agents - WARNING - failed to connect to livekit, retrying in 0s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1085, in _connection_task
+    await self._run_ws(ws)
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1167, in _run_ws
+    await asyncio.gather(*tasks)
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1139, in _recv_task
+    raise Exception("worker connection closed unexpectedly")
+Exception: worker connection closed unexpectedly
+2026-07-04 15:14:12,116 - livekit.agents - INFO - registered worker
+2026-07-04 15:16:04,728 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:34:05,150 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:34:07,651 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:34:15,154 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:34:25,157 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:34:27,658 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:34:32,660 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:34:35,162 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:34:45,171 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:34:47,672 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:34:52,682 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:34:55,183 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:36:00,227 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:36:02,727 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:36:12,742 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:36:17,745 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:36:27,747 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:36:42,759 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:36:45,260 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:36:47,762 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:36:52,766 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:36:55,266 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:37:07,773 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:37:10,274 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:37:47,792 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:37:52,803 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:38:10,317 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:38:12,813 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:38:20,315 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:38:22,816 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:39:10,335 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:39:50,353 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:39:52,854 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:39:55,355 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:40:02,868 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:40:05,368 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:41:10,449 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:41:12,949 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:41:45,481 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:41:47,982 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:41:55,484 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:41:57,986 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:42:05,488 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:42:07,993 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:42:20,504 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:42:23,006 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:42:30,516 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:42:33,018 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:42:45,529 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:42:48,032 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:44:48,286 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:45:13,292 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:45:18,300 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:45:20,800 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:45:50,810 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:45:53,312 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:46:13,329 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:46:15,830 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:46:33,350 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:46:35,852 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:46:53,362 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:46:55,864 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:47:55,931 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:47:58,433 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:48:08,440 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:48:13,444 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:48:28,460 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:48:30,960 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:48:38,463 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:48:48,466 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:49:30,995 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:49:33,495 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:50:03,516 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:50:06,018 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:50:11,021 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:50:13,526 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:50:21,029 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:50:23,529 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:51:16,150 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:51:18,652 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:51:33,661 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:51:36,169 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:51:53,692 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:51:56,192 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:52:08,707 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:52:11,208 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:52:31,232 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:52:33,735 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:53:31,316 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:53:36,318 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:54:53,973 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:56:34,228 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:56:41,731 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:56:46,733 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:56:49,234 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:57:01,768 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:57:09,271 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:57:11,772 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:57:19,274 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:57:21,776 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:57:59,324 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:58:06,827 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:58:09,328 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:58:11,829 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:58:16,830 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:58:19,332 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:58:24,335 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:58:26,836 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:58:56,848 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:58:59,348 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:59:09,353 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:59:11,855 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:59:21,936 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:59:24,439 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:59:29,440 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:59:31,944 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:59:41,949 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:59:44,449 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 15:59:49,450 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 15:59:51,952 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:00:04,474 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:00:06,980 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:00:11,983 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:00:14,484 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:00:21,992 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:00:24,525 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:00:29,530 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:00:32,031 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:00:57,049 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:00:59,550 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:01:12,054 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:01:14,556 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:01:29,566 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:01:32,066 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:02:19,641 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:02:22,142 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:02:54,725 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:02:57,226 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:03:32,248 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:03:34,749 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:03:47,265 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:04:04,773 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:04:09,776 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:04:12,278 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:04:17,280 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:04:19,781 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:04:24,783 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:04:27,284 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:04:34,789 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:04:37,291 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:04:44,793 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:04:47,295 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:05:02,300 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:05:07,302 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:06:29,885 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:07:52,536 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:07:55,038 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:07:57,539 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:08:10,044 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:08:12,545 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:08:17,547 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:08:20,049 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:08:40,062 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:08:42,565 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:09:10,084 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:10:12,609 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:10:17,612 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:10:20,116 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:10:37,622 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:10:40,123 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:10:47,639 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 16:10:50,137 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 16:10:57,641 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:14:08,134 - livekit.agents - WARNING - unexpected message type: 258
+2026-07-04 17:14:08,141 - livekit.agents - WARNING - failed to connect to livekit, retrying in 0s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1085, in _connection_task
+    await self._run_ws(ws)
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1167, in _run_ws
+    await asyncio.gather(*tasks)
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1139, in _recv_task
+    raise Exception("worker connection closed unexpectedly")
+Exception: worker connection closed unexpectedly
+2026-07-04 17:14:08,600 - livekit.agents - WARNING - failed to connect to livekit, retrying in 2s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 17:14:21,835 - livekit.agents - WARNING - failed to connect to livekit, retrying in 4s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 17:14:37,038 - livekit.agents - WARNING - failed to connect to livekit, retrying in 6s
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1574, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1190, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1221, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Python314\Lib\asyncio\base_events.py", line 936, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        None, getaddr_func, host, port, family, type, proto, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Python314\Lib\socket.py", line 983, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\livekit\agents\worker.py", line 1042, in _connection_task
+    ws = await self._http_session.ws_connect(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 1087, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 788, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\client.py", line 742, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 672, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1251, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ANAMIKA\AppData\Roaming\Python\Python314\site-packages\aiohttp\connector.py", line 1580, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host bcrec-wr7kn3yu.livekit.cloud:443 ssl:default [getaddrinfo failed]
+2026-07-04 17:14:49,276 - livekit.agents - INFO - registered worker
+2026-07-04 17:25:31,098 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:25:33,598 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:25:48,605 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:26:06,112 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:26:21,119 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:26:36,123 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:26:48,627 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:26:51,128 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:26:53,629 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:26:56,129 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:27:03,633 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:27:06,134 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:27:08,635 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:27:13,637 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:27:18,640 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:27:21,141 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:27:26,143 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:27:41,149 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:27:53,652 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:27:58,654 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:28:01,154 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:28:03,655 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:28:06,157 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:28:21,163 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:28:28,667 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:28:36,168 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:28:38,669 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:28:41,172 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:28:43,673 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:28:46,175 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:29:26,194 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:29:43,702 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:29:46,203 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:30:06,212 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:30:21,219 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:30:23,721 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:30:48,729 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:31:03,735 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:31:06,237 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:31:21,244 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:31:23,745 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:32:46,289 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:32:51,291 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:33:08,799 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:35:28,856 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:35:36,357 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:35:38,858 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:35:48,862 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:36:01,366 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:36:18,872 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:36:33,879 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:36:36,380 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:36:38,881 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:37:43,916 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:37:46,416 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:38:56,457 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:38:58,957 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:39:03,960 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:44:41,582 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:44:46,584 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:44:49,084 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:44:51,586 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:44:56,588 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:45:06,593 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:45:09,093 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:45:49,121 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:45:51,623 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:46:19,134 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:46:21,634 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:47:11,653 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:47:14,155 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:47:16,656 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:47:21,659 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:47:29,162 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:49:24,208 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:49:26,709 - livekit.agents - INFO - worker is below capacity, marking as available
+2026-07-04 17:53:44,322 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+2026-07-04 17:53:46,821 - livekit.agents - INFO - worker is below capacity, marking as available

@@ -125,16 +125,24 @@ class SarvamService:
         speaker: str = "shubh",
         pace: float = 1.0,
         model: str = "bulbul:v3",
+        normalize: bool = True,
     ) -> Dict[str, Any]:
         """
         Convert text to speech using Sarvam TTS API.
+
+        Args:
+            normalize: When True (default), runs clean_for_voice() to expand
+                acronyms and normalize numbers. Set to False when the caller
+                (e.g. the LiveKit voice pipeline) has already normalized.
         """
         if not self.client:
             return {"success": False, "error": "Sarvam client not initialized"}
 
         try:
-            # Normalize text for perfect pronunciation
-            normalized_text = self._normalize_text_for_tts(text)
+            if normalize:
+                normalized_text = self._normalize_text_for_tts(text)
+            else:
+                normalized_text = text
             logger.info(f"Normalized TTS text: '{normalized_text}'")
 
             response = self.client.text_to_speech.convert(
@@ -173,6 +181,7 @@ class SarvamService:
         speaker: str = "shubh",
         pace: float = 1.0,
         model: str = "bulbul:v3",
+        normalize: bool = True,
     ):
         """Like text_to_speech, but yields individual audio chunks as they arrive.
 
@@ -187,7 +196,10 @@ class SarvamService:
             return
 
         try:
-            normalized_text = self._normalize_text_for_tts(text)
+            if normalize:
+                normalized_text = self._normalize_text_for_tts(text)
+            else:
+                normalized_text = text
             response = self.client.text_to_speech.convert(
                 text=normalized_text,
                 target_language_code=language,

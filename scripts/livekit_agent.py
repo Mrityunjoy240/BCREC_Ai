@@ -286,15 +286,20 @@ class SarvamSTT(stt.STT):
         language: str | None = None,
         conn_options: llm.APIConnectOptions,
     ) -> stt.SpeechEvent:
+        _stt_t0 = time.perf_counter()
         try:
             frame = buffer if isinstance(buffer, rtc.AudioFrame) else utils.merge_frames(buffer)
             audio_data = frame.to_wav_bytes()
             result = await self.service.speech_to_text(
                 audio_data, language="auto", model="saaras:v3"
             )
+            _stt_ms = (time.perf_counter() - _stt_t0) * 1000
             if result.get("success"):
                 text = result.get("text", "")
                 text = _fix_stt_acronyms(text)
+                logger.info(
+                    f"[PERF] STT ............. {_stt_ms:>7.1f} ms  transcript='{text[:60]}'"
+                )
                 return stt.SpeechEvent(
                     type=stt.SpeechEventType.FINAL_TRANSCRIPT,
                     alternatives=[
@@ -303,9 +308,11 @@ class SarvamSTT(stt.STT):
                         )
                     ],
                 )
+            logger.info(f"[PERF] STT ............. {_stt_ms:>7.1f} ms  (no result)")
             return stt.SpeechEvent(type=stt.SpeechEventType.FINAL_TRANSCRIPT, alternatives=[])
         except Exception as e:
-            logger.error(f"Sarvam STT Error: {e}")
+            _stt_ms = (time.perf_counter() - _stt_t0) * 1000
+            logger.error(f"[PERF] STT ............. {_stt_ms:>7.1f} ms  ERROR: {e}")
             return stt.SpeechEvent(type=stt.SpeechEventType.FINAL_TRANSCRIPT, alternatives=[])
 
 
@@ -331,6 +338,7 @@ class SarvamChunkedStream(tts.ChunkedStream):
         self.service = service
 
     async def _run(self, emitter: tts.AudioEmitter):
+        _tts_t0 = time.perf_counter()
         text = self._input_text
         if not text or not text.strip():
             emitter.end_input()
@@ -355,7 +363,19 @@ class SarvamChunkedStream(tts.ChunkedStream):
         speaker = LANG_SPEAKER_MAP.get(lang, "shubh")
 
         logger.info(f"Synthesizing: {text[:60]}... (lang={lang}, speaker={speaker})")
-        res = await self.service.text_to_speech(text, speaker=speaker, language=lang)
+
+        # Initialize emitter BEFORE the API call so the audio pipeline is
+        # ready as soon as the response arrives — reduces perceived stall.
+        emitter.initialize(
+            request_id=utils.shortuuid(),
+            sample_rate=24000,
+            num_channels=1,
+            mime_type="audio/pcm",
+        )
+
+        res = await self.service.text_to_speech(
+            text, speaker=speaker, language=lang, normalize=False
+        )
 
         if res.get("success"):
             data = res["audio_bytes"]
@@ -375,24 +395,25 @@ class SarvamChunkedStream(tts.ChunkedStream):
                     # Fallback: strip first 44 bytes (standard PCM header)
                     data = data[44:]
 
-            emitter.initialize(
-                request_id=utils.shortuuid(),
-                sample_rate=24000,
-                num_channels=1,
-                mime_type="audio/pcm",
-            )
+            _tts_ms = (time.perf_counter() - _tts_t0) * 1000
+            logger.info(f"[PERF] TTS ............. {_tts_ms:>7.1f} ms  text={text[:40]}")
 
             # Push in 100ms chunks (4800 bytes @ 24000Hz 16-bit mono)
             chunk_size = 4800
+            _play_t0 = time.perf_counter()
             for j in range(0, len(data), chunk_size):
                 chunk = data[j : j + chunk_size]
                 if len(chunk) < chunk_size:
                     chunk = chunk.ljust(chunk_size, b"\x00")
                 emitter.push(chunk)
 
-            logger.info("Finished pushing audio chunk")
+            _play_ms = (time.perf_counter() - _play_t0) * 1000
+            logger.info(
+                f"[PERF] Playback ........ {_play_ms:>7.1f} ms  ({len(data) // 24000 // 2}s audio)"
+            )
         else:
-            logger.error(f"Sarvam TTS failed: {res.get('error')}")
+            _tts_ms = (time.perf_counter() - _tts_t0) * 1000
+            logger.error(f"[PERF] TTS ............. {_tts_ms:>7.1f} ms  FAILED: {res.get('error')}")
 
         emitter.end_input()
 
@@ -407,7 +428,7 @@ from livekit.agents.tokenize.basic import SentenceTokenizer
 # ---------------------------------------------------------------------------
 def prewarm(proc: agents.JobProcess):
     logger.info("Prewarming agent components (VAD, STT, LLM, TTS)...")
-    proc.userdata["vad"] = silero.VAD.load(min_speech_duration=0.3, min_silence_duration=1.0)
+    proc.userdata["vad"] = silero.VAD.load(min_speech_duration=0.3, min_silence_duration=1.5)
     proc.userdata["stt"] = SarvamSTT()
     proc.userdata["llm"] = BCRECGroqLLM()
     proc.userdata["tts"] = StreamAdapter(tts=SarvamTTS(), sentence_tokenizer=SentenceTokenizer())
@@ -476,9 +497,15 @@ VOICE TELEPHONY RULES (ADDITIONAL):
     await asyncio.sleep(0.5)
     logger.info("Sending greeting...")
     # Greeting: interruptible, concise, language-preserving (defaults to English on first visit)
-    session.say(
-        "Hello! BCREC AI assistant here. How can I help you today?", allow_interruptions=True
-    )
+    greeting = "Hello! BCREC AI assistant here. How can I help you today?"
+    try:
+        from app.services.llm.safe_point import DEMO_SAFEPOINT, get_greeting
+
+        if DEMO_SAFEPOINT:
+            greeting = get_greeting()
+    except ImportError:
+        pass
+    session.say(greeting, allow_interruptions=True)
 
     while ctx.room.isconnected():
         await asyncio.sleep(1)

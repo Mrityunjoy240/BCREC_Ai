@@ -1,0 +1,353 @@
+2026-07-04 17:31:46,537 - root - INFO - Logging configured successfully
+2026-07-04 17:31:47,668 - app.config - INFO - Loaded environment from C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\backend\.env
+2026-07-04 17:31:49,757 - app.config - INFO - Groq client initialized successfully
+2026-07-04 17:31:50,608 - app.config - INFO - Sarvam Voice Client: INITIALIZED
+2026-07-04 17:32:26,340 - app.services.backup - INFO - Backup directory initialized at C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\backend\backups
+2026-07-04 17:32:27,308 - app.database - INFO - Database initialized at ./chroma_db\conversations.db
+2026-07-04 17:32:27,309 - app.main - INFO - Pre-warming vector store...
+2026-07-04 17:32:27,311 - app.services.vector_store - INFO - ChromaDB path: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\chroma_db\chroma_db_v2
+2026-07-04 17:32:27,311 - app.services.vector_store - INFO - Initializing VectorStoreService with model: BAAI/bge-m3
+2026-07-04 17:32:41,101 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 17:32:41,144 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/modules.json "HTTP/1.1 200 OK"
+2026-07-04 17:32:41,431 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-07-04 17:32:41,432 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-07-04 17:32:41,474 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-07-04 17:32:41,626 - sentence_transformers.base.model - INFO - Loading SentenceTransformer model from BAAI/bge-m3.
+2026-07-04 17:32:41,904 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 17:32:41,944 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-07-04 17:32:42,230 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 17:32:42,278 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/README.md "HTTP/1.1 200 OK"
+2026-07-04 17:32:42,567 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 17:32:42,620 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/modules.json "HTTP/1.1 200 OK"
+2026-07-04 17:32:42,914 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 17:32:42,953 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/sentence_bert_config.json "HTTP/1.1 200 OK"
+2026-07-04 17:32:43,243 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-07-04 17:32:43,920 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 17:32:43,962 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config.json "HTTP/1.1 200 OK"
+2026-07-04 17:32:48,162 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/model.safetensors "HTTP/1.1 404 Not Found"
+2026-07-04 17:32:49,123 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3 "HTTP/1.1 200 OK"
+2026-07-04 17:32:49,777 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/commits/main "HTTP/1.1 200 OK"
+2026-07-04 17:32:50,112 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/discussions?p=0 "HTTP/1.1 200 OK"
+2026-07-04 17:32:50,435 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/commits/refs%2Fpr%2F130 "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights: 100%|██████████| 391/391 [00:00<00:00, 10742.30it/s]
+2026-07-04 17:32:50,750 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/refs%2Fpr%2F130/model.safetensors.index.json "HTTP/1.1 404 Not Found"
+2026-07-04 17:32:50,991 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-07-04 17:32:51,037 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/refs%2Fpr%2F130/model.safetensors "HTTP/1.1 302 Found"
+2026-07-04 17:32:51,283 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+2026-07-04 17:32:51,577 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+2026-07-04 17:32:51,891 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+2026-07-04 17:32:52,191 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 17:32:52,247 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-07-04 17:32:52,559 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 17:32:52,603 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config.json "HTTP/1.1 200 OK"
+2026-07-04 17:32:52,908 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 17:32:52,955 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config.json "HTTP/1.1 200 OK"
+2026-07-04 17:32:53,344 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 17:32:53,395 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-07-04 17:32:53,713 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-07-04 17:32:54,009 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-07-04 17:33:00,642 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3 "HTTP/1.1 200 OK"
+2026-07-04 17:33:01,062 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 17:33:01,112 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+2026-07-04 17:33:01,414 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3 "HTTP/1.1 200 OK"
+2026-07-04 17:33:01,785 - app.services.vector_store - INFO - VectorStoreService initialized successfully
+2026-07-04 17:33:01,785 - app.main - INFO - Vector store pre-warmed successfully
+2026-07-04 17:33:02,068 - app.main - INFO - System Check - Current Working Directory: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\backend
+2026-07-04 17:33:02,068 - app.main - INFO - System Check - File Path: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\backend\app\main.py
+2026-07-04 17:33:02,069 - app.main - INFO - Checking frontend path: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\frontend\dist -> FOUND
+2026-07-04 17:33:02,069 - app.main - INFO - CRITICAL: Frontend directory found at: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\frontend\dist. Mounting static files.
+INFO:     Started server process [16336]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:54338 - "GET /qa/health HTTP/1.1" 200 OK
+2026-07-04 17:33:41,815 - app.services.llm.groq_service - INFO - Query cache ENABLED (ttl=600s, max=256)
+2026-07-04 17:33:41,816 - app.services.llm.groq_service - INFO - GroqService ready.
+INFO:     127.0.0.1:54343 - "POST /qa/session/clear HTTP/1.1" 200 OK
+2026-07-04 17:33:43,871 - app.utils.conversation_logger - INFO - Conversation telemetry dir: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\data\logs\conversations
+2026-07-04 17:33:43,874 - app.services.normalization.normalizer - INFO - Loaded entity dictionary (8 sections)
+2026-07-04 17:33:43,885 - app.services.normalization.normalizer - INFO - Normalization: 'What is the CSE fee?' -> 'what is the CSE fee' (2 changes: ['cleanup', 'stt_correction'])
+2026-07-04 17:33:43,885 - app.services.llm.groq_service - INFO - [perf-v2] Query normalized: 'What is the CSE fee?' -> 'what is the CSE fee'
+2026-07-04 17:33:43,890 - app.utils.language_detect - INFO - fasttext not installed — using keyword-only detection
+2026-07-04 17:33:43,890 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+2026-07-04 17:33:43,896 - app.services.llm.groq_service - DEBUG - [perf-v2] PIPELINE query='what is the CSE fee' retrieval_query='what is the CSE fee' history_turns=0
+2026-07-04 17:33:43,901 - app.services.llm.groq_service - INFO - [perf-v2] STRUCTURED LOOKUP HIT: 'what is the CSE fee' -> 'The total fee for Computer Science and Engineering is six la'
+2026-07-04 17:33:43,901 - app.services.llm.groq_service - INFO - [PERF perf-v2]   normalization                   0.0 ms
+2026-07-04 17:33:43,901 - app.services.llm.groq_service - INFO - [PERF perf-v2]   lang_detect                    18.3 ms
+2026-07-04 17:33:43,902 - app.services.llm.groq_service - INFO - [PERF perf-v2]   followup_expand                 5.5 ms
+2026-07-04 17:33:43,902 - app.services.llm.groq_service - INFO - [PERF perf-v2]   pipeline_end                    4.8 ms
+2026-07-04 17:33:43,902 - app.services.llm.groq_service - INFO - [PERF perf-v2]   TOTAL                            29 ms
+2026-07-04 17:33:43,902 - app.api.qa - INFO - [PERF perf-v2] API endpoint: 32ms  source=structured_lookup  answer_len=117
+INFO:     127.0.0.1:54345 - "POST /qa/query HTTP/1.1" 200 OK
+2026-07-04 17:33:46,151 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'Admission process' <- from history: 'what is the CSE fee'
+2026-07-04 17:33:46,151 - app.services.llm.groq_service - DEBUG - [perf-v2] PIPELINE query='Admission process' retrieval_query='Admission process what is the CSE fee' history_turns=2
+2026-07-04 17:33:46,152 - app.services.llm.groq_service - INFO - [perf-v2] STRUCTURED LOOKUP HIT: 'Admission process what is the CSE fee' -> 'The total fee for Computer Science and Engineering is six la'
+2026-07-04 17:33:46,152 - app.services.llm.groq_service - INFO - [PERF perf-v2]   normalization                   0.0 ms
+2026-07-04 17:33:46,152 - app.services.llm.groq_service - INFO - [PERF perf-v2]   lang_detect                     3.5 ms
+2026-07-04 17:33:46,152 - app.services.llm.groq_service - INFO - [PERF perf-v2]   followup_expand                 0.6 ms
+2026-07-04 17:33:46,152 - app.services.llm.groq_service - INFO - [PERF perf-v2]   pipeline_end                    0.7 ms
+2026-07-04 17:33:46,152 - app.services.llm.groq_service - INFO - [PERF perf-v2]   TOTAL                             5 ms
+2026-07-04 17:33:46,152 - app.api.qa - INFO - [PERF perf-v2] API endpoint: 5ms  source=structured_lookup  answer_len=112
+INFO:     127.0.0.1:54348 - "POST /qa/query HTTP/1.1" 200 OK
+2026-07-04 17:33:48,397 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'Hostel fee' <- from history: 'Admission process'
+2026-07-04 17:33:48,398 - app.services.llm.groq_service - DEBUG - [perf-v2] PIPELINE query='Hostel fee' retrieval_query='Hostel fee Admission process' history_turns=4
+2026-07-04 17:33:48,400 - app.services.llm.groq_service - INFO - [perf-v2] STRUCTURED LOOKUP HIT: 'Hostel fee Admission process' -> 'BCREC B.Tech fees: CSE, IT, ECE: six lakh four thousand seve'
+2026-07-04 17:33:48,400 - app.services.llm.groq_service - INFO - [PERF perf-v2]   normalization                   0.0 ms
+2026-07-04 17:33:48,400 - app.services.llm.groq_service - INFO - [PERF perf-v2]   lang_detect                     2.2 ms
+2026-07-04 17:33:48,400 - app.services.llm.groq_service - INFO - [PERF perf-v2]   followup_expand                 1.0 ms
+2026-07-04 17:33:48,400 - app.services.llm.groq_service - INFO - [PERF perf-v2]   pipeline_end                    1.9 ms
+2026-07-04 17:33:48,400 - app.services.llm.groq_service - INFO - [PERF perf-v2]   TOTAL                             5 ms
+2026-07-04 17:33:48,400 - app.api.qa - INFO - [PERF perf-v2] API endpoint: 6ms  source=structured_lookup  answer_len=331
+INFO:     127.0.0.1:54350 - "POST /qa/query HTTP/1.1" 200 OK
+2026-07-04 17:33:50,630 - app.services.llm.groq_service - INFO - [perf-v2] Language: detected=hi, keeping en (reason: weak evidence, kw markers bn=0 hi=1)
+2026-07-04 17:33:50,631 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'Tell me about placements' <- from history: 'Hostel fee'
+2026-07-04 17:33:50,631 - app.services.llm.groq_service - DEBUG - [perf-v2] PIPELINE query='Tell me about placements' retrieval_query='Tell me about placements Hostel fee' history_turns=6
+2026-07-04 17:33:50,631 - app.services.llm.groq_service - INFO - [perf-v2] STRUCTURED LOOKUP HIT: 'Tell me about placements Hostel fee' -> 'The total fee for Mechanical Engineering is four lakh forty-'
+2026-07-04 17:33:50,632 - app.services.llm.groq_service - INFO - [PERF perf-v2]   normalization                   0.0 ms
+2026-07-04 17:33:50,632 - app.services.llm.groq_service - INFO - [PERF perf-v2]   lang_detect                     3.8 ms
+2026-07-04 17:33:50,632 - app.services.llm.groq_service - INFO - [PERF perf-v2]   followup_expand                 0.5 ms
+2026-07-04 17:33:50,632 - app.services.llm.groq_service - INFO - [PERF perf-v2]   pipeline_end                    0.5 ms
+2026-07-04 17:33:50,632 - app.services.llm.groq_service - INFO - [PERF perf-v2]   TOTAL                             5 ms
+2026-07-04 17:33:50,632 - app.api.qa - INFO - [PERF perf-v2] API endpoint: 5ms  source=structured_lookup  answer_len=148
+INFO:     127.0.0.1:54353 - "POST /qa/query HTTP/1.1" 200 OK
+2026-07-04 17:33:52,873 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'College timings' <- from history: 'Tell me about placements'
+2026-07-04 17:33:52,873 - app.services.llm.groq_service - DEBUG - [perf-v2] PIPELINE query='College timings' retrieval_query='College timings Tell me about placements' history_turns=8
+2026-07-04 17:33:52,875 - app.services.llm.groq_service - INFO - [perf-v2] STRUCTURED LOOKUP HIT: 'College timings Tell me about placements' -> 'College timings: Monday to Friday, 10:00 AM to 5:30 PM. The '
+2026-07-04 17:33:52,875 - app.services.llm.groq_service - INFO - [PERF perf-v2]   normalization                   0.0 ms
+2026-07-04 17:33:52,875 - app.services.llm.groq_service - INFO - [PERF perf-v2]   lang_detect                     2.5 ms
+2026-07-04 17:33:52,875 - app.services.llm.groq_service - INFO - [PERF perf-v2]   followup_expand                 0.5 ms
+2026-07-04 17:33:52,875 - app.services.llm.groq_service - INFO - [PERF perf-v2]   pipeline_end                    1.7 ms
+2026-07-04 17:33:52,875 - app.services.llm.groq_service - INFO - [PERF perf-v2]   TOTAL                             5 ms
+2026-07-04 17:33:52,876 - app.api.qa - INFO - [PERF perf-v2] API endpoint: 5ms  source=structured_lookup  answer_len=151
+INFO:     127.0.0.1:63968 - "POST /qa/query HTTP/1.1" 200 OK
+2026-07-04 17:33:55,107 - app.services.llm.safe_point - INFO - [DEMO_SAFEPOINT] [perf-v2] {'event': 'handoff', 'query': 'Principal name', 'latency_ms': 0, 'ts': 1783166635.1077287}
+2026-07-04 17:33:55,108 - app.services.llm.groq_service - INFO - [perf-v2] SAFEPOINT pre-processing intercepted: safe_point_handoff
+2026-07-04 17:33:55,108 - app.services.llm.groq_service - INFO - [PERF perf-v2]   normalization                   0.0 ms
+2026-07-04 17:33:55,108 - app.services.llm.groq_service - INFO - [PERF perf-v2]   lang_detect                     2.5 ms
+2026-07-04 17:33:55,108 - app.services.llm.groq_service - INFO - [PERF perf-v2]   pipeline_end                    0.5 ms
+2026-07-04 17:33:55,108 - app.services.llm.groq_service - INFO - [PERF perf-v2]   TOTAL                             3 ms
+2026-07-04 17:33:55,108 - app.api.qa - INFO - [PERF perf-v2] API endpoint: 3ms  source=safe_point_handoff  answer_len=131
+INFO:     127.0.0.1:63970 - "POST /qa/query HTTP/1.1" 200 OK
+2026-07-04 17:33:57,355 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'Computer lab timings' <- from history: 'College timings'
+2026-07-04 17:33:57,356 - app.services.llm.groq_service - DEBUG - [perf-v2] PIPELINE query='Computer lab timings' retrieval_query='Computer lab timings College timings' history_turns=10
+2026-07-04 17:33:57,357 - app.services.llm.groq_service - INFO - [perf-v2] STRUCTURED LOOKUP HIT: 'Computer lab timings College timings' -> 'College timings: Monday to Friday, 10:00 AM to 5:30 PM. The '
+2026-07-04 17:33:57,357 - app.services.llm.groq_service - INFO - [PERF perf-v2]   normalization                   0.0 ms
+2026-07-04 17:33:57,357 - app.services.llm.groq_service - INFO - [PERF perf-v2]   lang_detect                     3.3 ms
+2026-07-04 17:33:57,357 - app.services.llm.groq_service - INFO - [PERF perf-v2]   followup_expand                 0.7 ms
+2026-07-04 17:33:57,357 - app.services.llm.groq_service - INFO - [PERF perf-v2]   pipeline_end                    0.9 ms
+2026-07-04 17:33:57,357 - app.services.llm.groq_service - INFO - [PERF perf-v2]   TOTAL                             5 ms
+2026-07-04 17:33:57,357 - app.api.qa - INFO - [PERF perf-v2] API endpoint: 5ms  source=structured_lookup  answer_len=144
+INFO:     127.0.0.1:63973 - "POST /qa/query HTTP/1.1" 200 OK
+2026-07-04 17:33:59,607 - app.services.normalization.normalizer - INFO - Normalization: 'CSE cutoff' -> 'CSE cutoff' (1 changes: ['stt_correction'])
+2026-07-04 17:33:59,608 - app.services.llm.groq_service - INFO - [perf-v2] Query normalized: 'CSE cutoff' -> 'CSE cutoff'
+2026-07-04 17:33:59,608 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'CSE cutoff' <- from history: 'Computer lab timings'
+2026-07-04 17:33:59,608 - app.services.llm.groq_service - DEBUG - [perf-v2] PIPELINE query='CSE cutoff' retrieval_query='CSE cutoff Computer lab timings' history_turns=12
+2026-07-04 17:33:59,609 - app.services.llm.groq_service - INFO - [perf-v2] STRUCTURED LOOKUP HIT: 'CSE cutoff Computer lab timings' -> 'The WBJEE cutoff rank for CSE is: 2024: 16059, 2025: 67761, '
+2026-07-04 17:33:59,609 - app.services.llm.groq_service - INFO - [PERF perf-v2]   normalization                   0.0 ms
+2026-07-04 17:33:59,609 - app.services.llm.groq_service - INFO - [PERF perf-v2]   lang_detect                     3.1 ms
+2026-07-04 17:33:59,609 - app.services.llm.groq_service - INFO - [PERF perf-v2]   followup_expand                 0.4 ms
+2026-07-04 17:33:59,609 - app.services.llm.groq_service - INFO - [PERF perf-v2]   pipeline_end                    0.6 ms
+2026-07-04 17:33:59,609 - app.services.llm.groq_service - INFO - [PERF perf-v2]   TOTAL                             4 ms
+2026-07-04 17:33:59,609 - app.api.qa - INFO - [PERF perf-v2] API endpoint: 5ms  source=structured_lookup  answer_len=177
+INFO:     127.0.0.1:63975 - "POST /qa/query HTTP/1.1" 200 OK
+2026-07-04 17:34:01,842 - app.services.normalization.normalizer - INFO - Normalization: 'I want admission in CSE' -> 'i want admission in CSE' (1 changes: ['stt_correction'])
+2026-07-04 17:34:01,843 - app.services.llm.groq_service - INFO - [perf-v2] Query normalized: 'I want admission in CSE' -> 'i want admission in CSE'
+2026-07-04 17:34:01,843 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+2026-07-04 17:34:01,843 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'i want admission in CSE' <- from history: 'CSE cutoff'
+2026-07-04 17:34:01,843 - app.services.llm.groq_service - DEBUG - [perf-v2] PIPELINE query='i want admission in CSE' retrieval_query='i want admission in CSE CSE cutoff' history_turns=12
+2026-07-04 17:34:01,844 - app.services.llm.groq_service - INFO - [perf-v2] STRUCTURED LOOKUP HIT: 'i want admission in CSE CSE cutoff' -> 'The WBJEE cutoff rank for CSE is: 2024: 16059, 2025: 67761, '
+2026-07-04 17:34:01,844 - app.services.llm.groq_service - INFO - [PERF perf-v2]   normalization                   0.0 ms
+2026-07-04 17:34:01,844 - app.services.llm.groq_service - INFO - [PERF perf-v2]   lang_detect                     4.0 ms
+2026-07-04 17:34:01,844 - app.services.llm.groq_service - INFO - [PERF perf-v2]   followup_expand                 0.3 ms
+2026-07-04 17:34:01,844 - app.services.llm.groq_service - INFO - [PERF perf-v2]   pipeline_end                    0.5 ms
+2026-07-04 17:34:01,844 - app.services.llm.groq_service - INFO - [PERF perf-v2]   TOTAL                             5 ms
+2026-07-04 17:34:01,844 - app.api.qa - INFO - [PERF perf-v2] API endpoint: 5ms  source=structured_lookup  answer_len=187
+INFO:     127.0.0.1:63978 - "POST /qa/query HTTP/1.1" 200 OK
+2026-07-04 17:34:04,076 - app.services.normalization.normalizer - INFO - Normalization: 'What courses do you offer?' -> 'what courses do you offer' (1 changes: ['cleanup'])
+2026-07-04 17:34:04,076 - app.services.llm.groq_service - INFO - [perf-v2] Query normalized: 'What courses do you offer?' -> 'what courses do you offer'
+2026-07-04 17:34:04,077 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+2026-07-04 17:34:04,077 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'what courses do you offer' <- from history: 'i want admission in CSE'
+2026-07-04 17:34:04,077 - app.services.llm.groq_service - DEBUG - [perf-v2] PIPELINE query='what courses do you offer' retrieval_query='what courses do you offer i want admission in CSE' history_turns=12
+2026-07-04 17:34:04,078 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+2026-07-04 17:34:07,199 - app.services.llm.groq_service - DEBUG - [perf-v2] RETRIEVED confidence=0.4904 context_len=1359 threshold=0.15
+2026-07-04 17:34:07,987 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-04 17:34:11,301 - app.services.llm.groq_service - INFO - Groq response (en, 3931ms, validated=True, tokens=in:2257/out:75): We offer various B.Tech programs, including CSE, CSE with AI ML, CSE with Data S...
+2026-07-04 17:34:11,303 - app.services.llm.groq_service - INFO - [PERF perf-v2]   normalization                   0.0 ms
+2026-07-04 17:34:11,303 - app.services.llm.groq_service - INFO - [PERF perf-v2]   lang_detect                     4.1 ms
+2026-07-04 17:34:11,303 - app.services.llm.groq_service - INFO - [PERF perf-v2]   followup_expand                 0.3 ms
+2026-07-04 17:34:11,303 - app.services.llm.groq_service - INFO - [PERF perf-v2]   structured_done                 0.6 ms
+2026-07-04 17:34:11,303 - app.services.llm.groq_service - INFO - [PERF perf-v2]   retrieval_done                  3.1 s
+2026-07-04 17:34:11,303 - app.services.llm.groq_service - INFO - [PERF perf-v2]   llm_response                  804.8 ms
+2026-07-04 17:34:11,303 - app.services.llm.groq_service - INFO - [PERF perf-v2]   post_process                    3.3 s
+2026-07-04 17:34:11,303 - app.services.llm.groq_service - INFO - [PERF perf-v2]   pipeline_end                    0.0 ms
+2026-07-04 17:34:11,304 - app.services.llm.groq_service - INFO - [PERF perf-v2]   TOTAL                          7.23 s
+2026-07-04 17:34:11,304 - app.api.qa - INFO - [PERF perf-v2] API endpoint: 7231ms  source=groq_rag  answer_len=319
+INFO:     127.0.0.1:63980 - "POST /qa/query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62627 - "GET /qa/health HTTP/1.1" 200 OK
+2026-07-04 17:35:11,139 - app.services.llm.groq_service - DEBUG - [perf-measure] PIPELINE query='College timings' retrieval_query='College timings' history_turns=0
+2026-07-04 17:35:11,144 - app.services.llm.groq_service - INFO - [perf-measure] STRUCTURED LOOKUP HIT: 'College timings' -> 'College timings: Monday to Friday, 10:00 AM to 5:30 PM. The '
+2026-07-04 17:35:11,144 - app.services.llm.groq_service - INFO - [PERF perf-measure]   normalization                   0.0 ms
+2026-07-04 17:35:11,144 - app.services.llm.groq_service - INFO - [PERF perf-measure]   lang_detect                    17.9 ms
+2026-07-04 17:35:11,144 - app.services.llm.groq_service - INFO - [PERF perf-measure]   followup_expand                 2.9 ms
+2026-07-04 17:35:11,144 - app.services.llm.groq_service - INFO - [PERF perf-measure]   pipeline_end                    4.7 ms
+2026-07-04 17:35:11,144 - app.services.llm.groq_service - INFO - [PERF perf-measure]   TOTAL                            26 ms
+2026-07-04 17:35:11,144 - app.api.qa - INFO - [PERF perf-measure] API endpoint: 26ms  source=structured_lookup  answer_len=130
+INFO:     127.0.0.1:62627 - "POST /qa/query HTTP/1.1" 200 OK
+2026-07-04 17:35:11,654 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'College timings' <- from history: 'College timings'
+2026-07-04 17:35:11,654 - app.services.llm.groq_service - DEBUG - [perf-measure] PIPELINE query='College timings' retrieval_query='College timings College timings' history_turns=2
+2026-07-04 17:35:11,654 - app.services.llm.groq_service - INFO - [perf-measure] STRUCTURED LOOKUP HIT: 'College timings College timings' -> 'College timings: Monday to Friday, 10:00 AM to 5:30 PM. The '
+2026-07-04 17:35:11,655 - app.services.llm.groq_service - INFO - [PERF perf-measure]   normalization                   0.0 ms
+2026-07-04 17:35:11,655 - app.services.llm.groq_service - INFO - [PERF perf-measure]   lang_detect                     3.3 ms
+2026-07-04 17:35:11,655 - app.services.llm.groq_service - INFO - [PERF perf-measure]   followup_expand                 0.5 ms
+2026-07-04 17:35:11,655 - app.services.llm.groq_service - INFO - [PERF perf-measure]   pipeline_end                    0.7 ms
+2026-07-04 17:35:11,655 - app.services.llm.groq_service - INFO - [PERF perf-measure]   TOTAL                             5 ms
+2026-07-04 17:35:11,655 - app.api.qa - INFO - [PERF perf-measure] API endpoint: 5ms  source=structured_lookup  answer_len=131
+INFO:     127.0.0.1:62627 - "POST /qa/query HTTP/1.1" 200 OK
+2026-07-04 17:35:12,162 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'College timings' <- from history: 'College timings'
+2026-07-04 17:35:12,162 - app.services.llm.groq_service - DEBUG - [perf-measure] PIPELINE query='College timings' retrieval_query='College timings College timings' history_turns=4
+2026-07-04 17:35:12,163 - app.services.llm.groq_service - INFO - [perf-measure] STRUCTURED LOOKUP HIT: 'College timings College timings' -> 'College timings: Monday to Friday, 10:00 AM to 5:30 PM. The '
+2026-07-04 17:35:12,163 - app.services.llm.groq_service - INFO - [PERF perf-measure]   normalization                   0.0 ms
+2026-07-04 17:35:12,163 - app.services.llm.groq_service - INFO - [PERF perf-measure]   lang_detect                     2.1 ms
+2026-07-04 17:35:12,163 - app.services.llm.groq_service - INFO - [PERF perf-measure]   followup_expand                 0.4 ms
+2026-07-04 17:35:12,163 - app.services.llm.groq_service - INFO - [PERF perf-measure]   pipeline_end                    0.7 ms
+2026-07-04 17:35:12,163 - app.services.llm.groq_service - INFO - [PERF perf-measure]   TOTAL                             3 ms
+2026-07-04 17:35:12,163 - app.api.qa - INFO - [PERF perf-measure] API endpoint: 4ms  source=structured_lookup  answer_len=114
+INFO:     127.0.0.1:62627 - "POST /qa/query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62636 - "POST /qa/session/clear HTTP/1.1" 200 OK
+2026-07-04 17:35:23,004 - app.services.llm.groq_service - DEBUG - [perf-final] PIPELINE query='College timings' retrieval_query='College timings' history_turns=0
+2026-07-04 17:35:23,005 - app.services.llm.groq_service - INFO - [perf-final] STRUCTURED LOOKUP HIT: 'College timings' -> 'College timings: Monday to Friday, 10:00 AM to 5:30 PM. The '
+2026-07-04 17:35:23,005 - app.services.llm.groq_service - INFO - [PERF perf-final]   normalization                   0.0 ms
+2026-07-04 17:35:23,005 - app.services.llm.groq_service - INFO - [PERF perf-final]   lang_detect                     3.2 ms
+2026-07-04 17:35:23,005 - app.services.llm.groq_service - INFO - [PERF perf-final]   followup_expand                 0.4 ms
+2026-07-04 17:35:23,005 - app.services.llm.groq_service - INFO - [PERF perf-final]   pipeline_end                    0.7 ms
+2026-07-04 17:35:23,005 - app.services.llm.groq_service - INFO - [PERF perf-final]   TOTAL                             4 ms
+2026-07-04 17:35:23,006 - app.api.qa - INFO - [PERF perf-final] API endpoint: 5ms  source=structured_lookup  answer_len=124
+INFO:     127.0.0.1:62636 - "POST /qa/query HTTP/1.1" 200 OK
+2026-07-04 17:35:23,013 - app.services.normalization.normalizer - INFO - Normalization: 'What courses do you offer?' -> 'what courses do you offer' (1 changes: ['cleanup'])
+2026-07-04 17:35:23,014 - app.services.llm.groq_service - INFO - [perf-final] Query normalized: 'What courses do you offer?' -> 'what courses do you offer'
+2026-07-04 17:35:23,014 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+2026-07-04 17:35:23,015 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'what courses do you offer' <- from history: 'College timings'
+2026-07-04 17:35:23,015 - app.services.llm.groq_service - DEBUG - [perf-final] PIPELINE query='what courses do you offer' retrieval_query='what courses do you offer College timings' history_turns=2
+2026-07-04 17:35:23,016 - app.services.llm.groq_service - INFO - [perf-final] STRUCTURED LOOKUP HIT: 'what courses do you offer College timings' -> 'College timings: Monday to Friday, 10:00 AM to 5:30 PM. The '
+2026-07-04 17:35:23,017 - app.services.llm.groq_service - INFO - [PERF perf-final]   normalization                   0.0 ms
+2026-07-04 17:35:23,017 - app.services.llm.groq_service - INFO - [PERF perf-final]   lang_detect                     5.2 ms
+2026-07-04 17:35:23,017 - app.services.llm.groq_service - INFO - [PERF perf-final]   followup_expand                 0.6 ms
+2026-07-04 17:35:23,017 - app.services.llm.groq_service - INFO - [PERF perf-final]   pipeline_end                    1.2 ms
+2026-07-04 17:35:23,017 - app.services.llm.groq_service - INFO - [PERF perf-final]   TOTAL                             7 ms
+2026-07-04 17:35:23,017 - app.api.qa - INFO - [PERF perf-final] API endpoint: 8ms  source=structured_lookup  answer_len=150
+INFO:     127.0.0.1:62636 - "POST /qa/query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62642 - "POST /qa/session/clear HTTP/1.1" 200 OK
+2026-07-04 17:35:36,093 - app.services.normalization.normalizer - INFO - Normalization: 'What research facilities are available for CSE students?' -> 'what research facilities are available for CSE students' (2 changes: ['cleanup', 'stt_correction'])
+2026-07-04 17:35:36,093 - app.services.llm.groq_service - INFO - [perf-llm2] Query normalized: 'What research facilities are available for CSE students?' -> 'what research facilities are available for CSE students'
+2026-07-04 17:35:36,094 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+2026-07-04 17:35:36,094 - app.services.llm.groq_service - DEBUG - [perf-llm2] PIPELINE query='what research facilities are available for CSE students' retrieval_query='what research facilities are available for CSE students' history_turns=0
+2026-07-04 17:35:36,096 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+2026-07-04 17:35:39,622 - app.services.llm.groq_service - DEBUG - [perf-llm2] RETRIEVED confidence=0.3745 context_len=2657 threshold=0.15
+2026-07-04 17:35:41,667 - app.services.llm.groq_service - WARNING - [perf-llm2] LLM call timed out (>2s), using filler
+2026-07-04 17:35:41,667 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   normalization                   0.0 ms
+2026-07-04 17:35:41,668 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   lang_detect                     7.4 ms
+2026-07-04 17:35:41,668 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   followup_expand                 0.4 ms
+2026-07-04 17:35:41,668 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   structured_done                 1.2 ms
+2026-07-04 17:35:41,668 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   retrieval_done                  3.5 s
+2026-07-04 17:35:41,668 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   pipeline_end                    2.0 s
+2026-07-04 17:35:41,668 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   TOTAL                          5.58 s
+2026-07-04 17:35:41,669 - app.api.qa - INFO - [PERF perf-llm2] API endpoint: 5582ms  source=timeout_filler  answer_len=60
+INFO:     127.0.0.1:62642 - "POST /qa/query HTTP/1.1" 200 OK
+2026-07-04 17:35:41,987 - app.services.llm.groq_service - INFO - [perf-llm2] Language: detected=hi, keeping en (reason: weak evidence, kw markers bn=0 hi=1)
+2026-07-04 17:35:41,988 - app.services.llm.groq_service - DEBUG - [perf-llm2] PIPELINE query='Tell me about the laboratories in the college' retrieval_query='Tell me about the laboratories in the college' history_turns=2
+2026-07-04 17:35:42,288 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-04 17:35:42,721 - app.services.llm.groq_service - DEBUG - [perf-llm2] RETRIEVED confidence=0.3949 context_len=3803 threshold=0.15
+2026-07-04 17:35:43,486 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-04 17:35:43,489 - app.services.llm.groq_service - INFO - Response length-capped 357->400 chars: 'The college has state-of-the-art laboratories for all discip...'
+2026-07-04 17:35:43,496 - app.services.llm.groq_service - INFO - Groq response (en, 1509ms, validated=True, tokens=in:2912/out:129): The college has state-of-the-art laboratories for all disciplines, including dep...
+2026-07-04 17:35:43,498 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   normalization                   0.0 ms
+2026-07-04 17:35:43,498 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   lang_detect                     6.7 ms
+2026-07-04 17:35:43,498 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   followup_expand                 0.5 ms
+2026-07-04 17:35:43,498 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   structured_done                 0.6 ms
+2026-07-04 17:35:43,498 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   retrieval_done                731.9 ms
+2026-07-04 17:35:43,499 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   llm_response                  768.4 ms
+2026-07-04 17:35:43,499 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   post_process                    8.4 ms
+2026-07-04 17:35:43,499 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   pipeline_end                    0.0 ms
+2026-07-04 17:35:43,499 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   TOTAL                          1.52 s
+2026-07-04 17:35:43,499 - app.api.qa - INFO - [PERF perf-llm2] API endpoint: 1519ms  source=groq_rag  answer_len=440
+INFO:     127.0.0.1:62642 - "POST /qa/query HTTP/1.1" 200 OK
+2026-07-04 17:35:43,811 - app.services.normalization.normalizer - INFO - Normalization: 'What is the admission process for lateral entry?' -> 'what is the admission process for lateral entry' (1 changes: ['cleanup'])
+2026-07-04 17:35:43,811 - app.services.llm.groq_service - INFO - [perf-llm2] Query normalized: 'What is the admission process for lateral entry?' -> 'what is the admission process for lateral entry'
+2026-07-04 17:35:43,811 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+2026-07-04 17:35:43,812 - app.services.llm.groq_service - DEBUG - [perf-llm2] PIPELINE query='what is the admission process for lateral entry' retrieval_query='what is the admission process for lateral entry' history_turns=4
+2026-07-04 17:35:43,813 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+2026-07-04 17:35:44,325 - app.services.llm.groq_service - DEBUG - [perf-llm2] RETRIEVED confidence=0.3268 context_len=2233 threshold=0.15
+2026-07-04 17:35:45,008 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-04 17:35:45,009 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 11.000000 seconds
+2026-07-04 17:35:46,338 - app.services.llm.groq_service - WARNING - [perf-llm2] LLM call timed out (>2s), using filler
+2026-07-04 17:35:46,338 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   normalization                   0.0 ms
+2026-07-04 17:35:46,338 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   lang_detect                     6.5 ms
+2026-07-04 17:35:46,339 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   followup_expand                 0.3 ms
+2026-07-04 17:35:46,339 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   structured_done                 0.6 ms
+2026-07-04 17:35:46,339 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   retrieval_done                512.2 ms
+2026-07-04 17:35:46,339 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   pipeline_end                    2.0 s
+2026-07-04 17:35:46,339 - app.services.llm.groq_service - INFO - [PERF perf-llm2]   TOTAL                          2.53 s
+2026-07-04 17:35:46,339 - app.api.qa - INFO - [PERF perf-llm2] API endpoint: 2534ms  source=timeout_filler  answer_len=94
+INFO:     127.0.0.1:62642 - "POST /qa/query HTTP/1.1" 200 OK
+2026-07-04 17:35:58,426 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-04 17:36:18,872 - app.services.normalization.normalizer - INFO - Normalization: 'Describe the computer science department laboratories' -> 'describe the CSE laboratories' (2 changes: ['alias_resolution', 'alias_resolution'])
+2026-07-04 17:36:18,872 - app.services.llm.groq_service - INFO - [perf-raw-llm] Query normalized: 'Describe the computer science department laboratories' -> 'describe the CSE laboratories'
+2026-07-04 17:36:18,873 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+2026-07-04 17:36:18,873 - app.services.llm.groq_service - DEBUG - [perf-raw-llm] PIPELINE query='describe the CSE laboratories' retrieval_query='describe the CSE laboratories' history_turns=0
+2026-07-04 17:36:18,874 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+2026-07-04 17:36:19,317 - app.services.llm.groq_service - DEBUG - [perf-raw-llm] RETRIEVED confidence=0.3232 context_len=2433 threshold=0.15
+2026-07-04 17:36:19,519 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-04 17:36:19,520 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 1.000000 seconds
+2026-07-04 17:36:21,021 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-04 17:36:21,027 - app.services.llm.groq_service - INFO - Groq response (en, 2155ms, validated=True, tokens=in:2384/out:49): The CSE department has well-equipped labs, including the AICTE IDEA Lab. Additio...
+2026-07-04 17:36:21,028 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   normalization                   0.0 ms
+2026-07-04 17:36:21,029 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   lang_detect                     5.3 ms
+2026-07-04 17:36:21,029 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   followup_expand                 0.3 ms
+2026-07-04 17:36:21,029 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   structured_done                 0.6 ms
+2026-07-04 17:36:21,029 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   retrieval_done                443.4 ms
+2026-07-04 17:36:21,029 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   llm_response                    1.7 s
+2026-07-04 17:36:21,029 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   post_process                    5.9 ms
+2026-07-04 17:36:21,029 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   pipeline_end                    0.0 ms
+2026-07-04 17:36:21,029 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   TOTAL                          2.16 s
+2026-07-04 17:36:21,030 - app.api.qa - INFO - [PERF perf-raw-llm] API endpoint: 2162ms  source=groq_rag  answer_len=295
+INFO:     127.0.0.1:64720 - "POST /qa/query HTTP/1.1" 200 OK
+2026-07-04 17:36:21,342 - app.services.normalization.normalizer - INFO - Normalization: 'What is the admission procedure for diploma holders?' -> 'what is the admission procedure for diploma holders' (1 changes: ['cleanup'])
+2026-07-04 17:36:21,342 - app.services.llm.groq_service - INFO - [perf-raw-llm] Query normalized: 'What is the admission procedure for diploma holders?' -> 'what is the admission procedure for diploma holders'
+2026-07-04 17:36:21,342 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+2026-07-04 17:36:21,343 - app.services.llm.groq_service - DEBUG - [perf-raw-llm] PIPELINE query='what is the admission procedure for diploma holders' retrieval_query='what is the admission procedure for diploma holders' history_turns=2
+2026-07-04 17:36:21,345 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+2026-07-04 17:36:21,737 - app.services.llm.groq_service - DEBUG - [perf-raw-llm] RETRIEVED confidence=0.3934 context_len=2252 threshold=0.15
+2026-07-04 17:36:21,837 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-04 17:36:21,838 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 27.000000 seconds
+2026-07-04 17:36:23,754 - app.services.llm.groq_service - WARNING - [perf-raw-llm] LLM call timed out (>2s), using filler
+2026-07-04 17:36:23,755 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   normalization                   0.0 ms
+2026-07-04 17:36:23,755 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   lang_detect                     7.4 ms
+2026-07-04 17:36:23,755 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   followup_expand                 0.8 ms
+2026-07-04 17:36:23,755 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   structured_done                 0.8 ms
+2026-07-04 17:36:23,755 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   retrieval_done                392.9 ms
+2026-07-04 17:36:23,755 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   pipeline_end                    2.0 s
+2026-07-04 17:36:23,756 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   TOTAL                          2.42 s
+2026-07-04 17:36:23,756 - app.api.qa - INFO - [PERF perf-raw-llm] API endpoint: 2420ms  source=timeout_filler  answer_len=60
+INFO:     127.0.0.1:64720 - "POST /qa/query HTTP/1.1" 200 OK
+2026-07-04 17:36:24,067 - app.services.normalization.normalizer - INFO - Normalization: 'Tell me about industry partnerships at BCREC' -> 'tell me about industry partnerships at BCREC' (1 changes: ['alias_resolution'])
+2026-07-04 17:36:24,068 - app.services.llm.groq_service - INFO - [perf-raw-llm] Query normalized: 'Tell me about industry partnerships at BCREC' -> 'tell me about industry partnerships at BCREC'
+2026-07-04 17:36:24,068 - app.services.llm.groq_service - INFO - [perf-raw-llm] Language: detected=hi, keeping en (reason: weak evidence, kw markers bn=0 hi=1)
+2026-07-04 17:36:24,069 - app.services.llm.groq_service - DEBUG - [perf-raw-llm] PIPELINE query='tell me about industry partnerships at BCREC' retrieval_query='tell me about industry partnerships at BCREC' history_turns=4
+2026-07-04 17:36:24,484 - app.services.llm.groq_service - DEBUG - [perf-raw-llm] RETRIEVED confidence=0.4471 context_len=3644 threshold=0.15
+2026-07-04 17:36:24,617 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-04 17:36:24,618 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 30.000000 seconds
+2026-07-04 17:36:26,498 - app.services.llm.groq_service - WARNING - [perf-raw-llm] LLM call timed out (>2s), using filler
+2026-07-04 17:36:26,498 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   normalization                   0.0 ms
+2026-07-04 17:36:26,498 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   lang_detect                     6.9 ms
+2026-07-04 17:36:26,498 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   followup_expand                 0.3 ms
+2026-07-04 17:36:26,498 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   structured_done                 0.7 ms
+2026-07-04 17:36:26,499 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   retrieval_done                414.2 ms
+2026-07-04 17:36:26,499 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   pipeline_end                    2.0 s
+2026-07-04 17:36:26,499 - app.services.llm.groq_service - INFO - [PERF perf-raw-llm]   TOTAL                          2.44 s
+2026-07-04 17:36:26,499 - app.api.qa - INFO - [PERF perf-raw-llm] API endpoint: 2437ms  source=timeout_filler  answer_len=65
+INFO:     127.0.0.1:64720 - "POST /qa/query HTTP/1.1" 200 OK
+2026-07-04 17:36:49,560 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-04 17:36:54,822 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-04 17:36:54,824 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 26.000000 seconds
+2026-07-04 17:37:21,459 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"

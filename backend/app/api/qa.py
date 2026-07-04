@@ -88,6 +88,20 @@ async def query_endpoint(request: Request, data: GroqQueryRequest):
     try:
         service = get_groq_service()
         result = await service.generate_response(data.message, session_id=session_id)
+        _api_ms = round((time.time() - start_time) * 1000)
+
+        # ── DEMO_SAFEPOINT: post-process ALL responses (personality, unknown replacement) ──
+        if settings.demo_safepoint:
+            from app.services.llm.safe_point import post_process_response
+
+            result = post_process_response(None, data.message, result, "en")
+        # ── End DEMO_SAFEPOINT post-processing ──
+
+        logger.info(
+            f"[PERF {session_id}] API endpoint: {_api_ms}ms  "
+            f"source={result.get('source', '?')}  "
+            f"answer_len={len(result.get('answer', ''))}"
+        )
 
         return QueryResponse(
             answer=result["answer"],

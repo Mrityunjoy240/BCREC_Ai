@@ -1,9 +1,173 @@
-2026-07-04 10:56:37,900 - root - INFO - Logging configured successfully
-2026-07-04 10:56:38,743 - app.config - INFO - Loaded environment from C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\backend\.env
-2026-07-04 10:56:40,118 - app.config - INFO - Groq client initialized successfully
-2026-07-04 10:56:40,860 - app.config - INFO - Sarvam Voice Client: INITIALIZED
-2026-07-04 10:56:58,051 - app.services.backup - INFO - Backup directory initialized at C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\backend\backups
-2026-07-04 10:56:58,672 - app.database - INFO - Database initialized at ./chroma_db\conversations.db
-2026-07-04 10:56:58,673 - app.main - INFO - Pre-warming vector store...
-2026-07-04 10:56:58,674 - app.services.vector_store - INFO - ChromaDB path: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\chroma_db\chroma_db_v2
-2026-07-04 10:56:58,675 - app.services.vector_store - INFO - Initializing VectorStoreService with model: BAAI/bge-m3
+2026-07-04 16:07:42,732 - root - INFO - Logging configured successfully
+2026-07-04 16:07:43,986 - app.config - INFO - Loaded environment from C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\backend\.env
+2026-07-04 16:07:46,199 - app.config - INFO - Groq client initialized successfully
+2026-07-04 16:07:47,109 - app.config - INFO - Sarvam Voice Client: INITIALIZED
+2026-07-04 16:08:18,577 - app.services.backup - INFO - Backup directory initialized at C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\backend\backups
+2026-07-04 16:08:19,663 - app.database - INFO - Database initialized at ./chroma_db\conversations.db
+2026-07-04 16:08:19,663 - app.main - INFO - Pre-warming vector store...
+2026-07-04 16:08:19,666 - app.services.vector_store - INFO - ChromaDB path: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\chroma_db\chroma_db_v2
+2026-07-04 16:08:19,667 - app.services.vector_store - INFO - Initializing VectorStoreService with model: BAAI/bge-m3
+2026-07-04 16:08:37,513 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-07-04 16:08:37,515 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-07-04 16:08:37,623 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/modules.json "HTTP/1.1 200 OK"
+2026-07-04 16:08:37,974 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 16:08:38,075 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-07-04 16:08:38,080 - sentence_transformers.base.model - INFO - Loading SentenceTransformer model from BAAI/bge-m3.
+2026-07-04 16:08:38,405 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 16:08:38,485 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-07-04 16:08:38,895 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 16:08:38,999 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/README.md "HTTP/1.1 200 OK"
+2026-07-04 16:08:39,310 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 16:08:39,761 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/modules.json "HTTP/1.1 200 OK"
+2026-07-04 16:08:40,075 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 16:08:40,170 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/sentence_bert_config.json "HTTP/1.1 200 OK"
+2026-07-04 16:08:40,486 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-07-04 16:08:40,826 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 16:08:40,923 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config.json "HTTP/1.1 200 OK"
+2026-07-04 16:08:41,435 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/model.safetensors "HTTP/1.1 404 Not Found"
+2026-07-04 16:08:42,076 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3 "HTTP/1.1 200 OK"
+2026-07-04 16:08:42,433 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/commits/main "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights: 100%|██████████| 391/391 [00:00<00:00, 6129.14it/s]
+2026-07-04 16:08:43,023 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/discussions?p=0 "HTTP/1.1 200 OK"
+2026-07-04 16:08:43,516 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/commits/refs%2Fpr%2F130 "HTTP/1.1 200 OK"
+2026-07-04 16:08:43,713 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-07-04 16:08:43,972 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/refs%2Fpr%2F130/model.safetensors.index.json "HTTP/1.1 404 Not Found"
+2026-07-04 16:08:44,044 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+2026-07-04 16:08:44,296 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/refs%2Fpr%2F130/model.safetensors "HTTP/1.1 302 Found"
+2026-07-04 16:08:44,353 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+2026-07-04 16:08:44,777 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+2026-07-04 16:08:45,248 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 16:08:45,327 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-07-04 16:08:45,649 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 16:08:45,729 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config.json "HTTP/1.1 200 OK"
+2026-07-04 16:08:46,283 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 16:08:46,480 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config.json "HTTP/1.1 200 OK"
+2026-07-04 16:08:47,098 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 16:08:47,299 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-07-04 16:08:47,706 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-07-04 16:08:48,222 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-07-04 16:08:56,130 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3 "HTTP/1.1 200 OK"
+2026-07-04 16:08:56,608 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-04 16:08:56,682 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+2026-07-04 16:08:57,019 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3 "HTTP/1.1 200 OK"
+2026-07-04 16:08:57,588 - app.services.vector_store - INFO - VectorStoreService initialized successfully
+2026-07-04 16:08:57,589 - app.main - INFO - Vector store pre-warmed successfully
+2026-07-04 16:08:57,919 - app.main - INFO - System Check - Current Working Directory: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\backend
+2026-07-04 16:08:57,919 - app.main - INFO - System Check - File Path: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\backend\app\main.py
+2026-07-04 16:08:57,921 - app.main - INFO - Checking frontend path: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\frontend\dist -> FOUND
+2026-07-04 16:08:57,921 - app.main - INFO - CRITICAL: Frontend directory found at: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\frontend\dist. Mounting static files.
+INFO:     Started server process [31868]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-07-04 17:25:36,715 - app.services.llm.groq_service - INFO - Query cache ENABLED (ttl=600s, max=256)
+2026-07-04 17:25:36,726 - app.services.llm.groq_service - INFO - GroqService ready.
+2026-07-04 17:25:36,733 - app.utils.conversation_logger - INFO - Conversation telemetry dir: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\data\logs\conversations
+2026-07-04 17:25:36,808 - app.services.normalization.normalizer - INFO - Loaded entity dictionary (8 sections)
+2026-07-04 17:25:36,906 - app.services.normalization.normalizer - INFO - Normalization: 'What is the CSE fee?' -> 'what is the CSE fee' (2 changes: ['cleanup', 'stt_correction'])
+2026-07-04 17:25:36,907 - app.services.llm.groq_service - INFO - [perf-test] Query normalized: 'What is the CSE fee?' -> 'what is the CSE fee'
+2026-07-04 17:25:36,936 - app.utils.language_detect - INFO - fasttext not installed — using keyword-only detection
+2026-07-04 17:25:36,938 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+2026-07-04 17:25:36,990 - app.services.llm.groq_service - DEBUG - [perf-test] PIPELINE query='what is the CSE fee' retrieval_query='what is the CSE fee' history_turns=0
+2026-07-04 17:25:37,006 - app.services.llm.groq_service - INFO - [perf-test] STRUCTURED LOOKUP HIT: 'what is the CSE fee' -> 'The total fee for Computer Science and Engineering is six la'
+2026-07-04 17:25:37,009 - app.services.llm.groq_service - INFO - [PERF perf-test]   normalization                   0.0 ms
+2026-07-04 17:25:37,009 - app.services.llm.groq_service - INFO - [PERF perf-test]   lang_detect                   144.2 ms
+2026-07-04 17:25:37,012 - app.services.llm.groq_service - INFO - [PERF perf-test]   followup_expand                50.9 ms
+2026-07-04 17:25:37,013 - app.services.llm.groq_service - INFO - [PERF perf-test]   pipeline_end                   17.9 ms
+2026-07-04 17:25:37,013 - app.services.llm.groq_service - INFO - [PERF perf-test]   TOTAL                           213 ms
+2026-07-04 17:25:37,021 - app.api.qa - INFO - [PERF perf-test] API endpoint: 324ms  source=structured_lookup  answer_len=112
+2026-07-04 17:25:55,189 - app.services.normalization.normalizer - INFO - Normalization: 'What is the CSE fee?' -> 'what is the CSE fee' (2 changes: ['cleanup', 'stt_correction'])
+2026-07-04 17:25:55,190 - app.services.llm.groq_service - INFO - [perf-test] Query normalized: 'What is the CSE fee?' -> 'what is the CSE fee'
+2026-07-04 17:25:55,190 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+2026-07-04 17:25:55,191 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'what is the CSE fee' <- from history: 'what is the CSE fee'
+2026-07-04 17:25:55,192 - app.services.llm.groq_service - DEBUG - [perf-test] PIPELINE query='what is the CSE fee' retrieval_query='what is the CSE fee what is the CSE fee' history_turns=2
+2026-07-04 17:25:55,192 - app.services.llm.groq_service - INFO - [perf-test] STRUCTURED LOOKUP HIT: 'what is the CSE fee what is the CSE fee' -> 'The total fee for Computer Science and Engineering is six la'
+2026-07-04 17:25:55,194 - app.services.llm.groq_service - INFO - [PERF perf-test]   normalization                   0.0 ms
+2026-07-04 17:25:55,194 - app.services.llm.groq_service - INFO - [PERF perf-test]   lang_detect                     5.3 ms
+2026-07-04 17:25:55,195 - app.services.llm.groq_service - INFO - [PERF perf-test]   followup_expand                 1.2 ms
+2026-07-04 17:25:55,195 - app.services.llm.groq_service - INFO - [PERF perf-test]   pipeline_end                    2.0 ms
+2026-07-04 17:25:55,195 - app.services.llm.groq_service - INFO - [PERF perf-test]   TOTAL                             8 ms
+2026-07-04 17:25:55,196 - app.api.qa - INFO - [PERF perf-test] API endpoint: 10ms  source=structured_lookup  answer_len=153
+2026-07-04 17:25:57,255 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'Admission process' <- from history: 'what is the CSE fee'
+2026-07-04 17:25:57,255 - app.services.llm.groq_service - DEBUG - [perf-test] PIPELINE query='Admission process' retrieval_query='Admission process what is the CSE fee' history_turns=4
+2026-07-04 17:25:57,257 - app.services.llm.groq_service - INFO - [perf-test] STRUCTURED LOOKUP HIT: 'Admission process what is the CSE fee' -> 'The total fee for Computer Science and Engineering is six la'
+2026-07-04 17:25:57,258 - app.services.llm.groq_service - INFO - [PERF perf-test]   normalization                   0.0 ms
+2026-07-04 17:25:57,258 - app.services.llm.groq_service - INFO - [PERF perf-test]   lang_detect                     5.7 ms
+2026-07-04 17:25:57,258 - app.services.llm.groq_service - INFO - [PERF perf-test]   followup_expand                 1.8 ms
+2026-07-04 17:25:57,258 - app.services.llm.groq_service - INFO - [PERF perf-test]   pipeline_end                    1.1 ms
+2026-07-04 17:25:57,258 - app.services.llm.groq_service - INFO - [PERF perf-test]   TOTAL                             9 ms
+2026-07-04 17:25:57,259 - app.api.qa - INFO - [PERF perf-test] API endpoint: 10ms  source=structured_lookup  answer_len=117
+2026-07-04 17:25:59,310 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'Hostel fee' <- from history: 'Admission process'
+2026-07-04 17:25:59,310 - app.services.llm.groq_service - DEBUG - [perf-test] PIPELINE query='Hostel fee' retrieval_query='Hostel fee Admission process' history_turns=6
+2026-07-04 17:25:59,313 - app.services.llm.groq_service - INFO - [perf-test] STRUCTURED LOOKUP HIT: 'Hostel fee Admission process' -> 'BCREC B.Tech fees: CSE, IT, ECE: six lakh four thousand seve'
+2026-07-04 17:25:59,313 - app.services.llm.groq_service - INFO - [PERF perf-test]   normalization                   0.0 ms
+2026-07-04 17:25:59,313 - app.services.llm.groq_service - INFO - [PERF perf-test]   lang_detect                     2.9 ms
+2026-07-04 17:25:59,313 - app.services.llm.groq_service - INFO - [PERF perf-test]   followup_expand                 0.8 ms
+2026-07-04 17:25:59,314 - app.services.llm.groq_service - INFO - [PERF perf-test]   pipeline_end                    2.4 ms
+2026-07-04 17:25:59,314 - app.services.llm.groq_service - INFO - [PERF perf-test]   TOTAL                             6 ms
+2026-07-04 17:25:59,314 - app.api.qa - INFO - [PERF perf-test] API endpoint: 7ms  source=structured_lookup  answer_len=295
+2026-07-04 17:26:01,365 - app.services.llm.groq_service - INFO - [perf-test] Language: detected=hi, keeping en (reason: weak evidence, kw markers bn=0 hi=1)
+2026-07-04 17:26:01,366 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'Tell me about placements' <- from history: 'Hostel fee'
+2026-07-04 17:26:01,366 - app.services.llm.groq_service - DEBUG - [perf-test] PIPELINE query='Tell me about placements' retrieval_query='Tell me about placements Hostel fee' history_turns=8
+2026-07-04 17:26:01,367 - app.services.llm.groq_service - INFO - [perf-test] STRUCTURED LOOKUP HIT: 'Tell me about placements Hostel fee' -> 'The total fee for Mechanical Engineering is four lakh forty-'
+2026-07-04 17:26:01,368 - app.services.llm.groq_service - INFO - [PERF perf-test]   normalization                   0.0 ms
+2026-07-04 17:26:01,368 - app.services.llm.groq_service - INFO - [PERF perf-test]   lang_detect                     4.0 ms
+2026-07-04 17:26:01,368 - app.services.llm.groq_service - INFO - [PERF perf-test]   followup_expand                 1.2 ms
+2026-07-04 17:26:01,368 - app.services.llm.groq_service - INFO - [PERF perf-test]   pipeline_end                    1.4 ms
+2026-07-04 17:26:01,368 - app.services.llm.groq_service - INFO - [PERF perf-test]   TOTAL                             7 ms
+2026-07-04 17:26:01,369 - app.api.qa - INFO - [PERF perf-test] API endpoint: 7ms  source=structured_lookup  answer_len=117
+2026-07-04 17:26:03,433 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'College timings' <- from history: 'Tell me about placements'
+2026-07-04 17:26:03,434 - app.services.llm.groq_service - DEBUG - [perf-test] PIPELINE query='College timings' retrieval_query='College timings Tell me about placements' history_turns=10
+2026-07-04 17:26:03,438 - app.services.llm.groq_service - INFO - [perf-test] STRUCTURED LOOKUP HIT: 'College timings Tell me about placements' -> 'College timings: Monday to Friday, 10:00 AM to 5:30 PM. The '
+2026-07-04 17:26:03,439 - app.services.llm.groq_service - INFO - [PERF perf-test]   normalization                   0.0 ms
+2026-07-04 17:26:03,439 - app.services.llm.groq_service - INFO - [PERF perf-test]   lang_detect                     3.8 ms
+2026-07-04 17:26:03,439 - app.services.llm.groq_service - INFO - [PERF perf-test]   followup_expand                 1.3 ms
+2026-07-04 17:26:03,440 - app.services.llm.groq_service - INFO - [PERF perf-test]   pipeline_end                    4.7 ms
+2026-07-04 17:26:03,440 - app.services.llm.groq_service - INFO - [PERF perf-test]   TOTAL                            10 ms
+2026-07-04 17:26:03,440 - app.api.qa - INFO - [PERF perf-test] API endpoint: 11ms  source=structured_lookup  answer_len=155
+2026-07-04 17:26:05,515 - app.services.llm.safe_point - INFO - [DEMO_SAFEPOINT] [perf-test] {'event': 'handoff', 'query': 'Principal name', 'latency_ms': 0, 'ts': 1783166165.5157542}
+2026-07-04 17:26:05,516 - app.services.llm.groq_service - INFO - [perf-test] SAFEPOINT pre-processing intercepted: safe_point_handoff
+2026-07-04 17:26:05,517 - app.services.llm.groq_service - INFO - [PERF perf-test]   normalization                   0.0 ms
+2026-07-04 17:26:05,517 - app.services.llm.groq_service - INFO - [PERF perf-test]   lang_detect                     3.9 ms
+2026-07-04 17:26:05,517 - app.services.llm.groq_service - INFO - [PERF perf-test]   pipeline_end                    1.3 ms
+2026-07-04 17:26:05,517 - app.services.llm.groq_service - INFO - [PERF perf-test]   TOTAL                             5 ms
+2026-07-04 17:26:05,518 - app.api.qa - INFO - [PERF perf-test] API endpoint: 6ms  source=safe_point_handoff  answer_len=111
+2026-07-04 17:26:07,562 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'Computer lab timings' <- from history: 'College timings'
+2026-07-04 17:26:07,562 - app.services.llm.groq_service - DEBUG - [perf-test] PIPELINE query='Computer lab timings' retrieval_query='Computer lab timings College timings' history_turns=12
+2026-07-04 17:26:07,563 - app.services.llm.groq_service - INFO - [perf-test] STRUCTURED LOOKUP HIT: 'Computer lab timings College timings' -> 'College timings: Monday to Friday, 10:00 AM to 5:30 PM. The '
+2026-07-04 17:26:07,563 - app.services.llm.groq_service - INFO - [PERF perf-test]   normalization                   0.0 ms
+2026-07-04 17:26:07,564 - app.services.llm.groq_service - INFO - [PERF perf-test]   lang_detect                     3.4 ms
+2026-07-04 17:26:07,564 - app.services.llm.groq_service - INFO - [PERF perf-test]   followup_expand                 0.6 ms
+2026-07-04 17:26:07,565 - app.services.llm.groq_service - INFO - [PERF perf-test]   pipeline_end                    0.6 ms
+2026-07-04 17:26:07,565 - app.services.llm.groq_service - INFO - [PERF perf-test]   TOTAL                             5 ms
+2026-07-04 17:26:07,565 - app.api.qa - INFO - [PERF perf-test] API endpoint: 6ms  source=structured_lookup  answer_len=131
+2026-07-04 17:26:09,608 - app.services.normalization.normalizer - INFO - Normalization: 'CSE cutoff' -> 'CSE cutoff' (1 changes: ['stt_correction'])
+2026-07-04 17:26:09,609 - app.services.llm.groq_service - INFO - [perf-test] Query normalized: 'CSE cutoff' -> 'CSE cutoff'
+2026-07-04 17:26:09,609 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'CSE cutoff' <- from history: 'Computer lab timings'
+2026-07-04 17:26:09,609 - app.services.llm.groq_service - DEBUG - [perf-test] PIPELINE query='CSE cutoff' retrieval_query='CSE cutoff Computer lab timings' history_turns=12
+2026-07-04 17:26:09,609 - app.services.llm.groq_service - INFO - [perf-test] STRUCTURED LOOKUP HIT: 'CSE cutoff Computer lab timings' -> 'The WBJEE cutoff rank for CSE is: 2024: 16059, 2025: 67761, '
+2026-07-04 17:26:09,610 - app.services.llm.groq_service - INFO - [PERF perf-test]   normalization                   0.0 ms
+2026-07-04 17:26:09,610 - app.services.llm.groq_service - INFO - [PERF perf-test]   lang_detect                     2.9 ms
+2026-07-04 17:26:09,610 - app.services.llm.groq_service - INFO - [PERF perf-test]   followup_expand                 0.2 ms
+2026-07-04 17:26:09,610 - app.services.llm.groq_service - INFO - [PERF perf-test]   pipeline_end                    0.9 ms
+2026-07-04 17:26:09,610 - app.services.llm.groq_service - INFO - [PERF perf-test]   TOTAL                             4 ms
+2026-07-04 17:26:09,610 - app.api.qa - INFO - [PERF perf-test] API endpoint: 5ms  source=structured_lookup  answer_len=188
+2026-07-04 17:26:11,658 - app.services.normalization.normalizer - INFO - Normalization: 'I want admission in CSE' -> 'i want admission in CSE' (1 changes: ['stt_correction'])
+2026-07-04 17:26:11,658 - app.services.llm.groq_service - INFO - [perf-test] Query normalized: 'I want admission in CSE' -> 'i want admission in CSE'
+2026-07-04 17:26:11,659 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+2026-07-04 17:26:11,660 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'i want admission in CSE' <- from history: 'CSE cutoff'
+2026-07-04 17:26:11,660 - app.services.llm.groq_service - DEBUG - [perf-test] PIPELINE query='i want admission in CSE' retrieval_query='i want admission in CSE CSE cutoff' history_turns=12
+2026-07-04 17:26:11,660 - app.services.llm.groq_service - INFO - [perf-test] STRUCTURED LOOKUP HIT: 'i want admission in CSE CSE cutoff' -> 'The WBJEE cutoff rank for CSE is: 2024: 16059, 2025: 67761, '
+2026-07-04 17:26:11,660 - app.services.llm.groq_service - INFO - [PERF perf-test]   normalization                   0.0 ms
+2026-07-04 17:26:11,660 - app.services.llm.groq_service - INFO - [PERF perf-test]   lang_detect                     4.5 ms
+2026-07-04 17:26:11,660 - app.services.llm.groq_service - INFO - [PERF perf-test]   followup_expand                 0.3 ms
+2026-07-04 17:26:11,661 - app.services.llm.groq_service - INFO - [PERF perf-test]   pipeline_end                    0.5 ms
+2026-07-04 17:26:11,661 - app.services.llm.groq_service - INFO - [PERF perf-test]   TOTAL                             5 ms
+2026-07-04 17:26:11,661 - app.api.qa - INFO - [PERF perf-test] API endpoint: 6ms  source=structured_lookup  answer_len=157
+2026-07-04 17:26:13,704 - app.services.normalization.normalizer - INFO - Normalization: 'What courses do you offer?' -> 'what courses do you offer' (1 changes: ['cleanup'])
+2026-07-04 17:26:13,704 - app.services.llm.groq_service - INFO - [perf-test] Query normalized: 'What courses do you offer?' -> 'what courses do you offer'
+2026-07-04 17:26:13,705 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+2026-07-04 17:26:13,706 - app.services.llm.groq_service - INFO - Query expanded for retrieval: 'what courses do you offer' <- from history: 'i want admission in CSE'
+2026-07-04 17:26:13,706 - app.services.llm.groq_service - DEBUG - [perf-test] PIPELINE query='what courses do you offer' retrieval_query='what courses do you offer i want admission in CSE' history_turns=12
+2026-07-04 17:26:13,708 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
