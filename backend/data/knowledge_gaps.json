@@ -1041,5 +1041,229 @@
     "reason": "out_of_kb_deflection",
     "timestamp": "2026-06-27T17:12:16.581720Z",
     "count": 1
+  },
+  {
+    "query": "How many hostels are there in BCREC?",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-06-30T03:59:35.329996Z",
+    "count": 1
+  },
+  {
+    "query": "What is the weather like in Durgapur?",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-06-30T04:07:43.582972Z",
+    "count": 1
+  },
+  {
+    "query": "Who won the 2024 T20 World Cup?",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-06-30T04:08:46.089167Z",
+    "count": 1
+  },
+  {
+    "query": "What is the stock price of Apple?",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-06-30T04:09:08.160395Z",
+    "count": 1
+  },
+  {
+    "query": "Does BCREC have a library?",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-06-30T04:09:20.326313Z",
+    "count": 1
+  },
+  {
+    "query": "Does BCREC have online classes?",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-06-30T04:16:56.533217Z",
+    "count": 1
+  },
+  {
+    "query": "Vorti process ta ki?",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-06-30T04:59:47.228348Z",
+    "count": 1
+  },
+  {
+    "query": "How many hostels are there in BCREC?",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-06-30T06:08:25.264501Z",
+    "count": 1
+  },
+  {
+    "query": "How many hostels are there in BCREC?",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-06-30T06:14:21.709615Z",
+    "count": 1
+  },
+  {
+    "query": "Tell me about the CSE department",
+    "lang": "hi",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-06-30T06:17:16.756995Z",
+    "count": 1
+  },
+  {
+    "query": "How many hostels are there in BCREC?",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-06-30T06:20:29.214582Z",
+    "count": 1
+  },
+  {
+    "query": "How many hostels are there in BCREC?",
+    "lang": "en",
+    "reason": "out_of_kb_deflection_stream",
+    "timestamp": "2026-06-30T06:27:10.287468Z",
+    "count": 1
+  },
+  {
+    "query": "How many hostels are there in BCREC?",
+    "lang": "en",
+    "reason": "hallucination_guard: entities not found in context: ['03432501353', '03432502449']",
+    "timestamp": "2026-06-30T06:28:06.156462Z",
+    "count": 1
+  },
+  {
+    "query": "DC Royal का",
+    "lang": "hi",
+    "reason": "out_of_kb_deflection_stream",
+    "timestamp": "2026-06-30T07:46:15.395209Z",
+    "count": 1
+  },
+  {
+    "query": "What is the capital of France?",
+    "lang": "bn",
+    "reason": "low_confidence_retrieval_0.045",
+    "timestamp": "2026-06-30T19:27:17.438784Z",
+    "count": 1
+  },
+  {
+    "query": "How many seats in ECE department?",
+    "lang": "hi",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-06-30T19:27:43.361862Z",
+    "count": 1
+  },
+  {
+    "query": "What is the placement rate of IT and how many companies visited?",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-06-30T19:43:02.505462Z",
+    "count": 1
+  },
+  {
+    "query": "What is the placement rate of IT and how many companies visited?",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-06-30T19:51:52.146845Z",
+    "count": 1
+  },
+  {
+    "query": "What is the cutoff for WBJEE?",
+    "lang": "en",
+    "reason": "hallucination_guard: entities not found in context: ['0343', '2501353', '03432501353']",
+    "timestamp": "2026-06-30T20:08:29.251758Z",
+    "count": 1
+  },
+  {
+    "query": "What is the fee for CSE?",
+    "lang": "en",
+    "reason": "hallucination_guard: entities not found in context: ['98225']",
+    "timestamp": "2026-06-30T20:25:28.834024Z",
+    "count": 1
+  },
+  {
+    "query": "Who is the principal of this college?",
+    "lang": "en",
+    "reason": "hallucination_guard: entities not found in context: ['03432501353']",
+    "timestamp": "2026-06-30T20:31:55.192726Z",
+    "count": 1
+  },
+  {
+    "query": "Principal ke baare mein batao",
+    "lang": "hi",
+    "reason": "hallucination_guard: entities not found in context: ['0343', '2501353', '03432501353']",
+    "timestamp": "2026-06-30T20:31:56.221664Z",
+    "count": 1
+  },
+  {
+    "query": "Is there any scholarship for SC students?",
+    "lang": "en",
+    "reason": "hallucination_guard: entities not found in context: ['03432501353']",
+    "timestamp": "2026-06-30T20:33:59.400967Z",
+    "count": 1
+  },
+  {
+    "query": "Bhai Mars mission kaise join karein?",
+    "lang": "hi",
+    "reason": "low_confidence_retrieval_0.093",
+    "timestamp": "2026-06-30T20:36:18.930072Z",
+    "count": 1
+  },
+  {
+    "query": "Principal ke baare mein batao",
+    "lang": "hi",
+    "reason": "hallucination_guard: entities not found in context: ['0343', '2501353', '03432501353']",
+    "timestamp": "2026-06-30T20:44:55.850895Z",
+    "count": 1
+  },
+  {
+    "query": "Bhai Mars mission kaise join karein?",
+    "lang": "hi",
+    "reason": "low_confidence_retrieval_0.093",
+    "timestamp": "2026-06-30T20:49:14.164116Z",
+    "count": 1
+  },
+  {
+    "query": "Principal ke baare mein batao",
+    "lang": "hi",
+    "reason": "hallucination_guard: entities not found in context: ['0343', '2501353', '03432501353']",
+    "timestamp": "2026-06-30T20:57:52.746439Z",
+    "count": 1
+  },
+  {
+    "query": "Who is the principal of this college?",
+    "lang": "en",
+    "reason": "hallucination_guard: entities not found in context: ['03432501353']",
+    "timestamp": "2026-06-30T20:58:11.008771Z",
+    "count": 1
+  },
+  {
+    "query": "Bhai Mars mission kaise join karein?",
+    "lang": "hi",
+    "reason": "low_confidence_retrieval_0.093",
+    "timestamp": "2026-06-30T21:01:39.581698Z",
+    "count": 1
+  },
+  {
+    "query": "college timings",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-07-03T15:46:29.105266Z",
+    "count": 1
+  },
+  {
+    "query": "the last date for admission is tomorrow and i haven't received my documents yet what should i do",
+    "lang": "en",
+    "reason": "hallucination_guard: entities not found in context: ['03432501353']",
+    "timestamp": "2026-07-03T16:08:32.978688Z",
+    "count": 1
+  },
+  {
+    "query": "how do i reach the college from durgapur station",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-07-03T16:10:06.484858Z",
+    "count": 1
   }
 ]

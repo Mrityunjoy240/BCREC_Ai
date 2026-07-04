@@ -1,0 +1,76 @@
+{
+  "eligibility_btech": "10+2 with PCM, minimum 50% marks for general category",
+  "entrance": "WBJEE or JEE Main",
+  "seat_distribution": {
+    "wbjee": "80%",
+    "jee_main": "10%",
+    "management": "10%"
+  },
+  "lateral_entry": "10% of approved intake via JELET",
+  "documents": {
+    "_provenance_default": {
+      "source_type": "manual_entry",
+      "date_verified": "2026-06-28",
+      "confidence": "medium",
+      "notes": "Document checklist from combined_kb.json"
+    },
+    "entrance": {
+      "value": [
+        "WBJEE/JEE-Main Rank Card",
+        "WBJEE/JEE-Main Admit Card"
+      ]
+    },
+    "academic": {
+      "value": [
+        "Class 10 Marksheet and Pass Certificate",
+        "Class 12 Marksheet and Pass Certificate"
+      ]
+    },
+    "counseling": {
+      "value": [
+        "Allotment Letter from WBJEEB"
+      ]
+    },
+    "character": {
+      "value": [
+        "Character Certificate from last attended institution"
+      ]
+    },
+    "photographs": {
+      "value": [
+        "6 copies of color stamp-size photographs"
+      ]
+    },
+    "certificates": {
+      "value": [
+        "Domicile Certificate (for West Bengal students)",
+        "Aadhar Card",
+        "Caste Certificate (if applicable)"
+      ]
+    },
+    "other": {
+      "value": [
+        "Migration Certificate (if applicable)",
+        "Aadhar Card",
+        "6-8 Passport-size Photographs"
+      ]
+    },
+    "scholarship": {
+      "value": [
+        "Income Certificate (for TFW candidates)"
+      ]
+    },
+    "hostel_items": {
+      "value": [
+        "Big and small lock",
+        "Bedding with mosquito net",
+        "Steel glass",
+        "Bucket",
+        "Mug",
+        "Torch",
+        "Big trunk for storage"
+      ]
+    }
+  },
+  "source": "canonical_kb.json > admission / admission_documents"
+}

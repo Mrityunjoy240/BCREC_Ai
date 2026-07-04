@@ -1,0 +1,128 @@
+{
+  "Who is the principal of BCREC?": {
+    "lang": "en",
+    "answer": "The principal of Doctor B. C. Roy Engineering College is Doctor Sanjay S. Pawar.",
+    "voice_text": "The principal of Doctor B. C. Roy Engineering College is Doctor Sanjay S. Pawar.",
+    "latency_ms": 5194,
+    "validated": true,
+    "model": "llama-3.1-8b-instant",
+    "issues": []
+  },
+  "Who is the vice principal?": {
+    "lang": "en",
+    "answer": "The Vice Principal of BCREC is Professor (Doctor) K. M. Hossain.",
+    "voice_text": "The Vice Principal of BCREC is Professor (Doctor) K. M. Hossain.",
+    "latency_ms": 712,
+    "validated": true,
+    "model": "llama-3.1-8b-instant",
+    "issues": []
+  },
+  "What is the fee for CSE?": {
+    "lang": "en",
+    "answer": "The fee for Computer Science and Engineering is not mentioned in the given context. However, it is mentioned that the B Tech Computer Science and Engineering, Information Technology, and Electronics a",
+    "voice_text": "The fee for Computer Science and Engineering is not mentioned in the given context. However, it is mentioned that the B Tech Computer Science and Engineering, Information Technology, and Electronics a",
+    "latency_ms": 799,
+    "validated": true,
+    "model": "llama-3.1-8b-instant",
+    "issues": []
+  },
+  "What placements does BCREC have?": {
+    "lang": "en",
+    "answer": "BCREC has a very good placement record. The overall placement rate is ninety-one percent, and the Computer Science and Engineering placement rate is ninety-three point six percent. Top recruiters incl",
+    "voice_text": "BCREC has a very good placement record. The overall placement rate is ninety-one percent, and the Computer Science and Engineering placement rate is ninety-three point six percent. Top recruiters incl",
+    "latency_ms": 7209,
+    "validated": true,
+    "model": "llama-3.1-8b-instant",
+    "issues": []
+  },
+  "What is the address of BCREC?": {
+    "lang": "en",
+    "answer": "The address of BCREC is Jemua Road, Fuljhore, Durgapur - seven one three two zero six, West Bengal.",
+    "voice_text": "The address of BCREC is Jemua Road, Fuljhore, Durgapur - seven one three two zero six, West Bengal.",
+    "latency_ms": 26392,
+    "validated": true,
+    "model": "llama-3.1-8b-instant",
+    "issues": []
+  },
+  "What departments are available?": {
+    "lang": "en",
+    "answer": "The departments available at BCREC are Computer Science and Engineering, Information Technology, Electronics and Communication Engineering, M. C. A., M. B. A., and other departments.",
+    "voice_text": "The departments available at BCREC are Computer Science and Engineering, Information Technology, Electronics and Communication Engineering, M. C. A., M. B. A., and other departments.",
+    "latency_ms": 20327,
+    "validated": true,
+    "model": "llama-3.1-8b-instant",
+    "issues": []
+  },
+  "How is the hostel facility?": {
+    "lang": "en",
+    "answer": "The hostel facility at BCREC is quite good. The college provides on-campus hostel facilities for both boys and girls, with a total capacity of fifteen hundred students. There are five hostels in total",
+    "voice_text": "The hostel facility at BCREC is quite good. The college provides on-campus hostel facilities for both boys and girls, with a total capacity of fifteen hundred students. There are five hostels in total",
+    "latency_ms": 21444,
+    "validated": true,
+    "model": "llama-3.1-8b-instant",
+    "issues": []
+  },
+  "Tell me about admission eligibility": {
+    "lang": "en",
+    "answer": "बी.टेक में एडमिशन के लिए पात्रता दस+दो पीसीएम के साथ है, जिसमें सामान्य श्रेणी के लिए न्यूनतम पचास percent अंक होने चाहिए।",
+    "voice_text": "बी.टेक में एडमिशन के लिए पात्रता दस+दो पीसीएम के साथ है, जिसमें सामान्य श्रेणी के लिए न्यूनतम पचास percent अंक होने चाहिए।",
+    "latency_ms": 14400,
+    "validated": true,
+    "model": "llama-3.1-8b-instant",
+    "issues": []
+  },
+  "BCREC ka principal kaun hai?": {
+    "lang": "hi",
+    "answer": "बीसीआरईसी के प्रिंसिपल डॉ. संजय एस. पवार हैं।",
+    "voice_text": "बीसीआरईसी के प्रिंसिपल डॉ. संजय एस. पवार हैं।",
+    "latency_ms": 27189,
+    "validated": true,
+    "model": "llama-3.1-8b-instant",
+    "issues": []
+  },
+  "CSE ka fee kitna hai?": {
+    "lang": "hi",
+    "answer": "बी.टेक सीएसई की कुल फीस छह लाख चार हज़ार सात सौ रुपये है।",
+    "voice_text": "बी.टेक सीएसई की कुल फीस छह लाख चार हज़ार सात सौ रुपये है।",
+    "latency_ms": 14934,
+    "validated": true,
+    "model": "llama-3.1-8b-instant",
+    "issues": []
+  },
+  "BCREC ka address kya hai?": {
+    "lang": "hi",
+    "answer": "बी.सी.आर.ई.सी. का पता जेमुआ रोड, फुलझोरे, डुर्गापुर - सात एक तीन दो शून्य छह, पश्चिम बंगाल है।",
+    "voice_text": "बी.सी.आर.ई.सी. का पता जेमुआ रोड, फुलझोरे, डुर्गापुर - सात एक तीन दो शून्य छह, पश्चिम बंगाल है।",
+    "latency_ms": 24265,
+    "validated": true,
+    "model": "llama-3.1-8b-instant",
+    "issues": []
+  },
+  "Hostel ki facility kaisi hai?": {
+    "lang": "hi",
+    "answer": "होस्टल की सुविधा वैकल्पिक है, अर्थात अनिवार्य नहीं है। छात्रों के लिए सिंगल बेड रूम की फीस तीस हज़ार रुपये प्रति सेमेस्टर है, जबकि डबल या ट्रिपल बेड रूम की फीस दस हज़ार रुपये प्रति सेमेस्टर है। मेस का",
+    "voice_text": "होस्टल की सुविधा वैकल्पिक है, अर्थात अनिवार्य नहीं है। छात्रों के लिए सिंगल बेड रूम की फीस तीस हज़ार रुपये प्रति सेमेस्टर है, जबकि डबल या ट्रिपल बेड रूम की फीस दस हज़ार रुपये प्रति सेमेस्टर है। मेस का",
+    "latency_ms": 25281,
+    "validated": true,
+    "model": "llama-3.1-8b-instant",
+    "issues": []
+  },
+  "প্রিন্সিপাল কে?": {
+    "lang": "bn",
+    "answer": "বিসিআরইসির প্রিন্সিপাল ড. সঞ্জয় এস পাওয়ার।",
+    "voice_text": "বিসিআরইসির প্রিন্সিপাল ড. সঞ্জয় এস পাওয়ার।",
+    "latency_ms": 11030,
+    "validated": true,
+    "model": "llama-3.1-8b-instant",
+    "issues": []
+  },
+  "CSE এর ফি কত?": {
+    "lang": "bn",
+    "answer": "সিএসই বিভাগের মোট ফি ছয় লাখ চার হাজার সাতশো টাকা।",
+    "voice_text": "সিএসই বিভাগের মোট ফি ছয় লাখ চার হাজার সাতশো টাকা।",
+    "latency_ms": 20169,
+    "validated": true,
+    "model": "llama-3.1-8b-instant",
+    "issues": []
+  }
+}

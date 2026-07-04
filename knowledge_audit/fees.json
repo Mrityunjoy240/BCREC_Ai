@@ -1,0 +1,53 @@
+[
+  {
+    "category": "B.Tech (CSE, IT, ECE)",
+    "total": 604700,
+    "admission": 98225,
+    "per_semester": 72925,
+    "first_semester": 98225,
+    "eighth_semester": 73925,
+    "source": "canonical_kb.json > fees_summary > semester_wise_cse_it_ece",
+    "provenance": {
+      "source_type": "manual_entry",
+      "date_verified": "2026-06-28",
+      "confidence": "medium",
+      "notes": "Fee summary from combined_kb.json. See official PDF from bcrec.ac.in for semester-wise breakdown."
+    }
+  },
+  {
+    "category": "B.Tech (EE, AIML, DS, CY, CSD)",
+    "total": 554100,
+    "admission": 91900,
+    "per_semester": 66100,
+    "first_semester": 91900,
+    "eighth_semester": 67100,
+    "source": "canonical_kb.json > fees_summary > semester_wise_ee_group"
+  },
+  {
+    "category": "B.Tech (ME, CE)",
+    "total": 444100,
+    "admission": 78150,
+    "per_semester": 40800,
+    "first_semester": 78150,
+    "eighth_semester": 41800,
+    "source": "canonical_kb.json > fees_summary > semester_wise_me_ce"
+  },
+  {
+    "category": "MBA",
+    "total": 419200,
+    "admission": 121400,
+    "source": "canonical_kb.json > courses > mba > fees"
+  },
+  {
+    "category": "MCA",
+    "total": 208800,
+    "admission": 67200,
+    "source": "canonical_kb.json > courses > mca > fees"
+  },
+  {
+    "category": "M.Tech",
+    "total": 120400,
+    "admission": 40800,
+    "source": "canonical_kb.json > courses > mtech > fees"
+  }
+]

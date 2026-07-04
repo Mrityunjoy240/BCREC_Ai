@@ -1,0 +1,1 @@
+start /B /HIGH python scriptslivekit_agent.py start ^ 2^

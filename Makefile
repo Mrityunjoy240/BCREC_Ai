@@ -24,7 +24,7 @@ format:
 
 # Verification: Testing
 test:
-	python -m pytest backend/tests
+	python -m pytest backend/tests tests/
 
 # Orchestration: Start Everything (using start_reliable.py logic)
 start-all:

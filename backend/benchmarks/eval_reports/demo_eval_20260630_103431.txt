@@ -1,0 +1,145 @@
+================================================================================
+  DEMO READINESS EVALUATION REPORT
+  Generated: 2026-06-30T10:34:31.989077
+================================================================================
+
+  Total questions evaluated: 142
+  Questions with RAG context: 133/142 (93.7%)
+  KB has answer for: 113/142 (79.6%)
+  Errors: 9
+
+--------------------------------------------------------------------------------
+  HALLUCINATION & RETRIEVAL ANALYSIS
+--------------------------------------------------------------------------------
+  Hallucination detected: 16/142 (11.3%)
+  Average latency: 36502ms
+  Retrieval Recall@30 (has context): 133/142 = 93.7%
+  Estimated accuracy (on KB-answerable): 105/113 = 92.9%
+
+--------------------------------------------------------------------------------
+  RESULTS BY CATEGORY
+--------------------------------------------------------------------------------
+  admission            n=17 ctx=17 hall= 1 ka=13 lat=30362ms
+  ambiguous            n= 6 ctx= 6 hall= 0 ka= 6 lat=15083ms
+  campus               n= 8 ctx= 8 hall= 1 ka= 7 lat=62982ms
+  contact              n= 2 ctx= 2 hall= 0 ka= 2 lat=50839ms
+  courses              n= 2 ctx= 2 hall= 0 ka= 2 lat=52395ms
+  departments          n=10 ctx=10 hall= 0 ka= 9 lat=20209ms
+  eligibility          n= 2 ctx= 2 hall= 0 ka= 2 lat=71326ms
+  facilities           n= 1 ctx= 1 hall= 0 ka= 1 lat=89163ms
+  faculty              n=15 ctx=15 hall= 0 ka=12 lat=33167ms
+  fees                 n=19 ctx=19 hall= 0 ka=16 lat=34203ms
+  followup             n= 2 ctx= 2 hall= 0 ka= 2 lat=13984ms
+  hostel               n=16 ctx=16 hall= 1 ka=14 lat=38976ms
+  international        n= 1 ctx= 1 hall= 0 ka= 1 lat=21148ms
+  multi_turn           n= 8 ctx= 1 hall= 7 ka= 5 lat=2335ms
+  online               n= 1 ctx= 1 hall= 1 ka= 1 lat=69940ms
+  placement            n=10 ctx=10 hall= 0 ka= 8 lat=30026ms
+  policies             n= 4 ctx= 3 hall= 1 ka= 3 lat=58722ms
+  refund               n= 2 ctx= 2 hall= 0 ka= 2 lat=79021ms
+  scholarship          n= 5 ctx= 5 hall= 0 ka= 4 lat=41256ms
+  unknown              n= 5 ctx= 5 hall= 3 ka= 0 lat=66377ms
+  why_bcrec            n= 6 ctx= 5 hall= 1 ka= 3 lat=48734ms
+
+--------------------------------------------------------------------------------
+  RESULTS BY LANGUAGE
+--------------------------------------------------------------------------------
+  BANGLISH     n=12 ctx=12 hall= 1 lat=16897ms
+  BN           n=18 ctx=18 hall= 0 lat=20378ms
+  EN           n=80 ctx=73 hall=13 lat=45819ms
+  HI           n=20 ctx=18 hall= 2 lat=37678ms
+  HINGLISH     n=12 ctx=12 hall= 0 lat=16223ms
+
+--------------------------------------------------------------------------------
+  FAILED / HALLUCINATED QUESTIONS
+--------------------------------------------------------------------------------
+  # 16 [EN      /hostel      ] HALL=YES CTX= 500
+       Q: How many hostels are there in BCREC?
+       A: I'm sorry, I don't have that specific information. Please call the college at 0 3 4 3, 2 5 0 1 3 5 3 for accurate detail
+
+  # 41 [EN      /unknown     ] HALL=YES CTX= 500
+       Q: What is the weather like in Durgapur?
+       A: I'm sorry, I don't have that specific information. Please call the college at 0 3 4 3, 2 5 0 1 3 5 3 for accurate detail
+
+  # 43 [EN      /unknown     ] HALL=YES CTX= 500
+       Q: Who won the 2024 T20 World Cup?
+       A: I'm sorry, I don't have that specific information. Please call the college at 0 3 4 3, 2 5 0 1 3 5 3 for accurate detail
+
+  # 45 [EN      /unknown     ] HALL=YES CTX= 500
+       Q: What is the stock price of Apple?
+       A: I'm sorry, I don't have that specific information. Please call the college at 0 3 4 3, 2 5 0 1 3 5 3 for accurate detail
+
+  # 46 [EN      /campus      ] HALL=YES CTX= 500
+       Q: Does BCREC have a library?
+       A: I'm sorry, I don't have that specific information. Please call the college at 0 3 4 3, 2 5 0 1 3 5 3 for accurate detail
+
+  # 66 [EN      /online      ] HALL=YES CTX= 500
+       Q: Does BCREC have online classes?
+       A: I'm sorry, I don't have that specific information. Please call the college at 0 3 4 3, 2 5 0 1 3 5 3 for accurate detail
+
+  #120 [BANGLISH/admission   ] HALL=YES CTX= 500
+       Q: Vorti process ta ki?
+       A: I'm sorry, I don't have that specific information. Please call the college at 0 3 4 3, 2 5 0 1 3 5 3 for accurate detail
+
+  #134 [EN      /multi_turn  ] HALL=YES CTX=   0
+       Q: What about AIML?
+       A: ERROR: All connection attempts failed
+
+  #135 [EN      /multi_turn  ] HALL=YES CTX=   0
+       Q: What documents do I need for admission?
+       A: ERROR: All connection attempts failed
+
+  #136 [EN      /multi_turn  ] HALL=YES CTX=   0
+       Q: Where can I track my application?
+       A: ERROR: All connection attempts failed
+
+  #137 [EN      /multi_turn  ] HALL=YES CTX=   0
+       Q: Who is the principal?
+       A: ERROR: All connection attempts failed
+
+  #138 [EN      /multi_turn  ] HALL=YES CTX=   0
+       Q: And the vice principal?
+       A: ERROR: All connection attempts failed
+
+  #139 [HI      /multi_turn  ] HALL=YES CTX=   0
+       Q: प्रिंसिपल कौन हैं?
+       A: ERROR: All connection attempts failed
+
+  #140 [HI      /multi_turn  ] HALL=YES CTX=   0
+       Q: उप-प्रिंसिपल कौन हैं?
+       A: ERROR: All connection attempts failed
+
+  #141 [EN      /policies    ] HALL=YES CTX=   0
+       Q: Are there any rules about attendance?
+       A: ERROR: All connection attempts failed
+
+  #142 [EN      /why_bcrec   ] HALL=YES CTX=   0
+       Q: What accreditation does BCREC have?
+       A: ERROR: All connection attempts failed
+
+
+--------------------------------------------------------------------------------
+  LANGUAGE DISTRIBUTION
+--------------------------------------------------------------------------------
+  BANGLISH    : 12 (8%)
+  BN          : 18 (13%)
+  EN          : 80 (56%)
+  HI          : 20 (14%)
+  HINGLISH    : 12 (8%)
+
+--------------------------------------------------------------------------------
+  ERRORS
+--------------------------------------------------------------------------------
+  #134: What about AIML? -> ERROR: All connection attempts failed
+  #135: What documents do I need for admission? -> ERROR: All connection attempts failed
+  #136: Where can I track my application? -> ERROR: All connection attempts failed
+  #137: Who is the principal? -> ERROR: All connection attempts failed
+  #138: And the vice principal? -> ERROR: All connection attempts failed
+  #139: प्रिंसिपल कौन हैं? -> ERROR: All connection attempts failed
+  #140: उप-प्रिंसिपल कौन हैं? -> ERROR: All connection attempts failed
+  #141: Are there any rules about attendance? -> ERROR: All connection attempts failed
+  #142: What accreditation does BCREC have? -> ERROR: All connection attempts failed
+
+================================================================================
+  END OF REPORT
+================================================================================

@@ -1,0 +1,176 @@
+================================================================================
+  DEMO READINESS EVALUATION REPORT
+  Questions: 142, Hallucinations: 68, Errors: 62, With Context: 80
+  Hallucination rate: 47.9%
+  Retrieval Recall@30: 56.3%
+  Estimated accuracy: 53/89 = 59.6%
+  Average latency: 30195ms
+
+  By Category:
+    admission       n=17 ctx= 9 hall= 8 lat=22708ms
+    ambiguous       n= 6 ctx= 0 hall= 6 lat=0ms
+    campus          n= 8 ctx= 5 hall= 4 lat=51046ms
+    contact         n= 2 ctx= 2 hall= 0 lat=50839ms
+    courses         n= 2 ctx= 2 hall= 0 lat=52395ms
+    departments     n=10 ctx= 6 hall= 4 lat=12582ms
+    eligibility     n= 2 ctx= 2 hall= 0 lat=71326ms
+    facilities      n= 1 ctx= 1 hall= 0 lat=89163ms
+    faculty         n=15 ctx= 9 hall= 6 lat=28464ms
+    fees            n=19 ctx=10 hall= 9 lat=26796ms
+    followup        n= 2 ctx= 0 hall= 2 lat=0ms
+    hostel          n=16 ctx= 8 hall= 9 lat=29401ms
+    international   n= 1 ctx= 1 hall= 0 lat=21148ms
+    multi_turn      n= 8 ctx= 0 hall= 8 lat=0ms
+    online          n= 1 ctx= 1 hall= 1 lat=69940ms
+    placement       n=10 ctx= 7 hall= 3 lat=24177ms
+    policies        n= 4 ctx= 3 hall= 1 lat=58722ms
+    refund          n= 2 ctx= 2 hall= 0 lat=79021ms
+    scholarship     n= 5 ctx= 3 hall= 2 lat=35737ms
+    unknown         n= 5 ctx= 5 hall= 3 lat=66377ms
+    why_bcrec       n= 6 ctx= 4 hall= 2 lat=47718ms
+
+  By Language:
+    BANGLISH   n=12 ctx= 0 hall=12 lat=0ms
+    BN         n=18 ctx= 0 hall=18 lat=0ms
+    EN         n=80 ctx=66 hall=20 lat=44522ms
+    HI         n=20 ctx=14 hall= 6 lat=36295ms
+    HINGLISH   n=12 ctx= 0 hall=12 lat=0ms
+
+  Failed/Hallucinated:
+    # 16 [EN      /hostel      ] hall=YES ctx= 500  Q: How many hostels are there in BCREC?
+      A: I'm sorry, I don't have that specific information. Please call the college at 0 3 4 3, 2 5 0 1 3 5 3 for accurate detail
+    # 41 [EN      /unknown     ] hall=YES ctx= 500  Q: What is the weather like in Durgapur?
+      A: I'm sorry, I don't have that specific information. Please call the college at 0 3 4 3, 2 5 0 1 3 5 3 for accurate detail
+    # 43 [EN      /unknown     ] hall=YES ctx= 500  Q: Who won the 2024 T20 World Cup?
+      A: I'm sorry, I don't have that specific information. Please call the college at 0 3 4 3, 2 5 0 1 3 5 3 for accurate detail
+    # 45 [EN      /unknown     ] hall=YES ctx= 500  Q: What is the stock price of Apple?
+      A: I'm sorry, I don't have that specific information. Please call the college at 0 3 4 3, 2 5 0 1 3 5 3 for accurate detail
+    # 46 [EN      /campus      ] hall=YES ctx= 500  Q: Does BCREC have a library?
+      A: I'm sorry, I don't have that specific information. Please call the college at 0 3 4 3, 2 5 0 1 3 5 3 for accurate detail
+    # 66 [EN      /online      ] hall=YES ctx= 500  Q: Does BCREC have online classes?
+      A: I'm sorry, I don't have that specific information. Please call the college at 0 3 4 3, 2 5 0 1 3 5 3 for accurate detail
+    # 81 [HI      /why_bcrec   ] hall=YES ctx=   0  Q: बीसीआरईसी एनबीए मान्यता प्राप्त है?
+      A: ERROR: All connection attempts failed
+    # 82 [HI      /admission   ] hall=YES ctx=   0  Q: क्या लेटरल एंट्री मिलती है?
+      A: ERROR: All connection attempts failed
+    # 83 [HI      /hostel      ] hall=YES ctx=   0  Q: लड़कियों के लिए हॉस्टल है?
+      A: ERROR: All connection attempts failed
+    # 84 [BN      /departments ] hall=YES ctx=   0  Q: বিসিআরইসি-তে কোন কোন ডিপার্টমেন্ট আছে?
+      A: ERROR: All connection attempts failed
+    # 85 [BN      /departments ] hall=YES ctx=   0  Q: বি.টেক এ কী কী শাখা আছে?
+      A: ERROR: All connection attempts failed
+    # 86 [BN      /fees        ] hall=YES ctx=   0  Q: বি.টেক সিএসই এর ফি কত?
+      A: ERROR: All connection attempts failed
+    # 87 [BN      /fees        ] hall=YES ctx=   0  Q: এআইএমএল কোর্সের ফি কত?
+      A: ERROR: All connection attempts failed
+    # 88 [BN      /fees        ] hall=YES ctx=   0  Q: এমবিএ এর মোট ফি কত?
+      A: ERROR: All connection attempts failed
+    # 89 [BN      /hostel      ] hall=YES ctx=   0  Q: হোস্টেল ফি কত?
+      A: ERROR: All connection attempts failed
+    # 90 [BN      /hostel      ] hall=YES ctx=   0  Q: হোস্টেল কি বাধ্যতামূলক?
+      A: ERROR: All connection attempts failed
+    # 91 [BN      /placement   ] hall=YES ctx=   0  Q: বিসিআরইসি এর প্লেসমেন্ট রেট কত?
+      A: ERROR: All connection attempts failed
+    # 92 [BN      /admission   ] hall=YES ctx=   0  Q: ভর্তির প্রক্রিয়া কী?
+      A: ERROR: All connection attempts failed
+    # 93 [BN      /admission   ] hall=YES ctx=   0  Q: ভর্তির জন্য কী কী ডকুমেন্ট লাগে?
+      A: ERROR: All connection attempts failed
+    # 94 [BN      /faculty     ] hall=YES ctx=   0  Q: প্রিন্সিপাল কে?
+      A: ERROR: All connection attempts failed
+    # 95 [BN      /faculty     ] hall=YES ctx=   0  Q: উপ-প্রিন্সিপাল কে?
+      A: ERROR: All connection attempts failed
+    # 96 [BN      /faculty     ] hall=YES ctx=   0  Q: সিএসই বিভাগের প্রধান কে?
+      A: ERROR: All connection attempts failed
+    # 97 [BN      /campus      ] hall=YES ctx=   0  Q: ক্যাম্পাসে ওয়াই-ফাই আছে?
+      A: ERROR: All connection attempts failed
+    # 98 [BN      /scholarship ] hall=YES ctx=   0  Q: স্কলারশিপ কী কী পাওয়া যায়?
+      A: ERROR: All connection attempts failed
+    # 99 [BN      /admission   ] hall=YES ctx=   0  Q: ল্যাটারাল এন্ট্রি কি পাওয়া যায়?
+      A: ERROR: All connection attempts failed
+    #100 [BN      /hostel      ] hall=YES ctx=   0  Q: ছেলেদের জন্য আলাদা হোস্টেল আছে?
+      A: ERROR: All connection attempts failed
+    #101 [HINGLISH/departments ] hall=YES ctx=   0  Q: BCREC me kaun se departments hain?
+      A: ERROR: All connection attempts failed
+    #102 [HINGLISH/fees        ] hall=YES ctx=   0  Q: CSE ka fee kitna hai?
+      A: ERROR: All connection attempts failed
+    #103 [HINGLISH/fees        ] hall=YES ctx=   0  Q: MBA ki total fee kya hai?
+      A: ERROR: All connection attempts failed
+    #104 [HINGLISH/fees        ] hall=YES ctx=   0  Q: Admission fee kitni hai?
+      A: ERROR: All connection attempts failed
+    #105 [HINGLISH/hostel      ] hall=YES ctx=   0  Q: Hostel fee kitni hai bhai?
+      A: ERROR: All connection attempts failed
+    #106 [HINGLISH/hostel      ] hall=YES ctx=   0  Q: Kya hostel compulsory hai?
+      A: ERROR: All connection attempts failed
+    #107 [HINGLISH/placement   ] hall=YES ctx=   0  Q: Placement kitna percent hai BCREC mein?
+      A: ERROR: All connection attempts failed
+    #108 [HINGLISH/admission   ] hall=YES ctx=   0  Q: Admission ke liye kya karna padta hai?
+      A: ERROR: All connection attempts failed
+    #109 [HINGLISH/admission   ] hall=YES ctx=   0  Q: BTech ke liye kya eligibility hai?
+      A: ERROR: All connection attempts failed
+    #110 [HINGLISH/faculty     ] hall=YES ctx=   0  Q: Principal kaun hain?
+      A: ERROR: All connection attempts failed
+    #111 [HINGLISH/campus      ] hall=YES ctx=   0  Q: WiFi available hai campus mein?
+      A: ERROR: All connection attempts failed
+    #112 [HINGLISH/scholarship ] hall=YES ctx=   0  Q: Scholarship milti hai kya?
+      A: ERROR: All connection attempts failed
+    #113 [BANGLISH/departments ] hall=YES ctx=   0  Q: BCREC te ki ki department ache?
+      A: ERROR: All connection attempts failed
+    #114 [BANGLISH/fees        ] hall=YES ctx=   0  Q: CSE er fee koto?
+      A: ERROR: All connection attempts failed
+    #115 [BANGLISH/fees        ] hall=YES ctx=   0  Q: AIML er total fee koto?
+      A: ERROR: All connection attempts failed
+    #116 [BANGLISH/fees        ] hall=YES ctx=   0  Q: Admission fee koto?
+      A: ERROR: All connection attempts failed
+    #117 [BANGLISH/hostel      ] hall=YES ctx=   0  Q: Hostel er fee koto?
+      A: ERROR: All connection attempts failed
+    #118 [BANGLISH/hostel      ] hall=YES ctx=   0  Q: Hostel ki compulsory?
+      A: ERROR: All connection attempts failed
+    #119 [BANGLISH/placement   ] hall=YES ctx=   0  Q: Placement rate koto BCREC te?
+      A: ERROR: All connection attempts failed
+    #120 [BANGLISH/admission   ] hall=YES ctx=   0  Q: Vorti process ta ki?
+      A: ERROR: All connection attempts failed
+    #121 [BANGLISH/admission   ] hall=YES ctx=   0  Q: Btech e vortir jonno ki ki document lagbe?
+      A: ERROR: All connection attempts failed
+    #122 [BANGLISH/faculty     ] hall=YES ctx=   0  Q: Principal ke?
+      A: ERROR: All connection attempts failed
+    #123 [BANGLISH/faculty     ] hall=YES ctx=   0  Q: CSE department er HOD ke?
+      A: ERROR: All connection attempts failed
+    #124 [BANGLISH/campus      ] hall=YES ctx=   0  Q: Campus e WiFi ache?
+      A: ERROR: All connection attempts failed
+    #125 [EN      /ambiguous   ] hall=YES ctx=   0  Q: What is the fee?
+      A: ERROR: All connection attempts failed
+    #126 [EN      /ambiguous   ] hall=YES ctx=   0  Q: Who is the HOD?
+      A: ERROR: All connection attempts failed
+    #127 [EN      /followup    ] hall=YES ctx=   0  Q: Tell me more about fees
+      A: ERROR: All connection attempts failed
+    #128 [EN      /followup    ] hall=YES ctx=   0  Q: What about placements?
+      A: ERROR: All connection attempts failed
+    #129 [EN      /ambiguous   ] hall=YES ctx=   0  Q: Is it good?
+      A: ERROR: All connection attempts failed
+    #130 [HI      /ambiguous   ] hall=YES ctx=   0  Q: फीस कितनी है?
+      A: ERROR: All connection attempts failed
+    #131 [BN      /ambiguous   ] hall=YES ctx=   0  Q: ফি কত?
+      A: ERROR: All connection attempts failed
+    #132 [EN      /ambiguous   ] hall=YES ctx=   0  Q: How many departments?
+      A: ERROR: All connection attempts failed
+    #133 [EN      /multi_turn  ] hall=YES ctx=   0  Q: What is the fee for CSE?
+      A: ERROR: All connection attempts failed
+    #134 [EN      /multi_turn  ] hall=YES ctx=   0  Q: What about AIML?
+      A: ERROR: All connection attempts failed
+    #135 [EN      /multi_turn  ] hall=YES ctx=   0  Q: What documents do I need for admission?
+      A: ERROR: All connection attempts failed
+    #136 [EN      /multi_turn  ] hall=YES ctx=   0  Q: Where can I track my application?
+      A: ERROR: All connection attempts failed
+    #137 [EN      /multi_turn  ] hall=YES ctx=   0  Q: Who is the principal?
+      A: ERROR: All connection attempts failed
+    #138 [EN      /multi_turn  ] hall=YES ctx=   0  Q: And the vice principal?
+      A: ERROR: All connection attempts failed
+    #139 [HI      /multi_turn  ] hall=YES ctx=   0  Q: प्रिंसिपल कौन हैं?
+      A: ERROR: All connection attempts failed
+    #140 [HI      /multi_turn  ] hall=YES ctx=   0  Q: उप-प्रिंसिपल कौन हैं?
+      A: ERROR: All connection attempts failed
+    #141 [EN      /policies    ] hall=YES ctx=   0  Q: Are there any rules about attendance?
+      A: ERROR: All connection attempts failed
+    #142 [EN      /why_bcrec   ] hall=YES ctx=   0  Q: What accreditation does BCREC have?
+      A: ERROR: All connection attempts failed
+================================================================================

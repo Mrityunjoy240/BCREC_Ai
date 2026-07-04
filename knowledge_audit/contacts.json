@@ -1,0 +1,47 @@
+[
+  {
+    "type": "College Main",
+    "phones": [
+      "0343-2501353",
+      "0343-2502449",
+      "0343-2503985",
+      "0343-2503360",
+      "0343-2504224",
+      "0343-2504106"
+    ],
+    "email": "info@bcrec.ac.in",
+    "mobile": "+91-6297128554",
+    "address": "Jemua Road, Fuljhore, Durgapur - 713206, West Bengal",
+    "website": "https://www.bcrec.ac.in"
+  },
+  {
+    "type": "Principal",
+    "name": "Dr. Sanjay S. Pawar",
+    "phone": "0343-2501353",
+    "email": "principal@bcrec.ac.in"
+  },
+  {
+    "type": "Vice Principal",
+    "name": "Prof. (Dr.) K. M. Hossain",
+    "phone": "0343-2501353",
+    "email": "km.hossain@bcrec.ac.in"
+  },
+  {
+    "type": "Kolkata Office",
+    "address": "Concord Tower, 92/2A, Bidhannagar Road, Kolkata - 700067",
+    "phones": [
+      "033-23554412",
+      "033-23558703"
+    ],
+    "emails": [
+      "tpo.kol@bcrec.ac.in",
+      "bcrec_kol@yahoo.co.in"
+    ]
+  },
+  {
+    "type": "T&P Cell",
+    "head": "Mr. Atanu Maity",
+    "manager": "Mr. Deepraj Mondal",
+    "campus_incharge": "Prof. Prabal Kumar Sahu"
+  }
+]

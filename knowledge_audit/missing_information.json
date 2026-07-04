@@ -1,0 +1,1109 @@
+{
+  "summary": {
+    "duplicate_information": 3,
+    "missing_faculty_information": 12,
+    "missing_placement_statistics": 2
+  },
+  "details": {
+    "duplicate_information": [
+      "knowledge_base.json and canonical/canonical_kb.json contain overlapping data (fees, HODs, placements) in different formats",
+      "fees_summary has both aggregate (btech_cse_it_ece) and detailed (semester_wise_cse_it_ece) sections with overlapping data",
+      "CSE/IT/ECE fees appear in both fees_summary.btech_cse_it_ece and fees_summary.semester_wise_cse_it_ece"
+    ],
+    "conflicting_values": [],
+    "missing_department_information": [],
+    "missing_faculty_information": [
+      "AIML: No faculty listing beyond HOD",
+      "CE: No faculty listing beyond HOD",
+      "CSD: No faculty listing beyond HOD",
+      "CSE: No faculty listing beyond HOD",
+      "CY: No faculty listing beyond HOD",
+      "DS: No faculty listing beyond HOD",
+      "ECE: No faculty listing beyond HOD",
+      "EE: No faculty listing beyond HOD",
+      "IT: No faculty listing beyond HOD",
+      "MBA: No faculty listing beyond HOD",
+      "MCA: No faculty listing beyond HOD",
+      "ME: No faculty listing beyond HOD"
+    ],
+    "missing_placement_statistics": [
+      "MBA: No placement data",
+      "MCA: No placement data"
+    ],
+    "missing_laboratory_information": [],
+    "missing_admission_information": [],
+    "missing_fee_information": [],
+    "missing_hod_information": [],
+    "missing_contact_information": []
+  },
+  "knowledge_gaps_from_production": [
+    {
+      "query": "How many companies visited in 2025?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Tell me about Dr. Chandan Chattoraj",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "??? ??? ????? ????",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "??????????? ???",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "vice principal name",
+      "lang": "en",
+      "reason": "hallucination_guard: entities not found in context: ['0343', '2501353', '03432501353']",
+      "count": 1
+    },
+    {
+      "query": "placement rate",
+      "lang": "en",
+      "reason": "hallucination_guard: entities not found in context: ['0343', '2501353', '03432501353']",
+      "count": 1
+    },
+    {
+      "query": "who is vice principal",
+      "lang": "en",
+      "reason": "hallucination_guard: entities not found in context: ['0343', '2501353', '03432501353']",
+      "count": 1
+    },
+    {
+      "query": "vice principal name",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "I have 90k WBJEE rank and 50% marks in PCM, can I get admission?",
+      "lang": "en",
+      "reason": "hallucination_guard: entities not found in context: ['90000']",
+      "count": 1
+    },
+    {
+      "query": "What is his phone number?",
+      "lang": "en",
+      "reason": "hallucination_guard: entities not found in context: ['03432501353']",
+      "count": 1
+    },
+    {
+      "query": "मुझे सीएसी एंड एआईएमएल डिपार्टमेंट का फैकल्टी बारे में बताइए कौन कौन है क्या क्या है",
+      "lang": "hi",
+      "reason": "out_of_kb_deflection_stream",
+      "count": 1
+    },
+    {
+      "query": "What's the placement rate?",
+      "lang": "en",
+      "reason": "hallucination_guard: entities not found in context: ['936']",
+      "count": 1
+    },
+    {
+      "query": "placement rate kya hai?",
+      "lang": "hi",
+      "reason": "hallucination_guard: entities not found in context: ['936']",
+      "count": 1
+    },
+    {
+      "query": "What's the placement rate?",
+      "lang": "en",
+      "reason": "hallucination_guard: entities not found in context: ['936']",
+      "count": 1
+    },
+    {
+      "query": "placement rate kya hai?",
+      "lang": "hi",
+      "reason": "hallucination_guard: entities not found in context: ['936']",
+      "count": 1
+    },
+    {
+      "query": "Ami admission nite pari?",
+      "lang": "bn",
+      "reason": "hallucination_guard: entities not found in context: ['03432501353']",
+      "count": 1
+    },
+    {
+      "query": "Hostel ache?",
+      "lang": "bn",
+      "reason": "hallucination_guard: entities not found in context: ['১৫০০', '২০০০']",
+      "count": 1
+    },
+    {
+      "query": "Hostel ache?",
+      "lang": "bn",
+      "reason": "hallucination_guard: entities not found in context: ['১৫০০', '২০০০']",
+      "count": 1
+    },
+    {
+      "query": "Who is the vice Principal of this college?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection_stream",
+      "count": 1
+    },
+    {
+      "query": "Can I pay fees in installments?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Can I pay fees in installments?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What are the charges for the library?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Do engineering students have to pay lab fees separately?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Can I transfer from another college?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What's the acceptance rate for BCREC?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Do you offer lateral entry for diploma holders?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "How many faculty members are in the ECE department?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What are the qualifications of the CSE HOD?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "When does the placement season start?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What sports facilities are available?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Is there a library with good resources?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What are the charges for the library?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Do engineering students have to pay lab fees separately?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Can I transfer from another college?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What's the acceptance rate for BCREC?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Do you offer lateral entry for diploma holders?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "How many faculty members are in the ECE department?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Who handles student affairs?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "When does the placement season start?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What sports facilities are available?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Can I pay fees in installments?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What are the charges for the library?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Do engineering students have to pay lab fees separately?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What's the fee structure for IT branch?",
+      "lang": "en",
+      "reason": "hallucination_guard: entities not found in context: ['98225']",
+      "count": 1
+    },
+    {
+      "query": "Can I pay fees in installments?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What are the charges for the library?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Do engineering students have to pay lab fees separately?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Can I transfer from another college?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What's the acceptance rate for BCREC?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Do you offer lateral entry for diploma holders?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "How many faculty members are in the ECE department?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What are the qualifications of the CSE HOD?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Who is responsible for placements?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What's the contact number of the Principal's office?",
+      "lang": "en",
+      "reason": "hallucination_guard: entities not found in context: ['03432501353']",
+      "count": 1
+    },
+    {
+      "query": "When does the placement season start?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Can I pay fees in installments?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What are the charges for the library?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Do engineering students have to pay lab fees separately?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Is GATE score required for admission?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Can I transfer from another college?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What's the acceptance rate for BCREC?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Do you offer lateral entry for diploma holders?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "How many faculty members are in the ECE department?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What are the qualifications of the CSE HOD?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Who handles student affairs?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Who is responsible for placements?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Can I pay fees in installments?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What are the charges for the library?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Do engineering students have to pay lab fees separately?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Can I transfer from another college?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What's the acceptance rate for BCREC?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Do you offer lateral entry for diploma holders?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "How many faculty members are in the ECE department?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What are the qualifications of the CSE HOD?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Who handles student affairs?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Who is responsible for placements?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "When does the placement season start?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What sports facilities are available?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Is there a library with good resources?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Do you have computer labs?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What's the college address?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What is the total cost of studying at BCREC?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Can I pay fees in installments?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What are the charges for the library?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Do engineering students have to pay lab fees separately?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What's the acceptance rate for BCREC?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Do you offer lateral entry for diploma holders?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "How many faculty members are in the ECE department?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What are the qualifications of the CSE HOD?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Who handles student affairs?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Can I meet the Vice Principal?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What's the contact number of the Principal's office?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "When does the placement season start?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "How many companies visited for placements?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Do final year students get guaranteed placements?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What sports facilities are available?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What's the college address?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What are the college timings?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Can I pay fees in installments?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What are the charges for the library?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Do engineering students have to pay lab fees separately?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Can I transfer from another college?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What's the acceptance rate for BCREC?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Do you offer lateral entry for diploma holders?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "How many faculty members are in the ECE department?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What are the qualifications of the CSE HOD?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "How many students got placed last year?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "When does the placement season start?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What sports facilities are available?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What are the charges for the library?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Do engineering students have to pay lab fees separately?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Can I transfer from another college?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What's the acceptance rate for BCREC?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Do you offer lateral entry for diploma holders?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "How many faculty members are in the ECE department?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What are the qualifications of the CSE HOD?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What sports facilities are available?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Is there a library with good resources?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What's the college address?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What are the college timings?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "BCREC mein padhai ka total kharcha kitna hai?",
+      "lang": "hi",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "ECE saal mein kitne rupaye ka kharch hai?",
+      "lang": "hi",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Library ke liye kitna charge hai?",
+      "lang": "hi",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Agla pravesh chakra kab hai?",
+      "lang": "hi",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "CSE ke HOD ki yogyataen kya hain?",
+      "lang": "hi",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Kya main Vice Principal se mil sakta hoon?",
+      "lang": "hi",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Principal karyalaya ka phone number kya hai?",
+      "lang": "hi",
+      "reason": "hallucination_guard: entities not found in context: ['03432501353']",
+      "count": 1
+    },
+    {
+      "query": "Pichhle saal kitne chhatron ko jagah mili?",
+      "lang": "hi",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Placement ke liye kitni companies aayin?",
+      "lang": "hi",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Kya parivahan uplabdh hai?",
+      "lang": "hi",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Engineering shiksharthider alada lab fee dite hoy ki?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "CSE ebong anyo vibhager modhye fee parthokko koto?",
+      "lang": "bn",
+      "reason": "hallucination_guard: entities not found in context: ['03432501353']",
+      "count": 1
+    },
+    {
+      "query": "Shara bochhor abedon grohito hoy ki?",
+      "lang": "hi",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "GATE score proyojon ache ki?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Bhortir jonno ki ki dolil lage?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Poroborti bhirti chokro kokhon?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Shara bochhor abedon grohito hoy ki?",
+      "lang": "hi",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "GATE score proyojon ache ki?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Poroborti bhirti chokro kokhon?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Shara bochhor abedon grohito hoy ki?",
+      "lang": "hi",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "GATE score proyojon ache ki?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Bhortir jonno ki ki dolil lage?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Poroborti bhirti chokro kokhon?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Shikkharthi bishoyok dayittwe ke ache?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Placement season kokhon shuru hoy?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Campus e hostel ache ki?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Ki ki khelar subidha ache?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Campus e WiFi ache ki?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Poribohon upolobdh ache ki?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "How many hostels are there in BCREC?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What is the weather like in Durgapur?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Who won the 2024 T20 World Cup?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What is the stock price of Apple?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Does BCREC have a library?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Does BCREC have online classes?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Vorti process ta ki?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "How many hostels are there in BCREC?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "How many hostels are there in BCREC?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "Tell me about the CSE department",
+      "lang": "hi",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "How many hostels are there in BCREC?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "How many hostels are there in BCREC?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection_stream",
+      "count": 1
+    },
+    {
+      "query": "How many hostels are there in BCREC?",
+      "lang": "en",
+      "reason": "hallucination_guard: entities not found in context: ['03432501353', '03432502449']",
+      "count": 1
+    },
+    {
+      "query": "DC Royal का",
+      "lang": "hi",
+      "reason": "out_of_kb_deflection_stream",
+      "count": 1
+    },
+    {
+      "query": "What is the capital of France?",
+      "lang": "bn",
+      "reason": "low_confidence_retrieval_0.045",
+      "count": 1
+    },
+    {
+      "query": "How many seats in ECE department?",
+      "lang": "hi",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What is the placement rate of IT and how many companies visited?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What is the placement rate of IT and how many companies visited?",
+      "lang": "en",
+      "reason": "out_of_kb_deflection",
+      "count": 1
+    },
+    {
+      "query": "What is the cutoff for WBJEE?",
+      "lang": "en",
+      "reason": "hallucination_guard: entities not found in context: ['0343', '2501353', '03432501353']",
+      "count": 1
+    },
+    {
+      "query": "What is the fee for CSE?",
+      "lang": "en",
+      "reason": "hallucination_guard: entities not found in context: ['98225']",
+      "count": 1
+    },
+    {
+      "query": "Who is the principal of this college?",
+      "lang": "en",
+      "reason": "hallucination_guard: entities not found in context: ['03432501353']",
+      "count": 1
+    },
+    {
+      "query": "Principal ke baare mein batao",
+      "lang": "hi",
+      "reason": "hallucination_guard: entities not found in context: ['0343', '2501353', '03432501353']",
+      "count": 1
+    },
+    {
+      "query": "Is there any scholarship for SC students?",
+      "lang": "en",
+      "reason": "hallucination_guard: entities not found in context: ['03432501353']",
+      "count": 1
+    },
+    {
+      "query": "Bhai Mars mission kaise join karein?",
+      "lang": "hi",
+      "reason": "low_confidence_retrieval_0.093",
+      "count": 1
+    },
+    {
+      "query": "Principal ke baare mein batao",
+      "lang": "hi",
+      "reason": "hallucination_guard: entities not found in context: ['0343', '2501353', '03432501353']",
+      "count": 1
+    },
+    {
+      "query": "Bhai Mars mission kaise join karein?",
+      "lang": "hi",
+      "reason": "low_confidence_retrieval_0.093",
+      "count": 1
+    },
+    {
+      "query": "Principal ke baare mein batao",
+      "lang": "hi",
+      "reason": "hallucination_guard: entities not found in context: ['0343', '2501353', '03432501353']",
+      "count": 1
+    },
+    {
+      "query": "Who is the principal of this college?",
+      "lang": "en",
+      "reason": "hallucination_guard: entities not found in context: ['03432501353']",
+      "count": 1
+    },
+    {
+      "query": "Bhai Mars mission kaise join karein?",
+      "lang": "hi",
+      "reason": "low_confidence_retrieval_0.093",
+      "count": 1
+    }
+  ]
+}

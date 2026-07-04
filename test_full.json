@@ -1,0 +1,38 @@
+{
+  "Who is the principal of BCREC?": {
+    "answer": "The principal of Doctor B. C. Roy Engineering College is Doctor Sanjay S. Pawar.",
+    "model": "llama-3.1-8b-instant",
+    "latency_ms": 5967,
+    "validated": true
+  },
+  "BCREC ka principal kaun hai?": {
+    "answer": "बीसीआरईसी के प्रिंसिपल डॉ. संजय एस. पवार हैं।",
+    "model": "llama-3.1-8b-instant",
+    "latency_ms": 814,
+    "validated": true
+  },
+  "প্রিন্সিপাল কে?": {
+    "answer": "বিসিআরইসি এর প্রিন্সিপাল হলেন ড. সঞ্জয় এস পাওয়ার।",
+    "model": "llama-3.1-8b-instant",
+    "latency_ms": 640,
+    "validated": true
+  },
+  "Who is the vice principal?": {
+    "answer": "The Vice Principal of BCREC is Professor (Doctor) K. M. Hossain.",
+    "model": "llama-3.1-8b-instant",
+    "latency_ms": 16001,
+    "validated": true
+  },
+  "What is the fee for CSE?": {
+    "answer": "The total fee for Computer Science and Engineering is five lakh fifty four thousand one hundred rupees.",
+    "model": "llama-3.1-8b-instant",
+    "latency_ms": 15852,
+    "validated": true
+  },
+  "BCREC ka address kya hai?": {
+    "answer": "BCREC ka address Jemua Road, Fuljhore, Durgapur - seven lakh thirteen thousand two hundred and six, West Bengal hai.",
+    "model": "llama-3.1-8b-instant",
+    "latency_ms": 25005,
+    "validated": true
+  }
+}

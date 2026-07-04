@@ -34,6 +34,11 @@
       "bank": "Axis Bank",
       "branch": "City Centre, Durgapur-713216"
     },
+    "accounts": {
+      "phone": "7001380141",
+      "extension": "0343-2501353 extn. 278",
+      "email": "accounts@bcrec.ac.in"
+    },
     "kolkata_office": {
       "address": "Concord Tower, 92/2A, Bidhannagar Road, Kolkata - 700067",
       "phones": [
@@ -61,6 +66,7 @@
     ],
     "nirf": "Ranked 201-250 in the Engineering category (2025)",
     "aicte_idea_lab_rank": "#1 in India among 106 AICTE-IDEA LABS (2022-23)",
+    "e_govt_campus": "Recognized as e-Govt Campus by Engineering Watch and NIC",
     "campus_size_acres": 17,
     "why_bcrec": {
       "en": "NBA accredited (CSE, ECE, IT, EE, ME), NAAC B+ grade. Established in 2000, modern infrastructure, dedicated Training & Placement cell, GATE Forum, and active industry linkages.",
@@ -342,6 +348,16 @@
       },
       "scholarship": "10% tuition fee scholarship for eligible candidates"
     },
+    "mba_hosp_management": {
+      "full_name": "MBA (Hospital Management)",
+      "intake": 30,
+      "duration": "2 years",
+      "fees": {
+        "total": 419200,
+        "admission": 121400
+      },
+      "note": "Fee structure PDF available on bcrec.ac.in"
+    },
     "mca": {
       "intake": 120,
       "duration": "2 years",
@@ -356,7 +372,8 @@
         "M.Tech ECE",
         "M.Tech Power Systems",
         "M.Tech CSE",
-        "M.Tech ME"
+        "M.Tech ME",
+        "M.Tech Construction Technology and Management"
       ],
       "intake": 18,
       "duration": "2 years",
@@ -392,8 +409,12 @@
       "total": "Rs. 4,19,200",
       "admission": "Rs. 1,21,400"
     },
+    "mba_hosp_management": {
+      "total": "Rs. 4,19,200",
+      "admission": "Rs. 1,21,400"
+    },
     "mca": {
-      "total": "Rs. 2,17,400",
+      "total": "Rs. 2,08,800",
       "admission": "Rs. 67,200"
     },
     "mtech": {
@@ -414,8 +435,8 @@
       "description_first": "Includes admission fee, caution deposit, library fee, and tuition",
       "per_semester": 72925,
       "eighth": 73925,
-      "total_btech": 609700,
-      "total_description": "Rs. 6,09,700 for 4-year B.Tech CSE/IT/ECE"
+      "total_btech": 604700,
+      "total_description": "Rs. 6,04,700 for 4-year B.Tech CSE/IT/ECE"
     },
     "semester_wise_ee_group": {
       "first": 91900,
@@ -452,7 +473,7 @@
     },
     "lateral_entry": "10% of approved intake via JELET",
     "counseling": "WBJEEB at wbjeeb.nic.in",
-    "portal": "https://bcrec.ucanapply.com",
+    "portal": "https://bcrecdgp.ac.in",
     "contacts": {
       "general": [
         "9333928874",
@@ -599,13 +620,29 @@
       "hospital": "Tie-up with Mission Hospital",
       "womens_safety_helpline": "9851006415 (24x7)"
     },
+    "guest_house": {
+      "available": true,
+      "description": "Guest house facility available for parents and visitors"
+    },
+    "language_lab": "Language Lab in collaboration with IIT Kharagpur",
+    "ncc": "NCC Cadets program available",
+    "counselling_services": {
+      "psychological": "Psychological Counselling Services available",
+      "mental_health": "Mental Health Support Services available",
+      "internal_complaints": "Internal Complaints Committee available"
+    },
     "facilities": [
       "ATM",
       "Medical (Mission Hospital)",
       "Cafeteria",
       "Gym",
       "Solar Power",
-      "24x7 CCTV Security"
+      "24x7 CCTV Security",
+      "Guest House",
+      "Language Lab (IIT Kharagpur)",
+      "NCC",
+      "Psychological Counselling",
+      "EDUSAT"
     ],
     "transportation": {
       "en": "Students typically commute by private or public means. Dedicated college transport is not detailed on the official site.",
@@ -799,7 +836,7 @@
         "availability": "Maximum"
       }
     ],
-    "caution_money": 2000,
+    "caution_money": "Rs. 2,000 (hostel caution deposit) / Rs. 10,000 (without hostel) / Rs. 12,000 (with hostel) as admission caution deposit. All refundable.",
     "mess": {
       "monthly_charge": 5000,
       "months_per_year": 11,
@@ -847,7 +884,7 @@
   },
   "academics": {
     "faculty": {
-      "total": "150+",
+      "total": "281+",
       "description": "Core branches have experienced professors with PhDs. Newer CSE specializations (AI/ML) have mix of experienced and young, tech-savvy faculty."
     },
     "student_teacher_ratio": "15:1 to 20:1",
@@ -977,14 +1014,26 @@
   "quick_answers": {
     "btech_fee": "B.Tech total fees range from Rs. 444100 to Rs. 604700 depending on branch. CSE/IT/ECE: Rs. 604700. EE/AIML/DS/CS/CSD: Rs. 554100. ME/CE: Rs. 444100.",
     "placement_rate": "BCREC has 91% overall placement rate. CSE placement rate is 93.6%. Highest package: Rs. 7.0 LPA. Median package: Rs. 4.25 LPA.",
-    "hostel_fee": "Hostel is optional. Seat rent: Rs. 10,000 per semester. Mess charges: Rs. 5,500 per month. Caution deposit: Rs. 10,000 (without hostel) or Rs. 12,000 (with hostel), refundable.",
+    "hostel_fee": "Hostel is optional. Seat rent: Rs. 10,000 per semester. Mess charges: Rs. 5,000 per month. Caution deposit: Rs. 2,000 (hostel caution) or Rs. 10,000 (without hostel) / Rs. 12,000 (with hostel) as admission caution deposit, refundable.",
     "nba_accredited": "5 branches are NBA accredited: CSE, IT, ECE, EE, and ME.",
     "autonomous": "Yes, BCREC is an Autonomous Institute from 2024-25 batch onwards.",
-    "admission_through": "B.Tech admission through WBJEE (80%), JEE Main (10%), or Management Quota (10%)."
+    "admission_through": "B.Tech admission through WBJEE (80%), JEE Main (10%), or Management Quota (10%).",
+    "internship": "BCREC provides internship opportunities through its Training and Placement Cell. Students can apply for internships at visiting companies, research labs, and through online platforms. The TPO coordinates internship drives throughout the year.",
+    "tpo": "The Training and Placement Officer (TPO) at BCREC is Prof. S. De. Contact the TPO through the Training and Placement Cell for placement and internship queries.",
+    "branch_change": "Branch change is permitted after the first year based on academic performance and seat availability. Eligibility requires minimum CGPA as per college norms.",
+    "gym": "BCREC has a well-equipped gymnasium on campus available for students and staff.",
+    "auditorium": "BCREC has a fully air-conditioned auditorium with a capacity of 1000+ seats for seminars, cultural events, and college functions.",
+    "language_lab": "BCREC has a state-of-the-art Language Laboratory with 60+ terminals, established in collaboration with IIT Kharagpur, for improving communication skills.",
+    "ncc": "NCC (National Cadet Corps) is available at BCREC. Students can enroll and participate in camps, parades, and national events.",
+    "counselling": "BCREC provides counselling services through a dedicated student counselling cell for academic guidance, career counselling, and personal support.",
+    "departments_list": "BCREC has departments: Computer Science and Engineering (CSE), Information Technology (IT), Electronics and Communication Engineering (ECE), Electrical Engineering (EE), Mechanical Engineering (ME), Civil Engineering (CE), Master of Business Administration (MBA), and Master of Computer Applications (MCA).",
+    "civil_engineering": "Yes, BCREC has a Civil Engineering (CE) department offering a 4-year B.Tech program with an intake of 60 students. The department was established in 2002 and has well-equipped labs.",
+    "principal_contact": "The principal of BCREC is Dr. Sanjay S. Pawar. Email: principal@bcrec.ac.in. Phone: 0343-2501353 (College office).",
+    "college_timings": "College timings: Monday to Friday, 10:00 AM to 5:30 PM. Saturday and Sunday are closed. The college office can be contacted at 0343-2501353 during working hours."
   },
   "important_links": {
     "website": "https://www.bcrec.ac.in",
-    "admission_portal": "https://bcrec.ucanapply.com",
+    "admission_portal": "https://bcrecdgp.ac.in",
     "placements": "https://bcrec.ac.in/placements",
     "contact": "https://bcrec.ac.in/contact-us"
   },
@@ -1330,9 +1379,9 @@
         "প্রফেসর"
       ],
       "answers": {
-        "en": "BCREC has 150+ experienced faculty members. Student-teacher ratio is 15:1 to 20:1.",
-        "hi": "बीसीआरईसी में 150+ अनुभवी शिक्षक हैं। छात्र-शिक्षक अनुपात 15:1 to 20:1 है।",
-        "bn": "বিসিআরইসি তে 150+ অভিজ্ঞ শিক্ষক রয়েছেন। ছাত্র-শিক্ষক অনুপাত 15:1 to 20:1।"
+        "en": "BCREC has 281+ faculty members. Student-teacher ratio is 15:1 to 20:1.",
+        "hi": "बीसीआरईसी में 281+ शिक्षक हैं। छात्र-शिक्षक अनुपात 15:1 to 20:1 है।",
+        "bn": "বিসিআরইসি তে 281+ শিক্ষক রয়েছেন। ছাত্র-শিক্ষক অনুপাত 15:1 to 20:1।"
       }
     },
     "scholarship": {
@@ -1346,9 +1395,9 @@
         "kanyashree"
       ],
       "answers": {
-        "en": "BCREC offers Tuition Fee Waiver, Swami Vivekananda Scholarship, Kanyashree for girls, and OASIS or Aikyashree scholarships for SC, ST, OBC, and minority students.",
-        "hi": "बीसीआरईसी ट्यूशन फीस माफी, स्वामी विवेकानंद स्कॉलरशिप, लड़कियों के लिए कन्याश्री और एससी, एसटी, ओबीसी और अल्पसंख्यक छात्रों के लिए ओएसिस या ऐक्यश्री स्कॉलरशिप प्रदान करता है।",
-        "bn": "বিসিআরইসি টিউশন ফি ওয়েভার, স্বামী বিবেকানন্দ স্কলারশিপ, মেয়েদের জন্য কন্যাশ্রী এবং এসসি, এসটি, ওবিসি ও সংখ্যালঘু শিক্ষার্থীদের জন্য ওয়েসিস বা ঐক্যশ্রী স্কলারশিপ প্রদান করে।"
+        "en": "TFW (Tuition Fee Waiver) scheme is available for economically weaker students. BCREC also offers Swami Vivekananda Scholarship, Kanyashree for girls, and OASIS or Aikyashree scholarships for SC, ST, OBC, and minority students.",
+        "hi": "TFW (ट्यूशन फीस माफी) योजना आर्थिक रूप से कमजोर छात्रों के लिए उपलब्ध है। बीसीआरईसी स्वामी विवेकानंद स्कॉलरशिप, लड़कियों के लिए कन्याश्री और एससी, एसटी, ओबीसी और अल्पसंख्यक छात्रों के लिए ओएसिस या ऐक्यश्री स्कॉलरशिप भी प्रदान करता है।",
+        "bn": "TFW (টিউশন ফি ওয়েভার) স্কিম অর্থনৈতিকভাবে দুর্বল শিক্ষার্থীদের জন্য উপলব্ধ। বিসিআরইসি স্বামী বিবেকানন্দ স্কলারশিপ, মেয়েদের জন্য কন্যাশ্রী এবং এসসি, এসটি, ওবিসি ও সংখ্যালঘু শিক্ষার্থীদের জন্য ওয়েসিস বা ঐক্যশ্রী স্কলারশিপ প্রদান করে।"
       }
     },
     "documents": {
@@ -1479,6 +1528,31 @@
         "en": "Rank 80,000 with 65 percent PCM marks typically qualifies for CSE, CSE-AIML, CE, and ME. Rank 1,00,000 plus typically qualifies for EE, ECE, and lower-preference branches. Cutoffs vary yearly.",
         "hi": "रैंक 80,000 और PCM में 65% अंक पर आमतौर पर CSE, CSE-AIML, CE, और ME के लिए पात्रता होती है। कटऑफ साल-दर-साल बदलती रहती है।",
         "bn": "র‍্যাঙ্ক ৮০,০০০ এবং PCM এ ৬৫% মার্কস সাধারণত CSE, CSE-AIML, CE, এবং ME এর জন্য যোগ্যতা দেয়। কাটঅফ প্রতি বছর পরিবর্তিত হয়।"
+      }
+    },
+    "college_timings": {
+      "keywords": [
+        "timing",
+        "timings",
+        "college timings",
+        "college time",
+        "college hour",
+        "college hours",
+        "office hour",
+        "office hours",
+        "working hour",
+        "working hours",
+        "open time",
+        "close time",
+        "college open",
+        "college close",
+        "समय",
+        "ঘন্টা"
+      ],
+      "answers": {
+        "en": "College timings are Monday to Friday from 10:00 AM to 5:30 PM. The college is closed on Saturdays and Sundays.",
+        "hi": "कॉलेज का समय सोमवार से शुक्रवार सुबह 10:00 बजे से शाम 5:30 बजे तक है। शनिवार और रविवार को कॉलेज बंद रहता है।",
+        "bn": "কলেজের সময় সোমবার থেকে শুক্রবার সকাল ১০:০০ থেকে সন্ধ্যা ৫:৩০ পর্যন্ত। শনিবার এবং রবিবার কলেজ বন্ধ থাকে।"
       }
     }
   }

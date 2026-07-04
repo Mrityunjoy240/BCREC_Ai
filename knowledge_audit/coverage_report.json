@@ -1,0 +1,135 @@
+{
+  "department_coverage": {
+    "AIML": {
+      "HOD": "YES",
+      "Faculty": "PARTIAL (HOD only)",
+      "Labs": "NO (department-specific labs not documented)",
+      "Placement": "YES",
+      "Fees": "YES",
+      "Intake": "YES",
+      "Duration": "YES",
+      "Contact": "YES"
+    },
+    "CE": {
+      "HOD": "YES",
+      "Faculty": "PARTIAL (HOD only)",
+      "Labs": "NO (department-specific labs not documented)",
+      "Placement": "YES",
+      "Fees": "YES",
+      "Intake": "YES",
+      "Duration": "YES",
+      "Contact": "YES"
+    },
+    "CSD": {
+      "HOD": "YES",
+      "Faculty": "PARTIAL (HOD only)",
+      "Labs": "NO (department-specific labs not documented)",
+      "Placement": "YES",
+      "Fees": "YES",
+      "Intake": "YES",
+      "Duration": "YES",
+      "Contact": "YES"
+    },
+    "CSE": {
+      "HOD": "YES",
+      "Faculty": "PARTIAL (HOD only)",
+      "Labs": "NO (department-specific labs not documented)",
+      "Placement": "YES",
+      "Fees": "YES",
+      "Intake": "YES",
+      "Duration": "YES",
+      "Contact": "YES"
+    },
+    "CY": {
+      "HOD": "YES",
+      "Faculty": "PARTIAL (HOD only)",
+      "Labs": "NO (department-specific labs not documented)",
+      "Placement": "YES",
+      "Fees": "YES",
+      "Intake": "YES",
+      "Duration": "YES",
+      "Contact": "YES"
+    },
+    "DS": {
+      "HOD": "YES",
+      "Faculty": "PARTIAL (HOD only)",
+      "Labs": "NO (department-specific labs not documented)",
+      "Placement": "YES",
+      "Fees": "YES",
+      "Intake": "YES",
+      "Duration": "YES",
+      "Contact": "YES"
+    },
+    "ECE": {
+      "HOD": "YES",
+      "Faculty": "PARTIAL (HOD only)",
+      "Labs": "NO (department-specific labs not documented)",
+      "Placement": "YES",
+      "Fees": "YES",
+      "Intake": "YES",
+      "Duration": "YES",
+      "Contact": "YES"
+    },
+    "EE": {
+      "HOD": "YES",
+      "Faculty": "PARTIAL (HOD only)",
+      "Labs": "NO (department-specific labs not documented)",
+      "Placement": "YES",
+      "Fees": "YES",
+      "Intake": "YES",
+      "Duration": "YES",
+      "Contact": "YES"
+    },
+    "IT": {
+      "HOD": "YES",
+      "Faculty": "PARTIAL (HOD only)",
+      "Labs": "NO (department-specific labs not documented)",
+      "Placement": "YES",
+      "Fees": "YES",
+      "Intake": "YES",
+      "Duration": "YES",
+      "Contact": "YES"
+    },
+    "MBA": {
+      "HOD": "N/A (no HOD in data)",
+      "Faculty": "MISSING",
+      "Labs": "NO",
+      "Placement": "MISSING",
+      "Fees": "YES",
+      "Intake": "YES",
+      "Duration": "YES",
+      "Contact": "MISSING"
+    },
+    "MCA": {
+      "HOD": "N/A (no HOD in data)",
+      "Faculty": "MISSING",
+      "Labs": "NO",
+      "Placement": "MISSING",
+      "Fees": "YES",
+      "Intake": "YES",
+      "Duration": "YES",
+      "Contact": "MISSING"
+    },
+    "ME": {
+      "HOD": "YES",
+      "Faculty": "PARTIAL (HOD only)",
+      "Labs": "NO (department-specific labs not documented)",
+      "Placement": "YES",
+      "Fees": "YES",
+      "Intake": "YES",
+      "Duration": "YES",
+      "Contact": "YES"
+    },
+    "MTECH": {
+      "HOD": "N/A (no HOD in data)",
+      "Faculty": "MISSING",
+      "Labs": "NO",
+      "Placement": "MISSING",
+      "Fees": "YES",
+      "Intake": "YES",
+      "Duration": "YES",
+      "Contact": "MISSING"
+    }
+  },
+  "notes": "Each department checked for: HOD, Faculty (beyond HOD), Labs, Placement, Fees, Intake, Duration, Contact"
+}

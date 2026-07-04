@@ -1,0 +1,63 @@
+2026-07-04 10:48:56,618 - livekit-agent - INFO - [Diag 2026-07-04T05:18:56.618646+00:00] Target: bcrec-wr7kn3yu.livekit.cloud:443
+2026-07-04 10:48:56,693 - livekit-agent - INFO - [Diag 2026-07-04T05:18:56.618646+00:00] DNS OK: bcrec-wr7kn3yu.livekit.cloud -> ['64:ff9b::8fdf:5b06', '64:ff9b::8fdf:5b86', '143.223.91.6', '143.223.91.134'] in 74.4ms
+2026-07-04 10:48:56,693 - livekit-agent - ERROR - [Diag 2026-07-04T05:18:56.618646+00:00] TCP FAILED: 64:ff9b::8fdf:5b06:443 -> [Errno 11001] getaddrinfo failed in 0.1ms
+2026-07-04 10:48:56,693 - livekit-agent - ERROR - [Diag 2026-07-04T05:18:56.618646+00:00] TCP FAILED: 64:ff9b::8fdf:5b86:443 -> [Errno 11001] getaddrinfo failed in 0.0ms
+2026-07-04 10:48:56,780 - livekit-agent - INFO - [Diag 2026-07-04T05:18:56.618646+00:00] TCP OK: 143.223.91.6:443 in 86.7ms
+2026-07-04 10:48:56,804 - livekit-agent - ERROR - [Diag 2026-07-04T05:18:56.618646+00:00] TLS FAILED: bcrec-wr7kn3yu.livekit.cloud (64:ff9b::8fdf:5b06) -> [Errno 11001] getaddrinfo failed in 23.1ms
+2026-07-04 10:48:56,827 - livekit-agent - ERROR - [Diag 2026-07-04T05:18:56.618646+00:00] TLS FAILED: bcrec-wr7kn3yu.livekit.cloud (64:ff9b::8fdf:5b86) -> [Errno 11001] getaddrinfo failed in 22.8ms
+2026-07-04 10:48:57,076 - livekit-agent - INFO - [Diag 2026-07-04T05:18:56.618646+00:00] TLS OK: bcrec-wr7kn3yu.livekit.cloud (143.223.91.6) in 249.1ms
+2026-07-04 10:48:57,401 - livekit-agent - INFO - [Diag 2026-07-04T05:18:56.618646+00:00] WebSocket OK: wss://bcrec-wr7kn3yu.livekit.cloud/agent in 323.1ms
+2026-07-04 10:48:57,490 - livekit.agents - INFO - starting worker
+2026-07-04 10:48:57,490 - livekit.agents - INFO - plugin registered
+2026-07-04 10:48:57,492 - livekit.agents - INFO - HTTP server listening on :8081
+2026-07-04 10:48:57,496 - livekit.agents - INFO - initializing job runner
+2026-07-04 10:48:57,497 - livekit.agents - INFO - initializing job runner
+2026-07-04 10:48:57,497 - livekit.agents - INFO - initializing job runner
+2026-07-04 10:48:57,497 - livekit.agents - INFO - initializing job runner
+2026-07-04 10:48:57,497 - livekit-agent - INFO - Prewarming agent components (VAD, STT, LLM, TTS)...
+2026-07-04 10:48:57,498 - livekit-agent - INFO - Prewarming agent components (VAD, STT, LLM, TTS)...
+2026-07-04 10:48:57,498 - livekit-agent - INFO - Prewarming agent components (VAD, STT, LLM, TTS)...
+2026-07-04 10:48:57,498 - livekit-agent - INFO - Prewarming agent components (VAD, STT, LLM, TTS)...
+2026-07-04 10:48:58,160 - app.services.sarvam_service - INFO - Sarvam client initialized
+2026-07-04 10:48:58,161 - app.services.vector_store - INFO - ChromaDB path: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\chroma_db\chroma_db_v2
+2026-07-04 10:48:58,161 - app.services.vector_store - INFO - Initializing VectorStoreService with model: BAAI/bge-m3
+2026-07-04 10:48:58,247 - app.services.sarvam_service - INFO - Sarvam client initialized
+2026-07-04 10:48:58,248 - app.services.sarvam_service - INFO - Sarvam client initialized
+2026-07-04 10:48:58,248 - app.services.vector_store - INFO - ChromaDB path: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\chroma_db\chroma_db_v2
+2026-07-04 10:48:58,249 - app.services.vector_store - INFO - Initializing VectorStoreService with model: BAAI/bge-m3
+2026-07-04 10:48:58,250 - app.services.vector_store - INFO - ChromaDB path: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\chroma_db\chroma_db_v2
+2026-07-04 10:48:58,250 - app.services.vector_store - INFO - Initializing VectorStoreService with model: BAAI/bge-m3
+2026-07-04 10:48:58,253 - app.services.sarvam_service - INFO - Sarvam client initialized
+2026-07-04 10:48:58,254 - app.services.vector_store - INFO - ChromaDB path: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\chroma_db\chroma_db_v2
+2026-07-04 10:48:58,254 - app.services.vector_store - INFO - Initializing VectorStoreService with model: BAAI/bge-m3
+2026-07-04 10:49:03,325 - sentence_transformers.base.model - INFO - Loading SentenceTransformer model from BAAI/bge-m3.
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights: 100%|██████████| 391/391 [00:00<00:00, 21940.61it/s]
+2026-07-04 10:49:03,831 - sentence_transformers.base.model - INFO - Loading SentenceTransformer model from BAAI/bge-m3.
+2026-07-04 10:49:05,666 - sentence_transformers.base.model - INFO - Loading SentenceTransformer model from BAAI/bge-m3.
+2026-07-04 10:49:05,806 - app.services.vector_store - INFO - VectorStoreService initialized successfully
+2026-07-04 10:49:05,807 - app.services.llm.groq_service - INFO - Query cache ENABLED (ttl=600s, max=256)
+2026-07-04 10:49:05,807 - app.services.llm.groq_service - INFO - GroqService ready.
+2026-07-04 10:49:05,807 - livekit-agent - INFO - Prewarm complete — agent is ready to accept jobs.
+2026-07-04 10:49:05,809 - livekit.agents - INFO - job runner initialized
+2026-07-04 10:49:05,842 - sentence_transformers.base.model - INFO - Loading SentenceTransformer model from BAAI/bge-m3.
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s][ALoading weights: 100%|██████████| 391/391 [00:00<00:00, 6012.49it/s]
+Loading weights: 100%|██████████| 391/391 [00:00<00:00, 9082.80it/s]
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights:   5%|▌         | 21/391 [00:00<00:06, 53.13it/s]2026-07-04 10:49:10,926 - livekit.agents - WARNING - job executor is unresponsive
+Loading weights:   7%|▋         | 27/391 [00:03<01:06,  5.45it/s]Loading weights: 100%|██████████| 391/391 [00:03<00:00, 98.08it/s]
+2026-07-04 10:49:11,010 - app.services.vector_store - INFO - VectorStoreService initialized successfully
+2026-07-04 10:49:11,011 - app.services.llm.groq_service - INFO - Query cache ENABLED (ttl=600s, max=256)
+2026-07-04 10:49:11,011 - app.services.llm.groq_service - INFO - GroqService ready.
+2026-07-04 10:49:11,011 - livekit-agent - INFO - Prewarm complete — agent is ready to accept jobs.
+2026-07-04 10:49:11,012 - livekit.agents - INFO - job runner initialized
+2026-07-04 10:49:11,017 - app.services.vector_store - INFO - VectorStoreService initialized successfully
+2026-07-04 10:49:11,018 - app.services.llm.groq_service - INFO - Query cache ENABLED (ttl=600s, max=256)
+2026-07-04 10:49:11,018 - app.services.llm.groq_service - INFO - GroqService ready.
+2026-07-04 10:49:11,019 - livekit-agent - INFO - Prewarm complete — agent is ready to accept jobs.
+2026-07-04 10:49:11,019 - livekit.agents - INFO - job runner initialized
+2026-07-04 10:49:13,203 - app.services.vector_store - INFO - VectorStoreService initialized successfully
+2026-07-04 10:49:13,203 - app.services.llm.groq_service - INFO - Query cache ENABLED (ttl=600s, max=256)
+2026-07-04 10:49:13,203 - app.services.llm.groq_service - INFO - GroqService ready.
+2026-07-04 10:49:13,204 - livekit-agent - INFO - Prewarm complete — agent is ready to accept jobs.
+2026-07-04 10:49:13,204 - livekit.agents - INFO - job runner initialized
+2026-07-04 10:49:13,653 - livekit.agents - INFO - registered worker

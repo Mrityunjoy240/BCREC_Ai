@@ -3,10 +3,12 @@ import json
 import logging
 import os
 import re
+import socket
 import sys
+import ssl
 import time
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import AsyncIterable, List, Dict, Any, Literal
 
 # Force HuggingFace to load from local disk cache — skips all network HEAD/GET
@@ -44,7 +46,9 @@ from livekit.plugins import silero
 
 from app.database import get_db, init_db
 from app.services.llm.groq_service import get_groq_service, SYSTEM_PROMPT
+from app.services.normalization.normalizer import normalize_for_tts
 from app.services.sarvam_service import get_sarvam_service
+from app.utils.conversation_logger import get_telemetry
 
 # Initialize DB
 init_db()
@@ -58,17 +62,34 @@ logger = logging.getLogger("livekit-agent")
 # PHONETIC LEXICON & NUMBER CONVERSION
 # ---------------------------------------------------------------------------
 LEXICON = {
-    "BCREC": "BCREC",
-    "MAKAUT": "Ma-Kaut",
-    "AIML": "A. I. M. L.",
-    "AML": "A. I. M. L.",
-    "CSE": "CSE",
-    "ECE": "E. C. E.",
-    "IT": "Information Technology",
-    "B.Tech": "B. Tech",
-    "M.Tech": "M. Tech",
-    "WBJEE": "W. B. J. E. E.",
-    "JEE": "J. E. E.",
+    "BCREC": "B C Roy Engineering College",
+    "MAKAUT": "M A K A U T",
+    "CSE": "C S E",
+    "ECE": "E C E",
+    "EE": "E E",
+    "ME": "M E",
+    "CE": "C E",
+    "AIML": "A I M L",
+    "AML": "A I M L",
+    "IT": "I T",
+    "DS": "D S",
+    "CY": "C Y",
+    "CSD": "C S D",
+    "MBA": "M B A",
+    "MCA": "M C A",
+    "B.Tech": "B dot Tech",
+    "M.Tech": "M dot Tech",
+    "HOD": "Head of Department",
+    "T&P": "T and P",
+    "AICTE": "A I C T E",
+    "NBA": "N B A",
+    "NAAC": "N A A C",
+    "NIRF": "N I R F",
+    "WBJEE": "W B J E E",
+    "JEE": "J E E",
+    "JELET": "J E L E T",
+    "LPA": "L P A",
+    "CGPA": "C G P A",
 }
 
 BN_NUMS = {
@@ -108,17 +129,28 @@ def apply_lexicon(text: str, lang: str) -> str:
     processed = text
 
     # 1. Expand technical acronyms based on LEXICON
-    for word, phonetic in LEXICON.items():
+    for word, phonetic in sorted(LEXICON.items(), key=lambda x: -len(x[0])):
         processed = re.sub(rf"\b{re.escape(word)}\b", phonetic, processed)
 
     # 2. Normalize AML to AIML for consistency
-    processed = re.sub(r"\bAML\b", "A. I. M. L.", processed, flags=re.IGNORECASE)
+    processed = re.sub(r"\bAML\b", "A I M L", processed, flags=re.IGNORECASE)
 
-    # 3. Handle numbers for Bengali
+    # 3. Handle phone numbers digit-by-digit for English/Hindi
     if lang == "bn-IN":
-        # Only convert phone numbers digit-by-digit
-        # Fees/Currency are now handled by the LLM in words
         processed = convert_phone_numbers(processed)
+    else:
+        # Landline: 0343-2501353 -> 0 3 4 3 2 5 0 1 3 5 3
+        processed = re.sub(
+            r"\b(\d{3,4})-(\d{7})\b",
+            lambda m: " ".join(m.group(1) + m.group(2)),
+            processed,
+        )
+        # Mobile: 9876543210 -> 9 8 7 6 5 4 3 2 1 0
+        processed = re.sub(r"\b(\d{10})\b", lambda m: " ".join(m.group(1)), processed)
+
+    # 4. Bengali normalization for natural TTS pronunciation
+    if lang == "bn-IN":
+        processed = processed.replace("রুপি", "টাকা")
 
     return processed
 
@@ -130,6 +162,7 @@ class BCRECGroqLLM(llm.LLM):
     def __init__(self):
         super().__init__()
         self._service = get_groq_service()
+        self.session_id = "default"
 
     def chat(
         self,
@@ -147,13 +180,15 @@ class BCRECGroqLLM(llm.LLM):
             tools=tools or [],
             conn_options=conn_options,
             service=self._service,
+            session_id=self.session_id,
         )
 
 
 class BCRECGroqStream(llm.LLMStream):
-    def __init__(self, llm_inst, *, chat_ctx, tools, conn_options, service):
+    def __init__(self, llm_inst, *, chat_ctx, tools, conn_options, service, session_id="default"):
         super().__init__(llm=llm_inst, chat_ctx=chat_ctx, tools=tools, conn_options=conn_options)
         self._service = service
+        self._session_id = session_id
         self._id = utils.shortuuid()
 
     async def _run(self):
@@ -191,7 +226,7 @@ class BCRECGroqStream(llm.LLMStream):
 
         first_chunk = True
         async for chunk in self._service.stream_response(
-            query, session_id="livekit", conversation_history=history[:-1]
+            query, session_id=self._session_id, conversation_history=history[:-1]
         ):
             if first_chunk:
                 ttft = round((time.time() - t0) * 1000)
@@ -310,13 +345,17 @@ class SarvamChunkedStream(tts.ChunkedStream):
             else "en-IN"
         )
 
+        # Apply entity_dict TTS normalization, then lexicon and phone formatting before TTS
+        text = normalize_for_tts(text.strip())
+        text = apply_lexicon(text, lang)
+
         # Pick speaker from shared map
         from app.utils.voice_utils import LANG_SPEAKER_MAP
 
         speaker = LANG_SPEAKER_MAP.get(lang, "shubh")
 
         logger.info(f"Synthesizing: {text[:60]}... (lang={lang}, speaker={speaker})")
-        res = await self.service.text_to_speech(text.strip(), speaker=speaker, language=lang)
+        res = await self.service.text_to_speech(text, speaker=speaker, language=lang)
 
         if res.get("success"):
             data = res["audio_bytes"]
@@ -406,7 +445,7 @@ VOICE TELEPHONY RULES (ADDITIONAL):
         llm=llm_comp,
         vad=vad_inst,
         turn_handling={
-            "interruption": {"enabled": True, "mode": "vad", "min_words": 5},
+            "interruption": {"enabled": True, "mode": "vad", "min_words": 2},
             "endpointing": {"min_delay": 0.5, "max_delay": 4.0},
         },
     )
@@ -421,23 +460,221 @@ VOICE TELEPHONY RULES (ADDITIONAL):
     await ctx.connect()
     logger.info(f"Connected to room: {ctx.room.name}")
 
+    # Set participant-specific session key for conversation isolation
+    session_key = ctx.room.name
+    llm_comp.session_id = session_key
+    logger.info(f"Session key: {session_key}")
+
+    # Start conversation telemetry for this session
+    telemetry = get_telemetry()
+    conv_id = telemetry.start_session(session_key)
+    logger.info(f"[TELEMETRY] Session started: {session_key} conv={conv_id}")
+
     await session.start(agent, room=ctx.room)
     logger.info("Agent session started")
 
     await asyncio.sleep(0.5)
     logger.info("Sending greeting...")
+    # Greeting: interruptible, concise, language-preserving (defaults to English on first visit)
     session.say(
-        "Hello! BCREC AI assistant here. How can I help you today?", allow_interruptions=False
+        "Hello! BCREC AI assistant here. How can I help you today?", allow_interruptions=True
     )
 
     while ctx.room.isconnected():
         await asyncio.sleep(1)
 
-    get_groq_service().clear_session("livekit")
+    get_groq_service().clear_session(session_key)
+    telemetry.end_session(session_key)
     logger.info("Room disconnected, session cleared, exiting entrypoint")
 
 
+# ---------------------------------------------------------------------------
+# Connection Diagnostics — runs once before worker startup
+# ---------------------------------------------------------------------------
+def _gather_dns_evidence(hostname: str) -> None:
+    """When DNS fails, collect evidence about where the failure came from."""
+    import subprocess
+
+    ts = datetime.now(timezone.utc).isoformat()
+
+    try:
+        result = subprocess.run(
+            ["nslookup", hostname],
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        logger.info(f"[Diag {ts}] nslookup {hostname}:\n{result.stdout.strip()}")
+        if result.stderr.strip():
+            logger.warning(f"[Diag {ts}] nslookup stderr: {result.stderr.strip()}")
+    except Exception as e:
+        logger.warning(f"[Diag {ts}] nslookup failed: {e}")
+
+    hosts_path = r"C:\Windows\System32\drivers\etc\hosts"
+    try:
+        with open(hosts_path) as f:
+            for line in f:
+                if hostname in line and not line.strip().startswith("#"):
+                    logger.warning(f"[Diag {ts}] Hosts file entry: {line.strip()}")
+    except Exception as e:
+        logger.warning(f"[Diag {ts}] Cannot read hosts file: {e}")
+
+    for test_host in ["google.com", "livekit.cloud"]:
+        try:
+            t0 = time.time()
+            socket.getaddrinfo(test_host, 443, socket.AF_UNSPEC, socket.SOCK_STREAM)
+            ms = (time.time() - t0) * 1000
+            logger.info(f"[Diag {ts}] DNS cross-check: {test_host} resolves OK ({ms:.1f}ms)")
+        except socket.gaierror as e:
+            logger.error(
+                f"[Diag {ts}] DNS cross-check: {test_host} also FAILED "
+                f"(errno={e.args[0]} {e.args[1]})"
+            )
+
+    try:
+        result = subprocess.run(
+            ["ipconfig", "/all"],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        for line in result.stdout.splitlines():
+            lowered = line.strip().lower()
+            if "dns" in lowered or "dns-suffix" in lowered:
+                logger.info(f"[Diag {ts}] DNS config: {line.strip()}")
+    except Exception as e:
+        logger.warning(f"[Diag {ts}] ipconfig failed: {e}")
+
+
+def _run_connection_diagnostics() -> None:
+    """Lightweight connectivity check before LiveKit worker starts.
+    Logs DNS resolution, TCP, TLS, and WebSocket status with timestamps.
+    Never blocks startup — just logs results."""
+    from urllib.parse import urlparse
+
+    url = os.environ.get("LIVEKIT_URL", "")
+    if not url:
+        logger.info("[Diag] LIVEKIT_URL not set — skipping connection diagnostics")
+        return
+
+    parsed = urlparse(url)
+    hostname = parsed.netloc
+    port = 443
+    ts = datetime.now(timezone.utc).isoformat()
+
+    logger.info(f"[Diag {ts}] Target: {hostname}:{port}")
+
+    # ---- 1. DNS resolution ----
+    t0 = time.time()
+    try:
+        addrs = socket.getaddrinfo(hostname, port, socket.AF_UNSPEC, socket.SOCK_STREAM)
+        dns_ms = (time.time() - t0) * 1000
+        ips = list(dict.fromkeys(a[4][0] for a in addrs))
+        logger.info(f"[Diag {ts}] DNS OK: {hostname} -> {ips} in {dns_ms:.1f}ms")
+    except socket.gaierror as e:
+        dns_ms = (time.time() - t0) * 1000
+        logger.error(
+            f"[Diag {ts}] DNS FAILED: {hostname} errno={e.args[0]} ({e.args[1]}) in {dns_ms:.1f}ms"
+        )
+        _gather_dns_evidence(hostname)
+        return
+
+    # ---- 2. TCP connectivity ----
+    tcp_ok = False
+    for ip in ips:
+        t0 = time.time()
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(5)
+        try:
+            sock.connect((ip, port))
+            tcp_ms = (time.time() - t0) * 1000
+            logger.info(f"[Diag {ts}] TCP OK: {ip}:{port} in {tcp_ms:.1f}ms")
+            tcp_ok = True
+            sock.close()
+            break
+        except Exception as e:
+            tcp_ms = (time.time() - t0) * 1000
+            logger.error(f"[Diag {ts}] TCP FAILED: {ip}:{port} -> {e} in {tcp_ms:.1f}ms")
+        finally:
+            sock.close()
+
+    if not tcp_ok:
+        logger.error(f"[Diag {ts}] TCP: all IPs unreachable — skipping further checks")
+        return
+
+    # ---- 3. TLS handshake ----
+    tls_ok = False
+    for ip in ips:
+        t0 = time.time()
+        ctx = ssl.create_default_context()
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(5)
+        try:
+            wrapped = ctx.wrap_socket(sock, server_hostname=hostname)
+            wrapped.connect((ip, port))
+            tls_ms = (time.time() - t0) * 1000
+            logger.info(f"[Diag {ts}] TLS OK: {hostname} ({ip}) in {tls_ms:.1f}ms")
+            tls_ok = True
+            wrapped.close()
+            break
+        except Exception as e:
+            tls_ms = (time.time() - t0) * 1000
+            logger.error(f"[Diag {ts}] TLS FAILED: {hostname} ({ip}) -> {e} in {tls_ms:.1f}ms")
+        finally:
+            sock.close()
+
+    if not tls_ok:
+        logger.error(f"[Diag {ts}] TLS: all IPs failed — skipping WebSocket test")
+        return
+
+    # ---- 4. Authenticated WebSocket (optional, always logs result) ----
+    try:
+        from urllib.parse import urljoin
+
+        import aiohttp
+        from livekit import api
+
+        api_key = os.environ.get("LIVEKIT_API_KEY", "")
+        api_secret = os.environ.get("LIVEKIT_API_SECRET", "")
+        token = (
+            api.AccessToken(api_key, api_secret).with_grants(api.VideoGrants(agent=True)).to_jwt()
+        )
+
+        scheme = parsed.scheme.replace("http", "ws")
+        base = f"{scheme}://{parsed.netloc}{parsed.path}".rstrip("/") + "/"
+        agent_url = urljoin(base, "agent")
+
+        async def _ws_test():
+            t0 = time.time()
+            connector = aiohttp.TCPConnector(family=socket.AF_INET)
+            session = aiohttp.ClientSession(connector=connector)
+            try:
+                async with session.ws_connect(
+                    agent_url,
+                    headers={"Authorization": f"Bearer {token}"},
+                    timeout=aiohttp.ClientWSTimeout(ws_close=5),
+                    autoping=True,
+                ) as ws:
+                    ws_ms = (time.time() - t0) * 1000
+                    logger.info(f"[Diag {ts}] WebSocket OK: {agent_url} in {ws_ms:.1f}ms")
+                    await ws.close()
+            except Exception as e:
+                ws_ms = (time.time() - t0) * 1000
+                logger.error(
+                    f"[Diag {ts}] WebSocket FAILED: {agent_url} -> "
+                    f"{type(e).__name__}: {e} in {ws_ms:.1f}ms"
+                )
+            finally:
+                await session.close()
+
+        asyncio.run(_ws_test())
+    except Exception as e:
+        logger.warning(f"[Diag {ts}] WebSocket test setup error: {e}")
+
+
 if __name__ == "__main__":
+    _run_connection_diagnostics()
+
     cli.run_app(
         WorkerOptions(
             entrypoint_fnc=entrypoint,

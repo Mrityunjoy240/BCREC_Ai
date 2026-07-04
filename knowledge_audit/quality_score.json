@@ -1,0 +1,28 @@
+{
+  "overall_score_pct": 83.9,
+  "completeness_pct": 74.0,
+  "consistency": "UNRESOLVED CONFLICTS",
+  "duplicate_rate": 3.0,
+  "conflict_count": 13,
+  "missing_data_count": 14,
+  "department_coverage_pct": 100.0,
+  "faculty_coverage_pct": 100.0,
+  "placement_coverage_pct": 83.3,
+  "fee_coverage_pct": 83.3,
+  "total_departments_analyzed": 12,
+  "conflicts_found": [
+    "EE/AIML/DS/CY/CSD total fee (arithmetic check)",
+    "ME/CE total fee (arithmetic check)",
+    "ME/CE per_semester fee consistency",
+    "btech_cse_it_ece vs semester_wise_cse_it_ece total fee",
+    "MCA total fee",
+    "M.Tech total fee format discrepancy",
+    "Campus size (acres)",
+    "Admission portal URLs",
+    "CSE intake (seats)",
+    "IT intake (seats)",
+    "MCA intake (seats)",
+    "Hostel caution money",
+    "Mess monthly charge"
+  ]
+}

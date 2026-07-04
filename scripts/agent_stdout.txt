@@ -1,0 +1,75 @@
+{"message": "starting worker", "level": "INFO", "name": "livekit.agents", "version": "1.5.12", "rtc-version": "1.1.8", "timestamp": "2026-07-04T05:18:57.490471+00:00"}
+{"message": "plugin registered", "level": "INFO", "name": "livekit.agents", "plugin": "livekit.plugins.silero", "version": "1.5.12", "timestamp": "2026-07-04T05:18:57.490758+00:00"}
+{"message": "HTTP server listening on :8081", "level": "INFO", "name": "livekit.agents", "timestamp": "2026-07-04T05:18:57.492614+00:00"}
+{"message": "initializing job runner", "level": "INFO", "name": "livekit.agents", "tid": 4264, "timestamp": "2026-07-04T05:18:57.496656+00:00"}
+{"message": "initializing job runner", "level": "INFO", "name": "livekit.agents", "tid": 25244, "timestamp": "2026-07-04T05:18:57.497068+00:00"}
+{"message": "initializing job runner", "level": "INFO", "name": "livekit.agents", "tid": 24952, "timestamp": "2026-07-04T05:18:57.497376+00:00"}
+{"message": "initializing job runner", "level": "INFO", "name": "livekit.agents", "tid": 35632, "timestamp": "2026-07-04T05:18:57.497618+00:00"}
+{"message": "Prewarming agent components (VAD, STT, LLM, TTS)...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:18:57.497833+00:00"}
+{"message": "Prewarming agent components (VAD, STT, LLM, TTS)...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:18:57.498148+00:00"}
+{"message": "Prewarming agent components (VAD, STT, LLM, TTS)...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:18:57.498472+00:00"}
+{"message": "Prewarming agent components (VAD, STT, LLM, TTS)...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:18:57.498238+00:00"}
+{"message": "Sarvam client initialized", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-04T05:18:58.160101+00:00"}
+{"message": "ChromaDB path: C:\\Users\\ANAMIKA\\DEV\\Temp\\college_agent-master\\college_agent-master\\chroma_db\\chroma_db_v2", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-04T05:18:58.161098+00:00"}
+{"message": "Initializing VectorStoreService with model: BAAI/bge-m3", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-04T05:18:58.161218+00:00"}
+{"message": "Sarvam client initialized", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-04T05:18:58.247641+00:00"}
+{"message": "Sarvam client initialized", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-04T05:18:58.248767+00:00"}
+{"message": "ChromaDB path: C:\\Users\\ANAMIKA\\DEV\\Temp\\college_agent-master\\college_agent-master\\chroma_db\\chroma_db_v2", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-04T05:18:58.248832+00:00"}
+{"message": "Initializing VectorStoreService with model: BAAI/bge-m3", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-04T05:18:58.249086+00:00"}
+{"message": "ChromaDB path: C:\\Users\\ANAMIKA\\DEV\\Temp\\college_agent-master\\college_agent-master\\chroma_db\\chroma_db_v2", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-04T05:18:58.250371+00:00"}
+{"message": "Initializing VectorStoreService with model: BAAI/bge-m3", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-04T05:18:58.250655+00:00"}
+{"message": "Sarvam client initialized", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-04T05:18:58.253583+00:00"}
+{"message": "ChromaDB path: C:\\Users\\ANAMIKA\\DEV\\Temp\\college_agent-master\\college_agent-master\\chroma_db\\chroma_db_v2", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-04T05:18:58.254519+00:00"}
+{"message": "Initializing VectorStoreService with model: BAAI/bge-m3", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-04T05:18:58.254623+00:00"}
+{"message": "Loading SentenceTransformer model from BAAI/bge-m3.", "level": "INFO", "name": "sentence_transformers.base.model", "timestamp": "2026-07-04T05:19:03.325094+00:00"}
+{"message": "Loading SentenceTransformer model from BAAI/bge-m3.", "level": "INFO", "name": "sentence_transformers.base.model", "timestamp": "2026-07-04T05:19:03.831754+00:00"}
+{"message": "Loading SentenceTransformer model from BAAI/bge-m3.", "level": "INFO", "name": "sentence_transformers.base.model", "timestamp": "2026-07-04T05:19:05.666210+00:00"}
+{"message": "VectorStoreService initialized successfully", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-04T05:19:05.806133+00:00"}
+{"message": "Query cache ENABLED (ttl=600s, max=256)", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-04T05:19:05.807221+00:00"}
+{"message": "GroqService ready.", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-04T05:19:05.807578+00:00"}
+{"message": "Prewarm complete — agent is ready to accept jobs.", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:19:05.807971+00:00"}
+{"message": "job runner initialized", "level": "INFO", "name": "livekit.agents", "tid": 4264, "elapsed_time": 8.31, "timestamp": "2026-07-04T05:19:05.809270+00:00"}
+{"message": "Loading SentenceTransformer model from BAAI/bge-m3.", "level": "INFO", "name": "sentence_transformers.base.model", "timestamp": "2026-07-04T05:19:05.842187+00:00"}
+{"message": "job executor is unresponsive", "level": "WARNING", "name": "livekit.agents", "delay": 870, "tid": 4264, "timestamp": "2026-07-04T05:19:10.926239+00:00"}
+{"message": "VectorStoreService initialized successfully", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-04T05:19:11.010683+00:00"}
+{"message": "Query cache ENABLED (ttl=600s, max=256)", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-04T05:19:11.011310+00:00"}
+{"message": "GroqService ready.", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-04T05:19:11.011554+00:00"}
+{"message": "Prewarm complete — agent is ready to accept jobs.", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:19:11.011842+00:00"}
+{"message": "job runner initialized", "level": "INFO", "name": "livekit.agents", "tid": 25244, "elapsed_time": 13.52, "timestamp": "2026-07-04T05:19:11.012785+00:00"}
+{"message": "VectorStoreService initialized successfully", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-04T05:19:11.017605+00:00"}
+{"message": "Query cache ENABLED (ttl=600s, max=256)", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-04T05:19:11.018498+00:00"}
+{"message": "GroqService ready.", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-04T05:19:11.018664+00:00"}
+{"message": "Prewarm complete — agent is ready to accept jobs.", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:19:11.019133+00:00"}
+{"message": "job runner initialized", "level": "INFO", "name": "livekit.agents", "tid": 35632, "elapsed_time": 13.52, "timestamp": "2026-07-04T05:19:11.019580+00:00"}
+{"message": "VectorStoreService initialized successfully", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-04T05:19:13.203508+00:00"}
+{"message": "Query cache ENABLED (ttl=600s, max=256)", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-04T05:19:13.203832+00:00"}
+{"message": "GroqService ready.", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-04T05:19:13.203930+00:00"}
+{"message": "Prewarm complete — agent is ready to accept jobs.", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:19:13.204076+00:00"}
+{"message": "job runner initialized", "level": "INFO", "name": "livekit.agents", "tid": 24952, "elapsed_time": 15.71, "timestamp": "2026-07-04T05:19:13.204481+00:00"}
+{"message": "registered worker", "level": "INFO", "name": "livekit.agents", "agent_name": "bcrec-agent", "id": "AW_qGWdNwc6yWWU", "url": "https://bcrec-wr7kn3yu.livekit.cloud", "region": "India West", "protocol": 17, "timestamp": "2026-07-04T05:19:13.653748+00:00"}
+{"message": "received job request", "level": "INFO", "name": "livekit.agents", "job_id": "AJ_7W4K336Lq6HW", "dispatch_id": "AD_zd5EmE43UEwi", "room": "console-496d2f4e", "room_id": "RM_uJXR3P3YVR4E", "agent_name": "bcrec-agent", "resuming": false, "enable_recording": false, "timestamp": "2026-07-04T05:19:49.780931+00:00"}
+{"message": "initializing job runner", "level": "INFO", "name": "livekit.agents", "tid": 29584, "timestamp": "2026-07-04T05:19:50.639574+00:00"}
+{"message": "Prewarming agent components (VAD, STT, LLM, TTS)...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:19:50.640112+00:00"}
+{"message": "Prewarm complete — agent is ready to accept jobs.", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:19:50.763547+00:00"}
+{"message": "job runner initialized", "level": "INFO", "name": "livekit.agents", "tid": 29584, "elapsed_time": 0.12, "timestamp": "2026-07-04T05:19:50.764460+00:00"}
+{"message": "Starting agent job AJ_7W4K336Lq6HW", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:19:50.772333+00:00"}
+{"message": "Connected to room: console-496d2f4e", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:19:53.518983+00:00"}
+{"message": "Session key: console-496d2f4e", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:19:53.519321+00:00"}
+{"message": "Conversation telemetry dir: C:\\Users\\ANAMIKA\\DEV\\Temp\\college_agent-master\\college_agent-master\\data\\logs\\conversations", "level": "INFO", "name": "app.utils.conversation_logger", "timestamp": "2026-07-04T05:19:53.520096+00:00"}
+{"message": "[TELEMETRY] SESSION_START console-496d2f4e conv=c0bc92f087fb", "level": "INFO", "name": "app.utils.conversation_logger", "timestamp": "2026-07-04T05:19:53.521937+00:00"}
+{"message": "[TELEMETRY] Session started: console-496d2f4e conv=c0bc92f087fb", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:19:53.522135+00:00"}
+{"message": "Agent session started", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:19:53.544406+00:00"}
+{"message": "Sending greeting...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:19:54.045516+00:00"}
+{"message": "SarvamTTS.synthesize called for: Hello! BCREC AI assistant here....", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:19:54.052221+00:00"}
+{"message": "Loaded entity dictionary (8 sections)", "level": "INFO", "name": "app.services.normalization.normalizer", "timestamp": "2026-07-04T05:19:54.065801+00:00"}
+{"message": "Synthesizing: Hello! B C Roy Engineering College AI assistant here.... (lang=en-IN, speaker=shubh)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:19:56.885793+00:00"}
+{"message": "Normalized TTS text: 'Hello! B. C. Roy Engineering College AI assistant here.'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-04T05:19:56.889324+00:00"}
+{"message": "TTS generated: 192556 bytes, lang=en-IN, speaker=shubh", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-04T05:19:59.797283+00:00"}
+{"message": "Finished pushing audio chunk", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:19:59.797885+00:00"}
+{"message": "SarvamTTS.synthesize called for: How can I help you today?...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:19:59.987018+00:00"}
+{"message": "Synthesizing: How can I help you today?... (lang=en-IN, speaker=shubh)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:19:59.993922+00:00"}
+{"message": "Normalized TTS text: 'How can I help you today?'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-04T05:19:59.994431+00:00"}
+{"message": "TTS generated: 65580 bytes, lang=en-IN, speaker=shubh", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-04T05:20:01.157497+00:00"}
+{"message": "Finished pushing audio chunk", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-04T05:20:01.158376+00:00"}
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 1.1462913999632, "timestamp": "2026-07-04T05:20:01.159276+00:00"}
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 1.14196899999585, "timestamp": "2026-07-04T05:20:01.166385+00:00"}

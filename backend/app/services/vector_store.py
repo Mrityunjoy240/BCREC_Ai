@@ -68,26 +68,36 @@ class VectorStoreService:
         Single retriever — no keyword boosting, no hardcoded intent maps.
         BGE-M3 handles multilingual queries natively.
         """
+        docs, _ = self.search_with_scores(query, k=k)
+        return docs
+
+    def search_with_scores(self, query: str, k: int = 8) -> tuple[List[Document], float]:
+        """
+        Like search() but also returns the max relevance score (confidence).
+        Returns (documents, max_score). max_score is 0.0 if no results.
+        """
         if not self.vector_store:
             logger.warning("Vector store not initialized. Returning empty results.")
-            return []
+            return [], 0.0
 
         try:
             results_with_scores = self.vector_store.similarity_search_with_relevance_scores(
                 query, k=k
             )
 
+            max_score = max((score for _, score in results_with_scores), default=0.0)
+
             RELEVANCE_THRESHOLD = 0.15
             filtered = [doc for doc, score in results_with_scores if score >= RELEVANCE_THRESHOLD]
 
             if not filtered and results_with_scores:
                 logger.warning("Threshold fallback active.")
-                return [doc for doc, score in results_with_scores[:3]]
+                return [doc for doc, score in results_with_scores[:3]], max_score
 
-            return filtered[:k]
+            return filtered[:k], max_score
         except Exception as e:
             logger.error(f"Search error: {e}")
-            return []
+            return [], 0.0
 
     def add_documents(self, documents: List[Document]):
         """

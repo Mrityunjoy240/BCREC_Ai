@@ -1,0 +1,98 @@
+{
+  "total_conflicts": 13,
+  "conflicts": [
+    {
+      "fact": "EE/AIML/DS/CY/CSD total fee (arithmetic check)",
+      "value_a": "Rs. 554100 (stated)",
+      "value_b": "Rs. 555600 (first 91900 + 6*66100 + eighth 67100)",
+      "source_a": "canonical_kb.json > fees_summary > semester_wise_ee_group > total_btech",
+      "source_b": "computed from same section"
+    },
+    {
+      "fact": "ME/CE total fee (arithmetic check)",
+      "value_a": "Rs. 444100 (stated)",
+      "value_b": "Rs. 364750 (first 78150 + 6*40800 + eighth 41800)",
+      "source_a": "canonical_kb.json > fees_summary > semester_wise_me_ce > total_btech",
+      "source_b": "computed from same section"
+    },
+    {
+      "fact": "ME/CE per_semester fee consistency",
+      "value_a": "Rs. 40800 (stated per_semester)",
+      "value_b": "Rs. 52279 (derived from (total - first) / 7)",
+      "source_a": "canonical_kb.json > fees_summary > semester_wise_me_ce > per_semester",
+      "source_b": "computed from same section"
+    },
+    {
+      "fact": "btech_cse_it_ece vs semester_wise_cse_it_ece total fee",
+      "value_a": "Rs. 604700 (from btech_cse_it_ece)",
+      "value_b": "Rs. 609700 (from semester_wise_cse_it_ece)",
+      "source_a": "canonical_kb.json > fees_summary > btech_cse_it_ece > total",
+      "source_b": "canonical_kb.json > fees_summary > semester_wise_cse_it_ece > total_btech"
+    },
+    {
+      "fact": "MCA total fee",
+      "value_a": "Rs. 208800 (from courses.mca.fees.total)",
+      "value_b": "Rs. 217400 (from fees_summary.mca.total)",
+      "source_a": "canonical_kb.json > courses > mca > fees > total > value",
+      "source_b": "canonical_kb.json > fees_summary > mca > total > value"
+    },
+    {
+      "fact": "M.Tech total fee format discrepancy",
+      "value_a": "Rs. 120400 (single value from courses.mtech.fees.total)",
+      "value_b": "Rs. 126000 to 206000 (range from fees_summary.mtech.total)",
+      "source_a": "canonical_kb.json > courses > mtech > fees > total > value",
+      "source_b": "canonical_kb.json > fees_summary > mtech > total > value"
+    },
+    {
+      "fact": "Campus size (acres)",
+      "value_a": "17 (current)",
+      "value_b": "25 (historical, per college.md)",
+      "source_a": "canonical_kb.json > college > campus_size_acres > value",
+      "source_b": "canonical_kb.json > college > campus_size_acres > history[0] > value (originally from college.md)"
+    },
+    {
+      "fact": "Admission portal URLs",
+      "value_a": "https://bcrec.ucanapply.com (from canonical portal field)",
+      "value_b": "bcrecdgp.ac.in (mentioned in knowledge_base.json admission.online_application)",
+      "source_a": "canonical_kb.json > admission > portal > value",
+      "source_b": "knowledge_base.json > admission > online_application > en"
+    },
+    {
+      "fact": "CSE intake (seats)",
+      "value_a": "180 (current)",
+      "value_b": "120 (historical, from cse.md)",
+      "source_a": "canonical_kb.json > courses > btech > CSE > intake > value",
+      "source_b": "canonical_kb.json > courses > btech > CSE > intake > history[0] > value"
+    },
+    {
+      "fact": "IT intake (seats)",
+      "value_a": "60 (current)",
+      "value_b": "120 (historical)",
+      "source_a": "canonical_kb.json > courses > btech > IT > intake > value",
+      "source_b": "canonical_kb.json > courses > btech > IT > intake > history[0] > value"
+    },
+    {
+      "fact": "MCA intake (seats)",
+      "value_a": "120 (current)",
+      "value_b": "60 (historical)",
+      "source_a": "canonical_kb.json > courses > mca > intake > value",
+      "source_b": "canonical_kb.json > courses > mca > intake > history[0] > value"
+    },
+    {
+      "fact": "Hostel caution money",
+      "value_a": "Rs. 2000 (current)",
+      "value_b": "Rs. 2000 (historical; official PDF says Rs. 12,000)",
+      "source_a": "canonical_kb.json > hostel > caution_money > value",
+      "source_b": "canonical_kb.json > hostel > caution_money > history[0] (provenance notes mention PDF conflict)"
+    },
+    {
+      "fact": "Mess monthly charge",
+      "value_a": "Rs. 5000 (current)",
+      "value_b": "Rs. 4,800 (official PDF) / Rs. 5,500 (quick_answers)",
+      "source_a": "canonical_kb.json > hostel > mess > monthly_charge > value",
+      "source_b": "canonical_kb.json > hostel > mess > monthly_charge > provenance > notes"
+    }
+  ],
+  "generated_at": "2026-07-02",
+  "methodology": "Automated comparison of canonical_kb.json vs knowledge_base.json + internal consistency checks"
+}

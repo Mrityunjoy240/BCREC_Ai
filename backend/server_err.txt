@@ -1,0 +1,9 @@
+2026-07-04 10:56:37,900 - root - INFO - Logging configured successfully
+2026-07-04 10:56:38,743 - app.config - INFO - Loaded environment from C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\backend\.env
+2026-07-04 10:56:40,118 - app.config - INFO - Groq client initialized successfully
+2026-07-04 10:56:40,860 - app.config - INFO - Sarvam Voice Client: INITIALIZED
+2026-07-04 10:56:58,051 - app.services.backup - INFO - Backup directory initialized at C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\backend\backups
+2026-07-04 10:56:58,672 - app.database - INFO - Database initialized at ./chroma_db\conversations.db
+2026-07-04 10:56:58,673 - app.main - INFO - Pre-warming vector store...
+2026-07-04 10:56:58,674 - app.services.vector_store - INFO - ChromaDB path: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\chroma_db\chroma_db_v2
+2026-07-04 10:56:58,675 - app.services.vector_store - INFO - Initializing VectorStoreService with model: BAAI/bge-m3

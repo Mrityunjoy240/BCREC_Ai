@@ -1,0 +1,12 @@
+{
+  "BCREC ka address kya hai?": {
+    "answer": "BCREC ka address Jemua Road, Fuljhore, Durgapur - 7 1 3 2 0 6, West Bengal hai.",
+    "voice_text": "BCREC ka address Jemua Road, Fuljhore, Durgapur - 7 1 3 2 0 6, West Bengal hai.",
+    "latency_ms": 5704
+  },
+  "What is the address of BCREC?": {
+    "answer": "The address of BCREC is Jemua Road, Fuljhore, Durgapur - seven one three two zero six, West Bengal.",
+    "voice_text": "The address of BCREC is Jemua Road, Fuljhore, Durgapur - seven one three two zero six, West Bengal.",
+    "latency_ms": 658
+  }
+}

@@ -15,6 +15,10 @@ fixable = ["ALL"]
 [tool.ruff.lint.isort]
 known-first-party = ["app"]
 
+[tool.pytest.ini_options]
+testpaths = ["backend/tests", "tests"]
+log_cli_level = "WARNING"
+
 [tool.mypy]
 python_version = "3.10"
 warn_return_any = true

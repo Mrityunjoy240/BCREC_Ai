@@ -16,7 +16,7 @@
 - **Lateral Entry**: 10% of approved intake via JELET
 - **Spot Round**: Mid-September to early October
 - **Counseling**: WBJEEB at wbjeeb.nic.in
-- **Application Portal**: https://bcrec.ucanapply.com
+- **Application Portal**: https://bcrecdgp.ac.in
 
 ## Age Limit
 

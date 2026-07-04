@@ -1,0 +1,14 @@
+{
+  "Who is the principal of BCREC?": {
+    "answer": "The principal of Doctor B. C. Roy Engineering College is Doctor Sanjay S. Pawar.",
+    "voice_text": "The principal of Doctor B. C. Roy Engineering College is Doctor Sanjay S. Pawar."
+  },
+  "BCREC ke principal kaun hain?": {
+    "answer": "बीसीआरईसी के प्रिंसिपल डॉ. संजय एस. पवार हैं।",
+    "voice_text": "बीसीआरईसी के प्रिंसिपल डॉ. संजय एस. पवार हैं।"
+  },
+  "প্রিন্সিপাল কে?": {
+    "answer": "বিসিআরইসি এর প্রিন্সিপাল হলেন ড. সঞ্জয় এস পাওয়ার।",
+    "voice_text": "বিসিআরইসি এর প্রিন্সিপাল হলেন ড. সঞ্জয় এস পাওয়ার।"
+  }
+}

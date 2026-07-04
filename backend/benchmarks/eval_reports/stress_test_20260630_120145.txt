@@ -1,0 +1,29 @@
+================================================================================
+  DEMO-READINESS STRESS TEST REPORT
+  Generated: 2026-06-30T12:01:45.004137
+================================================================================
+
+  Sessions: 20 × 3 questions = 60 queries
+
+  Peak RSS:        1244.8 MB
+  Baseline RSS:    1241.4 MB
+  Final RSS:       1243.8 MB
+  RSS Growth:      +2.4 MB
+
+  Threads:         74 → 74 (Δ=+0)
+  Open Files:      9 → 9 (Δ=+0)
+  Connections:     6 → 5 (Δ=-1)
+
+  Avg Latency:     3733 ms
+  P95 Latency:     17521 ms
+  Max Latency:     46646 ms
+  Latency Creep:   0.13x
+
+  Avg TTFT:        4920 ms
+
+  Errors:          0 / 60
+
+  Resource Leak Assessment:
+    ✅ MEMORY | ✅ THREADS | ✅ FDS | ✅ LATENCY
+
+================================================================================

@@ -1,0 +1,110 @@
+[
+  {
+    "code": "AIML",
+    "full_name": "CSE (Artificial Intelligence and Machine Learning)",
+    "intake": 60,
+    "established": 2021,
+    "duration": "4 years",
+    "nba_accredited": false,
+    "source": "canonical_kb.json > courses > btech > AIML"
+  },
+  {
+    "code": "CE",
+    "full_name": "Civil Engineering",
+    "intake": 60,
+    "established": 2010,
+    "duration": "4 years",
+    "nba_accredited": false,
+    "source": "canonical_kb.json > courses > btech > CE"
+  },
+  {
+    "code": "CSD",
+    "full_name": "Computer Science and Design",
+    "intake": 60,
+    "established": 2021,
+    "duration": "4 years",
+    "nba_accredited": false,
+    "source": "canonical_kb.json > courses > btech > CSD"
+  },
+  {
+    "code": "CSE",
+    "full_name": "Computer Science and Engineering",
+    "intake": 180,
+    "established": 2000,
+    "duration": "4 years",
+    "nba_accredited": true,
+    "source": "canonical_kb.json > courses > btech > CSE"
+  },
+  {
+    "code": "CY",
+    "full_name": "CSE (Cyber Security)",
+    "intake": 60,
+    "established": 2024,
+    "duration": "4 years",
+    "nba_accredited": false,
+    "source": "canonical_kb.json > courses > btech > CY"
+  },
+  {
+    "code": "DS",
+    "full_name": "CSE (Data Science)",
+    "intake": 60,
+    "established": 2022,
+    "duration": "4 years",
+    "nba_accredited": false,
+    "source": "canonical_kb.json > courses > btech > DS"
+  },
+  {
+    "code": "ECE",
+    "full_name": "Electronics and Communication Engineering",
+    "intake": 120,
+    "established": 2000,
+    "duration": "4 years",
+    "nba_accredited": true,
+    "source": "canonical_kb.json > courses > btech > ECE"
+  },
+  {
+    "code": "EE",
+    "full_name": "Electrical Engineering",
+    "intake": 120,
+    "established": 2000,
+    "duration": "4 years",
+    "nba_accredited": true,
+    "source": "canonical_kb.json > courses > btech > EE"
+  },
+  {
+    "code": "IT",
+    "full_name": "Information Technology",
+    "intake": 60,
+    "established": 2000,
+    "duration": "4 years",
+    "nba_accredited": true,
+    "source": "canonical_kb.json > courses > btech > IT"
+  },
+  {
+    "code": "MBA",
+    "full_name": "",
+    "intake": null,
+    "established": null,
+    "duration": null,
+    "nba_accredited": null,
+    "source": "canonical_kb.json > courses > btech > MBA"
+  },
+  {
+    "code": "MCA",
+    "full_name": "",
+    "intake": null,
+    "established": null,
+    "duration": null,
+    "nba_accredited": null,
+    "source": "canonical_kb.json > courses > btech > MCA"
+  },
+  {
+    "code": "ME",
+    "full_name": "Mechanical Engineering",
+    "intake": 60,
+    "established": 2003,
+    "duration": "4 years",
+    "nba_accredited": true,
+    "source": "canonical_kb.json > courses > btech > ME"
+  }
+]

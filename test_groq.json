@@ -1,0 +1,13 @@
+{
+  "answer": "The principal of Doctor B. C. Roy Engineering College is Doctor Sanjay S. Pawar.",
+  "voice_text": "The principal of Doctor B. C. Roy Engineering College is Doctor Sanjay S. Pawar.",
+  "source": "groq_rag",
+  "model": "llama-3.1-8b-instant",
+  "latency_ms": 5293,
+  "hallucination_validated": true,
+  "tokens": {
+    "prompt": 1963,
+    "completion": 22
+  },
+  "cache_hit": false
+}

@@ -1,0 +1,13 @@
+{
+  "answer": "बीसीआरईसी के प्रिंसिपल डॉ. संजय एस. पवार हैं।",
+  "voice_text": "बीसीआरईसी के प्रिंसिपल डॉ. संजय एस. पवार हैं।",
+  "source": "groq_rag",
+  "model": "llama-3.1-8b-instant",
+  "latency_ms": 3269,
+  "hallucination_validated": true,
+  "tokens": {
+    "prompt": 2393,
+    "completion": 29
+  },
+  "cache_hit": false
+}

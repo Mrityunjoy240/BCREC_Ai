@@ -186,6 +186,7 @@ def clean_for_voice(text: str) -> str:
         flags=re.IGNORECASE,
     )
     clean = re.sub(r"\bCY\b", "Cyber Security", clean, flags=re.IGNORECASE)
+    clean = re.sub(r"\bHOD\b", "Head of Department", clean, flags=re.IGNORECASE)
     # Base departments
     clean = re.sub(r"\bC\s*S\s*E\b", "Computer Science and Engineering", clean, flags=re.IGNORECASE)
     clean = re.sub(r"\b(I\s+T|IT)\b", "Information Technology", clean)
@@ -229,6 +230,16 @@ def clean_for_voice(text: str) -> str:
     # Protect 4+ digit numbers that look like years or room numbers
     # (e.g., 2024, Room 301) — keep them as-is
     # We'll let inflect handle large financial numbers below
+
+    # ── Step 1.5: Read PIN/postal codes as individual digits ──
+    # 6-digit numbers (e.g. 713206) are postal PIN codes in college contexts.
+    # Converting them to words ("seven lakh thirteen thousand...") or stripping
+    # them leaves awkward gaps. Read digit-by-digit instead.
+    clean = re.sub(
+        r"\b(\d{6})\b",
+        lambda m: " ".join(m.group(1)),
+        clean,
+    )
 
     # ── Step 2: Expand abbreviations (English/Romanized only) ──
     if not has_bengali and not has_devanagari:

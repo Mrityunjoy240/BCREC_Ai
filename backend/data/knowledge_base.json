@@ -34,6 +34,11 @@
       "bank": "Axis Bank",
       "branch": "City Centre, Durgapur-713216"
     },
+    "accounts": {
+      "phone": "7001380141",
+      "extension": "0343-2501353 extn. 278",
+      "email": "accounts@bcrec.ac.in"
+    },
     "kolkata_office": {
       "address": "Concord Tower, 92/2A, Bidhannagar Road, Kolkata - 700067",
       "phones": [
@@ -61,6 +66,7 @@
     ],
     "nirf": "Ranked 201-250 in the Engineering category (2025)",
     "aicte_idea_lab_rank": "#1 in India among 106 AICTE-IDEA LABS (2022-23)",
+    "e_govt_campus": "Recognized as e-Govt Campus by Engineering Watch and NIC",
     "campus_size_acres": 17,
     "why_bcrec": {
       "en": "NBA accredited (CSE, ECE, IT, EE, ME), NAAC B+ grade. Established in 2000, modern infrastructure, dedicated Training & Placement cell, GATE Forum, and active industry linkages.",
@@ -424,6 +430,16 @@
       },
       "scholarship": "10% tuition fee scholarship for eligible candidates"
     },
+    "mba_hosp_management": {
+      "full_name": "MBA (Hospital Management)",
+      "intake": 30,
+      "duration": "2 years",
+      "fees": {
+        "total": 419200,
+        "admission": 121400
+      },
+      "note": "Fee structure PDF available on bcrec.ac.in"
+    },
     "mca": {
       "intake": 120,
       "duration": "2 years",
@@ -438,7 +454,8 @@
         "M.Tech ECE",
         "M.Tech Power Systems",
         "M.Tech CSE",
-        "M.Tech ME"
+        "M.Tech ME",
+        "M.Tech Construction Technology and Management"
       ],
       "intake": 18,
       "duration": "2 years",
@@ -474,8 +491,12 @@
       "total": "Rs. 4,19,200",
       "admission": "Rs. 1,21,400"
     },
+    "mba_hosp_management": {
+      "total": "Rs. 4,19,200",
+      "admission": "Rs. 1,21,400"
+    },
     "mca": {
-      "total": "Rs. 2,17,400",
+      "total": "Rs. 2,08,800",
       "admission": "Rs. 67,200"
     },
     "mtech": {
@@ -496,8 +517,8 @@
       "description_first": "Includes admission fee, caution deposit, library fee, and tuition",
       "per_semester": 72925,
       "eighth": 73925,
-      "total_btech": 609700,
-      "total_description": "Rs. 6,09,700 for 4-year B.Tech CSE/IT/ECE"
+        "total_btech": 604700,
+        "total_description": "Rs. 6,04,700 for 4-year B.Tech CSE/IT/ECE"
     },
     "semester_wise_ee_group": {
       "first": 91900,
@@ -534,7 +555,7 @@
     },
     "lateral_entry": "10% of approved intake via JELET",
     "counseling": "WBJEEB at wbjeeb.nic.in",
-    "portal": "https://bcrec.ucanapply.com",
+    "portal": "https://bcrecdgp.ac.in",
     "contacts": {
       "general": [
         "9333928874",
@@ -681,13 +702,29 @@
       "hospital": "Tie-up with Mission Hospital",
       "womens_safety_helpline": "9851006415 (24x7)"
     },
+    "guest_house": {
+      "available": true,
+      "description": "Guest house facility available for parents and visitors"
+    },
+    "language_lab": "Language Lab in collaboration with IIT Kharagpur",
+    "ncc": "NCC Cadets program available",
+    "counselling_services": {
+      "psychological": "Psychological Counselling Services available",
+      "mental_health": "Mental Health Support Services available",
+      "internal_complaints": "Internal Complaints Committee available"
+    },
     "facilities": [
       "ATM",
       "Medical (Mission Hospital)",
       "Cafeteria",
       "Gym",
       "Solar Power",
-      "24x7 CCTV Security"
+      "24x7 CCTV Security",
+      "Guest House",
+      "Language Lab (IIT Kharagpur)",
+      "NCC",
+      "Psychological Counselling",
+      "EDUSAT"
     ],
     "transportation": {
       "en": "Students typically commute by private or public means. Dedicated college transport is not detailed on the official site.",
@@ -754,9 +791,9 @@
     },
     "schemes": {
       "tfw": {
-        "name": "Tuition Fee Waiver",
+        "name": "TFW (Tuition Fee Waiver)",
         "seats": "5% of total intake via WBJEE counseling",
-        "benefit": "Full tuition fee waiver"
+        "benefit": "Full tuition fee waiver for economically weaker students"
       },
       "svmcm": {
         "name": "Swami Vivekananda Merit-cum-Means Scholarship",
@@ -929,7 +966,7 @@
   },
   "academics": {
     "faculty": {
-      "total": "150+",
+      "total": "281+",
       "description": "Core branches have experienced professors with PhDs. Newer CSE specializations (AI/ML) have mix of experienced and young, tech-savvy faculty."
     },
     "student_teacher_ratio": "15:1 to 20:1",
@@ -976,7 +1013,7 @@
   },
   "important_links": {
     "website": "https://www.bcrec.ac.in",
-    "admission_portal": "https://bcrec.ucanapply.com",
+    "admission_portal": "https://bcrecdgp.ac.in",
     "placements": "https://bcrec.ac.in/placements",
     "contact": "https://bcrec.ac.in/contact-us"
   }

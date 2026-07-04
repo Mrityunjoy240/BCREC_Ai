@@ -1,0 +1,150 @@
+[
+  {
+    "department": "AIML",
+    "name": "Dr. Gour Sundar Mitra Thakur",
+    "email": "gour.mitrathakur@bcrec.ac.in",
+    "phone": "",
+    "provenance": {
+      "source_type": "manual_entry",
+      "date_verified": "2026-04-15",
+      "confidence": "medium",
+      "notes": "Dr. Gour Sundar Mitra Thakur is also HOD of Cyber Security department"
+    },
+    "source": "canonical_kb.json > departments > AIML > hod"
+  },
+  {
+    "department": "CE",
+    "name": "Dr. Sanjay Sengupta",
+    "email": "sanjay.sengupta@bcrec.ac.in",
+    "phone": "9836303034",
+    "provenance": {
+      "source_type": "manual_entry",
+      "date_verified": "2026-04-15",
+      "confidence": "medium"
+    },
+    "source": "canonical_kb.json > departments > CE > hod"
+  },
+  {
+    "department": "CSD",
+    "name": "Dr. Poulomi Mukherjee Tewari",
+    "email": "poulami.mukherjee@bcrec.ac.in",
+    "phone": "",
+    "provenance": {
+      "source_type": "manual_entry",
+      "date_verified": "2026-04-15",
+      "confidence": "medium"
+    },
+    "source": "canonical_kb.json > departments > CSD > hod"
+  },
+  {
+    "department": "CSE",
+    "name": "Dr. Pabitra Kumar Dey",
+    "email": "pabitra.dey@bcrec.ac.in",
+    "phone": "9434476503",
+    "provenance": {
+      "source_type": "manual_entry",
+      "date_verified": "2026-04-15",
+      "confidence": "medium",
+      "notes": "Dr. Pabitra Kumar Dey is also HOD of MCA department"
+    },
+    "source": "canonical_kb.json > departments > CSE > hod"
+  },
+  {
+    "department": "CY",
+    "name": "Dr. Gour Sundar Mitra Thakur",
+    "email": "gour.mitrathakur@bcrec.ac.in",
+    "phone": "",
+    "provenance": {
+      "source_type": "manual_entry",
+      "date_verified": "2026-04-15",
+      "confidence": "medium",
+      "notes": "Same HOD as AIML department"
+    },
+    "source": "canonical_kb.json > departments > CY > hod"
+  },
+  {
+    "department": "DS",
+    "name": "Dr. Chandan Bandyopadhyay",
+    "email": "chandan.bandyopadhyay@bcrec.ac.in",
+    "phone": "",
+    "provenance": {
+      "source_type": "manual_entry",
+      "date_verified": "2026-04-15",
+      "confidence": "medium"
+    },
+    "source": "canonical_kb.json > departments > DS > hod"
+  },
+  {
+    "department": "ECE",
+    "name": "Dr. Mrinmoy Chakraborty",
+    "email": "mrinmoy.chakraborty@bcrec.ac.in",
+    "phone": "9932245570",
+    "provenance": {
+      "source_type": "manual_entry",
+      "date_verified": "2026-04-15",
+      "confidence": "medium"
+    },
+    "source": "canonical_kb.json > departments > ECE > hod"
+  },
+  {
+    "department": "EE",
+    "name": "Dr. Shibendu Mahata",
+    "email": "shibendu.mahata@bcrec.ac.in",
+    "phone": "9832724052",
+    "provenance": {
+      "source_type": "manual_entry",
+      "date_verified": "2026-04-15",
+      "confidence": "medium"
+    },
+    "source": "canonical_kb.json > departments > EE > hod"
+  },
+  {
+    "department": "IT",
+    "name": "Dr. Dinesh Kumar Pradhan",
+    "email": "dinesh.pradhan@bcrec.ac.in",
+    "phone": "9433303419",
+    "provenance": {
+      "source_type": "manual_entry",
+      "date_verified": "2026-04-15",
+      "confidence": "medium"
+    },
+    "source": "canonical_kb.json > departments > IT > hod"
+  },
+  {
+    "department": "MBA",
+    "name": "Somroop Siddhanta",
+    "email": "somroop.siddhanta@bcrec.ac.in",
+    "phone": "9002650046",
+    "provenance": {
+      "source_type": "manual_entry",
+      "date_verified": "2026-04-15",
+      "confidence": "medium"
+    },
+    "source": "canonical_kb.json > departments > MBA > hod"
+  },
+  {
+    "department": "MCA",
+    "name": "Dr. Pabitra Kumar Dey",
+    "email": "pabitra.dey@bcrec.ac.in",
+    "phone": "9434476503",
+    "provenance": {
+      "source_type": "manual_entry",
+      "date_verified": "2026-04-15",
+      "confidence": "medium",
+      "notes": "Same HOD as CSE department"
+    },
+    "source": "canonical_kb.json > departments > MCA > hod"
+  },
+  {
+    "department": "ME",
+    "name": "Dr. Chandan Chattoraj",
+    "email": "chandan.chattoraj@bcrec.ac.in",
+    "phone": "9531591525",
+    "provenance": {
+      "source_type": "manual_entry",
+      "date_verified": "2026-04-15",
+      "confidence": "medium"
+    },
+    "source": "canonical_kb.json > departments > ME > hod"
+  }
+]

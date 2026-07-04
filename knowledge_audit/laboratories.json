@@ -1,0 +1,22 @@
+{
+  "computer_labs": {
+    "description": "Well-equipped labs with modern hardware",
+    "config": "Intel Core i5/i7, 8-16GB RAM",
+    "software": [
+      "MATLAB",
+      "Simulink",
+      "TensorFlow",
+      "Python",
+      "Xilinx",
+      "ANSYS",
+      "AutoCAD",
+      "CREO",
+      "Department-specific software"
+    ]
+  },
+  "special_labs": {
+    "khorana_research_lab": "UV-Vis spectrophotometers, digital pH meters"
+  },
+  "lab_detail_text": "State-of-the-art laboratories for all disciplines including departmental and central labs.",
+  "source": "canonical_kb.json > infrastructure"
+}

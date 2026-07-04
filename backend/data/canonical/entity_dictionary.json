@@ -1,0 +1,392 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "last_updated": "2026-07-02",
+    "description": "Canonical entity dictionary for STT normalization and TTS spoken form conversion"
+  },
+  "departments": {
+    "CSE": {
+      "canonical": "CSE",
+      "full_name": "Computer Science and Engineering",
+      "aliases": ["computer science", "computer science and engineering", "c s e", "cse dept", "cse department", "comp sc", "comp sci"],
+      "stt_mistakes": ["sce", "cse", "css", "c see", "csi"],
+      "spoken_variants": ["C S E", "Computer Science"],
+      "tts_spoken": "C S E"
+    },
+    "IT": {
+      "canonical": "IT",
+      "full_name": "Information Technology",
+      "aliases": ["information technology", "i t", "it dept", "it department"],
+      "stt_mistakes": ["it", "i t"],
+      "spoken_variants": ["I T", "Information Technology"],
+      "tts_spoken": "I T"
+    },
+    "ECE": {
+      "canonical": "ECE",
+      "full_name": "Electronics and Communication Engineering",
+      "aliases": ["electronics and communication", "electronics", "e c e", "ece dept", "ece department", "electronics and communication engineering"],
+      "stt_mistakes": ["e c e", "ece", "ec e", "ecce"],
+      "spoken_variants": ["E C E", "Electronics"],
+      "tts_spoken": "E C E"
+    },
+    "EE": {
+      "canonical": "EE",
+      "full_name": "Electrical Engineering",
+      "aliases": ["electrical", "electrical engineering", "e e", "ee dept", "ee department"],
+      "stt_mistakes": ["e e", "ee", "ie", "eie"],
+      "spoken_variants": ["E E", "Electrical"],
+      "tts_spoken": "E E"
+    },
+    "ME": {
+      "canonical": "ME",
+      "full_name": "Mechanical Engineering",
+      "aliases": ["mechanical", "mechanical engineering", "m e", "me dept", "me department"],
+      "stt_mistakes": ["m e", "em e", "mec"],
+      "spoken_variants": ["M E", "Mechanical"],
+      "tts_spoken": "M E"
+    },
+    "CE": {
+      "canonical": "CE",
+      "full_name": "Civil Engineering",
+      "aliases": ["civil", "civil engineering", "c e", "ce dept", "ce department"],
+      "stt_mistakes": ["c e", "ce", "cie", "civ"],
+      "spoken_variants": ["C E", "Civil"],
+      "tts_spoken": "C E"
+    },
+    "AIML": {
+      "canonical": "AIML",
+      "full_name": "CSE (Artificial Intelligence and Machine Learning)",
+      "aliases": ["ai ml", "a i m l", "a i ml", "artificial intelligence", "artificial intelligence and machine learning", "ai and ml", "aiml dept", "aiml department", "cse aiml", "cse ai ml"],
+      "stt_mistakes": ["iml", "a i m l", "a i m l", "aiml", "am l", "a ml", "ai m l", "eyeml", "cseaml", "cciml"],
+      "spoken_variants": ["A I M L", "AI and ML", "Artificial Intelligence and Machine Learning"],
+      "tts_spoken": "A I M L"
+    },
+    "DS": {
+      "canonical": "DS",
+      "full_name": "CSE (Data Science)",
+      "aliases": ["data science", "d s", "ds dept", "ds department", "cse ds", "cse data science", "data sci"],
+      "stt_mistakes": ["d s", "ds", "d se", "de es"],
+      "spoken_variants": ["D S", "Data Science"],
+      "tts_spoken": "D S"
+    },
+    "CY": {
+      "canonical": "CY",
+      "full_name": "CSE (Cyber Security)",
+      "aliases": ["cyber security", "cybersecurity", "c y", "cy dept", "cy department", "cse cy", "cse cyber security", "cyber"],
+      "stt_mistakes": ["c y", "cy", "saiber", "s y"],
+      "spoken_variants": ["C Y", "Cyber Security"],
+      "tts_spoken": "C Y"
+    },
+    "CSD": {
+      "canonical": "CSD",
+      "full_name": "Computer Science and Design",
+      "aliases": ["computer science and design", "c s d", "csd dept", "csd department", "cse design"],
+      "stt_mistakes": ["c s d", "csd", "cs d", "c es d"],
+      "spoken_variants": ["C S D", "Computer Science and Design"],
+      "tts_spoken": "C S D"
+    },
+    "MBA": {
+      "canonical": "MBA",
+      "full_name": "Master of Business Administration",
+      "aliases": ["mba dept", "mba department", "m b a", "mba program", "master of business administration", "management"],
+      "stt_mistakes": ["m b a", "mba", "em b a"],
+      "spoken_variants": ["M B A", "MBA"],
+      "tts_spoken": "M B A"
+    },
+    "MCA": {
+      "canonical": "MCA",
+      "full_name": "Master of Computer Applications",
+      "aliases": ["mca dept", "mca department", "m c a", "mca program", "master of computer applications"],
+      "stt_mistakes": ["m c a", "mca", "em c a"],
+      "spoken_variants": ["M C A", "MCA"],
+      "tts_spoken": "M C A"
+    }
+  },
+  "faculty": {
+    "principal": {
+      "canonical": "Dr. Sanjay S. Pawar",
+      "role": "Principal",
+      "aliases": ["sanjay pawar", "sanjay s pawar", "dr sanjay", "sanjoy pawar", "sanjay pawar sir"],
+      "stt_mistakes": ["sanjay parwar", "sanjay paur", "sanjay pawaar"]
+    },
+    "vice_principal": {
+      "canonical": "Prof. (Dr.) K. M. Hossain",
+      "role": "Vice Principal",
+      "aliases": ["k m hossain", "km hossain", "k. m. hossain", "hossain sir"],
+      "stt_mistakes": ["k m hossen", "k m hosen", "hossain k m"]
+    },
+    "hod_CSE": {
+      "canonical": "Dr. Pabitra Kumar Dey",
+      "role": "HOD of CSE",
+      "aliases": ["pabitra dey", "pabitra kumar dey", "dr pabitra", "pabitra"],
+      "stt_mistakes": ["pabitra day", "pabitra dai", "pobitro dey"]
+    },
+    "hod_IT": {
+      "canonical": "Dr. Dinesh Kumar Pradhan",
+      "role": "HOD of IT",
+      "aliases": ["dinesh pradhan", "dinesh kumar pradhan", "dr dinesh"],
+      "stt_mistakes": ["dinesh pradan", "dinesh pradhaan"]
+    },
+    "hod_ECE": {
+      "canonical": "Dr. Mrinmoy Chakraborty",
+      "role": "HOD of ECE",
+      "aliases": ["mrinmoy chakraborty", "dr mrinmoy", "mrinmoy"],
+      "stt_mistakes": ["mrinmoy chakraborty", "mrinmoy chakrabarti", "mrinmoy chakroborty"]
+    },
+    "hod_EE": {
+      "canonical": "Dr. Shibendu Mahata",
+      "role": "HOD of EE",
+      "aliases": ["shibendu mahata", "dr shibendu", "shibendu"],
+      "stt_mistakes": ["shibendu mahata", "shivendu mahata"]
+    },
+    "hod_ME": {
+      "canonical": "Dr. Chandan Chattoraj",
+      "role": "HOD of ME",
+      "aliases": ["chandan chattoraj", "dr chandan chattoraj", "chandan"],
+      "stt_mistakes": ["chandan chattoraj", "chandan chatoraj", "chandan chattaraj"]
+    },
+    "hod_CE": {
+      "canonical": "Dr. Sanjay Sengupta",
+      "role": "HOD of CE",
+      "aliases": ["sanjay sengupta", "dr sanjay sengupta"],
+      "stt_mistakes": ["sanjay sengupta", "sanjay sengupto"]
+    },
+    "hod_CSD": {
+      "canonical": "Dr. Poulomi Mukherjee Tewari",
+      "role": "HOD of CSD",
+      "aliases": ["poulomi mukherjee", "poulomi tewari", "poulomi mukherjee tewari", "dr poulomi"],
+      "stt_mistakes": ["poulomi mukherjee", "poulami mukherjee", "poulomi tewari"]
+    },
+    "hod_AIML": {
+      "canonical": "Dr. Gour Sundar Mitra Thakur",
+      "role": "HOD of AIML",
+      "aliases": ["gour sundar mitra thakur", "gour mitra thakur", "dr gour", "gour"],
+      "stt_mistakes": ["gour sundar", "gour mitra thakur", "gour thakur"]
+    },
+    "hod_DS": {
+      "canonical": "Dr. Chandan Bandyopadhyay",
+      "role": "HOD of DS",
+      "aliases": ["chandan bandyopadhyay", "chandan bandopadhyay", "chandan bandopaddhyay", "dr chandan"],
+      "stt_mistakes": ["chandan bandopadhyay", "chandan banerjee", "chandan bandyopadhyay"]
+    },
+    "hod_CY": {
+      "canonical": "Dr. Gour Sundar Mitra Thakur",
+      "role": "HOD of CY",
+      "aliases": ["gour sundar mitra thakur", "gour mitra thakur", "dr gour"],
+      "stt_mistakes": ["gour sundar", "gour thakur"]
+    },
+    "hod_MBA": {
+      "canonical": "Somroop Siddhanta",
+      "role": "HOD of MBA",
+      "aliases": ["somroop siddhanta", "somroop"],
+      "stt_mistakes": ["somroop siddhanta", "somrup siddhanta"]
+    },
+    "hod_MCA": {
+      "canonical": "Dr. Pabitra Kumar Dey",
+      "role": "HOD of MCA",
+      "aliases": ["pabitra dey", "pabitra kumar dey", "dr pabitra"],
+      "stt_mistakes": ["pabitra day", "pabitra dai"]
+    }
+  },
+  "programs": {
+    "BTECH": {
+      "canonical": "B.Tech",
+      "full_name": "Bachelor of Technology",
+      "aliases": ["btech", "b tech", "b.tech", "bachelor of technology", "b e", "be"],
+      "stt_mistakes": ["b tech", "btec", "b tec"],
+      "tts_spoken": "B dot Tech"
+    },
+    "MTECH": {
+      "canonical": "M.Tech",
+      "full_name": "Master of Technology",
+      "aliases": ["mtech", "m tech", "m.tech", "master of technology", "m e"],
+      "stt_mistakes": ["m tech", "mtec", "m tec"],
+      "tts_spoken": "M dot Tech"
+    },
+    "MBA_PROG": {
+      "canonical": "MBA",
+      "full_name": "Master of Business Administration",
+      "aliases": ["mba", "m b a", "master of business administration"],
+      "stt_mistakes": ["m b a"],
+      "tts_spoken": "M B A"
+    },
+    "MCA_PROG": {
+      "canonical": "MCA",
+      "full_name": "Master of Computer Applications",
+      "aliases": ["mca", "m c a", "master of computer applications"],
+      "stt_mistakes": ["m c a"],
+      "tts_spoken": "M C A"
+    }
+  },
+  "common_abbreviations": {
+    "HOD": {
+      "canonical": "HOD",
+      "full_form": "Head of Department",
+      "aliases": ["head of department", "department head", "ho d", "h o d"],
+      "stt_mistakes": ["hod", "hot", "hode"],
+      "tts_spoken": "Head of Department"
+    },
+    "BCREC": {
+      "canonical": "BCREC",
+      "full_form": "Dr. B.C. Roy Engineering College",
+      "aliases": ["b c roy", "bcrec", "b c rec", "bc rec", "b c roy engineering college", "dr b c roy engineering college", "b.c.roy"],
+      "stt_mistakes": ["b c rec", "bcrec", "b c r e c", "bcrek"]
+    },
+    "MAKAUT": {
+      "canonical": "MAKAUT",
+      "full_form": "Maulana Abul Kalam Azad University of Technology",
+      "aliases": ["makaut", "maulana abul kalam azad university of technology", "wb ut"],
+      "stt_mistakes": ["makaut", "makote"],
+      "tts_spoken": "M A K A U T"
+    },
+    "AICTE": {
+      "canonical": "AICTE",
+      "full_form": "All India Council for Technical Education",
+      "aliases": ["aicte", "all india council for technical education"],
+      "stt_mistakes": ["a i c t e", "aict"],
+      "tts_spoken": "A I C T E"
+    },
+    "NBA": {
+      "canonical": "NBA",
+      "full_form": "National Board of Accreditation",
+      "aliases": ["nba", "national board of accreditation"],
+      "stt_mistakes": ["n b a", "nbaa"],
+      "tts_spoken": "N B A"
+    },
+    "NAAC": {
+      "canonical": "NAAC",
+      "full_form": "National Assessment and Accreditation Council",
+      "aliases": ["naac", "national assessment and accreditation council"],
+      "stt_mistakes": ["n a a c", "nac"],
+      "tts_spoken": "N A A C"
+    },
+    "NIRF": {
+      "canonical": "NIRF",
+      "full_form": "National Institutional Ranking Framework",
+      "aliases": ["nirf", "national institutional ranking framework"],
+      "stt_mistakes": ["n i r f", "nrf"],
+      "tts_spoken": "N I R F"
+    },
+    "WBJEE": {
+      "canonical": "WBJEE",
+      "full_form": "West Bengal Joint Entrance Examination",
+      "aliases": ["wbjee", "west bengal jee", "wb jee"],
+      "stt_mistakes": ["w b j e e", "dubuje", "wbje"],
+      "tts_spoken": "W B J E E"
+    },
+    "JEE": {
+      "canonical": "JEE",
+      "full_form": "Joint Entrance Examination",
+      "aliases": ["jee", "jee main", "joint entrance examination", "iit jee"],
+      "stt_mistakes": ["jee", "je"],
+      "tts_spoken": "J E E"
+    },
+    "JELET": {
+      "canonical": "JELET",
+      "full_form": "Joint Entrance Examination for Lateral Entry",
+      "aliases": ["jelet", "joint entrance lateral entry"],
+      "stt_mistakes": ["jelet", "jele"],
+      "tts_spoken": "J E L E T"
+    },
+    "TNP": {
+      "canonical": "T&P",
+      "full_form": "Training and Placement",
+      "aliases": ["training and placement", "t and p", "t p", "placement cell", "training placement"],
+      "stt_mistakes": ["t and p", "t p"],
+      "tts_spoken": "T and P"
+    }
+  },
+  "buildings": {
+    "dulal_mitra_auditorium": {
+      "canonical": "Dulal Mitra Auditorium",
+      "aliases": ["dulal mitra", "auditorium", "dulal auditorium"],
+      "stt_mistakes": ["dulal mitra", "dulal auditorium", "dulal mitro"]
+    },
+    "nazrul_manch": {
+      "canonical": "Nazrul Manch",
+      "aliases": ["nazrul manch", "open air stage"],
+      "stt_mistakes": ["nazrul manch", "nazrul man", "najrul manch"]
+    },
+    "einstein_hall": {
+      "canonical": "Albert Einstein Hall",
+      "aliases": ["einstein hall", "albert einstein", "seminar hall"],
+      "stt_mistakes": ["einstein hall", "ainstain hall"]
+    }
+  },
+  "language_mappings": {
+    "hindi_to_english": {
+      "विभाग": "department",
+      "अध्यक्ष": "hod",
+      "प्रिंसिपल": "principal",
+      "फीस": "fee",
+      "शुल्क": "fee",
+      "प्लेसमेंट": "placement",
+      "प्रवेश": "admission",
+      "भर्ती": "admission",
+      "छात्र": "student",
+      "पढ़ाई": "study",
+      "कितना": "how much",
+      "कौन": "who",
+      "क्या": "what",
+      "कहाँ": "where",
+      "कब": "when",
+      "क्यों": "why",
+      "हॉस्टल": "hostel",
+      "पैसा": "fee",
+      "रुपये": "rupees",
+      "साल": "year",
+      "सेमेस्टर": "semester",
+      "जानकारी": "information",
+      "बारे में": "about"
+    },
+    "bengali_to_english": {
+      "বিভাগ": "department",
+      "প্রধান": "hod",
+      "অধ্যক্ষ": "principal",
+      "ফি": "fee",
+      "প্লেসমেন্ট": "placement",
+      "ভর্তি": "admission",
+      "ছাত্র": "student",
+      "পড়াশোনা": "study",
+      "কত": "how much",
+      "কে": "who",
+      "কী": "what",
+      "কোথায়": "where",
+      "কখন": "when",
+      "কেন": "why",
+      "হোস্টেল": "hostel",
+      "টাকা": "rupees",
+      "বছর": "year",
+      "সেমিস্টার": "semester",
+      "তথ্য": "information",
+      "সম্পর্কে": "about"
+    }
+  },
+  "tts_spoken_forms": {
+    "CSE": "C S E",
+    "IT": "I T",
+    "ECE": "E C E",
+    "EE": "E E",
+    "ME": "M E",
+    "CE": "C E",
+    "AIML": "A I M L",
+    "DS": "D S",
+    "CY": "C Y",
+    "CSD": "C S D",
+    "MBA": "M B A",
+    "MCA": "M C A",
+    "HOD": "Head of Department",
+    "MAKAUT": "M A K A U T",
+    "AICTE": "A I C T E",
+    "NBA": "N B A",
+    "NAAC": "N A A C",
+    "NIRF": "N I R F",
+    "WBJEE": "W B J E E",
+    "JEE": "J E E",
+    "B.Tech": "B dot Tech",
+    "M.Tech": "M dot Tech",
+    "T&P": "T and P",
+    "LPA": "L P A",
+    "CGPA": "C G P A"
+  }
+}

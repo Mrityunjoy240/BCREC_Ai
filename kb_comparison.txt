@@ -1,0 +1,178 @@
+=== HOSTEL ===
+{
+  "available": true,
+  "compulsory": false,
+  "total_hostels": 5,
+  "boys_hostels": 3,
+  "girls_hostels": 2,
+  "total_capacity": 1500,
+  "room_types": [
+    {
+      "type": "Single Bed",
+      "rent_per_sem": 30000,
+      "availability": "Limited (need-based)"
+    },
+    {
+      "type": "Double/Triple Bed",
+      "rent_per_sem": 10000,
+      "availability": "Standard"
+    },
+    {
+      "type": "4-Bed",
+      "rent_per_sem": 10000,
+      "availability": "Maximum"
+    }
+  ],
+  "caution_money": 2000,
+  "mess": {
+    "monthly_charge": 5000,
+    "months_per_year": 11,
+    "meals_per_day": 4,
+    "veg": true,
+    "non_veg": "Available 3-4 days/week (Chicken/Fish/Egg)",
+    "veg_options": "Paneer and Soybean available daily",
+    "timings": {
+      "breakfast": "07:30 - 09:00 AM",
+      "lunch": "12:30 - 02:00 PM",
+      "snacks": "Evening",
+      "dinner": "07:30 - 09:30 PM"
+    }
+  },
+  "facilities": [
+    "24-hour WiFi",
+    "Bed/Table/Chair/Wardrobe provided",
+    "Laundry service (pai
+
+=== COURSES (MBA) ===
+{
+  "intake": 90,
+  "duration": "2 years",
+  "fees": {
+    "total": 419200,
+    "admission": 121400
+  },
+  "scholarship": "10% tuition fee scholarship for eligible candidates"
+}
+
+=== COURSES (MTech) ===
+{
+  "programs": [
+    "M.Tech ECE",
+    "M.Tech Power Systems",
+    "M.Tech CSE",
+    "M.Tech ME"
+  ],
+  "intake": 18,
+  "duration": "2 years",
+  "fees": {
+    "total": 120400,
+    "admission": 40800
+  },
+  "stipend": "Rs. 3000/month for eligible students"
+}
+
+=== COURSES (MCA) ===
+{
+  "intake": 120,
+  "duration": "2 years",
+  "fees": {
+    "total": 208800,
+    "admission": 67200
+  },
+  "eligibility": "JECA qualified"
+}
+
+=== FEES SUMMARY ===
+{
+  "btech_cse_it_ece": {
+    "total": "Rs. 6,04,700",
+    "admission": "Rs. 98,225",
+    "per_semester": "Rs. 72,925"
+  },
+  "btech_ee_aiml_ds_cy_csd": {
+    "total": "Rs. 5,54,100",
+    "admission": "Rs. 91,900",
+    "per_semester": "Rs. 66,100"
+  },
+  "btech_me_ce": {
+    "total": "Rs. 4,44,100",
+    "admission": "Rs. 78,150",
+    "per_semester": "Rs. 40,800"
+  },
+  "mba": {
+    "total": "Rs. 4,19,200",
+    "admission": "Rs. 1,21,400"
+  },
+  "mca": {
+    "total": "Rs. 2,17,400",
+    "admission": "Rs. 67,200"
+  },
+  "mtech": {
+    "total": "Rs. 1,26,000 to 2,06,000",
+    "admission": "Rs. 41,200"
+  },
+  "payment_modes": [
+    "Demand Draft",
+    "Debit Card",
+    "Credit Card"
+  ],
+  "not_accepted": [
+    "Cheque",
+    "Cash"
+  ],
+  "semester_wise_cse_it_ece": {
+    "first": 98225,
+    "description_first": "Includes admission fee, caution deposit, library fee, and tuition",
+    "per_semester": 72925,
+    "eighth": 73925,
+    "total_btech": 609700,
+    "total_description": "Rs. 6,09,700 for 4-year B.Tech CSE/IT/ECE"
+  },
+  "semester_wise_ee_group": {
+    "first": 91900,
+    "per_semester": 66100,
+    "eighth": 67100,
+    "total_btech": 554100,
+    "total_description": "Rs. 5,54,100 for 4-year B.Tech EE/AIML/DS/CS/CSD"
+  },
+  "semester_wise_me_ce": {
+    "first": 78150,
+    "per_semester": 40800,
+    "eighth": 41800,
+    "total_btech": 444100,
+    "total_description": "Rs. 4,44,100 for 4-year B.Tech ME/CE"
+  },
+  "hidden_charges": "No hidden charges. All fees are transparentl
+
+=== ADMISSION ===
+{
+  "eligibility": {
+    "btech": "10+2 with PCM, minimum 50% marks for general category",
+    "entrance": "WBJEE or JEE Main"
+  },
+  "seat_distribution": {
+    "wbjee": "80%",
+    "jee_main": "10%",
+    "management": "10%"
+  },
+  "lateral_entry": "10% of approved intake via JELET",
+  "counseling": "WBJEEB at wbjeeb.nic.in",
+  "portal": "https://bcrec.ucanapply.com",
+  "contacts": {
+    "general": [
+      "9333928874",
+      "9832131164",
+      "9932245570",
+      "9434250472",
+      "7063189887"
+    ],
+    "mba": "8370989772"
+  },
+  "age_limit": {
+    "en": "There is no upper age limit. Candidates must be at least 17 years old by December 31st of the admission year as per WBJEEB norms.",
+    "hi": "कोई ऊपरी आयु सीमा नहीं है। उम्मीदवारों की आयु प्रवेश वर्ष के 31 दिसंबर तक कम से कम 17 वर्ष होनी चाहिए।",
+    "bn": "কোনো ঊর্ধ্ব বয়সসীমা নেই। প্রার্থীদের ভর্তি বছরের ৩১ ডিসেম্বরের মধ্যে কমপক্ষে ১৭ বছর বয়স হতে হবে।"
+  },
+  "spot_round": "Mid-September to early October",
+  "nri_quota": {
+   
