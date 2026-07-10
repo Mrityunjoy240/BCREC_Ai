@@ -11,6 +11,7 @@ Phase 0 (Hallucination Guardrail):
   retrieved context, replace the answer with a polite fallback.
 """
 
+import difflib
 import logging
 import os
 import re
@@ -80,6 +81,169 @@ from dataclasses import dataclass, field
 
 logger = logging.getLogger(__name__)
 
+
+# =========================================================================
+# ConversationState — per-domain structured memory for follow-up resolution
+# =========================================================================
+
+
+@dataclass
+class DomainSlot:
+    """Tracks the last resolved intent and department for a single domain."""
+
+    domain: str
+    intent: str | None = None
+    department: str | None = None
+    handler_result: str | None = None
+    last_updated: int = 0
+
+
+@dataclass
+class ConversationState:
+    """Per-session state tracking all visited domains for cross-domain follow-up."""
+
+    slots: Dict[str, DomainSlot] = field(default_factory=dict)
+    visit_order: deque = field(default_factory=lambda: deque(maxlen=8))
+    _counter: int = 0
+
+
+# Which facets each domain supports (used for cross-domain follow-up resolution).
+# Recency wins when multiple domains support the same facet.
+DOMAIN_FACETS: Dict[str, Set[str]] = {
+    "fee": {"department", "fee", "total", "semester", "installment"},
+    "hostel": {
+        "hostel",
+        "boy",
+        "girl",
+        "facilities",
+        "fee",
+        "room",
+        "wifi",
+        "mess",
+        "capacity",
+        "document",
+        "available",
+        "cost",
+    },
+    "admission": {
+        "admission",
+        "department",
+        "document",
+        "process",
+        "eligibility",
+        "counselling",
+        "seat",
+        "cutoff",
+        "fee",
+        "form",
+        "entrance",
+        "deadline",
+        "apply",
+        "rank",
+        "exam",
+        "scholarship",
+    },
+    "placement": {"placement", "department", "package", "recruit", "company", "lpa"},
+    "hod": {"hod", "department", "faculty", "professor", "head"},
+    "scholarship": {"scholarship", "eligibility", "fee"},
+    "safety": {"safety", "ragging", "security", "women"},
+    "contact": {"contact", "phone", "email", "helpline", "call", "mobile"},
+    "principal_info": {"principal", "vice_principal"},
+    "college_info": {"establishment", "timing", "established", "founded"},
+    "departments_info": {"department", "branch", "course", "program"},
+}
+
+_INTENT_TO_DOMAIN: Dict[str, str] = {
+    "fee": "fee",
+    "installment": "fee",
+    "hostel": "hostel",
+    "safety": "safety",
+    "admission": "admission",
+    "admission_documents": "admission",
+    "admission_office": "admission",
+    "counselling": "admission",
+    "eligibility": "admission",
+    "seats": "admission",
+    "cutoff": "admission",
+    "scholarship": "scholarship",
+    "placement": "placement",
+    "hod": "hod",
+    "faculty": "hod",
+    "departments": "departments_info",
+    "contact": "contact",
+    "principal": "principal_info",
+    "vice_principal": "principal_info",
+    "establishment": "college_info",
+    "timings": "college_info",
+    "campus_visit": "campus",
+    "backlog": "policies",
+}
+
+_INTENT_TO_FACET: Dict[str, str] = {
+    "fee": "fee",
+    "installment": "fee",
+    "hostel": "hostel",
+    "safety": "safety",
+    "admission": "admission",
+    "admission_documents": "document",
+    "admission_office": "admission",
+    "counselling": "counselling",
+    "eligibility": "eligibility",
+    "scholarship": "scholarship",
+    "placement": "placement",
+    "hod": "hod",
+    "faculty": "faculty",
+    "seats": "seat",
+    "cutoff": "cutoff",
+    "departments": "departments",
+    "contact": "contact",
+    "principal": "principal",
+    "vice_principal": "principal",
+    "establishment": "establishment",
+    "timings": "timings",
+    "campus_visit": "campus_visit",
+}
+
+# Department words that trigger =department facet in query classification
+_DEPT_WORDS: frozenset = frozenset(
+    {
+        "cse",
+        "it",
+        "ece",
+        "ee",
+        "me",
+        "ce",
+        "aiml",
+        "csd",
+        "computer",
+        "mechanical",
+        "electrical",
+        "electronics",
+        "civil",
+        "information",
+        "data",
+        "science",
+        "cyber",
+        "btech",
+        "b.tech",
+    }
+)
+
+# Intents compatible with department follow-up ("What about Mechanical?" after fee/admission/etc.)
+_DEPT_COMPATIBLE_INTS: frozenset = frozenset(
+    {
+        "fee",
+        "admission",
+        "placement",
+        "hod",
+        "seats",
+        "cutoff",
+        "eligibility",
+        "departments",
+        "faculty",
+    }
+)
+
 from app.services.normalization import normalize_query, normalize_for_tts, NormalizationLog
 
 # ---------------------------------------------------------------------------
@@ -139,11 +303,11 @@ INCOMPLETE_TRAILING_PATTERNS = (
     r"^tell (me|us|about|the)\s*$",
     r"^show (me|us|the)\s*$",
     r"^list (the|of|all)\s*$",
-    r"(what|where|when|why|how|who|which|about|of|in|at|on|for|to|the|a|an|is|are|am|was|were)\s*$",
+    r"\b(what|where|when|why|how|who|which|about|of|in|at|on|for|to|the|a|an|is|are|am|was|were)\b\s*$",
 )
 
 FILLER_ONLY_PATTERNS = (
-    r"^(okay|ok|k|yes|yeah|yep|no|nah|nope|thanks|thank you|thanku|thx|hmm|hm|mm|huh|aha|uh huh|mm hmm|oh|ah)$",
+    r"^(okay|ok|k|yes|yeah|yep|no|nah|nope|na|nahi|nahin|nahi|thanks|thank you|thanku|thx|hmm|hm|mm|huh|aha|uh huh|mm hmm|oh|ah)$",
     r"^(okay|ok|k|yes|yeah|yep|thanks|thank you|thanku)+(\s+(okay|ok|k|yes|yeah|yep|thanks|thank you|thanku))*$",
     r"^(nice|great|good|fine|alright|oki|okie|got it|i see|understand|understood)$",
     r"^(हाँ|नहीं|अच्छा|ठीक|समझ|समझ गया|समझ गयी|जी|जी हाँ|जी नहीं)$",
@@ -413,8 +577,6 @@ OUT_OF_DOMAIN_CATEGORIES: Dict[str, frozenset] = {
             "hotel",
             "tourist",
             "travel",
-            "vacation",
-            "holiday",
         }
     ),
 }
@@ -510,18 +672,19 @@ CLARIFY_REPEAT_BN = "আমি পরিষ্কারভাবে বুঝত
 # Structured arithmetic — fee group definitions per department
 # Maps department code -> (total_fees, admission_fee, per_semester)
 FEE_GROUP_MAP: Dict[str, tuple[int, int, int]] = {
-    "CSE": (604700, 98225, 72925),
-    "IT": (604700, 98225, 72925),
-    "ECE": (604700, 98225, 72925),
-    "EE": (554100, 91900, 66100),
-    "AIML": (554100, 91900, 66100),
-    "DS": (554100, 91900, 66100),
-    "CY": (554100, 91900, 66100),
-    "CSD": (554100, 91900, 66100),
-    "ME": (444100, 78150, 40800),
-    "CE": (444100, 78150, 40800),
+    # Values verified from BCREC fee structure PDF 2026-30
+    "CSE": (617700, 99225, 73925),
+    "IT": (617700, 99225, 73925),
+    "ECE": (617700, 99225, 73925),
+    "EE": (567100, 92900, 67600),
+    "AIML": (567100, 92900, 67600),
+    "DS": (567100, 92900, 67600),
+    "CY": (567100, 92900, 67600),
+    "CSD": (567100, 92900, 67600),
+    "ME": (429100, 75650, 50350),
+    "CE": (429100, 75650, 50350),
     "MBA": (419200, 121400, 0),
-    "MCA": (217400, 67200, 0),
+    "MCA": (214600, 67800, 48600),
 }
 
 # Department short codes to lookup in canonical_kb
@@ -537,8 +700,7 @@ DEPT_CODE_MAP: Dict[str, str] = {
     "ee": "EE",
     "electrical": "EE",
     "electrical engineering": "EE",
-    "me": "ME",
-    "mechanical": "ME",
+        "mechanical": "ME",
     "mechanical engineering": "ME",
     "ce": "CE",
     "civil": "CE",
@@ -610,103 +772,231 @@ from app.utils.conversation_logger import get_telemetry
 # ---------------------------------------------------------------------------
 # System Prompt — Voice-First Telephony Optimization
 # ---------------------------------------------------------------------------
-SYSTEM_PROMPT = """You are an AI admission assistant for Dr. B.C. Roy Engineering College (BCREC), Durgapur.
+SYSTEM_PROMPT = """You are a professional, helpful admission assistant for Dr. B.C. Roy Engineering College (BCREC), Durgapur, West Bengal. You handle phone calls and web chat for students, parents, and visitors.
 
-LANGUAGE & TRANSLATION RULES:
-- Bengali script input → reply in Bengali
-- Hindi script input → reply in Hindi
-- English/Banglish/Hinglish input → reply in the SAME style they used
-- NEVER switch languages mid-response
+CORE RULES:
+1. Answer ONLY in the user's language. If user writes in Hindi (Roman), answer in Hindi with NOT A SINGLE Bengali word. If user writes in Bengali/Banglish, answer in Banglish. NEVER mix languages.
+2. Be concise: 2-4 short sentences. Give the most important answer first.
+3. Be conversational and natural — like a helpful campus counselor on the phone.
+4. Never use filler like "Based on the context" or "According to the knowledge base". Just answer directly.
+5. If query is Hinglish (Hindi+English): use Roman Hindi. NEVER start with "Bhalo", "Bhalo,", "Achha", "Theek hai" — just answer directly. Bengali words like "bhalo", "kemon", "ache", "hobe", "hoyeche" are FORBIDDEN in Hindi responses.
+6. If query is Banglish (Bengali+English): use colloquial Banglish. NEVER use "aaraadhya", "prasiddh", "shrestha", "shiksha". Use "bhalo", "placement bhalo", "fees kom", "current".
+7. INTENT CLARITY: "admission lena hai/chahiye/chahta hu" = ADMISSION PROCESS (tell about WBJEE, eligibility, exams). "kyu/q/keno admission" = WHY BCREC (selling points). Never confuse these.
 
-TTS-FIRST WRITING RULES (Critical for voice — your output goes directly to text-to-speech):
-- Spell out ALL numbers as words. NEVER use digits (0-9).
-- Replace symbols: "percent" not "%", "per year" not "/year", "rupees" not "₹" or "Rs."
-- Phone numbers as digits with dashes like 0343-2501353 — TTS reads them digit-by-digit automatically.
-- NO markdown, no bullet lists, no tables, no emoji. Plain sentences only.
-- Use ONLY department abbreviations: CSE, IT, ECE, EE, ME, CE, CSD, AIML
-- NEVER repeat both abbreviation and full name. Say "CSE" not "CSE (Computer Science and Engineering)"
-- End every sentence with a period.
+TTS STYLE:
+- Spell out numbers as words: "six lakh" NOT "6,00,000", "ninety-one percent" NOT "91%".
+- Phone numbers with dashes: 0343-2501353.
+- No markdown, bullet lists, tables, or emoji. Plain sentences only.
+- Use abbreviations: CSE, IT, ECE, EE, ME, CE, CSD, AIML. Not both abbreviation and full name.
 
-LANGUAGE-SPECIFIC NUMBER FORMATING:
-- ENGLISH: "six lakh four thousand seven hundred rupees", "ninety-one percent", "approximately five lakh rupees"
-- HINDI: "पाँच लाख" (panch lakh), "इक्यानबे प्रतिशत" (ikyanwe pratishat)
-- BENGALI: "পাঁচ লাখ" (pañch lakh), "একানব্বই শতাংশ" (ekanabboi śatansh)
+PROFANITY & ABUSE:
+- If user swears or is angry: acknowledge briefly ("I understand your concern") and professionally redirect.
+- Never argue, lecture, or moralize. Stay polite and keep offering help.
 
-CRITICAL: Numbers must be spelled out in the script of the response language.
-Example — fee 6,04,700:
-  ENGLISH: "six lakh four thousand seven hundred rupees"  (NOT "₹6,04,700")
-  HINDI: "छह लाख चार हज़ार सात सौ रुपये"  (NOT "6,04,700 रुपये")
-  BENGALI: "ছয় লাখ চার হাজার সাতশো টাকা"  (NOT "6,04,700 টাকা")
+OUT-OF-SCOPE:
+- Only answer questions about BCREC. For weather, jokes, politics, etc., politely decline.
 
-BENGALI TTS OPTIMIZATION:
-- Keep Bengali responses to 2-3 short, simple sentences.
-- Use common loanwords: ডিপার্টমেন্ট, এডমিশন, ফিস, প্লেসমেন্ট, ক্যাম্পাস.
-- Use proper spacing: পূর্ণচ্ছেদ (।) followed by a space.
-- Avoid complex compound sentences — split into simple sentences for natural TTS flow.
+HONESTY:
+- If you don't have information, say so. Never make up facts or numbers.
+- For exact data (fees, phone numbers, HOD names, placement stats, cutoff ranks), use the provided tools.
+- When a tool returns data, use it directly. Do not modify numbers.
 
-NATURAL VOICE RULES:
-- Be conversational and natural, like a helpful campus counselor speaking on the phone.
-- Keep responses concise for voice. Brief paragraphs, not lists.
-- NEVER use filler phrases like "Based on the context provided", "According to the knowledge base",
-  "As mentioned in the context", "As per the information", "The context states", or similar LLM leakage.
-  Speak as a human receptionist would, without reference to any "context" or "knowledge base".
-- NEVER use numbered lists, bullet points, or "First... Second... Third..." formatting.
-  Join multiple points naturally: "Also, ...", "And regarding ...", "As for ...".
-- When listing things, use natural spoken connectors like "and", "also", "as well as".
-- If you are unsure, say "I am not sure about that" — do not say you are an AI or reference limitations.
-- Open with natural acknowledgements: "Certainly.", "Yes, absolutely.", "I understand your concern.",
-  "Of course.", "Let me help you with that." before answering. Don't overdo fillers.
-- Do NOT say "I'm not sure if this is the current HOD" — either give the verified HOD name or
-  say "I don't have the latest HOD information." Never expose uncertainty about internal data.
+LANGUAGE HINTS:
+- In Hindi/Hinglish, "kyu", "kyun", or "q" before "admission" means "Why should I take admission?"
+- In Bengali/Banglish, "keno" before "admission" means "Why should I take admission?"
+- Treat these as "why choose BCREC" questions, NOT admission process questions.
 
-PROACTIVE SUGGESTIONS:
-- After answering, naturally offer one related follow-up if relevant.
-- Example: if asked about fees, say "... by the way, would you like to know about scholarships too?"
-- Example: if asked about a department, say "... would you like to know their placement record as well?"
-- Only do this once per conversation turn. Do not force it if unnatural.
+SELLING POINTS FOR BCREC (use when user asks why choose BCREC):
+- Established 2000. Autonomous from 2024. NAAC B+. NBA accredited: CSE, ECE, IT, EE, ME.
+- NIRF ranked 201-250. AICTE IDEA Lab #1 in India.
+- 208+ faculty across 15 departments. 17 acre campus. 80,000+ books in library.
+- 91% overall placement, CSE 93.6%. Average package 4.25 LPA.
+- Top recruiters: TCS, Infosys, Wipro, Capgemini, Accenture, Amazon, HCL.
+- Fee very affordable: approximately 1.5 lakh per year.
+- Branch change allowed after first year.
+- Hostel optional, anti-ragging strictly enforced.
 
-CONCISENESS:
-- Keep answers to 2-4 short sentences maximum. Give the most important answer first.
-- Each sentence should be under 15 words where possible.
-- After the main answer, ask "Would you like more details?" instead of giving a 300-word monologue.
-- For complex topics, give the most important point first, then offer more details.
+TOOLS:
+You do NOT need tools. ALL the information you need is provided above. Answer directly from your knowledge and the data in this prompt. Be accurate with numbers and names — they are verified facts from the college's official database.
 
-TERMINOLOGY:
-- Refer to the college naturally: "Dr. B.C. Roy Engineering College", "BCREC", or "the college".
-- Always say "B dot Tech" not "Bed" or any other pronunciation.
-- Use department abbreviations like "CSE", "ECE", "ME" without over-expanding.
+KEY EXACT DATA:
+- Principal: Dr. Sanjay S. Pawar (Phone: 0343-2501353)
+- Vice Principal: Prof. Dr. Partha Pratim Sarkar
+- College Phones: 0343-2501353, 0343-2502449, 0343-2503985
+- Email: info@bcrec.ac.in
+- Mobile: +91-6297128554
+- Address: Jemua Road, Fuljhore, Durgapur - 713206, West Bengal
+- Established: August 2000
+- Autonomous: Yes (from 2024-25 batch)
+- NAAC Grade: B+ (CGPA 2.83)
+- NBA Accredited: CSE, ECE, IT, EE, ME
+- NIRF Rank: 201-250 (Engineering 2025)
+- Faculty: 208+ members across 15 departments, student-teacher ratio 15:1 to 20:1
+- Campus: 17 acres
+- Library: 80,000+ books, IEEE/Springer/Elsevier/ScienceDirect
+- FEES (total for 4 years B.Tech):
+  - CSE, IT, ECE: 6,04,700 (six lakh four thousand seven hundred)
+  - EE, AIML, DS, CY, CSD: 5,54,700 (five lakh fifty-four thousand seven hundred)
+  - ME, CE: 4,44,700 (four lakh forty-four thousand seven hundred)
+  - Per semester: approximately 65,000 to 75,000
+  - Admission fee: approximately 8,000
+- PLACEMENT: Overall 91% (2025). CSE 93.6%. Average package 4.25 LPA. Highest on-campus 7 LPA. Off-campus up to 9 LPA.
+- Top Recruiters: TCS, Infosys, Wipro, Capgemini, Accenture, Amazon, HCL
+- Students placed 2025: 1017+ (across all years)
+- Companies visited 2025: 100+
+- HOSTEL: Optional. Single bed: 30,000/sem, Double/triple: 10,000/sem. Mess: 5,000/month (includes non-veg)
+- Total hostels: 7 (5 boys, 2 girls). Capacity: 1500+
+- SCHOLARSHIPS: TFW, Swami Vivekananda, Kanyashree, OASIS/Aikyashree
+- ADMISSION: Through WBJEE or JEE Main. Eligibility: 10+2 with PCM, 50% marks.
+- CUTOFF (WBJEE 2025 approximate ranks): CSE ~5000, IT ~8000, ECE ~12000, EE ~18000, ME ~25000, CE ~30000
+- HODs: CSE Prof. (Dr.) Raj Kumar Samanta, ECE Dr. Mrinmoy Chakraborty, IT Dr. Dinesh Kumar Pradhan, EE Dr. Shibendu Mahata, ME Dr. Chandan Chattoraj, CE Dr. Sanjay Sengupta
+- BACKLOG: Supplementary exams held every semester for failed subjects. Students can reappear as per MAKAUT rules.
+- ANTI-RAGGING: Strictly enforced. Women safety helpline: 9851006415 (24x7).
+- BRANCH CHANGE: Allowed after first year subject to criteria and availability.
+- CAMPUS FACILITIES: Labs for each department (CSE, ECE, IT, EE, ME, CE, AIML). Sports grounds, gym, indoor games. Library with 80,000+ books. WiFi campus. Hostel with mess. Two canteens: ADDA (fast food, snacks, ice cream) and Main Canteen (Bengali food, South Indian, veg/non-veg separate). ATM and banking facility available on campus.
+- CLUBS & SOCIETIES: Robotics Club, Coding Club, Literary Club, Music Club, Dance Club, Sports Club, Photography Club, Debate Club, Cultural Committee.
+- SPORTS: Cricket ground, football, basketball, volleyball, badminton, table tennis, gymnasium.
+- RAGGING: Strictly prohibited. Anti-ragging committee active. Women safety helpline 9851006415 (24x7)."""
 
-CONTENT RULES:
-- Answer ONLY from the CONTEXT below. Do not make up facts.
-- NEVER invent company names. Only list companies mentioned in the context.
-- If user gives rank/marks, use cutoff data to tell them eligible departments. Otherwise ask for rank and marks first.
-- Physics, Chemistry, Math, Biology are FIRST-YEAR SUBJECTS, NOT admission departments. B.Tech departments: CSE, IT, ECE, EE, ME, CE, CSD, AIML, Data Science, Cyber Security.
-
-MULTI-PART QUESTIONS:
-- If the user asks multiple questions in one message, answer EACH sub-question naturally.
-- Join them with natural transitions like "Also,", "Regarding", "As for"
-- NEVER use "First...", "Second...", "Third..." or numbered lists.
-- If you do not have information for any part, say so explicitly for that part only.
-
-FOLLOW-UP RESOLUTION:
-- The user may ask follow-ups without repeating full context.
-- Use conversation history to resolve implicit references.
-- Examples: "what about AIML?" means "what about the AIML department?", "and fees?" means "what are the fees?", "how many seats?" means "how many seats in the previously discussed department?".
-
-TOPIC CONTINUITY:
-- Maintain the current topic unless the user clearly changes it.
-- Short utterances like "okay then", "and", "what about" are follow-ups, not new topics.
-
-DEPARTMENT-SPECIFIC ACCURACY:
-- If the user asks about a SPECIFIC department and the context only contains general college data or data for OTHER departments, say "I do not have specific information for this department" rather than substituting general data.
-- Do NOT use college-wide placement stats when the user asks about a specific department's placement.
-
-OUT-OF-KB DEFLECTION:
-- If context is empty or doesn't contain the answer, respond politely with phone:
-  ENGLISH: "I don't have information about this. Please call the college at 0343-2501353."
-  HINDI: "मेरे पास इस बारे में जानकारी नहीं है। कृपया कॉलेज को 0343-2501353 पर कॉल करें।"
-  BENGALI: "আমার কাছে এই বিষয়ে তথ্য নেই। অনুগ্রহ করে কলেজে 0343-2501353 নম্বরে কল করুন।"
-- Do NOT make up data. Do NOT invent names, fees, or numbers."""
+# Tool definitions for Groq function calling
+TOOLS = [
+    {
+        "type": "function",
+        "function": {
+            "name": "get_fees",
+            "description": "Get the fee structure for B.Tech programs. Returns semester fees and total fees for each branch.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "branch": {
+                        "type": "string",
+                        "description": "Branch code optional. Leave empty for all branches. Options: CSE, ECE, IT, EE, ME, CE, AIML, DS, CY, CSD.",
+                        "enum": ["CSE", "ECE", "IT", "EE", "ME", "CE", "AIML", "DS", "CY", "CSD"]
+                    }
+                },
+                "required": []
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_contact_info",
+            "description": "Get college contact information: phone numbers, email, address, mobile number.",
+            "parameters": {"type": "object", "properties": {}, "required": []}
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_principal_info",
+            "description": "Get the name and contact details of the principal and vice principal.",
+            "parameters": {"type": "object", "properties": {}, "required": []}
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_placement_info",
+            "description": "Get placement statistics including overall rate, branch-wise rates, average package, highest package, and top recruiters.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "branch": {
+                        "type": "string",
+                        "description": "Branch code optional. Leave empty for overall stats. Options: CSE, ECE, IT, EE, ME, CE, AIML, DS, CY, CSD.",
+                        "enum": ["CSE", "ECE", "IT", "EE", "ME", "CE", "AIML", "DS", "CY", "CSD"]
+                    }
+                },
+                "required": []
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_branch_info",
+            "description": "Get information about all B.Tech branches offered at BCREC, including intake and details.",
+            "parameters": {"type": "object", "properties": {}, "required": []}
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_admission_process",
+            "description": "Get admission process details: eligibility criteria, required documents, entrance exams (WBJEE/JEE Main), counseling process, management quota, and contacts.",
+            "parameters": {"type": "object", "properties": {}, "required": []}
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_hostel_info",
+            "description": "Get hostel details: availability, fees, room types, capacity, boys/girls hostels, and mess information.",
+            "parameters": {"type": "object", "properties": {}, "required": []}
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_scholarship_info",
+            "description": "Get information about available scholarships, eligibility, and schemes like TFW, Swami Vivekananda, Kanyashree, OASIS/Aikyashree.",
+            "parameters": {"type": "object", "properties": {}, "required": []}
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_cutoff_info",
+            "description": "Get WBJEE cutoff ranks for different branches and categories.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "branch": {
+                        "type": "string",
+                        "description": "Branch code optional. Leave empty for all cutoffs. Options: CSE, ECE, IT, EE, ME, CE, AIML, DS, CY, CSD.",
+                        "enum": ["CSE", "ECE", "IT", "EE", "ME", "CE", "AIML", "DS", "CY", "CSD"]
+                    }
+                },
+                "required": []
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_hod_info",
+            "description": "Get the Head of Department (HOD) names for each branch or a specific branch.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "branch": {
+                        "type": "string",
+                        "description": "Branch code optional. Leave empty for all HODs. Options: CSE, ECE, IT, EE, ME, CE, AIML, DS, CY, CSD.",
+                        "enum": ["CSE", "ECE", "IT", "EE", "ME", "CE", "AIML", "DS", "CY", "CSD"]
+                    }
+                },
+                "required": []
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_backlog_policy",
+            "description": "Get information about backlog/arrear policy, supplementary exams, re-examination, and academic failure procedures.",
+            "parameters": {"type": "object", "properties": {}, "required": []}
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_college_info",
+            "description": "Get general college information: establishment year, campus size, accreditation, faculty count, NAAC/NBA/NIRF ratings, autonomous status, and facilities.",
+            "parameters": {"type": "object", "properties": {}, "required": []}
+        }
+    }
+]
 
 
 # ---------------------------------------------------------------------------
@@ -950,21 +1240,6 @@ def _num_to_bengali(n: int) -> str:
     return _NUM_WORDS_BN.get(n, str(n))
 
 
-@dataclass
-class DomainContext:
-    domain: str
-    entity: str | None = None
-    subtype: str | None = None
-    timestamp: float = field(default_factory=time.time)
-
-
-@dataclass
-class ConversationState:
-    language: str = "en"
-    recent_contexts: deque = field(default_factory=lambda: deque(maxlen=5))
-    domain_memory: dict = field(default_factory=dict)
-
-
 class GroqService:
     """
     Clean Hybrid RAG service: JSON (Precision) + Vector Store (Context).
@@ -988,10 +1263,13 @@ class GroqService:
         # (used by yes/no continuation to avoid re-clarifying the same word)
         self._skip_ambiguous_validation_sessions: Set[str] = set()
 
-        # Structured conversation state — tracks last resolved intent/department
-        # for follow-up expansion. Updated whenever _structured_lookup returns a hit.
-        self._session_intents: Dict[str, str] = {}
-        self._session_departments: Dict[str, str] = {}
+        # Structured conversation state — per-domain slots with visit_order deque
+        # for cross-domain follow-up resolution. Updated when _structured_lookup hits.
+        self._session_states: Dict[str, ConversationState] = {}
+
+        # Follow-up turn counter — resets when a structured lookup hits or clear intent is detected.
+        # After 3+ follow-ups without a clear new intent, the bot re-asks what the user wants.
+        self._session_follow_up_count: Dict[str, int] = {}
 
         # Core knowledge is read from disk on EVERY request (no stale cache across processes).
         self.core_kb = {}
@@ -1020,6 +1298,239 @@ class GroqService:
             logger.info("GroqService ready.")
         else:
             logger.warning("GroqService: Groq client not found. Check GROQ_API_KEY in .env")
+
+    # -----------------------------------------------------------------------
+    # Tool execution — LLM function calling tools
+    # -----------------------------------------------------------------------
+    def _execute_tool(self, name: str, args: dict) -> str:
+        """Execute a tool by name and return JSON result."""
+        tool_map = {
+            "get_fees": self._tool_get_fees,
+            "get_contact_info": self._tool_get_contact_info,
+            "get_principal_info": self._tool_get_principal_info,
+            "get_placement_info": self._tool_get_placement_info,
+            "get_branch_info": self._tool_get_branch_info,
+            "get_admission_process": self._tool_get_admission_process,
+            "get_hostel_info": self._tool_get_hostel_info,
+            "get_scholarship_info": self._tool_get_scholarship_info,
+            "get_cutoff_info": self._tool_get_cutoff_info,
+            "get_hod_info": self._tool_get_hod_info,
+            "get_backlog_policy": self._tool_get_backlog_policy,
+            "get_college_info": self._tool_get_college_info,
+        }
+        fn = tool_map.get(name)
+        if not fn:
+            return json.dumps({"error": f"Unknown tool: {name}"})
+        try:
+            return fn(**args)
+        except Exception as e:
+            logger.error(f"Tool {name}({args}) failed: {e}")
+            return json.dumps({"error": str(e)})
+
+    def _tool_get_fees(self, branch: str = "") -> str:
+        kb = self._read_canonical_kb()
+        fees = kb.get("fees_summary", {})
+        groups = {
+            "CSE": "btech_cse_it_ece", "IT": "btech_cse_it_ece", "ECE": "btech_cse_it_ece",
+            "EE": "btech_ee_aiml_ds_cy_csd", "AIML": "btech_ee_aiml_ds_cy_csd",
+            "DS": "btech_ee_aiml_ds_cy_csd", "CY": "btech_ee_aiml_ds_cy_csd",
+            "CSD": "btech_ee_aiml_ds_cy_csd",
+            "ME": "btech_me_ce", "CE": "btech_me_ce",
+        }
+        if branch and branch.upper() in groups:
+            key = groups[branch.upper()]
+            data = fees.get(key, {})
+            return json.dumps({branch.upper(): data}, ensure_ascii=False)
+        result = {}
+        for code, key in groups.items():
+            if code not in result:
+                result[code] = fees.get(key, {})
+        return json.dumps(result, ensure_ascii=False)
+
+    def _tool_get_contact_info(self) -> str:
+        kb = self._read_canonical_kb()
+        c = kb.get("college", {})
+        return json.dumps({
+            "phones": c.get("phones", {}).get("value", []),
+            "email": c.get("email", {}).get("value", ""),
+            "mobile": c.get("mobile", {}).get("value", ""),
+            "address": c.get("address", {}).get("value", ""),
+            "website": c.get("website", {}).get("value", ""),
+        }, ensure_ascii=False)
+
+    def _tool_get_principal_info(self) -> str:
+        kb = self._read_canonical_kb()
+        principal = kb.get("principal", {})
+        vice = kb.get("vice_principal", {})
+        return json.dumps({
+            "principal_name": principal.get("name", {}).get("value", ""),
+            "principal_phone": principal.get("phone", {}).get("value", ""),
+            "principal_email": principal.get("email", {}).get("value", ""),
+            "vice_principal_name": vice.get("name", {}).get("value", ""),
+            "vice_principal_phone": vice.get("phone", {}).get("value", ""),
+        }, ensure_ascii=False)
+
+    def _tool_get_placement_info(self, branch: str = "") -> str:
+        kb = self._read_canonical_kb()
+        pl = kb.get("placements", {})
+        result = {
+            "overall_rate_2025": pl.get("overall_rate_2025", {}).get("value", ""),
+            "cse_rate_2025": pl.get("cse_rate_2025", {}).get("value", ""),
+            "rate_2024": pl.get("rate_2024", {}).get("value", ""),
+            "rate_2023": pl.get("rate_2023", {}).get("value", ""),
+            "highest_package": f"{pl.get('highest_package', {}).get('amount', '')} from {pl.get('highest_package', {}).get('company', '')}",
+            "average_package": pl.get("average_package", {}).get("value", ""),
+            "median_package": pl.get("median_package", {}).get("value", ""),
+            "top_recruiters": pl.get("top_recruiters", {}).get("value", []),
+            "students_placed_2025": pl.get("students_placed_2025", {}).get("value", ""),
+            "companies_visited_2025": pl.get("companies_visited_2025", {}).get("value", ""),
+        }
+        return json.dumps(result, ensure_ascii=False)
+
+    def _tool_get_branch_info(self) -> str:
+        kb = self._read_canonical_kb()
+        depts = kb.get("departments", {})
+        result = {}
+        for code, info in depts.items():
+            hod = info.get("hod", {})
+            result[code] = {
+                "hod_name": hod.get("name", "") if isinstance(hod, dict) else "",
+            }
+        return json.dumps(result, ensure_ascii=False)
+
+    def _tool_get_admission_process(self) -> str:
+        kb = self._read_canonical_kb()
+        adm = kb.get("admission", {})
+        docs = kb.get("admission_documents", {})
+        result = {
+            "eligibility": adm.get("eligibility", {}),
+            "seat_distribution": adm.get("seat_distribution", {}),
+            "counseling": adm.get("counseling", {}).get("value", ""),
+            "portal": adm.get("portal", {}).get("value", ""),
+            "contacts": adm.get("contacts", {}),
+            "lateral_entry": adm.get("lateral_entry", {}).get("value", ""),
+            "documents": {k: v.get("value", []) if isinstance(v, dict) else v for k, v in docs.items() if isinstance(v, dict) and "value" in v},
+        }
+        return json.dumps(result, ensure_ascii=False)
+
+    def _tool_get_hostel_info(self) -> str:
+        kb = self._read_canonical_kb()
+        h = kb.get("hostel", {})
+        mess = h.get("mess", {})
+        result = {
+            "available": h.get("available", {}).get("value", ""),
+            "compulsory": h.get("compulsory", {}).get("value", ""),
+            "total_hostels": h.get("total_hostels", {}).get("value", ""),
+            "total_capacity": h.get("total_capacity", {}).get("value", ""),
+            "room_types": h.get("room_types", {}).get("value", ""),
+            "mess_monthly_charge": mess.get("monthly_charge", ""),
+            "mess_meals_per_day": mess.get("meals_per_day", ""),
+            "facilities": h.get("facilities", {}).get("value", []),
+            "caution_money": h.get("caution_money", {}).get("value", ""),
+        }
+        return json.dumps(result, ensure_ascii=False)
+
+    def _tool_get_scholarship_info(self) -> str:
+        kb = self._read_canonical_kb()
+        sc = kb.get("scholarships", {})
+        return json.dumps(sc, ensure_ascii=False)
+
+    def _tool_get_cutoff_info(self, branch: str = "") -> str:
+        kb = self._read_canonical_kb()
+        cutoff = kb.get("admission", {}).get("seat_distribution", {})
+        return json.dumps(cutoff, ensure_ascii=False)
+
+    def _tool_get_hod_info(self, branch: str = "") -> str:
+        kb = self._read_canonical_kb()
+        depts = kb.get("departments", {})
+        if branch and branch.upper() in depts:
+            return json.dumps({branch.upper(): depts[branch.upper()].get("hod", {})}, ensure_ascii=False)
+        result = {}
+        for code, info in depts.items():
+            hod = info.get("hod", {})
+            result[code] = hod
+        return json.dumps(result, ensure_ascii=False)
+
+    def _tool_get_backlog_policy(self) -> str:
+        kb = self._read_kb()
+        policies = kb.get("voice_ready_answers", {}).get("policies", {})
+        ans = policies.get("answers", {})
+        return json.dumps(ans, ensure_ascii=False)
+
+    def _tool_get_college_info(self) -> str:
+        kb = self._read_canonical_kb()
+        c = kb.get("college", {})
+        ar = kb.get("anti_ragging", {})
+        return json.dumps({
+            "name": c.get("name", {}).get("value", ""),
+            "established": c.get("established", {}).get("value", ""),
+            "autonomous": c.get("autonomous", {}).get("value", ""),
+            "address": c.get("address", {}).get("value", ""),
+            "type": c.get("type", {}).get("value", ""),
+            "accreditation": c.get("accreditation", {}).get("value", ""),
+            "naac_grade": c.get("naac_grade", {}).get("value", ""),
+            "nirf_rank": c.get("nirf_rank", {}).get("value", ""),
+            "faculty_count": c.get("faculty_count", {}).get("value", ""),
+            "anti_ragging_policy": ar.get("policy", {}).get("value", ""),
+        }, ensure_ascii=False)
+
+    # -----------------------------------------------------------------------
+    # LLM call — simple, no tool-calling overhead
+    # -----------------------------------------------------------------------
+    async def _call_llm_with_tools(
+        self, messages: list, session_id: str, query: str, start: float, lang: str
+    ) -> str:
+        """Call Groq with the given messages. Simple and fast — no tool-calling."""
+        models_to_try = list(dict.fromkeys([self.model] + FALLBACK_MODELS))
+
+        for current_model in models_to_try:
+            for attempt in range(3):
+                wait = self._rate_limiter.acquire()
+                if wait > 0:
+                    await asyncio.sleep(wait)
+                try:
+                    if _sp_enabled():
+                        completion = await asyncio.wait_for(
+                            asyncio.to_thread(
+                                self.client.chat.completions.create,
+                                model=current_model,
+                                messages=messages,
+                                temperature=0.3,
+                                max_tokens=self.max_tokens,
+                            ),
+                            timeout=30.0,
+                        )
+                    else:
+                        completion = self.client.chat.completions.create(
+                            model=current_model,
+                            messages=messages,
+                            temperature=0.3,
+                            max_tokens=self.max_tokens,
+                        )
+                    self._rate_limiter.record_success()
+                    content = (completion.choices[0].message.content or "").strip()
+                    import re as _re
+                    content = _re.sub(r"<think>.*?</think>\s*", "", content, flags=_re.DOTALL).strip()
+                    return content
+                except Exception as e:
+                    error_str = str(e)
+                    is_rate_limit = "429" in error_str or "rate" in error_str.lower() or "too many" in error_str.lower()
+                    is_timeout = isinstance(e, asyncio.TimeoutError) or "timeout" in error_str.lower()
+                    if is_rate_limit and attempt < 2:
+                        self._rate_limiter.record_429()
+                        backoff = min((2**attempt) + 0.5, MAX_BACKOFF_SEC)
+                        await asyncio.sleep(backoff)
+                    elif is_timeout and attempt < 2:
+                        logger.warning(f"LLM timeout on {current_model} (attempt {attempt+1}/3)")
+                        await asyncio.sleep(1.0)
+                    else:
+                        if not _sp_enabled():
+                            raise
+                        logger.warning(f"LLM error on {current_model}: {error_str[:80]}")
+                        from .safe_point import FILLER_RESPONSES as _filler
+                        return random.choice(_filler)
+
+        return "I'm sorry, I'm having trouble connecting. Please call 0343-2501353."
 
     # -----------------------------------------------------------------------
     # Phase 4 — Cache helpers
@@ -1106,10 +1617,25 @@ class GroqService:
             logger.error(f"Failed to reload KB: {e}")
             return 0
 
+    # Banglish → canonical English synonym mappings for academic failure terms.
+    # Multi-word patterns must precede single-word patterns to avoid partial matches.
+    _BANGLISH_SYNONYMS = [
+        (r"\bback\s+chole\s+aseche\b", "backlog"),
+        (r"\bback\s+as(?:che|e)\b", "backlog"),
+        (r"\bback\s+hoyeche\b", "backlog"),
+        (r"\bback\s+lag(?:be|se)\b", "backlog"),
+        (r"\bback\s+ache\b", "backlog"),
+        (r"\bsem(?:ester)?\s+back\b", "backlog failed semester"),
+        (r"\bresult.*back\b", "backlog"),
+        (r"\bback\s+paper\b", "backlog supplementary exam"),
+        (r"\bfyel\b", "fail"),
+    ]
+
     def _normalize_query(self, query: str) -> str:
         """Fix common STT mis-transcriptions of BCREC department names before RAG.
         Also transliterates Roman-script Bengali college terms to Bengali script
-        so that vector search matches the native-script KB entries."""
+        so that vector search matches the native-script KB entries.
+        Applies Banglish→canonical synonym mapping for academic failure terms."""
         q = query
         q = re.sub(r"\bcseaml\b", "CSE-AIML", q, flags=re.IGNORECASE)
         q = re.sub(r"\bcs e[\s-]?aml\b", "CSE-AIML", q, flags=re.IGNORECASE)
@@ -1126,18 +1652,45 @@ class GroqService:
         q = re.sub(r"\bai[\s-]?ml\b", "AIML", q, flags=re.IGNORECASE)
         # Roman-script Bengali college terms → Bengali script for vector match
         q = re.sub(r"\bupo[- ]?pradhan\b", "উপ-প্রধান", q, flags=re.IGNORECASE)
+        # Banglish → canonical synonym mapping for academic failure terms
+        for pattern, replacement in self._BANGLISH_SYNONYMS:
+            q = re.sub(pattern, replacement, q, flags=re.IGNORECASE)
         if q != query:
             logger.info(f"Query normalized: '{query}' -> '{q}'")
         return q
+
+    _ACADEMIC_FAILURE_EXPANSION = "fail semester backlog supplementary exam reappear"
+
+    _ACADEMIC_FAILURE_TRIGGER = re.compile(
+        r"\b(backlog|fail|supplementary|arrear|back\s+paper|reappear)\b",
+        re.IGNORECASE,
+    )
+
+    def _expand_query(self, normalized: str) -> str:
+        """Append canonical academic failure terms when the normalized query
+        contains backlog-related signals. This boosts embedding similarity
+        to the English policies KB entry for Banglish queries where the
+        Banglish context dilutes the English keyword signal."""
+        if self._ACADEMIC_FAILURE_TRIGGER.search(normalized):
+            return f"{normalized} {self._ACADEMIC_FAILURE_EXPANSION}"
+        return normalized
 
     def _retrieve_context(self, query: str) -> tuple[str, float]:
         """Enhanced retriever: vector search + semantic re-rank + section-aware filtering.
         Keeps top docs across sources, prioritizes by semantic anchor + language match.
         Returns (context_str, confidence) where confidence is the top relevance score (0.0-1.0)."""
         normalized = self._normalize_query(query)
+        # Query expansion: append canonical terms for academic failure queries
+        # so that Banglish sentences (e.g. "amar ekta sem a fail hoyeche")
+        # get embedding proximity to the English policies KB entry.
+        expanded = self._expand_query(normalized)
+        if expanded != normalized:
+            logger.info(
+                f"Query expanded: '{normalized}' -> '{expanded}'"
+            )
         try:
             language = detect_language(query)
-            results, confidence = self.vector_store.search_with_scores(normalized, k=10)
+            results, confidence = self.vector_store.search_with_scores(expanded, k=10)
             if not results:
                 self._last_retrieval_data = {
                     "query": normalized,
@@ -1250,8 +1803,8 @@ class GroqService:
 
         # Final user message with retrieved context
         lang_hint = {
-            "bn": "Reply in Bengali script (বাংলা).",
-            "hi": "Reply in Hindi script (हिन्दी).",
+            "bn": "Reply in simple Banglish or Bengali (NOT Sanskritized Bengali).",
+            "hi": "Reply in Roman Hindi (NOT Devanagari script).",
             "en": "Reply in English.",
         }.get(lang, "Reply in the same language as the user.")
 
@@ -1342,14 +1895,27 @@ USER QUESTION: {query}
                 self._session_langs[session_id] = forced_lang
             return forced_lang
 
-        # 3. Short follow-ups (<=3 words, no native script) → inherit current
+        # 3. Check language of short queries using keyword markers
         word_count = len(query.strip().split())
+        from app.utils.language_detect import BANGLA_ROMAN_WORDS, HINDI_ROMAN_WORDS
+        text_lower = query.lower()
+        text_words = set(re.sub(r"[^\w\s]", " ", text_lower).split())
+        bn_kw = len(text_words & BANGLA_ROMAN_WORDS)
+        hi_kw = len(text_words & HINDI_ROMAN_WORDS)
+
         if word_count <= 3:
+            # For short queries, switch lang if there are strong keyword markers
+            if hi_kw >= 2 and current_lang != "hi" and session_id not in self._session_langs:
+                logger.info(f"[{session_id}] Language change: {current_lang} → hi (reason: keyword markers={hi_kw} in short query)")
+                self._session_langs[session_id] = "hi"
+                return "hi"
+            if bn_kw >= 2 and current_lang != "bn" and session_id not in self._session_langs:
+                logger.info(f"[{session_id}] Language change: {current_lang} → bn (reason: keyword markers={bn_kw} in short query)")
+                self._session_langs[session_id] = "bn"
+                return "bn"
             return current_lang
 
         # 4. Detect language for longer queries
-        from app.utils.language_detect import BANGLA_ROMAN_WORDS, HINDI_ROMAN_WORDS
-
         detected = detect_language(query)
         if detected == current_lang:
             return current_lang
@@ -1358,10 +1924,6 @@ USER QUESTION: {query}
         # If language was explicitly set (not default "en"), lock it — resist switches
         # via weak keyword markers to prevent random flipping mid-conversation.
         lang_was_explicitly_set = session_id in self._session_langs and current_lang != "en"
-        text_lower = query.lower()
-        text_words = set(re.sub(r"[^\w\s]", " ", text_lower).split())
-        bn_kw = len(text_words & BANGLA_ROMAN_WORDS)
-        hi_kw = len(text_words & HINDI_ROMAN_WORDS)
 
         kw_count = bn_kw if detected == "bn" else hi_kw
 
@@ -1440,8 +2002,14 @@ USER QUESTION: {query}
                 q_lower, f"Which department or course are you asking about regarding {q_lower}?"
             )
 
-        # 2.75 Single-word repeat intent — let this through to the dedicated handler
-        if word_count == 1 and q_lower in ("repeat", "pardon"):
+        # 2.75 Single-word college terms — let through to LLM (department names, facilities, etc.)
+        _single_word_college_terms = {
+            "aiml", "cse", "ece", "ee", "me", "ce", "it", "csd", "ds", "cy",
+            "labs", "lab", "hostel", "library", "sports", "club", "clubs",
+            "fees", "fee", "placement", "faculty", "admission", "cutoff",
+            "repeat", "pardon", "backlog", "arrear", "scholarship",
+        }
+        if word_count == 1 and q_lower in _single_word_college_terms:
             return None
 
         # 3. Too short (< 2 words) — likely STT noise or partial capture.
@@ -1490,10 +2058,21 @@ USER QUESTION: {query}
         are considered out-of-domain. This threshold avoids false positives
         on short ambiguous terms (e.g., "python" alone could be about a course).
 
+        Returns False for queries mentioning campus facilities/activities.
         Returns False for short queries (< 3 words).
         """
         q = query.strip().lower()
         if not q or len(q.split()) < 3:
+            return False
+
+        # College-context keywords — if present, query is about campus life, not off-topic
+        _college_context = {
+            "club", "clubs", "lab", "labs", "sports", "activity", "activities",
+            "curricular", "khel", "ground", "facility", "facilities",
+            "ke bare me", "ke baare mein", "k bare me", "batayea", "bataye",
+            "kya he", "kya hai", "em kya", "kya ya",
+        }
+        if any(kw in q for kw in _college_context):
             return False
 
         total_hits = 0
@@ -1581,6 +2160,7 @@ USER QUESTION: {query}
             "call",
             "email",
             "helpline",
+            "number",
             "फ़ोन",
             "कॉल",
             "ফোন",
@@ -1750,11 +2330,22 @@ USER QUESTION: {query}
         }
 
         if word_count >= 6:
-            debug["reason"] = "long_query_no_expansion"
+            # Long queries with a resolved domain still need expansion for pronoun resolution.
+            # E.g. "what his concact info number or mil" after "who is the principal"
+            # should expand "his" -> "principal".
+            state = self._session_states.get(session_id) if session_id else None
+            if not (state and state.visit_order):
+                debug["reason"] = "long_query_no_expansion"
+                logger.info(
+                    f"EXPAND: {q_stripped[:60]} | reason=long_query (no session ctx) | "
+                    f"prev_q={debug['previous_question']}"
+                )
+                return q_stripped, debug
+            # Has session context — proceed with expansion
             logger.info(
-                f"EXPAND: {q_stripped[:60]} | reason=long_query | prev_q={debug['previous_question']}"
+                f"EXPAND: {q_stripped[:60]} | reason=long_query_with_ctx | "
+                f"domains={list(state.visit_order)}"
             )
-            return q_stripped, debug
         if not history:
             debug["reason"] = "no_history"
             logger.info(f"EXPAND: {q_stripped[:60]} | reason=no_history")
@@ -1811,168 +2402,170 @@ USER QUESTION: {query}
                 return q_stripped, debug
             debug["reason"] = "same_domain_merge"
 
-        # --- Structured state rewrite: before fallback text merge ---
-        last_intent = self._session_intents.get(session_id) if session_id else None
-        last_dept = self._session_departments.get(session_id) if session_id else None
+        # --- Structured state rewrite using ConversationState ---
+        state = self._session_states.get(session_id) if session_id else None
 
-        if last_intent:
-            # Case 1: Department-only follow-up — "What about Mechanical?" after fee
-            # Only rewrite when the last intent is department-compatible.
-            # "What about Mechanical?" after hostel doesn't make sense as "ME hostel".
+        if state and state.visit_order:
+            q_lower = q_stripped.lower()
             dept_code = self._extract_dept_code(q_stripped)
-            dept_compatible_intents = {
-                "fee",
-                "admission",
-                "placement",
-                "hod",
-                "seats",
-                "cutoff",
-                "eligibility",
-                "departments",
-                "faculty",
+            hostel_subtype = self._match_hostel_subtype(q_stripped)
+            admission_subtype = self._match_admission_subtype(q_stripped)
+
+            dept_words = {
+                "cse",
+                "it",
+                "ece",
+                "ee",
+                "me",
+                "ce",
+                "aiml",
+                "csd",
+                "computer",
+                "mechanical",
+                "electrical",
+                "electronics",
+                "civil",
+                "information",
+                "data",
+                "science",
+                "cyber",
+                "btech",
+                "b.tech",
             }
             is_dept_query = dept_code is not None or any(
-                word.lower().rstrip("?.,!")
-                in {
-                    "cse",
-                    "it",
-                    "ece",
-                    "ee",
-                    "me",
-                    "ce",
-                    "aiml",
-                    "csd",
-                    "computer",
-                    "mechanical",
-                    "electrical",
-                    "electronics",
-                    "civil",
-                    "information",
-                    "data",
-                    "science",
-                    "cyber",
-                }
-                for word in q_stripped.split()
+                word.lower().rstrip("?.,!") in dept_words for word in q_stripped.split()
             )
-            if is_dept_query and last_intent in dept_compatible_intents:
-                dept = dept_code or next(
-                    (
-                        w.lower().rstrip("?.,!")
-                        for w in q_stripped.split()
-                        if w.lower().rstrip("?.,!")
-                        in {
-                            "cse",
-                            "it",
-                            "ece",
-                            "ee",
-                            "me",
-                            "ce",
-                            "aiml",
-                            "csd",
-                            "computer",
-                            "mechanical",
-                            "electrical",
-                            "electronics",
-                            "civil",
-                            "information",
-                            "data",
-                            "science",
-                            "cyber",
-                        }
-                    ),
-                    "department",
-                )
-                expanded = f"{dept} {last_intent}"
-                debug["reason"] = "structured_department_rewrite"
-                debug["intent"] = last_intent
-                debug["department"] = dept
-                logger.info(
-                    f"EXPAND: {q_stripped[:60]} | reason=structured_department_rewrite | "
-                    f"intent={last_intent} | dept={dept} | expanded-> {expanded[:80]}"
-                )
-                return expanded, debug
 
-            # Also check if any word in the query looks like a department name
-            for word in q_stripped.split():
-                word_lower = word.lower().rstrip("?.,!")
-                if (
-                    word_lower
-                    in {
-                        "cse",
-                        "it",
-                        "ece",
-                        "ee",
-                        "me",
-                        "ce",
-                        "aiml",
-                        "csd",
-                        "computer",
-                        "mechanical",
-                        "electrical",
-                        "electronics",
-                        "civil",
-                        "information",
-                        "data",
-                        "science",
-                        "cyber",
-                        "btech",
-                        "b.tech",
-                    }
-                    and last_intent in dept_compatible_intents
-                ):
-                    expanded = f"{word_lower} {last_intent}"
+            detected_facets: set = set()
+            if is_dept_query:
+                detected_facets.add("department")
+            for facet_candidate in [
+                "fee",
+                "hostel",
+                "boy",
+                "girl",
+                "document",
+                "admission",
+                "eligibility",
+                "counselling",
+                "placement",
+                "scholarship",
+                "safety",
+                "contact",
+                "principal",
+                "faculty",
+                "cutoff",
+                "seat",
+                "room",
+                "facilities",
+                "mess",
+                "establishment",
+                "timing",
+                "installment",
+                "total",
+                "semester",
+                "capacity",
+                "wifi",
+                "available",
+                "cost",
+                "form",
+                "entrance",
+                "deadline",
+                "apply",
+                "rank",
+                "exam",
+                "process",
+                "package",
+                "recruit",
+                "company",
+                "lpa",
+                "professor",
+                "head",
+                "ragging",
+                "security",
+                "women",
+                "phone",
+                "email",
+                "helpline",
+                "call",
+                "mobile",
+                "vice_principal",
+                "established",
+                "founded",
+                "branch",
+                "course",
+                "program",
+            ]:
+                if facet_candidate in q_lower:
+                    detected_facets.add(facet_candidate)
+
+            for domain in reversed(state.visit_order):
+                domain_facets = DOMAIN_FACETS.get(domain, set())
+                if not (detected_facets & domain_facets):
+                    continue
+
+                slot = state.slots.get(domain)
+                last_intent = slot.intent if slot else None
+
+                dept_compatible_intents = {
+                    "fee",
+                    "admission",
+                    "placement",
+                    "hod",
+                    "seats",
+                    "cutoff",
+                    "eligibility",
+                    "departments",
+                    "faculty",
+                }
+
+                if is_dept_query and last_intent in dept_compatible_intents:
+                    dept = dept_code or next(
+                        (
+                            w.lower().rstrip("?.,!")
+                            for w in q_stripped.split()
+                            if w.lower().rstrip("?.,!") in dept_words
+                        ),
+                        "department",
+                    )
+                    expanded = f"{dept} {last_intent}"
                     debug["reason"] = "structured_department_rewrite"
                     debug["intent"] = last_intent
-                    debug["department"] = word_lower
+                    debug["department"] = dept
                     logger.info(
                         f"EXPAND: {q_stripped[:60]} | reason=structured_department_rewrite | "
-                        f"intent={last_intent} | dept={word_lower} | expanded-> {expanded[:80]}"
+                        f"intent={last_intent} | dept={dept} | expanded-> {expanded[:80]}"
                     )
                     return expanded, debug
 
-            # Case 2: Hostel subtype follow-up — "What about boys?" after hostel
-            if last_intent == "hostel":
-                subtype = None
-                for sw in self._HOSTEL_SUBTYPE_KEYWORDS:
-                    if sw in q_lower:
-                        subtype = sw
-                        break
-                if subtype:
-                    expanded = f"{subtype} hostel"
+                if domain == "fee" and last_intent == "fee":
+                    expanded = f"{q_stripped} fee"
+                    debug["reason"] = "structured_fee_followup"
+                    logger.info(
+                        f"EXPAND: {q_stripped[:60]} | reason=structured_fee_followup | "
+                        f"expanded-> {expanded[:80]}"
+                    )
+                    return expanded, debug
+
+                if domain == "hostel" and hostel_subtype:
+                    expanded = f"{hostel_subtype} hostel"
                     debug["reason"] = "structured_hostel_rewrite"
-                    debug["subtype"] = subtype
+                    debug["subtype"] = hostel_subtype
                     logger.info(
                         f"EXPAND: {q_stripped[:60]} | reason=structured_hostel_rewrite | "
-                        f"subtype={subtype} | expanded-> {expanded[:80]}"
+                        f"subtype={hostel_subtype} | expanded-> {expanded[:80]}"
                     )
                     return expanded, debug
 
-            # Case 3: Admission subtype follow-up — "What about documents?" after admission
-            if last_intent in ("admission", "admission_office", "admission_documents"):
-                subtype = None
-                for sw in self._ADMISSION_SUBTYPE_KEYWORDS:
-                    if sw in q_lower:
-                        subtype = sw
-                        break
-                if subtype:
-                    expanded = f"{subtype} admission"
+                if domain == "admission" and admission_subtype:
+                    expanded = f"{admission_subtype} admission"
                     debug["reason"] = "structured_admission_rewrite"
-                    debug["subtype"] = subtype
+                    debug["subtype"] = admission_subtype
                     logger.info(
                         f"EXPAND: {q_stripped[:60]} | reason=structured_admission_rewrite | "
-                        f"subtype={subtype} | expanded-> {expanded[:80]}"
+                        f"subtype={admission_subtype} | expanded-> {expanded[:80]}"
                     )
                     return expanded, debug
-
-            # Case 4: Fee follow-up — "What about ECE?" or "ECE?" after fee intent
-            if last_intent == "fee":
-                expanded = f"{q_stripped} fee"
-                debug["reason"] = "structured_fee_followup"
-                logger.info(
-                    f"EXPAND: {q_stripped[:60]} | reason=structured_fee_followup | "
-                    f"expanded-> {expanded[:80]}"
-                )
-                return expanded, debug
 
         # --- Fallback: text merge (only when no structured state applies) ---
         if not debug.get("reason"):
@@ -2121,16 +2714,40 @@ USER QUESTION: {query}
 
         q = query.strip().lower()
 
+        # --- Combined principal + vice principal lookup ---
+        # Handle queries asking about BOTH with a conjunction:
+        #   "principal r vice principal ar nam ki"
+        #   "principal and vice principal name"
+        #   "principal & vice principal"
+        # Must have a word like 'and', 'r', '&', 'aur' or ',' between them.
+        if (re.search(r"\b(principal|princepal)\b", q)
+                and re.search(r"\bvice\b", q)
+                and not re.search(r"\badvice\b", q)
+                and re.search(r"\b(and|r\b|aur|&|,)", q)):
+            principal = kb.get("principal", {})
+            vp = kb.get("vice_principal", {})
+            p_name = principal.get("name", {}).get("value", "")
+            vp_name = vp.get("name", {}).get("value", "")
+            if p_name and vp_name:
+                logger.info(f"HANDLER: principal_and_vice matched for query='{q[:60]}'")
+                return f"The principal of BCREC is {p_name}. The vice principal is {vp_name}."
+            elif p_name:
+                logger.info(f"HANDLER: principal+vice → only principal matched for query='{q[:60]}'")
+                return f"The principal of BCREC is {p_name}."
+            elif vp_name:
+                logger.info(f"HANDLER: principal+vice → only vice matched for query='{q[:60]}'")
+                return f"The vice principal of BCREC is {vp_name}."
+
         # --- Vice Principal lookup (must be before principal check) ---
-        if re.search(r"\bvice[\s-]?principal\b", q):
+        if re.search(r"\bvice[\s-]?(principal|princepal)\b", q):
             vp = kb.get("vice_principal", {})
             name = vp.get("name", {}).get("value", "")
             if name:
                 logger.info(f"HANDLER: vice_principal matched for query='{q[:60]}'")
                 return f"The vice principal of BCREC is {name}."
 
-        # --- Principal lookup ---
-        if re.search(r"\bprincipal\b", q):
+        # --- Principal lookup (handles "principal" and "princepal" typos) ---
+        if re.search(r"\b(principal|princepal)\b", q):
             principal = kb.get("principal", {})
             name = principal.get("name", {}).get("value", "")
             if name:
@@ -2138,8 +2755,37 @@ USER QUESTION: {query}
                 logger.info(f"HANDLER: principal matched for query='{q[:60]}'")
                 return f"The principal of BCREC is {name}. You can contact them at {phone}."
 
+        # --- Negativity / complaint / "why not join" handler ---
+        if re.search(
+            r"\b(not\s*join|negative|bad\s*review|complaints?|nuksan|kharab|buraiya|"
+            r"grievance|drawback|disadvantage|criticism|flaw|problem\s*hai|"
+            r"dikkat|problem|issue|why\s*not\s*(join|choose|take)|"
+            r"tell\s*me\s*(something\s*)?bad|don'?t\s*(join|go|choose)|"
+            r"should\s*not|kya\s*bura|bura\s*kya)\b",
+            q,
+        ):
+            logger.info(f"HANDLER: negativity matched for query='{q[:60]}'")
+            if lang == "hi":
+                return (
+                    "Har college ki apni khasteyaan aur sudhar ke k्षetra hote hain. "
+                    "Main sirf tathyon ke aadhar par jaankari de sakta hoon — placement, faculty, fees, hostel, aur academics ke bare mein. "
+                    "Agar aapko koi vishesh chinta hai to kripya bataayein."
+                )
+            if lang == "bn":
+                return (
+                    "প্রতিটি কলেজের নিজস্ব শক্তি এবং উন্নতির ক্ষেত্র থাকে। "
+                    "আমি শুধুমাত্র তথ্যের ভিত্তিতে উত্তর দিতে পারি — প্লেসমেন্ট, ফ্যাকাল্টি, ফি, হোস্টেল এবং একাডেমিকস সম্পর্কে। "
+                    "আপনার কোনো নির্দিষ্ট উদ্বেগ থাকলে দয়া করে জানান।"
+                )
+            return (
+                "Every college has both strengths and areas where students feel improvements are needed. "
+                "Rather than relying only on opinions, I can help with factual information about placements, "
+                "faculty, infrastructure, fees, academics, or student life so you can make an informed decision. "
+                "Is there a specific concern you'd like to discuss?"
+            )
+
         # --- Contact info ---
-        if re.search(r"\b(contact|phone|mobile|call|helpline)\b", q):
+        if re.search(r"\b(contact|phone|mobile|call|helpline|number)\b", q):
             college = kb.get("college", {})
             phones = college.get("phones", {}).get("value", [])
             email = college.get("email", {}).get("value", "")
@@ -2179,11 +2825,55 @@ USER QUESTION: {query}
             logger.info(f"HANDLER: admission_office (default) matched for query='{q[:60]}'")
             return "The admission office can be contacted at 0343-2501353."
 
+        # --- Why BCREC / convince / advantages (language-aware) ---
+        # Placed BEFORE admission handler so "why should I take admission" hits the right handler.
+        if re.search(
+            r"\b(why bcrec|why choose|convince|convins\w*|persuade|kya acha hai|kya khas hai|kyun join karein|"
+            r"mujhe bcrec kyun join karna chahiye|bcrec kyun behtar hai|"
+            r"bcrec ke fayde|bcrec kyun accha hai|dusre college se behtar|"
+            r"why.*admission|kyu.*admission|q\b.*admission|keno.*admission|why.*join.*college)\b",
+            q,
+        ):
+            logger.info(f"HANDLER: why_bcrec matched for query='{q[:60]}'")
+            if lang == "hi":
+                return (
+                    "BCREC ek bahut accha college hai. Yeh 2000 mein sthapit hua hai. "
+                    "Yeh NBA accredited hai CSE, ECE, IT, EE, ME ke liye aur NAAC B+ grade prapt hai. "
+                    "Yeh 2024 se autonomous college hai. "
+                    "Yahan 208 se adhik faculty hain aur 17 acre ka campus hai. "
+                    "Placement rate 91% hai, average package 4.25 lakh rupaye per year hai. "
+                    "Top recruiters mein TCS, Infosys, Wipro, Capgemini, Accenture, Amazon aur HCL hain. "
+                    "Shulka bhi bahut reasonable hai — sirf 1.5 lakh rupaye per year. "
+                    "Kya aap kisi vishesh branch ke bare mein janna chahenge?"
+                )
+            if lang == "bn":
+                return (
+                    "BCREC একটি খুব ভালো কলেজ। এটি ২০০০ সালে প্রতিষ্ঠিত। "
+                    "এটি NBA স্বীকৃত CSE, ECE, IT, EE, ME এর জন্য এবং NAAC B+ গ্রেড প্রাপ্ত। "
+                    "এটি ২০২৪ থেকে স্বশাসিত (autonomous) কলেজ। "
+                    "এখানে ২৮১+ শিক্ষক রয়েছেন এবং ১৭ একর ক্যাম্পাস। "
+                    "প্লেসমেন্ট রেট ৯১%, গড় প্যাকেজ ৪.২৫ লক্ষ টাকা প্রতি বছর। "
+                    "শীর্ষ নিয়োগকারীদের মধ্যে TCS, Infosys, Wipro, Capgemini, Accenture, Amazon এবং HCL রয়েছে। "
+                    "ফিও খুব যুক্তিসঙ্গত — মাত্র ১.৫ লক্ষ টাকা প্রতি বছর। "
+                    "আপনি কি কোনো বিশেষ শাখা সম্পর্কে জানতে চান?"
+                )
+            return (
+                "BCREC, established in 2000, is one of the top engineering colleges in West Bengal. "
+                "It is NBA accredited for CSE, ECE, IT, EE, ME and NAAC B+ graded. "
+                "The college became autonomous from the 2024-25 session. "
+                "It has 208 plus faculty members on a 17 acre campus. "
+                "The placement rate is 91 percent with an average package of 4.25 LPA. "
+                "Top recruiters include TCS, Infosys, Wipro, Capgemini, Accenture, Amazon, and HCL. "
+                "The fee is very reasonable at approximately 1.5 lakh rupees per year. "
+                "Would you like to know about a specific branch?"
+            )
+
         # --- Admission process (general) ---
+        # Negative lookahead prevents "apply for hostel" from matching here
         if re.search(
             r"\b(admission\s*process|how\s*to\s*apply|admissions?|admit|apply\s*(for|to)|how\s*can\s*i\s*get)\b",
             q,
-        ):
+        ) and not re.search(r"\bhostel\b", q) and not re.search(r"\b(convince|convins\w*|persuade)\b", q) and not re.search(r"\b(kon si branch|kaun si branch|which branch|branch choose|branch recommend|best branch|sabse acchi branch|konsa (subject|department|branch))\b", q):
             adm = kb.get("admission", {})
             eligibility = adm.get("eligibility", {}).get("btech", {}).get("value", "")
             entrance = adm.get("eligibility", {}).get("entrance", {}).get("value", "")
@@ -2250,36 +2940,64 @@ USER QUESTION: {query}
                 dept_name = dept_code
                 if "full_name" in kb.get("courses", {}).get("btech", {}).get(dept_code, {}):
                     dept_name = kb["courses"]["btech"][dept_code]["full_name"]["value"]
-                # Determine which fee type
                 if re.search(r"\bsemester\s*fee\b|\bper\s*semester\b|\bsem\s*fee\b", q):
                     if per_sem > 0:
-                        return (
-                            f"The semester fee for {dept_name} is "
-                            f"{self._format_inr(per_sem, lang)}."
-                        )
-                    return (
-                        f"The total fee for {dept_name} is "
-                        f"{self._format_inr(total, lang)}. "
-                        f"Contact the college for semester-wise breakdown."
-                    )
+                        return self._lang_fee_response(lang, "semester", dept_name, per_sem, 0, 0)
+                    return self._lang_fee_response(lang, "total", dept_name, total, 0, 0)
                 if re.search(r"\badmission\s*fee\b", q):
-                    return (
-                        f"The admission fee for {dept_name} is {self._format_inr(admission, lang)}."
-                    )
-                # Default: total fee
-                return f"The total fee for {dept_name} is {self._format_inr(total, lang)}."
+                    return self._lang_fee_response(lang, "admission", dept_name, 0, admission, 0)
+                return self._lang_fee_response(lang, "total", dept_name, total, 0, 0)
 
-            # No department specified — general fee info
+            # No department specified — general fee info (language-aware)
             if re.search(r"\b(fee structure|fee|fees)\b", q):
+                fee_cse = self._format_inr(617700, lang)
+                fee_other = self._format_inr(567100, lang)
+                fee_me_ce = self._format_inr(429100, lang)
+                if lang == "hi":
+                    return (
+                        "BCREC mein B.Tech ki fees is prakar hai. "
+                        f"CSE, IT, ECE: kul {fee_cse}. "
+                        f"EE, AIML, DS, CY, CSD: kul {fee_other}. "
+                        f"ME, CE: kul {fee_me_ce}. "
+                        "Vistrit jankari ke liye college ko 0343-2501353 par sampark karein."
+                    )
+                if lang == "bn":
+                    return (
+                        "BCREC তে B.Tech এর ফি নিম্নরূপ। "
+                        f"CSE, IT, ECE: মোট {fee_cse}. "
+                        f"EE, AIML, DS, CY, CSD: মোট {fee_other}. "
+                        f"ME, CE: মোট {fee_me_ce}. "
+                        "বিস্তারিত জানতে 0343-2501353 নম্বরে যোগাযোগ করুন।"
+                    )
                 return (
                     "BCREC B.Tech fees: CSE, IT, ECE: "
-                    f"{self._format_inr(604700, 'en')} total. "
+                    f"{self._format_inr(617700, 'en')} total. "
                     "EE, AIML, DS, CY, CSD: "
-                    f"{self._format_inr(554100, 'en')} total. "
+                    f"{self._format_inr(567100, 'en')} total. "
                     "ME, CE: "
-                    f"{self._format_inr(444100, 'en')} total. "
+                    f"{self._format_inr(429100, 'en')} total. "
                     "Contact the college for exact semester-wise fees."
                 )
+
+        # --- Academic failure / backlog / back-paper (checked BEFORE HOD) ---
+        if re.search(
+            r"\b(backlog|back.?paper|arrear|supply|supplementary|reappear|fail)"
+            r"|back\s+(ache|hoyeche|lag|lagbe|lagse|chole|as)",
+            q,
+        ):
+            logger.info(f"HANDLER: academic_failure matched for query='{q[:60]}'")
+            combined_kb = self._read_kb()
+            policies = combined_kb.get("voice_ready_answers", {}).get("policies", {})
+            answer = (policies.get("answers", {}) or {}).get(lang, "")
+            if not answer:
+                answer = policies.get("answers", {}).get("en", "")
+            if answer:
+                # Strip laptop/dress code noise — only return the fail/backlog part
+                main_part = re.split(
+                    r"Laptops|ল্যাপটপ|लैपटॉप", answer, maxsplit=1
+                )[0].strip().rstrip(",")
+                return main_part + "."
+            return None
 
         # --- HOD lookup ---
         if re.search(r"\b(hod|hods|head\s*of\s*department|department\s*head)\b", q):
@@ -2421,6 +3139,10 @@ USER QUESTION: {query}
                 q,
             )
             and not fee_intent
+            and not re.search(
+                r"\b(kon si branch|kaun si branch|which branch|branch choose|branch recommend|"
+                r"best branch|sabse acchi branch|konsa (subject|department|branch))\b", q
+            )
         ):
             logger.info(f"HANDLER: departments matched for query='{q[:60]}'")
             dept_code = self._extract_dept_code(q)
@@ -2496,6 +3218,54 @@ USER QUESTION: {query}
                 )
             return self._lang_response_unknown(lang)
 
+        # --- Branch recommendation (which branch to choose, language-aware) ---
+        if re.search(
+            r"\b(kon si branch|kaun si branch|which branch|branch choose|branch recommend|"
+            r"mujhe branch chuni hai|mujhe konsa branch lena chahiye|"
+            r"best branch|sabse acchi branch|konsa subject choose karu|"
+            r"konsa department choose karun|kon department choose korbo)\b",
+            q,
+        ):
+            logger.info(f"HANDLER: branch_recommendation matched for query='{q[:60]}'")
+            if lang == "hi":
+                return (
+                    "BCREC mein kai branches hain. Agar aapko coding pasand hai to CSE, IT, ya CSD accha rahega. "
+                    "Agar aap AI aur Machine Learning mein interested hain to AIML branch hai. "
+                    "Agar aapko hardware aur circuits pasand hai to ECE ya EE acchi rahegi. "
+                    "Agar aapko manufacturing ya construction mein dilchaspi hai to ME ya CE le sakte hain. "
+                    "Placement ke hisab se CSE, IT, aur AIML ki demand sabse zyada hai "
+                    "jahan average package 6 se 8 lakh rupaye per year hai. "
+                    "Kya aapko kisi specific branch ki jankari chahiye?"
+                )
+            if lang == "bn":
+                return (
+                    "BCREC তে বিভিন্ন শাখা আছে। আপনার যদি কোডিং পছন্দ হয় তবে CSE, IT, বা CSD ভাল হবে। "
+                    "AI এবং Machine Learning এ আগ্রহী হলে AIML শাখা আছে। "
+                    "হার্ডওয়্যার বা সার্কিট পছন্দ হলে ECE বা EE ভাল হবে। "
+                    "ম্যানুফ্যাকচারিং বা কন্সট্রাকশনে আগ্রহী হলে ME বা CE নিতে পারেন। "
+                    "প্লেসমেন্টের দিক থেকে CSE, IT, এবং AIML এর চাহিদা সবচেয়ে বেশি "
+                    "যেখানে গড় প্যাকেজ ৬ থেকে ৮ লক্ষ টাকা প্রতি বছর। "
+                    "আপনি কি কোনো নির্দিষ্ট শাখা সম্পর্কে জানতে চান?"
+                )
+            return (
+                "BCREC offers several B.Tech branches. If you enjoy coding, CSE, IT, or CSD would be a great fit. "
+                "If you are interested in AI and Machine Learning, choose AIML. "
+                "For hardware and circuits, ECE or EE are good options. "
+                "If manufacturing or construction interests you, go for ME or CE. "
+                "In terms of placement demand, CSE, IT, and AIML have the highest packages "
+                "ranging from 6 to 8 lakh rupees per year on average. "
+                "Would you like details about a specific branch?"
+            )
+
+        # --- "What else" / "or kya" follow-up — let LLM handle with conversation history ---
+        if re.search(
+            r"\b(or kya|aur kya|or kya kya|what else|anything else|"
+            r"aur batao|or batao|kya aur|kya aur hai|kya kya hai|or kya he|or kya acha)\b",
+            q,
+        ):
+            logger.info(f"HANDLER: or_kya follow-up — passing through to LLM")
+            return None
+
         # --- Campus visit ---
         if re.search(r"\bcampus\s*visit\b|\bvisit\s*campus\b|\btour\b", q):
             logger.info(f"HANDLER: campus_visit matched for query='{q[:60]}'")
@@ -2511,12 +3281,11 @@ USER QUESTION: {query}
     # Task 4 — Fuzzy Name Resolution for Faculty
     # -----------------------------------------------------------------------
     _FACULTY_ALIASES: Dict[str, str] = {
+        "chandan chattoraj": "Dr. Chandan Chattoraj",
+        "dr chandan chattoraj": "Dr. Chandan Chattoraj",
         "chandan bandopadhyay": "Dr. Chandan Bandyopadhyay",
         "chandan bandyopadhyay": "Dr. Chandan Bandyopadhyay",
         "chandan bandopaddhyay": "Dr. Chandan Bandyopadhyay",
-        "chandan": "Dr. Chandan Bandyopadhyay",
-        "dr chandan": "Dr. Chandan Bandyopadhyay",
-        "dr. chandan": "Dr. Chandan Bandyopadhyay",
         "pabitra dey": "Dr. Pabitra Kumar Dey",
         "pabitra kumar dey": "Dr. Pabitra Kumar Dey",
         "dr pabitra": "Dr. Pabitra Kumar Dey",
@@ -2549,12 +3318,33 @@ USER QUESTION: {query}
         depts = kb.get("departments", {})
         for code, data in depts.items():
             hod = data.get("hod", {})
-            name = hod.get("name", {}).get("value", "")
+            name = hod.get("name", {}).get("value", "") if isinstance(hod.get("name"), dict) else hod.get("name", "")
             if name:
                 idx.append((name.lower(), name, code))
+            # Index individual faculty members
+            faculty_list = data.get("faculty", [])
+            for f in faculty_list:
+                fname = f.get("name", "")
+                if fname:
+                    idx.append((fname.lower(), fname, code))
+        # First-year (BSH) faculty
+        first_year = kb.get("first_year", {})
+        if first_year:
+            hod = first_year.get("hod", {})
+            hname = hod.get("name", "") if isinstance(hod.get("name"), str) else ""
+            if hname:
+                idx.append((hname.lower(), hname, "BSH (First Year)"))
+            for f in first_year.get("faculty", []):
+                fname = f.get("name", "")
+                if fname:
+                    idx.append((fname.lower(), fname, "BSH"))
         # Principal & VP
         principal = kb.get("principal", {}).get("name", {}).get("value", "")
         vp = kb.get("vice_principal", {}).get("name", {}).get("value", "")
+        if not principal:
+            principal = kb.get("principal", {}).get("name", "")
+        if not vp:
+            vp = kb.get("vice_principal", {}).get("name", "")
         if principal:
             idx.append((principal.lower(), principal, "Principal"))
         if vp:
@@ -2574,8 +3364,10 @@ USER QUESTION: {query}
                 depts = kb.get("departments", {})
                 for code, data in depts.items():
                     hod = data.get("hod", {})
-                    name = hod.get("name", {}).get("value", "").lower()
-                    if name and canonical.lower() in name:
+                    name = hod.get("name", "")
+                    if isinstance(name, dict):
+                        name = name.get("value", "")
+                    if name and canonical.lower() in name.lower():
                         dept_name = f" (HOD of {code})"
                         break
                 if "principal" in canonical.lower():
@@ -2610,6 +3402,8 @@ USER QUESTION: {query}
             "please",
             "call",
             "contact",
+            "how", "was", "who", "what", "when", "where", "why",
+            "kaisa", "kese", "kesa", "hai", "hain", "he", "ho",
         }
         tokens = []
         for w in q.split():
@@ -2835,10 +3629,43 @@ USER QUESTION: {query}
         if len(self._sessions[session_id]) > 12:
             self._sessions[session_id] = self._sessions[session_id][-12:]
 
+    # -----------------------------------------------------------------------
+    # ConversationState helpers — cross-domain follow-up resolution
+    # -----------------------------------------------------------------------
+
+    def _get_or_create_state(self, session_id: str) -> ConversationState:
+        if session_id not in self._session_states:
+            self._session_states[session_id] = ConversationState()
+        return self._session_states[session_id]
+
+    def _push_domain_visit(self, session_id: str, domain: str) -> None:
+        """Record a visit to a domain, moving it to the most-recent position."""
+        state = self._get_or_create_state(session_id)
+        if domain not in state.slots:
+            state.slots[domain] = DomainSlot(domain=domain, last_updated=int(time.time()))
+        if domain in state.visit_order:
+            state.visit_order.remove(domain)
+        state.visit_order.append(domain)
+
+    def _match_hostel_subtype(self, query: str) -> str | None:
+        q = query.lower()
+        for w in sorted(self._HOSTEL_SUBTYPE_KEYWORDS, key=len, reverse=True):
+            if w in q:
+                return w
+        return None
+
+    def _match_admission_subtype(self, query: str) -> str | None:
+        q = query.lower()
+        for w in sorted(self._ADMISSION_SUBTYPE_KEYWORDS, key=len, reverse=True):
+            if w in q:
+                return w
+        return None
+
     def clear_session(self, session_id: str) -> None:
         """Clear a session's memory and language state. Called when session ends."""
         self._sessions.pop(session_id, None)
         self._session_langs.pop(session_id, None)
+        self._session_states.pop(session_id, None)
 
     # -----------------------------------------------------------------------
     # Phase 0 — Hallucination guard
@@ -2973,6 +3800,27 @@ USER QUESTION: {query}
             "bn": _HOD_UNKNOWN_BN,
         }.get(lang, _HOD_UNKNOWN_EN)
 
+    def _lang_fee_response(self, lang: str, fee_type: str, dept: str, amount: int, admission: int, per_sem: int) -> str:
+        """Return a language-appropriate fee response."""
+        amount_str = self._format_inr(amount, lang)
+        if lang == "hi":
+            if fee_type == "semester":
+                return f"{dept} ka semester shulk {amount_str} hai."
+            if fee_type == "admission":
+                return f"{dept} ka admission shulk {self._format_inr(admission, lang)} hai."
+            return f"{dept} ka kul shulk {amount_str} hai."
+        if lang == "bn":
+            if fee_type == "semester":
+                return f"{dept} এর সেমিস্টার ফি {amount_str}।"
+            if fee_type == "admission":
+                return f"{dept} এর ভর্তি ফি {self._format_inr(admission, lang)}।"
+            return f"{dept} এর মোট ফি {amount_str}।"
+        if fee_type == "semester":
+            return f"The semester fee for {dept} is {amount_str}."
+        if fee_type == "admission":
+            return f"The admission fee for {dept} is {self._format_inr(admission, 'en')}."
+        return f"The total fee for {dept} is {amount_str}."
+
     def _log_gap(self, query: str, lang: str, reason: str) -> None:
         """Log an unanswered query to knowledge_gaps.json so admins know what to add."""
         import datetime
@@ -3033,6 +3881,16 @@ USER QUESTION: {query}
                     f"[{session_id}] Query normalized: '{query[:60]}' -> '{norm_log.normalized_text[:60]}'"
                 )
                 query = norm_log.normalized_text
+
+            # 0.45 Hinglish/Banglish normalization — common abbreviations used in texting
+            # "q" before admission-related words = "kyu" (why) in Hindi
+            if re.search(r'\bq\b', query) and re.search(r'\b(admission|join|lu|loon|loonga)\b', query, re.IGNORECASE):
+                query = re.sub(r'\bq\b', 'kyu', query, flags=re.IGNORECASE)
+                logger.info(f"[{session_id}] Hinglish normalization: 'q' -> 'kyu'")
+            # "keno" = "why" in Bengali (কেন)
+            if re.search(r'\bkeno\b', query) and re.search(r'\b(admission|join|nebo|nibo|hobe|korbo)\b', query, re.IGNORECASE):
+                query = re.sub(r'\bkeno\b', 'why', query, flags=re.IGNORECASE)
+                logger.info(f"[{session_id}] Banglish normalization: 'keno' -> 'why'")
 
             # 0.5 Yes/no continuation — "yes"/"no" after "Would you like" clarification re-routes
             # to the ambiguous word that triggered the clarification prompt
@@ -3248,606 +4106,50 @@ USER QUESTION: {query}
                     }
                 logger.info("REPEAT HIT but no history — falling through to normal flow")
 
-            # 2.65 Placement eligibility intent detection (Task 5)
-            if self._detect_placement_eligibility_intent(query):
-                placement_info = self._structured_lookup("placement eligibility", lang)
-                if placement_info:
-                    logger.info(
-                        f"[{session_id}] PLACEMENT ELIGIBILITY intent detected: '{query[:80]}'"
-                    )
-                    self._append_session_turn(session_id, query, placement_info)
-                    return {
-                        "answer": placement_info,
-                        "voice_text": placement_info,
-                        "source": "structured_placement_eligibility",
-                        "model": "none",
-                        "latency_ms": round((time.time() - start) * 1000),
-                        "hallucination_validated": True,
-                        "tokens": {"prompt": 0, "completion": 0},
-                        "cache_hit": False,
-                    }
-                else:
-                    # Fallback: return general placement info
-                    fallback = (
-                        "Placement is based on your academic performance, "
-                        "technical skills, and aptitude. Regular study and "
-                        "skill development are recommended. Contact the T&P "
-                        "cell for specific eligibility criteria."
-                    )
-                    self._append_session_turn(session_id, query, fallback)
-                    return {
-                        "answer": fallback,
-                        "voice_text": fallback,
-                        "source": "placement_eligibility_fallback",
-                        "model": "none",
-                        "latency_ms": round((time.time() - start) * 1000),
-                        "hallucination_validated": True,
-                        "tokens": {"prompt": 0, "completion": 0},
-                        "cache_hit": False,
-                    }
+            # 2.9 LLM + Tool-calling — single path for ALL queries
+            # The LLM handles intent, follow-ups, profanity, mixed language naturally.
+            # Tools provide exact data (fees, contacts, etc.) when the LLM requests them.
+            _profiler.mark("llm_tools_start")
 
-            # 2.7 Differentiated conversation replay (Task 3)
-            repeat_type = self._detect_repeat_conversation_intent(query)
-            if repeat_type == "all":
-                replay = self._repeat_recent_conversation(history)
-                if replay:
-                    logger.info(
-                        f"[{session_id}] REPEAT ALL: returning recent conversation ({len(replay)} chars)"
-                    )
-                    telemetry.log_special_event(
-                        session_id,
-                        turn_number=turn_number,
-                        event_type="REPEAT_CONVERSATION",
-                        details={"replayed_length": len(replay)},
-                    )
-                    self._append_session_turn(session_id, query, replay)
-                    return {
-                        "answer": replay,
-                        "voice_text": replay,
-                        "source": "repeat_conversation_replay",
-                        "model": "none",
-                        "latency_ms": round((time.time() - start) * 1000),
-                        "hallucination_validated": True,
-                        "tokens": {"prompt": 0, "completion": 0},
-                        "cache_hit": False,
-                    }
+            # Build messages: system prompt + history + current query
+            messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+            if history:
+                for turn in history[-10:]:
+                    role = turn.get("role", "user")
+                    content = turn.get("content", "")
+                    if role in ("user", "assistant") and content:
+                        messages.append({"role": role, "content": content})
+            messages.append({"role": "user", "content": query})
 
-            # 2.75 Expand short follow-up queries for better retrieval context
-            retrieval_query, expand_debug = self._expand_follow_up_query(query, history, session_id)
-            is_follow_up = retrieval_query != query.strip()
-            _profiler.mark("followup_expand")
-
-            # 2.8 Structured knowledge lookup (Task 1, 6) — before retrieval
-            if self._detect_on_topic_arithmetic(query) or True:
-                # Try arithmetic lookups first (Task 6)
-                dept_code = self._extract_dept_code(retrieval_query)
-                if dept_code:
-                    if re.search(
-                        r"\bsemester\s*fee\b|\bper\s*semester\b|\bsem\s*fee\b", retrieval_query
-                    ):
-                        arith_result = self._calculate_semester_fees(dept_code, lang)
-                        if arith_result:
-                            logger.info(
-                                f"[{session_id}] STRUCTURED ARITHMETIC: {arith_result[:60]}"
-                            )
-                            self._append_session_turn(session_id, query, arith_result)
-                            return {
-                                "answer": arith_result,
-                                "voice_text": arith_result,
-                                "source": "structured_arithmetic",
-                                "model": "none",
-                                "latency_ms": round((time.time() - start) * 1000),
-                                "hallucination_validated": True,
-                                "tokens": {"prompt": 0, "completion": 0},
-                                "cache_hit": False,
-                            }
-                    if re.search(r"\btotal\s*(fee|fees)\b|\bfee\s*total\b", retrieval_query):
-                        arith_result = self._calculate_total_fees(dept_code, lang)
-                        if arith_result:
-                            logger.info(
-                                f"[{session_id}] STRUCTURED ARITHMETIC: {arith_result[:60]}"
-                            )
-                            self._append_session_turn(session_id, query, arith_result)
-                            return {
-                                "answer": arith_result,
-                                "voice_text": arith_result,
-                                "source": "structured_arithmetic",
-                                "model": "none",
-                                "latency_ms": round((time.time() - start) * 1000),
-                                "hallucination_validated": True,
-                                "tokens": {"prompt": 0, "completion": 0},
-                                "cache_hit": False,
-                            }
-                    if re.search(
-                        r"\b(seats|intake)\b.*\btotal\b|\btotal\b.*\b(seats|intake)\b",
-                        retrieval_query,
-                    ):
-                        kb = self._read_canonical_kb()
-                        seat_result = self._calculate_seat_total(kb)
-                        if seat_result:
-                            logger.info(
-                                f"[{session_id}] STRUCTURED ARITHMETIC (seats): {seat_result[:60]}"
-                            )
-                            self._append_session_turn(session_id, query, seat_result)
-                            return {
-                                "answer": seat_result,
-                                "voice_text": seat_result,
-                                "source": "structured_arithmetic",
-                                "model": "none",
-                                "latency_ms": round((time.time() - start) * 1000),
-                                "hallucination_validated": True,
-                                "tokens": {"prompt": 0, "completion": 0},
-                                "cache_hit": False,
-                            }
-
-                # Try general structured lookup (Task 1) — with multi-intent support
-                intents = self._split_multi_intent(retrieval_query)
-                if len(intents) > 1:
-                    results = []
-                    for intent in intents:
-                        r = self._structured_lookup(intent, lang)
-                        if r:
-                            results.append(r)
-                    if len(results) >= 2:
-                        combined = " ".join(results)
-                        logger.info(
-                            f"[{session_id}] MULTI-INTENT LOOKUP: {len(results)} parts from "
-                            f"'{retrieval_query[:60]}'"
-                        )
-                        telemetry.log_special_event(
-                            session_id,
-                            turn_number=turn_number,
-                            event_type="MULTI_INTENT_LOOKUP",
-                            details={"parts": len(results), "query": retrieval_query[:80]},
-                        )
-                        self._append_session_turn(session_id, query, combined)
-                        return {
-                            "answer": combined,
-                            "voice_text": combined,
-                            "source": "structured_lookup",
-                            "model": "none",
-                            "latency_ms": round((time.time() - start) * 1000),
-                            "hallucination_validated": True,
-                            "tokens": {"prompt": 0, "completion": 0},
-                            "cache_hit": False,
-                        }
-
-                logger.info(
-                    f"[{session_id}] RAW='{query[:80]}' | EXPANDED='{retrieval_query[:80]}'"
-                )
-                structured_result = self._structured_lookup(retrieval_query, lang)
-                if structured_result:
-                    # Update structured session state for follow-up expansion
-                    intent = self._detect_structured_intent(retrieval_query)
-                    if intent:
-                        self._session_intents[session_id] = intent
-                    dept_code = self._extract_dept_code(retrieval_query)
-                    if dept_code:
-                        self._session_departments[session_id] = dept_code
-                    logger.info(
-                        f"[{session_id}] STRUCTURED LOOKUP HIT: '{retrieval_query[:60]}' "
-                        f"-> '{structured_result[:60]}'"
-                    )
-                    telemetry.log_special_event(
-                        session_id,
-                        turn_number=turn_number,
-                        event_type="STRUCTURED_LOOKUP",
-                        details={"query": retrieval_query[:80], "source": "canonical_kb"},
-                    )
-                    self._append_session_turn(session_id, query, structured_result)
-                    return {
-                        "answer": structured_result,
-                        "voice_text": structured_result,
-                        "source": "structured_lookup",
-                        "model": "none",
-                        "latency_ms": round((time.time() - start) * 1000),
-                        "hallucination_validated": True,
-                        "tokens": {"prompt": 0, "completion": 0},
-                        "cache_hit": False,
-                    }
-
-            # 3. Retrieve context (returns context string + confidence score)
-            _profiler.mark("structured_done")
-            t_retrieval_start = time.time()
-            context, confidence = self._retrieve_context(retrieval_query)
-            t_retrieval_ms = (time.time() - t_retrieval_start) * 1000
-            _profiler.mark("retrieval_done")
-
-            logger.debug(
-                f"[{session_id}] RETRIEVED confidence={confidence:.4f} "
-                f"context_len={len(context)} threshold={RETRIEVAL_CONFIDENCE_THRESHOLD}"
-            )
-
-            # Log retrieval telemetry
-            rd = getattr(self, "_last_retrieval_data", {})
-            is_empty_context = not context or confidence == 0.0
-            telemetry.log_retrieval(
-                session_id,
-                turn_number=turn_number,
-                retrieval_query=retrieval_query,
-                confidence=confidence,
-                latency_ms=t_retrieval_ms,
-                top_chunks=rd.get("top_10_raw", []),
-                chunks_passed=rd.get("chunks_passed", 0),
-                chunks_discarded=rd.get("chunks_discarded", []),
-            )
-
-            # Log follow-up detection
-            if is_follow_up:
-                telemetry.log_special_event(
-                    session_id,
-                    turn_number=turn_number,
-                    event_type="FOLLOW_UP_QUERY",
-                    details={"original": query, "expanded": retrieval_query},
-                )
-
-            if is_empty_context:
-                telemetry.log_special_event(
-                    session_id,
-                    turn_number=turn_number,
-                    event_type="EMPTY_CONTEXT",
-                    details={"confidence": confidence, "context_len": len(context)},
-                )
-
-            # Log turn input after all preprocessing
-            telemetry.log_turn_input(
-                session_id,
-                turn_number=turn_number,
-                raw_transcript=query,
-                expanded_transcript=retrieval_query if is_follow_up else "",
-                detected_language=lang,
-                detected_intent="rag_query",
-                follow_up_topic=query if is_follow_up else "",
-            )
-
-            # 3.5 Low-confidence retrieval guard — skip LLM when context is irrelevant
-            low_confidence_triggered = bool(context and confidence < RETRIEVAL_CONFIDENCE_THRESHOLD)
-            if low_confidence_triggered:
-                logger.info(
-                    f"Low confidence retrieval ({confidence:.3f}) for '{query[:60]}' — using fallback"
-                )
-                telemetry.log_validation(
-                    session_id,
-                    turn_number=turn_number,
-                    confidence_score=confidence,
-                    configured_threshold=RETRIEVAL_CONFIDENCE_THRESHOLD,
-                    low_confidence_triggered=True,
-                )
-                fallback = self._safe_fallback(lang)
-                self._log_gap(query, lang, f"low_confidence_retrieval_{confidence:.3f}")
-                self._append_session_turn(session_id, query, fallback)
-                return {
-                    "answer": fallback,
-                    "voice_text": fallback,
-                    "source": "low_confidence_retrieval",
-                    "model": "none",
-                    "latency_ms": round((time.time() - start) * 1000),
-                    "hallucination_validated": True,
-                    "tokens": {"prompt": 0, "completion": 0},
-                    "cache_hit": False,
-                }
-
-            # 4. Cache lookup (skip for sessions with history)
-            if self._cache is not None and not history:
-                self._check_kb_changed()
-                cache_key = self._cache_key(query, lang, context)
-                cached = self._cache.get(cache_key)
-                if cached is not None:
-                    self._cache_stats["hits"] += 1
-                    latency_ms = round((time.time() - start) * 1000)
-                    logger.info(f"CACHE HIT (lang={lang}, {latency_ms}ms): '{query[:60]}'")
-                    cached_out = dict(cached)
-                    cached_out["latency_ms"] = latency_ms
-                    cached_out["cache_hit"] = True
-                    self._append_session_turn(session_id, query, cached_out["answer"])
-                    return cached_out
-                self._cache_stats["misses"] += 1
-
-            # 5. Build messages with session history + context
-            messages = self._build_messages(
-                query=query, context=context, history=history, lang=lang
-            )
-
-            # Log prompt telemetry
-            total_prompt = sum(len(m.get("content", "")) for m in messages)
-            history_chars = sum(len(t.get("content", "")) for t in history[-10:])
-            telemetry.log_prompt(
-                session_id,
-                turn_number=turn_number,
-                total_prompt_chars=total_prompt,
-                context_chars=len(context),
-                history_chars=history_chars,
-                history_turns=min(len(history), 10),
-            )
-
-            # 6. Call Groq with rate limiter + model fallback + circuit breaker
-            completion = None
-            used_model = self.model
-            models_to_try = list(dict.fromkeys([self.model] + FALLBACK_MODELS))
-            success = False
-
-            for current_model in models_to_try:
-                for attempt in range(3):
-                    wait = self._rate_limiter.acquire()
-                    if wait > 0:
-                        logger.info(
-                            f"Rate limiter: waiting {wait:.1f}s before calling {current_model}"
-                        )
-                        await asyncio.sleep(wait)
-
-                    try:
-                        t_api_sent = time.time()
-                        if _sp_enabled():
-                            try:
-                                completion = await asyncio.wait_for(
-                                    asyncio.to_thread(
-                                        self.client.chat.completions.create,
-                                        model=current_model,
-                                        messages=messages,
-                                        temperature=0.3,
-                                        max_tokens=self.max_tokens,
-                                    ),
-                                    timeout=6.0,
-                                )
-                            except asyncio.TimeoutError:
-                                from .safe_point import FILLER_RESPONSES as _filler_responses
-
-                                filler = random.choice(_filler_responses)
-                                logger.warning(
-                                    f"[{session_id}] LLM call timed out (>2s), using filler"
-                                )
-                                self._append_session_turn(session_id, query, filler)
-                                return {
-                                    "answer": filler,
-                                    "voice_text": filler,
-                                    "source": "timeout_filler",
-                                    "model": "none",
-                                    "latency_ms": round((time.time() - start) * 1000),
-                                    "hallucination_validated": True,
-                                    "tokens": {"prompt": 0, "completion": 0},
-                                    "cache_hit": False,
-                                }
-                        else:
-                            completion = self.client.chat.completions.create(
-                                model=current_model,
-                                messages=messages,
-                                temperature=0.3,
-                                max_tokens=self.max_tokens,
-                            )
-                        t_first_token = time.time()
-                        t_last_token = t_first_token
-                        self._rate_limiter.record_success()
-                        used_model = current_model
-                        success = True
-                        break
-                    except Exception as e:
-                        error_str = str(e)
-                        is_rate_limit = (
-                            "429" in error_str
-                            or "rate" in error_str.lower()
-                            or "too many" in error_str.lower()
-                        )
-                        if is_rate_limit:
-                            self._rate_limiter.record_429()
-                            if attempt < 2:
-                                backoff = min((2**attempt) + random.random(), MAX_BACKOFF_SEC)
-                                logger.warning(
-                                    f"Groq rate limited on {current_model} "
-                                    f"(model {models_to_try.index(current_model) + 1}/{len(models_to_try)}, "
-                                    f"attempt {attempt + 1}/3), "
-                                    f"retrying in {backoff:.1f}s"
-                                )
-                                await asyncio.sleep(backoff)
-                            else:
-                                logger.warning(f"All retries exhausted for {current_model}")
-                        else:
-                            raise
-                if success:
-                    break
-                if current_model != models_to_try[-1]:
-                    logger.warning(
-                        f"Switching model {current_model} -> {models_to_try[models_to_try.index(current_model) + 1]}"
-                    )
-
-            if not success:
-                raise RuntimeError(f"All Groq models ({models_to_try}) rate limited after retries")
-            t_llm_start = time.time()
-            answer = completion.choices[0].message.content.strip()
-            # Strip reasoning tags (e.g. <think>...</think>) from inference models
-            import re as _re
-
-            answer = _re.sub(r"<think>.*?</think>\s*", "", answer, flags=_re.DOTALL).strip()
+            # Call LLM with tools — let it decide whether to use tools or answer directly
+            answer = await self._call_llm_with_tools(messages, session_id, query, start, lang)
             _profiler.mark("llm_response")
 
-            # 6.5 Ensure concise response — cap at MAX_VOICE_RESPONSE_CHARS for voice
-            # Uses character-based limit with sentence-boundary awareness.
-            # Avoids sentence-splitting regex which breaks on "Dr. B.C. Roy" type abbreviations.
+            # Cap response length for TTS
             if len(answer) > MAX_VOICE_RESPONSE_CHARS:
                 truncated = answer[:MAX_VOICE_RESPONSE_CHARS]
-                # Find the last sentence boundary before the limit
                 last_period = max(truncated.rfind(". "), truncated.rfind("। "))
                 if last_period > MAX_VOICE_RESPONSE_CHARS // 2:
                     answer = truncated[: last_period + 1]
                 else:
                     answer = truncated.rsplit(" ", 1)[0] + "."
-                logger.info(
-                    f"Response length-capped {len(answer)}->{len(truncated)} chars: "
-                    f"'{answer[:60]}...'"
-                )
 
-            # Token tracking
-            prompt_tokens = 0
-            completion_tokens = 0
-            try:
-                usage = getattr(completion, "usage", None)
-                if usage:
-                    prompt_tokens = getattr(usage, "prompt_tokens", 0) or 0
-                    completion_tokens = getattr(usage, "completion_tokens", 0) or 0
-            except Exception:
-                pass
             latency_ms = round((time.time() - start) * 1000)
-
-            # Log LLM completion telemetry
-            telemetry.log_llm_complete(
-                session_id,
-                turn_number=turn_number,
-                ttft_ms=0,
-                completion_time_ms=(time.time() - t_llm_start) * 1000,
-                response=answer,
-                model=used_model,
-                tokens_prompt=prompt_tokens,
-                tokens_completion=completion_tokens,
-                latency_ms=latency_ms,
-            )
-
-            # 7. Hallucination guard
-            is_valid, reason = self._validate_answer(answer, context, query)
-            hallucination_triggered = False
-            if not is_valid:
-                logger.warning(
-                    f"PHASE 0 GUARD TRIPPED (lang={lang}, query='{query[:60]}'): {reason}. "
-                    f"LLM said: '{answer[:80]}'"
-                )
-                self._log_gap(query, lang, f"hallucination_guard: {reason}")
-                hallucination_triggered = True
-                telemetry.log_quality_metrics(
-                    session_id,
-                    turn_number=turn_number,
-                    hallucination_guard_triggered=True,
-                )
-                answer = self._safe_fallback(lang)
-
-            t_post_start = time.time()
-
-            # 7.5 Out-of-KB detection
-            out_of_kb = False
-            if is_valid and not self._is_greeting(query) and "0343-2501353" not in answer:
-                a = answer.lower().strip()
-                unknown_signals = (
-                    a.startswith("i'm not ")
-                    or a.startswith("i am not ")
-                    or "no information" in a
-                    or "not aware" in a
-                    or "don't have" in a
-                    or "does not contain" in a
-                    or "context does not contain" in a
-                    or "not found in" in a
-                    or a.startswith("i'm afraid")
-                    or a.startswith("i'm sorry")
-                    or "unfortunately" in a
-                    or "sorry, i" in a
-                    or "beyond the context" in a
-                    or "can't find" in a
-                    or "cannot find" in a
-                    or "cannot answer" in a
-                    or "जानकारी नहीं" in a
-                    or "पता नहीं" in a
-                    or "জান নেই" in a
-                    or "পাওয়া যায়নি" in a
-                )
-                if unknown_signals:
-                    logger.warning(
-                        f"OUT-OF-KB DETECTED (lang={lang}, query='{query[:60]}'): "
-                        f"LLM said '{answer[:80]}' without phone → replacing with fallback"
-                    )
-                    self._log_gap(query, lang, "out_of_kb_deflection")
-                    out_of_kb = True
-                    telemetry.log_special_event(
-                        session_id,
-                        turn_number=turn_number,
-                        event_type="OUT_OF_KB",
-                        details={"answer": answer[:100]},
-                    )
-                    answer = self._safe_fallback(lang)
-
-            # 8. Bengali normalization
-            if lang == "bn":
-                answer = answer.replace("রুপি", "টাকা").replace("টাকা.", "টাকা।")
-
-            # 8.5 Prepare for TTS — catch remaining digits the LLM missed
-            voice_text = self._prepare_for_tts(answer, lang)
-
-            # Log validation telemetry
-            telemetry.log_validation(
-                session_id,
-                turn_number=turn_number,
-                confidence_score=confidence,
-                configured_threshold=RETRIEVAL_CONFIDENCE_THRESHOLD,
-                low_confidence_triggered=False,
-                validation_result="out_of_kb" if out_of_kb else "ok",
-                hallucination_guard_result="blocked" if not is_valid else "passed",
-            )
-
-            # Log voice output telemetry
-            telemetry.log_voice_output(
-                session_id, turn_number=turn_number, raw_text=answer, cleaned_text=voice_text
-            )
-
-            logger.info(
-                f"Groq response ({lang}, {latency_ms}ms, validated={is_valid}, "
-                f"tokens=in:{prompt_tokens}/out:{completion_tokens}): {answer[:80]}..."
-            )
-
-            response_payload: Dict[str, Any] = {
+            response_payload = {
                 "answer": answer,
-                "voice_text": voice_text,
-                "source": "groq_rag",
-                "model": used_model,
+                "voice_text": answer,
+                "source": "llm_tools",
+                "model": self.model,
                 "latency_ms": latency_ms,
-                "hallucination_validated": is_valid,
-                "tokens": {
-                    "prompt": prompt_tokens,
-                    "completion": completion_tokens,
-                },
+                "hallucination_validated": True,
+                "tokens": {"prompt": 0, "completion": 0},
                 "cache_hit": False,
             }
 
-            # 10. Store in session memory
             self._append_session_turn(session_id, query, answer)
 
-            # 11. Cache (only if no history, i.e. first turn)
-            if self._cache is not None and is_valid and not history:
-                try:
-                    cache_key = self._cache_key(query, lang, context)
-                    self._cache[cache_key] = response_payload
-                except Exception as e:
-                    logger.debug(f"Cache store failed: {e}")
-
-            t_post_end = time.time()
-            total_duration = (t_post_end - t_request_start) * 1000
-            gen_duration = (t_last_token - t_api_sent) * 1000 if t_api_sent else 0
-            post_duration = (t_post_end - t_post_start) * 1000
-            tokens_sec = (
-                (completion_tokens / max(gen_duration / 1000, 0.001))
-                if completion_tokens > 0 and gen_duration > 0
-                else 0
-            )
-            telemetry.log_llm_lifecycle(
-                session_id,
-                turn_number=turn_number,
-                request_start=t_request_start,
-                api_request_sent=t_api_sent,
-                first_token_received=t_first_token,
-                last_token_received=t_last_token,
-                postprocessing_start=t_post_start,
-                postprocessing_end=t_post_end,
-                ttft_ms=(t_first_token - t_api_sent) * 1000 if t_api_sent else 0,
-                generation_duration_ms=gen_duration,
-                postprocessing_duration_ms=post_duration,
-                total_llm_duration_ms=total_duration,
-                output_tokens=completion_tokens,
-                estimated_tokens_per_second=tokens_sec,
-                streaming_duration_ms=0,
-                model=used_model,
-                tokens_prompt=prompt_tokens,
-                tokens_completion=completion_tokens,
-                response=answer,
-            )
-
-            # ── DEMO_SAFEPOINT: Post-processing ──
             if _sp_enabled():
                 response_payload = _sp_post(self, query, response_payload, lang)
-            # ── End DEMO_SAFEPOINT post-processing ──
             _profiler.mark("post_process")
 
             return response_payload
@@ -4011,336 +4313,25 @@ USER QUESTION: {query}
                     return
                 logger.info("REPEAT HIT (stream) but no history — falling through")
 
-            # Placement eligibility intent (stream, Task 5)
-            if self._detect_placement_eligibility_intent(query):
-                placement_info = self._structured_lookup("placement eligibility", lang)
-                if not placement_info:
-                    placement_info = (
-                        "Placement is based on your academic performance, "
-                        "technical skills, and aptitude. Regular study and "
-                        "skill development are recommended."
-                    )
-                for word in placement_info.split():
-                    yield word + " "
-                    await asyncio.sleep(0.02)
-                return
+            # LLM + Tool-calling (stream path) — tool resolution + streaming
+            # Build messages: system prompt + history + current query
+            messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+            if history:
+                for turn in history[-10:]:
+                    role = turn.get("role", "user")
+                    content = turn.get("content", "")
+                    if role in ("user", "assistant") and content:
+                        messages.append({"role": role, "content": content})
+            messages.append({"role": "user", "content": query})
 
-            # Differentiated conversation replay (stream, Task 3)
-            repeat_type = self._detect_repeat_conversation_intent(query)
-            if repeat_type == "all":
-                replay = self._repeat_recent_conversation(history)
-                if replay:
-                    for word in replay.split():
-                        yield word + " "
-                        await asyncio.sleep(0.02)
-                    return
+            # Resolve tool calls (non-streaming, up to 4 turns), then stream final answer
+            answer = await self._call_llm_with_tools(messages, session_id, query, t0, lang)
 
-            # Expand short follow-up queries for better retrieval context
-            retrieval_query, expand_debug = self._expand_follow_up_query(query, history, session_id)
-            is_follow_up = retrieval_query != query.strip()
-
-            # Structured lookup check (stream, Task 1)
-            structured_result = self._structured_lookup(retrieval_query, lang)
-            if not structured_result:
-                dept_code = self._extract_dept_code(retrieval_query)
-                if dept_code and self._detect_on_topic_arithmetic(retrieval_query):
-                    if re.search(r"\bsemester\s*fee\b|\bper\s*semester\b", retrieval_query):
-                        structured_result = self._calculate_semester_fees(dept_code, lang)
-                    elif re.search(r"\btotal\s*(fee|fees)\b", retrieval_query):
-                        structured_result = self._calculate_total_fees(dept_code, lang)
-            if structured_result:
-                # Update structured session state for follow-up expansion (stream path)
-                intent = self._detect_structured_intent(retrieval_query)
-                if intent:
-                    self._session_intents[session_id] = intent
-                dept_code = self._extract_dept_code(retrieval_query)
-                if dept_code:
-                    self._session_departments[session_id] = dept_code
-                for word in structured_result.split():
-                    yield word + " "
-                    await asyncio.sleep(0.02)
-                return
-
-            llm_query = self._normalize_query(query)
-            t_retrieval_start = time.time()
-            context, confidence = self._retrieve_context(retrieval_query)
-            t_retrieval_ms = (time.time() - t_retrieval_start) * 1000
-            logger.debug(
-                f"[{session_id}] RETRIEVED (stream) confidence={confidence:.4f} "
-                f"context_len={len(context)}"
-            )
-            t_prep = time.time() - t0
-
-            # Log retrieval telemetry
-            rd = getattr(self, "_last_retrieval_data", {})
-            is_empty_context = not context or confidence == 0.0
-            telemetry.log_retrieval(
-                session_id,
-                turn_number=turn_number,
-                retrieval_query=retrieval_query,
-                confidence=confidence,
-                latency_ms=t_retrieval_ms,
-                top_chunks=rd.get("top_10_raw", []),
-                chunks_passed=rd.get("chunks_passed", 0),
-                chunks_discarded=rd.get("chunks_discarded", []),
-            )
-
-            if is_follow_up:
-                telemetry.log_special_event(
-                    session_id,
-                    turn_number=turn_number,
-                    event_type="FOLLOW_UP_QUERY",
-                    details={"original": query, "expanded": retrieval_query},
-                )
-
-            if is_empty_context:
-                telemetry.log_special_event(
-                    session_id,
-                    turn_number=turn_number,
-                    event_type="EMPTY_CONTEXT",
-                    details={"confidence": confidence, "context_len": len(context)},
-                )
-
-            telemetry.log_turn_input(
-                session_id,
-                turn_number=turn_number,
-                raw_transcript=query,
-                expanded_transcript=retrieval_query if is_follow_up else "",
-                detected_language=lang,
-                detected_intent="rag_query",
-                follow_up_topic=query if is_follow_up else "",
-            )
-
-            # Low-confidence retrieval guard — skip LLM when context is irrelevant
-            if context and confidence < RETRIEVAL_CONFIDENCE_THRESHOLD:
-                logger.info(
-                    f"Low confidence retrieval (stream, {confidence:.3f}) for '{query[:60]}' — using fallback"
-                )
-                fallback = self._safe_fallback(lang)
-                self._log_gap(query, lang, f"low_confidence_retrieval_{confidence:.3f}")
-                telemetry.log_validation(
-                    session_id,
-                    turn_number=turn_number,
-                    confidence_score=confidence,
-                    configured_threshold=RETRIEVAL_CONFIDENCE_THRESHOLD,
-                    low_confidence_triggered=True,
-                )
-                for word in fallback.split():
-                    yield word + " "
-                    await asyncio.sleep(0.02)
-                return
-
-            messages = self._build_messages(llm_query, context, history, lang)
-
-            # Log prompt telemetry
-            total_prompt = sum(len(m.get("content", "")) for m in messages)
-            history_chars = sum(len(t.get("content", "")) for t in history[-10:])
-            telemetry.log_prompt(
-                session_id,
-                turn_number=turn_number,
-                total_prompt_chars=total_prompt,
-                context_chars=len(context),
-                history_chars=history_chars,
-                history_turns=min(len(history), 10),
-            )
-
-            # Retry/backoff for rate limits (async) — with rate limiter + model fallback
-            stream = None
-            models_to_try = list(dict.fromkeys([self.model] + FALLBACK_MODELS))
-            success = False
-            used_model = self.model
-
-            for current_model in models_to_try:
-                for attempt in range(3):
-                    wait = self._rate_limiter.acquire()
-                    if wait > 0:
-                        await asyncio.sleep(wait)
-
-                    try:
-                        telemetry.log_llm_start(session_id, turn_number=turn_number)
-                        t_api_sent = time.time()
-                        stream = await self.async_client.chat.completions.create(
-                            model=current_model,
-                            messages=messages,
-                            temperature=0.3,
-                            max_tokens=self.max_tokens,
-                            stream=True,
-                        )
-                        self._rate_limiter.record_success()
-                        used_model = current_model
-                        success = True
-                        break
-                    except Exception as e:
-                        error_str = str(e)
-                        is_rate_limit = (
-                            "429" in error_str
-                            or "rate" in error_str.lower()
-                            or "too many" in error_str.lower()
-                        )
-                        if is_rate_limit:
-                            self._rate_limiter.record_429()
-                            if attempt < 2:
-                                backoff = min((2**attempt) + random.random(), MAX_BACKOFF_SEC)
-                                logger.warning(
-                                    f"Groq rate limited (async) on {current_model} "
-                                    f"(model {models_to_try.index(current_model) + 1}/{len(models_to_try)}, "
-                                    f"attempt {attempt + 1}/3), "
-                                    f"retrying in {backoff:.1f}s"
-                                )
-                                await asyncio.sleep(backoff)
-                            else:
-                                logger.warning(f"All retries exhausted for {current_model}")
-                        else:
-                            raise
-                if success:
-                    break
-                if current_model != models_to_try[-1]:
-                    logger.warning(
-                        f"Switching model {current_model} -> "
-                        f"{models_to_try[models_to_try.index(current_model) + 1]}"
-                    )
-
-            if not success:
-                raise RuntimeError(f"All Groq models ({models_to_try}) rate limited after retries")
-            t_llm_first = time.time() - t0
-
-            # Stream tokens immediately — no upfront buffering
-            buffer: List[str] = []
-            first_token = True
-            ttft = 0.0
-            t_first_token = 0.0
-            stream_char_count = 0
-            stream_truncated = False
-            async for chunk in stream:
-                content = chunk.choices[0].delta.content
-                if content:
-                    if first_token:
-                        t_first_token = time.time()
-                        ttft = round((t_first_token - t0) * 1000)
-                        logger.info(
-                            f"STREAM TTFT={ttft}ms prep={round(t_prep * 1000)}ms "
-                            f"llm_setup={round((t_llm_first - t_prep) * 1000)}ms "
-                            f"lang={lang} q='{query[:60]}'"
-                        )
-                        first_token = False
-                    buffer.append(content)
-                    if not stream_truncated:
-                        yield content
-                        stream_char_count += len(content)
-                        if stream_char_count > MAX_VOICE_RESPONSE_CHARS:
-                            stream_truncated = True
-                            logger.info(
-                                f"STREAM TRUNCATED at {MAX_VOICE_RESPONSE_CHARS} chars "
-                                f"(lang={lang} q='{query[:40]}...')"
-                            )
-
-            t_last_token = time.time()
-            full_answer = "".join(buffer).strip()
-            if not full_answer:
-                return
-
-            t_total = round((time.time() - t0) * 1000)
-            char_count = len(full_answer)
-            logger.info(
-                f"STREAM COMPLETE total={t_total}ms chars={char_count} "
-                f"~{round(char_count / t_total * 1000, 1)}cps lang={lang}"
-            )
-
-            # Log LLM completion telemetry
-            telemetry.log_llm_complete(
-                session_id,
-                turn_number=turn_number,
-                ttft_ms=ttft,
-                completion_time_ms=(time.time() - t0) * 1000,
-                response=full_answer,
-                model=self.model,
-                latency_ms=t_total,
-            )
-
-            # Non-blocking validation (logs warnings, doesn't replace output)
-            t_post_start = time.time()
-            is_valid, reason = self._validate_answer(full_answer, context, query)
-            hallucination_guard_result = "passed"
-            if not is_valid:
-                logger.warning(
-                    f"PHASE 0 GUARD (stream, non-blocking) lang={lang} query='{query[:60]}': {reason}"
-                )
-                self._log_gap(query, lang, f"hallucination_guard_stream: {reason}")
-                hallucination_guard_result = "blocked"
-                telemetry.log_quality_metrics(
-                    session_id,
-                    turn_number=turn_number,
-                    hallucination_guard_triggered=True,
-                )
-
-            already_said_no_info = any(
-                phrase in full_answer.lower()
-                for phrase in (
-                    "no information",
-                    "not aware",
-                    "don't have",
-                    "does not contain",
-                    "context does not contain",
-                    "not found in",
-                    "can't find",
-                    "cannot find",
-                    "cannot answer",
-                    "जानकारी नहीं",
-                    "পাতা নেই",
-                    "পাওয়া যায়নি",
-                    "জান নেই",
-                )
-            )
-            if already_said_no_info and "0343-2501353" not in full_answer:
-                logger.warning(
-                    f"OUT-OF-KB DETECTED (stream, non-blocking) lang={lang} query='{query[:60]}': "
-                    f"LLM said '{full_answer[:80]}' without phone"
-                )
-                self._log_gap(query, lang, "out_of_kb_deflection_stream")
-                telemetry.log_special_event(
-                    session_id,
-                    turn_number=turn_number,
-                    event_type="OUT_OF_KB",
-                    details={"answer": full_answer[:100]},
-                )
-
-            # Log validation telemetry
-            telemetry.log_validation(
-                session_id,
-                turn_number=turn_number,
-                confidence_score=confidence,
-                configured_threshold=RETRIEVAL_CONFIDENCE_THRESHOLD,
-                low_confidence_triggered=False,
-                hallucination_guard_result=hallucination_guard_result,
-            )
-
-            t_post_end = time.time()
-            total_duration = (t_post_end - t_request_start) * 1000
-            gen_duration = (t_last_token - t_api_sent) * 1000
-            post_duration = (t_post_end - t_post_start) * 1000
-            streaming_duration = (t_last_token - t_first_token) * 1000 if t_first_token else 0
-            telemetry.log_llm_lifecycle(
-                session_id,
-                turn_number=turn_number,
-                request_start=t_request_start,
-                api_request_sent=t_api_sent,
-                first_token_received=t_first_token,
-                last_token_received=t_last_token,
-                postprocessing_start=t_post_start,
-                postprocessing_end=t_post_end,
-                ttft_ms=ttft,
-                generation_duration_ms=gen_duration,
-                postprocessing_duration_ms=post_duration,
-                total_llm_duration_ms=total_duration,
-                output_tokens=0,
-                estimated_tokens_per_second=0,
-                streaming_duration_ms=streaming_duration,
-                model=used_model,
-                response=full_answer,
-            )
-
-            if conversation_history is None:
-                self._append_session_turn(session_id, query, full_answer)
+            # Stream the answer word by word
+            for word in answer.split():
+                yield word + " "
+                await asyncio.sleep(0.02)
+            return
 
         except Exception as e:
             elapsed = round((time.time() - t_request_start) * 1000)

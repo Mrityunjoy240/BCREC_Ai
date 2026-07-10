@@ -11,13 +11,13 @@ import uuid
 from datetime import datetime, timezone
 from typing import AsyncIterable, List, Dict, Any, Literal
 
-# Force HuggingFace to load from local disk cache — skips all network HEAD/GET
+# Force HuggingFace to load from local disk cache â€” skips all network HEAD/GET
 # requests that were causing prewarm to timeout. Model was already downloaded.
 os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
 os.environ.setdefault("HF_DATASETS_OFFLINE", "1")
 os.environ.setdefault("HF_HUB_OFFLINE", "1")
 
-# Fix Windows cp1252 crash: the rupee symbol (₹) and Bengali chars in LLM
+# Fix Windows cp1252 crash: the rupee symbol (â‚¹) and Bengali chars in LLM
 # responses crash the Rich console logger. Force UTF-8 everywhere so child
 # processes spawned by LiveKit IPC inherit the correct encoding.
 os.environ.setdefault("PYTHONUTF8", "1")
@@ -93,16 +93,16 @@ LEXICON = {
 }
 
 BN_NUMS = {
-    "0": "শূন্য",
-    "1": "এক",
-    "2": "দুই",
-    "3": "তিন",
-    "4": "চার",
-    "5": "পাঁচ",
-    "6": "ছয়",
-    "7": "সাত",
-    "8": "আট",
-    "9": "নয়",
+    "0": "à¦¶à§‚à¦¨à§à¦¯",
+    "1": "à¦à¦•",
+    "2": "à¦¦à§à¦‡",
+    "3": "à¦¤à¦¿à¦¨",
+    "4": "à¦šà¦¾à¦°",
+    "5": "à¦ªà¦¾à¦à¦š",
+    "6": "à¦›à¦¯à¦¼",
+    "7": "à¦¸à¦¾à¦¤",
+    "8": "à¦†à¦Ÿ",
+    "9": "à¦¨à¦¯à¦¼",
 }
 
 
@@ -150,7 +150,7 @@ def apply_lexicon(text: str, lang: str) -> str:
 
     # 4. Bengali normalization for natural TTS pronunciation
     if lang == "bn-IN":
-        processed = processed.replace("রুপি", "টাকা")
+        processed = processed.replace("à¦°à§à¦ªà¦¿", "à¦Ÿà¦¾à¦•à¦¾")
 
     return processed
 
@@ -195,7 +195,7 @@ class BCRECGroqStream(llm.LLMStream):
         t0 = time.time()
         query = ""
 
-        # Collect user + assistant messages only (skip system — _build_messages adds SYSTEM_PROMPT)
+        # Collect user + assistant messages only (skip system â€” _build_messages adds SYSTEM_PROMPT)
         history = []
         for msg in self.chat_ctx.messages():
             if msg.role == "system":
@@ -230,14 +230,14 @@ class BCRECGroqStream(llm.LLMStream):
         ):
             if first_chunk:
                 ttft = round((time.time() - t0) * 1000)
-                logger.info(f"TURN TTFT={ttft}ms (user speech → LLM first token)")
+                logger.info(f"TURN TTFT={ttft}ms (user speech â†’ LLM first token)")
                 first_chunk = False
             self._event_ch.send_nowait(
                 llm.ChatChunk(id=self._id, delta=llm.ChoiceDelta(role="assistant", content=chunk))
             )
 
         turn_total = round((time.time() - t0) * 1000)
-        logger.info(f"TURN COMPLETE total={turn_total}ms (user speech → LLM done)")
+        logger.info(f"TURN COMPLETE total={turn_total}ms (user speech â†’ LLM done)")
         self._event_ch.close()
 
 
@@ -365,7 +365,7 @@ class SarvamChunkedStream(tts.ChunkedStream):
         logger.info(f"Synthesizing: {text[:60]}... (lang={lang}, speaker={speaker})")
 
         # Initialize emitter BEFORE the API call so the audio pipeline is
-        # ready as soon as the response arrives — reduces perceived stall.
+        # ready as soon as the response arrives â€” reduces perceived stall.
         emitter.initialize(
             request_id=utils.shortuuid(),
             sample_rate=24000,
@@ -423,7 +423,7 @@ from livekit.agents.tokenize.basic import SentenceTokenizer
 
 
 # ---------------------------------------------------------------------------
-# PREWARM — runs ONCE per worker process, not in every subprocess fork.
+# PREWARM â€” runs ONCE per worker process, not in every subprocess fork.
 # This is the correct LiveKit pattern to avoid re-loading BGE-M3 repeatedly.
 # ---------------------------------------------------------------------------
 def prewarm(proc: agents.JobProcess):
@@ -432,7 +432,7 @@ def prewarm(proc: agents.JobProcess):
     proc.userdata["stt"] = SarvamSTT()
     proc.userdata["llm"] = BCRECGroqLLM()
     proc.userdata["tts"] = StreamAdapter(tts=SarvamTTS(), sentence_tokenizer=SentenceTokenizer())
-    logger.info("Prewarm complete — agent is ready to accept jobs.")
+    logger.info("Prewarm complete â€” agent is ready to accept jobs.")
 
 
 # ---------------------------------------------------------------------------
@@ -455,7 +455,7 @@ async def entrypoint(ctx: agents.JobContext):
 
 VOICE TELEPHONY RULES (ADDITIONAL):
 - Be concise for voice. 2-4 short sentences is fine.
-- Use common English loanwords in Bengali (ডিপার্টমেন্ট, এডমিশন, ফিস).
+- Use common English loanwords in Bengali (à¦¡à¦¿à¦ªà¦¾à¦°à§à¦Ÿà¦®à§‡à¦¨à§à¦Ÿ, à¦à¦¡à¦®à¦¿à¦¶à¦¨, à¦«à¦¿à¦¸).
 - Phone numbers stay as digits (0343-2501353) for digit-by-digit TTS."""
     )
 
@@ -501,8 +501,8 @@ VOICE TELEPHONY RULES (ADDITIONAL):
     try:
         from app.services.llm.safe_point import DEMO_SAFEPOINT, get_greeting
 
-        if DEMO_SAFEPOINT:
-            greeting = get_greeting()
+        # if DEMO_SAFEPOINT:
+        #     greeting = get_greeting()
     except ImportError:
         pass
     session.say(greeting, allow_interruptions=True)
@@ -516,7 +516,7 @@ VOICE TELEPHONY RULES (ADDITIONAL):
 
 
 # ---------------------------------------------------------------------------
-# Connection Diagnostics — runs once before worker startup
+# Connection Diagnostics â€” runs once before worker startup
 # ---------------------------------------------------------------------------
 def _gather_dns_evidence(hostname: str) -> None:
     """When DNS fails, collect evidence about where the failure came from."""
@@ -576,12 +576,12 @@ def _gather_dns_evidence(hostname: str) -> None:
 def _run_connection_diagnostics() -> None:
     """Lightweight connectivity check before LiveKit worker starts.
     Logs DNS resolution, TCP, TLS, and WebSocket status with timestamps.
-    Never blocks startup — just logs results."""
+    Never blocks startup â€” just logs results."""
     from urllib.parse import urlparse
 
     url = os.environ.get("LIVEKIT_URL", "")
     if not url:
-        logger.info("[Diag] LIVEKIT_URL not set — skipping connection diagnostics")
+        logger.info("[Diag] LIVEKIT_URL not set â€” skipping connection diagnostics")
         return
 
     parsed = urlparse(url)
@@ -626,7 +626,7 @@ def _run_connection_diagnostics() -> None:
             sock.close()
 
     if not tcp_ok:
-        logger.error(f"[Diag {ts}] TCP: all IPs unreachable — skipping further checks")
+        logger.error(f"[Diag {ts}] TCP: all IPs unreachable â€” skipping further checks")
         return
 
     # ---- 3. TLS handshake ----
@@ -651,7 +651,7 @@ def _run_connection_diagnostics() -> None:
             sock.close()
 
     if not tls_ok:
-        logger.error(f"[Diag {ts}] TLS: all IPs failed — skipping WebSocket test")
+        logger.error(f"[Diag {ts}] TLS: all IPs failed â€” skipping WebSocket test")
         return
 
     # ---- 4. Authenticated WebSocket (optional, always logs result) ----

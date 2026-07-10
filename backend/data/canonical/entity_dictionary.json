@@ -294,6 +294,11 @@
       "aliases": ["training and placement", "t and p", "t p", "placement cell", "training placement"],
       "stt_mistakes": ["t and p", "t p"],
       "tts_spoken": "T and P"
+    },
+    "contact": {
+      "canonical": "contact",
+      "aliases": [],
+      "stt_mistakes": ["concact", "conact", "contack"]
     }
   },
   "buildings": {

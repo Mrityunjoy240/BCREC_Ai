@@ -608,13 +608,13 @@ class TestStructuredArithmetic:
     """Tests for programmatic arithmetic instead of LLM computation."""
 
     def test_fee_group_map_cse(self):
-        assert FEE_GROUP_MAP["CSE"] == (604700, 98225, 72925)
+        assert FEE_GROUP_MAP["CSE"] == (617700, 99225, 73925)
 
     def test_fee_group_map_ee(self):
-        assert FEE_GROUP_MAP["EE"] == (554100, 91900, 66100)
+        assert FEE_GROUP_MAP["EE"] == (567100, 92900, 67600)
 
     def test_fee_group_map_me(self):
-        assert FEE_GROUP_MAP["ME"] == (444100, 78150, 40800)
+        assert FEE_GROUP_MAP["ME"] == (429100, 75650, 50350)
 
     def test_all_departments_have_fees(self):
         for dept in ["CSE", "IT", "ECE", "EE", "AIML", "DS", "CY", "CSD", "ME", "CE"]:

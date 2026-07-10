@@ -1,0 +1,1090 @@
+2026-07-06 12:20:32,649 - livekit-agent - INFO - [Diag 2026-07-06T06:50:32.649555+00:00] Target: ai-voice-agent-64sbd6v0.livekit.cloud:443
+2026-07-06 12:20:33,218 - livekit-agent - INFO - [Diag 2026-07-06T06:50:32.649555+00:00] DNS OK: ai-voice-agent-64sbd6v0.livekit.cloud -> ['64:ff9b::8fdf:5b06', '64:ff9b::8fdf:5b86', '143.223.91.6', '143.223.91.134'] in 568.2ms
+2026-07-06 12:20:33,218 - livekit-agent - ERROR - [Diag 2026-07-06T06:50:32.649555+00:00] TCP FAILED: 64:ff9b::8fdf:5b06:443 -> [Errno 11001] getaddrinfo failed in 0.1ms
+2026-07-06 12:20:33,219 - livekit-agent - ERROR - [Diag 2026-07-06T06:50:32.649555+00:00] TCP FAILED: 64:ff9b::8fdf:5b86:443 -> [Errno 11001] getaddrinfo failed in 0.1ms
+2026-07-06 12:20:33,430 - livekit-agent - INFO - [Diag 2026-07-06T06:50:32.649555+00:00] TCP OK: 143.223.91.6:443 in 211.1ms
+2026-07-06 12:20:33,458 - livekit-agent - ERROR - [Diag 2026-07-06T06:50:32.649555+00:00] TLS FAILED: ai-voice-agent-64sbd6v0.livekit.cloud (64:ff9b::8fdf:5b06) -> [Errno 11001] getaddrinfo failed in 27.5ms
+2026-07-06 12:20:33,482 - livekit-agent - ERROR - [Diag 2026-07-06T06:50:32.649555+00:00] TLS FAILED: ai-voice-agent-64sbd6v0.livekit.cloud (64:ff9b::8fdf:5b86) -> [Errno 11001] getaddrinfo failed in 23.9ms
+2026-07-06 12:20:33,709 - livekit-agent - INFO - [Diag 2026-07-06T06:50:32.649555+00:00] TLS OK: ai-voice-agent-64sbd6v0.livekit.cloud (143.223.91.6) in 227.0ms
+2026-07-06 12:20:33,975 - livekit-agent - INFO - [Diag 2026-07-06T06:50:32.649555+00:00] WebSocket OK: wss://ai-voice-agent-64sbd6v0.livekit.cloud/agent in 263.5ms
+2026-07-06 12:20:34,053 - livekit.agents - INFO - starting worker
+{"message": "starting worker", "level": "INFO", "name": "livekit.agents", "version": "1.5.12", "rtc-version": "1.1.8", "timestamp": "2026-07-06T06:50:34.053348+00:00"}
+2026-07-06 12:20:34,053 - livekit.agents - INFO - plugin registered
+{"message": "plugin registered", "level": "INFO", "name": "livekit.agents", "plugin": "livekit.plugins.silero", "version": "1.5.12", "timestamp": "2026-07-06T06:50:34.053559+00:00"}
+2026-07-06 12:20:34,055 - livekit.agents - INFO - HTTP server listening on :8081
+{"message": "HTTP server listening on :8081", "level": "INFO", "name": "livekit.agents", "timestamp": "2026-07-06T06:50:34.055588+00:00"}
+2026-07-06 12:20:34,060 - livekit.agents - INFO - initializing job runner
+{"message": "initializing job runner", "level": "INFO", "name": "livekit.agents", "tid": 11648, "timestamp": "2026-07-06T06:50:34.060248+00:00"}
+2026-07-06 12:20:34,060 - livekit.agents - INFO - initializing job runner
+{"message": "initializing job runner", "level": "INFO", "name": "livekit.agents", "tid": 6184, "timestamp": "2026-07-06T06:50:34.060548+00:00"}
+2026-07-06 12:20:34,060 - livekit.agents - INFO - initializing job runner
+{"message": "initializing job runner", "level": "INFO", "name": "livekit.agents", "tid": 24296, "timestamp": "2026-07-06T06:50:34.060780+00:00"}
+2026-07-06 12:20:34,060 - livekit.agents - INFO - initializing job runner
+{"message": "initializing job runner", "level": "INFO", "name": "livekit.agents", "tid": 7056, "timestamp": "2026-07-06T06:50:34.060982+00:00"}
+2026-07-06 12:20:34,061 - livekit-agent - INFO - Prewarming agent components (VAD, STT, LLM, TTS)...
+{"message": "Prewarming agent components (VAD, STT, LLM, TTS)...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:50:34.061178+00:00"}
+2026-07-06 12:20:34,061 - livekit-agent - INFO - Prewarming agent components (VAD, STT, LLM, TTS)...
+{"message": "Prewarming agent components (VAD, STT, LLM, TTS)...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:50:34.061361+00:00"}
+2026-07-06 12:20:34,061 - livekit-agent - INFO - Prewarming agent components (VAD, STT, LLM, TTS)...
+{"message": "Prewarming agent components (VAD, STT, LLM, TTS)...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:50:34.061614+00:00"}
+2026-07-06 12:20:34,062 - livekit-agent - INFO - Prewarming agent components (VAD, STT, LLM, TTS)...
+{"message": "Prewarming agent components (VAD, STT, LLM, TTS)...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:50:34.062062+00:00"}
+2026-07-06 12:20:34,810 - app.services.sarvam_service - INFO - Sarvam client initialized
+{"message": "Sarvam client initialized", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:50:34.810932+00:00"}
+2026-07-06 12:20:34,811 - app.services.vector_store - INFO - ChromaDB path: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\chroma_db\chroma_db_v2
+{"message": "ChromaDB path: C:\\Users\\ANAMIKA\\DEV\\Temp\\college_agent-master\\college_agent-master\\chroma_db\\chroma_db_v2", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-06T06:50:34.811861+00:00"}
+2026-07-06 12:20:34,811 - app.services.vector_store - INFO - Initializing VectorStoreService with model: BAAI/bge-m3
+{"message": "Initializing VectorStoreService with model: BAAI/bge-m3", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-06T06:50:34.811987+00:00"}
+2026-07-06 12:20:34,910 - app.services.sarvam_service - INFO - Sarvam client initialized
+{"message": "Sarvam client initialized", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:50:34.910384+00:00"}
+2026-07-06 12:20:34,911 - app.services.vector_store - INFO - ChromaDB path: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\chroma_db\chroma_db_v2
+{"message": "ChromaDB path: C:\\Users\\ANAMIKA\\DEV\\Temp\\college_agent-master\\college_agent-master\\chroma_db\\chroma_db_v2", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-06T06:50:34.911314+00:00"}
+2026-07-06 12:20:34,911 - app.services.vector_store - INFO - Initializing VectorStoreService with model: BAAI/bge-m3
+{"message": "Initializing VectorStoreService with model: BAAI/bge-m3", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-06T06:50:34.911427+00:00"}
+2026-07-06 12:20:34,912 - app.services.sarvam_service - INFO - Sarvam client initialized
+{"message": "Sarvam client initialized", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:50:34.912287+00:00"}
+2026-07-06 12:20:34,913 - app.services.vector_store - INFO - ChromaDB path: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\chroma_db\chroma_db_v2
+{"message": "ChromaDB path: C:\\Users\\ANAMIKA\\DEV\\Temp\\college_agent-master\\college_agent-master\\chroma_db\\chroma_db_v2", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-06T06:50:34.913454+00:00"}
+2026-07-06 12:20:34,913 - app.services.vector_store - INFO - Initializing VectorStoreService with model: BAAI/bge-m3
+{"message": "Initializing VectorStoreService with model: BAAI/bge-m3", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-06T06:50:34.913618+00:00"}
+2026-07-06 12:20:34,918 - app.services.sarvam_service - INFO - Sarvam client initialized
+{"message": "Sarvam client initialized", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:50:34.918770+00:00"}
+2026-07-06 12:20:34,919 - app.services.vector_store - INFO - ChromaDB path: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\chroma_db\chroma_db_v2
+{"message": "ChromaDB path: C:\\Users\\ANAMIKA\\DEV\\Temp\\college_agent-master\\college_agent-master\\chroma_db\\chroma_db_v2", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-06T06:50:34.919678+00:00"}
+2026-07-06 12:20:34,919 - app.services.vector_store - INFO - Initializing VectorStoreService with model: BAAI/bge-m3
+{"message": "Initializing VectorStoreService with model: BAAI/bge-m3", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-06T06:50:34.919793+00:00"}
+2026-07-06 12:20:40,920 - sentence_transformers.base.model - INFO - Loading SentenceTransformer model from BAAI/bge-m3.
+{"message": "Loading SentenceTransformer model from BAAI/bge-m3.", "level": "INFO", "name": "sentence_transformers.base.model", "timestamp": "2026-07-06T06:50:40.920781+00:00"}
+2026-07-06 12:20:41,191 - sentence_transformers.base.model - INFO - Loading SentenceTransformer model from BAAI/bge-m3.
+{"message": "Loading SentenceTransformer model from BAAI/bge-m3.", "level": "INFO", "name": "sentence_transformers.base.model", "timestamp": "2026-07-06T06:50:41.191733+00:00"}
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights: 100%|██████████| 391/391 [00:00<00:00, 11075.14it/s]
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights:   3%|▎         | 11/391 [00:00<00:10, 35.79it/s]Loading weights:  21%|██        | 83/391 [00:00<00:02, 142.71it/s]2026-07-06 12:20:44,128 - sentence_transformers.base.model - INFO - Loading SentenceTransformer model from BAAI/bge-m3.
+{"message": "Loading SentenceTransformer model from BAAI/bge-m3.", "level": "INFO", "name": "sentence_transformers.base.model", "timestamp": "2026-07-06T06:50:44.128367+00:00"}
+Loading weights:  25%|██▍       | 97/391 [00:02<00:10, 28.86it/s] 2026-07-06 12:20:44,133 - sentence_transformers.base.model - INFO - Loading SentenceTransformer model from BAAI/bge-m3.
+{"message": "Loading SentenceTransformer model from BAAI/bge-m3.", "level": "INFO", "name": "sentence_transformers.base.model", "timestamp": "2026-07-06T06:50:44.133919+00:00"}
+Loading weights: 100%|██████████| 391/391 [00:02<00:00, 143.15it/s]
+2026-07-06 12:20:44,419 - app.services.vector_store - INFO - VectorStoreService initialized successfully
+{"message": "VectorStoreService initialized successfully", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-06T06:50:44.419963+00:00"}
+2026-07-06 12:20:44,423 - app.services.llm.groq_service - INFO - Query cache ENABLED (ttl=600s, max=256)
+{"message": "Query cache ENABLED (ttl=600s, max=256)", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:50:44.423135+00:00"}
+2026-07-06 12:20:44,423 - app.services.llm.groq_service - INFO - GroqService ready.
+{"message": "GroqService ready.", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:50:44.423673+00:00"}
+2026-07-06 12:20:44,423 - livekit-agent - INFO - Prewarm complete â€” agent is ready to accept jobs.
+{"message": "Prewarm complete â€” agent is ready to accept jobs.", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:50:44.423971+00:00"}
+2026-07-06 12:20:44,434 - livekit.agents - INFO - job runner initialized
+{"message": "job runner initialized", "level": "INFO", "name": "livekit.agents", "tid": 6184, "elapsed_time": 10.37, "timestamp": "2026-07-06T06:50:44.434988+00:00"}
+2026-07-06 12:20:47,179 - app.services.vector_store - INFO - VectorStoreService initialized successfully
+{"message": "VectorStoreService initialized successfully", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-06T06:50:47.179483+00:00"}
+2026-07-06 12:20:47,180 - app.services.llm.groq_service - INFO - Query cache ENABLED (ttl=600s, max=256)
+{"message": "Query cache ENABLED (ttl=600s, max=256)", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:50:47.180268+00:00"}
+2026-07-06 12:20:47,180 - app.services.llm.groq_service - INFO - GroqService ready.
+{"message": "GroqService ready.", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:50:47.180574+00:00"}
+2026-07-06 12:20:47,180 - livekit-agent - INFO - Prewarm complete â€” agent is ready to accept jobs.
+{"message": "Prewarm complete â€” agent is ready to accept jobs.", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:50:47.180802+00:00"}
+2026-07-06 12:20:47,181 - livekit.agents - INFO - job runner initialized
+{"message": "job runner initialized", "level": "INFO", "name": "livekit.agents", "tid": 24296, "elapsed_time": 13.12, "timestamp": "2026-07-06T06:50:47.181913+00:00"}
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s][ALoading weights: 100%|██████████| 391/391 [00:00<00:00, 6465.78it/s]
+Loading weights: 100%|██████████| 391/391 [00:00<00:00, 7784.08it/s]
+2026-07-06 12:20:52,539 - app.services.vector_store - INFO - VectorStoreService initialized successfully
+{"message": "VectorStoreService initialized successfully", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-06T06:50:52.539131+00:00"}
+2026-07-06 12:20:52,540 - app.services.vector_store - INFO - VectorStoreService initialized successfully
+{"message": "VectorStoreService initialized successfully", "level": "INFO", "name": "app.services.vector_store", "timestamp": "2026-07-06T06:50:52.540398+00:00"}
+2026-07-06 12:20:52,540 - app.services.llm.groq_service - INFO - Query cache ENABLED (ttl=600s, max=256)
+{"message": "Query cache ENABLED (ttl=600s, max=256)", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:50:52.540632+00:00"}
+2026-07-06 12:20:52,540 - app.services.llm.groq_service - INFO - GroqService ready.
+{"message": "GroqService ready.", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:50:52.540749+00:00"}
+2026-07-06 12:20:52,540 - app.services.llm.groq_service - INFO - Query cache ENABLED (ttl=600s, max=256)
+{"message": "Query cache ENABLED (ttl=600s, max=256)", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:50:52.540842+00:00"}
+2026-07-06 12:20:52,541 - livekit-agent - INFO - Prewarm complete â€” agent is ready to accept jobs.
+{"message": "Prewarm complete â€” agent is ready to accept jobs.", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:50:52.541004+00:00"}
+2026-07-06 12:20:52,541 - app.services.llm.groq_service - INFO - GroqService ready.
+{"message": "GroqService ready.", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:50:52.541127+00:00"}
+2026-07-06 12:20:52,541 - livekit-agent - INFO - Prewarm complete â€” agent is ready to accept jobs.
+{"message": "Prewarm complete â€” agent is ready to accept jobs.", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:50:52.541372+00:00"}
+2026-07-06 12:20:52,541 - livekit.agents - INFO - job runner initialized
+{"message": "job runner initialized", "level": "INFO", "name": "livekit.agents", "tid": 7056, "elapsed_time": 18.48, "timestamp": "2026-07-06T06:50:52.541834+00:00"}
+2026-07-06 12:20:52,542 - livekit.agents - INFO - job runner initialized
+{"message": "job runner initialized", "level": "INFO", "name": "livekit.agents", "tid": 11648, "elapsed_time": 18.48, "timestamp": "2026-07-06T06:50:52.542324+00:00"}
+2026-07-06 12:20:52,840 - livekit.agents - INFO - registered worker
+{"message": "registered worker", "level": "INFO", "name": "livekit.agents", "agent_name": "bcrec-agent", "id": "AW_4qFbwhg2F9RB", "url": "wss://ai-voice-agent-64sbd6v0.livekit.cloud", "region": "India West", "protocol": 17, "timestamp": "2026-07-06T06:50:52.840981+00:00"}
+2026-07-06 12:21:17,718 - livekit.agents - INFO - received job request
+{"message": "received job request", "level": "INFO", "name": "livekit.agents", "job_id": "AJ_nCAAh7PeBL2H", "dispatch_id": "AD_LbSfNov57MiY", "room": "console-496c0eb4", "room_id": "RM_HYS8ar8ywaP2", "agent_name": "bcrec-agent", "resuming": false, "enable_recording": false, "timestamp": "2026-07-06T06:51:17.718873+00:00"}
+2026-07-06 12:21:17,933 - livekit.agents - INFO - initializing job runner
+{"message": "initializing job runner", "level": "INFO", "name": "livekit.agents", "tid": 8416, "timestamp": "2026-07-06T06:51:17.933891+00:00"}
+2026-07-06 12:21:17,934 - livekit-agent - INFO - Prewarming agent components (VAD, STT, LLM, TTS)...
+{"message": "Prewarming agent components (VAD, STT, LLM, TTS)...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:51:17.934508+00:00"}
+2026-07-06 12:21:18,081 - livekit-agent - INFO - Prewarm complete â€” agent is ready to accept jobs.
+{"message": "Prewarm complete â€” agent is ready to accept jobs.", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:51:18.081933+00:00"}
+2026-07-06 12:21:18,083 - livekit.agents - INFO - job runner initialized
+{"message": "job runner initialized", "level": "INFO", "name": "livekit.agents", "tid": 8416, "elapsed_time": 0.15, "timestamp": "2026-07-06T06:51:18.083365+00:00"}
+2026-07-06 12:21:18,139 - livekit-agent - INFO - Starting agent job AJ_nCAAh7PeBL2H
+{"message": "Starting agent job AJ_nCAAh7PeBL2H", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:51:18.139723+00:00"}
+2026-07-06 12:21:19,655 - livekit-agent - INFO - Connected to room: console-496c0eb4
+{"message": "Connected to room: console-496c0eb4", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:51:19.655891+00:00"}
+2026-07-06 12:21:19,656 - livekit-agent - INFO - Session key: console-496c0eb4
+{"message": "Session key: console-496c0eb4", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:51:19.656488+00:00"}
+2026-07-06 12:21:19,657 - app.utils.conversation_logger - INFO - Conversation telemetry dir: C:\Users\ANAMIKA\DEV\Temp\college_agent-master\college_agent-master\data\logs\conversations
+{"message": "Conversation telemetry dir: C:\\Users\\ANAMIKA\\DEV\\Temp\\college_agent-master\\college_agent-master\\data\\logs\\conversations", "level": "INFO", "name": "app.utils.conversation_logger", "timestamp": "2026-07-06T06:51:19.657421+00:00"}
+2026-07-06 12:21:19,659 - app.utils.conversation_logger - INFO - [TELEMETRY] SESSION_START console-496c0eb4 conv=4796ced7b803
+{"message": "[TELEMETRY] SESSION_START console-496c0eb4 conv=4796ced7b803", "level": "INFO", "name": "app.utils.conversation_logger", "timestamp": "2026-07-06T06:51:19.659416+00:00"}
+2026-07-06 12:21:19,659 - livekit-agent - INFO - [TELEMETRY] Session started: console-496c0eb4 conv=4796ced7b803
+{"message": "[TELEMETRY] Session started: console-496c0eb4 conv=4796ced7b803", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:51:19.659575+00:00"}
+2026-07-06 12:21:19,805 - livekit-agent - INFO - Agent session started
+{"message": "Agent session started", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:51:19.805243+00:00"}
+2026-07-06 12:21:20,306 - livekit-agent - INFO - Sending greeting...
+{"message": "Sending greeting...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:51:20.306906+00:00"}
+2026-07-06 12:21:20,331 - livekit-agent - INFO - SarvamTTS.synthesize called for: Hello! BCREC AI assistant here....
+{"message": "SarvamTTS.synthesize called for: Hello! BCREC AI assistant here....", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:51:20.331344+00:00"}
+2026-07-06 12:21:20,334 - app.services.normalization.normalizer - INFO - Loaded entity dictionary (8 sections)
+{"message": "Loaded entity dictionary (8 sections)", "level": "INFO", "name": "app.services.normalization.normalizer", "timestamp": "2026-07-06T06:51:20.334688+00:00"}
+2026-07-06 12:21:24,152 - livekit-agent - INFO - Synthesizing: Hello! B C Roy Engineering College AI assistant here.... (lang=en-IN, speaker=shubh)
+{"message": "Synthesizing: Hello! B C Roy Engineering College AI assistant here.... (lang=en-IN, speaker=shubh)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:51:24.152720+00:00"}
+2026-07-06 12:21:24,153 - app.services.sarvam_service - INFO - Normalized TTS text: 'Hello! B C Roy Engineering College AI assistant here.'
+{"message": "Normalized TTS text: 'Hello! B C Roy Engineering College AI assistant here.'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:51:24.153558+00:00"}
+2026-07-06 12:21:28,095 - app.services.sarvam_service - INFO - TTS generated: 163884 bytes, lang=en-IN, speaker=shubh
+{"message": "TTS generated: 163884 bytes, lang=en-IN, speaker=shubh", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:51:28.095300+00:00"}
+2026-07-06 12:21:28,095 - livekit-agent - INFO - [PERF] TTS .............  7763.6 ms  text=Hello! B C Roy Engineering College AI as
+{"message": "[PERF] TTS .............  7763.6 ms  text=Hello! B C Roy Engineering College AI as", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:51:28.095665+00:00"}
+2026-07-06 12:21:28,096 - livekit-agent - INFO - [PERF] Playback ........     0.5 ms  (3s audio)
+{"message": "[PERF] Playback ........     0.5 ms  (3s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:51:28.096488+00:00"}
+2026-07-06 12:21:28,117 - livekit-agent - INFO - SarvamTTS.synthesize called for: How can I help you today?...
+{"message": "SarvamTTS.synthesize called for: How can I help you today?...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:51:28.117733+00:00"}
+2026-07-06 12:21:28,118 - livekit-agent - INFO - Synthesizing: How can I help you today?... (lang=en-IN, speaker=shubh)
+{"message": "Synthesizing: How can I help you today?... (lang=en-IN, speaker=shubh)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:51:28.118932+00:00"}
+2026-07-06 12:21:28,119 - app.services.sarvam_service - INFO - Normalized TTS text: 'How can I help you today?'
+{"message": "Normalized TTS text: 'How can I help you today?'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:51:28.119232+00:00"}
+2026-07-06 12:21:28,959 - app.services.sarvam_service - INFO - TTS generated: 57388 bytes, lang=en-IN, speaker=shubh
+{"message": "TTS generated: 57388 bytes, lang=en-IN, speaker=shubh", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:51:28.959761+00:00"}
+2026-07-06 12:21:28,960 - livekit-agent - INFO - [PERF] TTS .............   841.8 ms  text=How can I help you today?
+{"message": "[PERF] TTS .............   841.8 ms  text=How can I help you today?", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:51:28.960019+00:00"}
+2026-07-06 12:21:28,960 - livekit-agent - INFO - [PERF] Playback ........     0.0 ms  (1s audio)
+{"message": "[PERF] Playback ........     0.0 ms  (1s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:51:28.960260+00:00"}
+2026-07-06 12:26:17,675 - app.utils.conversation_logger - INFO - [TELEMETRY] SESSION_SUMMARY console-496c0eb4: {"type": "SESSION_SUMMARY", "session_id": "console-496c0eb4", "conversation_id": "4796ced7b803", "timestamp": "2026-07-06T06:56:17.670403+00:00", "timestamp_unix": 1783320977.670421, "total_turns": 0, "duration_seconds": 298.0, "average_retrieval_score": 0.0, "average_retrieval_latency_ms": 0.0, "average_llm_latency_ms": 0.0, "average_ttft_ms": 0.0, "average_tts_latency_ms": 0.0, "average_confidence": 0.0, "maximum_latency_ms": 0.0, "minimum_latency_ms": 0.0, "median_llm_latency_ms": 0.0, "maximum_llm_latency_ms": 0.0, "minimum_llm_latency_ms": 0.0, "total_llm_tokens": 0, "average_tokens_per_second": 0.0, "interruptions": 0, "clarification_prompts": 0, "language_switches": 0, "follow_up_queries": 0, "repeat_requests": 0, "multi_topic_queries": 0, "confidence_rejections": 0, "empty_retrievals": 0, "low_confidence_retrievals": 0, "retrieval_failures": 0, "hallucination_guards_triggered": 0, "ambiguous_queries": 0, "out_of_kb": 0, "total_errors": 0}
+{"message": "[TELEMETRY] SESSION_SUMMARY console-496c0eb4: {\"type\": \"SESSION_SUMMARY\", \"session_id\": \"console-496c0eb4\", \"conversation_id\": \"4796ced7b803\", \"timestamp\": \"2026-07-06T06:56:17.670403+00:00\", \"timestamp_unix\": 1783320977.670421, \"total_turns\": 0, \"duration_seconds\": 298.0, \"average_retrieval_score\": 0.0, \"average_retrieval_latency_ms\": 0.0, \"average_llm_latency_ms\": 0.0, \"average_ttft_ms\": 0.0, \"average_tts_latency_ms\": 0.0, \"average_confidence\": 0.0, \"maximum_latency_ms\": 0.0, \"minimum_latency_ms\": 0.0, \"median_llm_latency_ms\": 0.0, \"maximum_llm_latency_ms\": 0.0, \"minimum_llm_latency_ms\": 0.0, \"total_llm_tokens\": 0, \"average_tokens_per_second\": 0.0, \"interruptions\": 0, \"clarification_prompts\": 0, \"language_switches\": 0, \"follow_up_queries\": 0, \"repeat_requests\": 0, \"multi_topic_queries\": 0, \"confidence_rejections\": 0, \"empty_retrievals\": 0, \"low_confidence_retrievals\": 0, \"retrieval_failures\": 0, \"hallucination_guards_triggered\": 0, \"ambiguous_queries\": 0, \"out_of_kb\": 0, \"total_errors\": 0}", "level": "INFO", "name": "app.utils.conversation_logger", "timestamp": "2026-07-06T06:56:17.675623+00:00"}
+2026-07-06 12:26:17,675 - livekit-agent - INFO - Room disconnected, session cleared, exiting entrypoint
+{"message": "Room disconnected, session cleared, exiting entrypoint", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:17.675933+00:00"}
+2026-07-06 12:26:23,609 - livekit.agents - INFO - received job request
+{"message": "received job request", "level": "INFO", "name": "livekit.agents", "job_id": "AJ_BR7YyxVbgQee", "dispatch_id": "AD_8V4zsoyZJN9f", "room": "console-95e48ba0", "room_id": "RM_WVUt9vV4mND8", "agent_name": "bcrec-agent", "resuming": false, "enable_recording": false, "timestamp": "2026-07-06T06:56:23.609005+00:00"}
+2026-07-06 12:26:23,680 - livekit-agent - INFO - Starting agent job AJ_BR7YyxVbgQee
+{"message": "Starting agent job AJ_BR7YyxVbgQee", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:23.680422+00:00"}
+2026-07-06 12:26:23,699 - livekit.agents - INFO - initializing job runner
+{"message": "initializing job runner", "level": "INFO", "name": "livekit.agents", "tid": 29668, "timestamp": "2026-07-06T06:56:23.699211+00:00"}
+2026-07-06 12:26:23,699 - livekit-agent - INFO - Prewarming agent components (VAD, STT, LLM, TTS)...
+{"message": "Prewarming agent components (VAD, STT, LLM, TTS)...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:23.699794+00:00"}
+2026-07-06 12:26:23,845 - livekit-agent - INFO - Prewarm complete â€” agent is ready to accept jobs.
+{"message": "Prewarm complete â€” agent is ready to accept jobs.", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:23.845389+00:00"}
+2026-07-06 12:26:23,846 - livekit.agents - INFO - job runner initialized
+{"message": "job runner initialized", "level": "INFO", "name": "livekit.agents", "tid": 29668, "elapsed_time": 0.15, "timestamp": "2026-07-06T06:56:23.846779+00:00"}
+2026-07-06 12:26:24,570 - livekit-agent - INFO - Connected to room: console-95e48ba0
+{"message": "Connected to room: console-95e48ba0", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:24.570189+00:00"}
+2026-07-06 12:26:24,570 - livekit-agent - INFO - Session key: console-95e48ba0
+{"message": "Session key: console-95e48ba0", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:24.570594+00:00"}
+2026-07-06 12:26:24,572 - app.utils.conversation_logger - INFO - [TELEMETRY] SESSION_START console-95e48ba0 conv=4ab719ba8b29
+{"message": "[TELEMETRY] SESSION_START console-95e48ba0 conv=4ab719ba8b29", "level": "INFO", "name": "app.utils.conversation_logger", "timestamp": "2026-07-06T06:56:24.572247+00:00"}
+2026-07-06 12:26:24,572 - livekit-agent - INFO - [TELEMETRY] Session started: console-95e48ba0 conv=4ab719ba8b29
+{"message": "[TELEMETRY] Session started: console-95e48ba0 conv=4ab719ba8b29", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:24.572411+00:00"}
+2026-07-06 12:26:24,579 - livekit-agent - INFO - Agent session started
+{"message": "Agent session started", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:24.579893+00:00"}
+2026-07-06 12:26:25,081 - livekit-agent - INFO - Sending greeting...
+{"message": "Sending greeting...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:25.081229+00:00"}
+2026-07-06 12:26:25,086 - livekit-agent - INFO - SarvamTTS.synthesize called for: Hello! BCREC AI assistant here....
+{"message": "SarvamTTS.synthesize called for: Hello! BCREC AI assistant here....", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:25.086322+00:00"}
+2026-07-06 12:26:25,087 - livekit-agent - INFO - Synthesizing: Hello! B C Roy Engineering College AI assistant here.... (lang=en-IN, speaker=shubh)
+{"message": "Synthesizing: Hello! B C Roy Engineering College AI assistant here.... (lang=en-IN, speaker=shubh)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:25.087395+00:00"}
+2026-07-06 12:26:25,087 - app.services.sarvam_service - INFO - Normalized TTS text: 'Hello! B C Roy Engineering College AI assistant here.'
+{"message": "Normalized TTS text: 'Hello! B C Roy Engineering College AI assistant here.'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:56:25.087612+00:00"}
+2026-07-06 12:26:28,548 - app.services.sarvam_service - INFO - TTS generated: 180268 bytes, lang=en-IN, speaker=shubh
+{"message": "TTS generated: 180268 bytes, lang=en-IN, speaker=shubh", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:56:28.548167+00:00"}
+2026-07-06 12:26:28,548 - livekit-agent - INFO - [PERF] TTS .............  3461.8 ms  text=Hello! B C Roy Engineering College AI as
+{"message": "[PERF] TTS .............  3461.8 ms  text=Hello! B C Roy Engineering College AI as", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:28.548464+00:00"}
+2026-07-06 12:26:28,548 - livekit-agent - INFO - [PERF] Playback ........     0.1 ms  (3s audio)
+{"message": "[PERF] Playback ........     0.1 ms  (3s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:28.548606+00:00"}
+2026-07-06 12:26:28,676 - livekit-agent - INFO - SarvamTTS.synthesize called for: How can I help you today?...
+{"message": "SarvamTTS.synthesize called for: How can I help you today?...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:28.676216+00:00"}
+2026-07-06 12:26:28,677 - livekit-agent - INFO - Synthesizing: How can I help you today?... (lang=en-IN, speaker=shubh)
+{"message": "Synthesizing: How can I help you today?... (lang=en-IN, speaker=shubh)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:28.677640+00:00"}
+2026-07-06 12:26:28,677 - app.services.sarvam_service - INFO - Normalized TTS text: 'How can I help you today?'
+{"message": "Normalized TTS text: 'How can I help you today?'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:56:28.677967+00:00"}
+2026-07-06 12:26:29,568 - app.services.sarvam_service - INFO - TTS generated: 53292 bytes, lang=en-IN, speaker=shubh
+{"message": "TTS generated: 53292 bytes, lang=en-IN, speaker=shubh", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:56:29.568394+00:00"}
+2026-07-06 12:26:29,568 - livekit-agent - INFO - [PERF] TTS .............   891.6 ms  text=How can I help you today?
+{"message": "[PERF] TTS .............   891.6 ms  text=How can I help you today?", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:29.568630+00:00"}
+2026-07-06 12:26:29,568 - livekit-agent - INFO - [PERF] Playback ........     0.0 ms  (1s audio)
+{"message": "[PERF] Playback ........     0.0 ms  (1s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:29.568731+00:00"}
+2026-07-06 12:26:29,572 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 0.8663079999452457, "timestamp": "2026-07-06T06:56:29.572850+00:00"}
+2026-07-06 12:26:29,574 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 0.8657696999791078, "timestamp": "2026-07-06T06:56:29.574572+00:00"}
+2026-07-06 12:26:38,662 - app.services.sarvam_service - INFO - STT request: audio_size=133100 bytes, model=saaras:v3, language=None
+{"message": "STT request: audio_size=133100 bytes, model=saaras:v3, language=None", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:56:38.662420+00:00"}
+2026-07-06 12:26:40,651 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+{"message": "Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:56:40.651042+00:00"}
+2026-07-06 12:26:40,651 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260706_8cc5e20e-e1ad-44ce-83ed-2ba85a1af218' transcript='কাজ করছে।' timestamps=None diarized_transcript=None language_code='bn-IN' language_probability=1.0
+{"message": "Sarvam raw response: request_id='20260706_8cc5e20e-e1ad-44ce-83ed-2ba85a1af218' transcript='কাজ করছে।' timestamps=None diarized_transcript=None language_code='bn-IN' language_probability=1.0", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:56:40.651529+00:00"}
+2026-07-06 12:26:40,651 - app.services.sarvam_service - INFO - Extracted transcript: 'কাজ করছে।'
+{"message": "Extracted transcript: 'কাজ করছে।'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:56:40.651666+00:00"}
+2026-07-06 12:26:40,651 - app.services.sarvam_service - INFO - STT result: 'কাজ করছে।...' detected_lang=bn-IN
+{"message": "STT result: 'কাজ করছে।...' detected_lang=bn-IN", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:56:40.651764+00:00"}
+2026-07-06 12:26:40,652 - livekit-agent - INFO - [PERF] STT .............  2067.2 ms  transcript='কাজ করছে।'
+{"message": "[PERF] STT .............  2067.2 ms  transcript='কাজ করছে।'", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:40.652455+00:00"}
+2026-07-06 12:26:40,654 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 2.037993000011891, "timestamp": "2026-07-06T06:56:40.654112+00:00"}
+2026-07-06 12:26:40,672 - livekit-agent - INFO - LLM Query: 'কাজ করছে।...' History: 2 turns
+{"message": "LLM Query: 'কাজ করছে।...' History: 2 turns", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:40.672116+00:00"}
+2026-07-06 12:26:40,688 - app.services.llm.groq_service - INFO - [console-95e48ba0] Language change: en → bn (reason: Bengali script detected in query)
+{"message": "[console-95e48ba0] Language change: en → bn (reason: Bengali script detected in query)", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:56:40.688893+00:00"}
+2026-07-06 12:26:40,693 - app.services.llm.groq_service - ERROR - Groq stream error (19ms): 'NoneType' object is not subscriptable
+{"message": "Groq stream error (19ms): 'NoneType' object is not subscriptable", "level": "ERROR", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:56:40.693706+00:00"}
+2026-07-06 12:26:40,693 - livekit-agent - INFO - TURN TTFT=22ms (user speech â†’ LLM first token)
+{"message": "TURN TTFT=22ms (user speech â†’ LLM first token)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:40.693894+00:00"}
+2026-07-06 12:26:40,694 - livekit-agent - INFO - TURN COMPLETE total=22ms (user speech â†’ LLM done)
+{"message": "TURN COMPLETE total=22ms (user speech â†’ LLM done)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:40.694394+00:00"}
+2026-07-06 12:26:40,720 - livekit-agent - INFO - SarvamTTS.synthesize called for: Sorry, something went wrong....
+{"message": "SarvamTTS.synthesize called for: Sorry, something went wrong....", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:40.720904+00:00"}
+2026-07-06 12:26:40,723 - livekit-agent - INFO - Synthesizing: Sorry, something went wrong.... (lang=en-IN, speaker=shubh)
+{"message": "Synthesizing: Sorry, something went wrong.... (lang=en-IN, speaker=shubh)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:40.723098+00:00"}
+2026-07-06 12:26:40,723 - app.services.sarvam_service - INFO - Normalized TTS text: 'Sorry, something went wrong.'
+{"message": "Normalized TTS text: 'Sorry, something went wrong.'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:56:40.723325+00:00"}
+2026-07-06 12:26:42,354 - app.services.sarvam_service - INFO - TTS generated: 81964 bytes, lang=en-IN, speaker=shubh
+{"message": "TTS generated: 81964 bytes, lang=en-IN, speaker=shubh", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:56:42.354622+00:00"}
+2026-07-06 12:26:42,354 - livekit-agent - INFO - [PERF] TTS .............  1632.2 ms  text=Sorry, something went wrong.
+{"message": "[PERF] TTS .............  1632.2 ms  text=Sorry, something went wrong.", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:42.354875+00:00"}
+2026-07-06 12:26:42,354 - livekit-agent - INFO - [PERF] Playback ........     0.0 ms  (1s audio)
+{"message": "[PERF] Playback ........     0.0 ms  (1s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:42.354992+00:00"}
+2026-07-06 12:26:42,355 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 3.593909100021701, "timestamp": "2026-07-06T06:56:42.355852+00:00"}
+2026-07-06 12:26:42,356 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 1.60846279998729, "timestamp": "2026-07-06T06:56:42.356386+00:00"}
+2026-07-06 12:26:54,394 - app.services.sarvam_service - INFO - STT request: audio_size=188396 bytes, model=saaras:v3, language=None
+{"message": "STT request: audio_size=188396 bytes, model=saaras:v3, language=None", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:56:54.394291+00:00"}
+2026-07-06 12:26:55,734 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+{"message": "Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:56:55.734594+00:00"}
+2026-07-06 12:26:55,735 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260706_69e93c71-ea6d-4117-956d-49c336456901' transcript='এবারে বাচ্চার সাথে কথা বলতে থাক না।' timestamps=None diarized_transcript=None language_code='bn-IN' language_probability=1.0
+{"message": "Sarvam raw response: request_id='20260706_69e93c71-ea6d-4117-956d-49c336456901' transcript='এবারে বাচ্চার সাথে কথা বলতে থাক না।' timestamps=None diarized_transcript=None language_code='bn-IN' language_probability=1.0", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:56:55.735013+00:00"}
+2026-07-06 12:26:55,735 - app.services.sarvam_service - INFO - Extracted transcript: 'এবারে বাচ্চার সাথে কথা বলতে থাক না।'
+{"message": "Extracted transcript: 'এবারে বাচ্চার সাথে কথা বলতে থাক না।'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:56:55.735212+00:00"}
+2026-07-06 12:26:55,735 - app.services.sarvam_service - INFO - STT result: 'এবারে বাচ্চার সাথে কথা বলতে থাক না।...' detected_lang=bn-IN
+{"message": "STT result: 'এবারে বাচ্চার সাথে কথা বলতে থাক না।...' detected_lang=bn-IN", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:56:55.735375+00:00"}
+2026-07-06 12:26:55,735 - livekit-agent - INFO - [PERF] STT .............  1341.3 ms  transcript='এবারে বাচ্চার সাথে কথা বলতে থাক না।'
+{"message": "[PERF] STT .............  1341.3 ms  transcript='এবারে বাচ্চার সাথে কথা বলতে থাক না।'", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:55.735537+00:00"}
+2026-07-06 12:26:55,736 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 1.3115931000276468, "timestamp": "2026-07-06T06:56:55.736611+00:00"}
+2026-07-06 12:26:55,736 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 1.3117849000329151, "timestamp": "2026-07-06T06:56:55.736970+00:00"}
+2026-07-06 12:26:55,747 - livekit-agent - INFO - LLM Query: 'এবারে বাচ্চার সাথে কথা বলতে থাক না।...' History: 4 turns
+{"message": "LLM Query: 'এবারে বাচ্চার সাথে কথা বলতে থাক না।...' History: 4 turns", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:55.747296+00:00"}
+2026-07-06 12:26:55,752 - app.services.llm.groq_service - INFO - EXPAND: এবারে বাচ্চার সাথে কথা বলতে থাক না। | reason=long_query | prev_q=কাজ করছে।
+{"message": "EXPAND: এবারে বাচ্চার সাথে কথা বলতে থাক না। | reason=long_query | prev_q=কাজ করছে।", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:56:55.752129+00:00"}
+2026-07-06 12:26:58,888 - app.services.vector_store - WARNING - Threshold fallback active.
+{"message": "Threshold fallback active.", "level": "WARNING", "name": "app.services.vector_store", "timestamp": "2026-07-06T06:56:58.888736+00:00"}
+2026-07-06 12:26:58,894 - app.services.llm.groq_service - INFO - Low confidence retrieval (stream, 0.119) for 'এবারে বাচ্চার সাথে কথা বলতে থাক না।' — using fallback
+{"message": "Low confidence retrieval (stream, 0.119) for 'এবারে বাচ্চার সাথে কথা বলতে থাক না।' — using fallback", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:56:58.894445+00:00"}
+2026-07-06 12:26:58,914 - app.services.llm.groq_service - INFO - Knowledge gap logged: 'এবারে বাচ্চার সাথে কথা বলতে থাক না।' (low_confidence_retrieval_0.119)
+{"message": "Knowledge gap logged: 'এবারে বাচ্চার সাথে কথা বলতে থাক না।' (low_confidence_retrieval_0.119)", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:56:58.914836+00:00"}
+2026-07-06 12:26:58,916 - livekit-agent - INFO - TURN TTFT=3170ms (user speech â†’ LLM first token)
+{"message": "TURN TTFT=3170ms (user speech â†’ LLM first token)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:58.916992+00:00"}
+2026-07-06 12:26:58,921 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 4.453793599981815, "timestamp": "2026-07-06T06:56:58.921292+00:00"}
+2026-07-06 12:26:59,457 - livekit-agent - INFO - TURN COMPLETE total=3710ms (user speech â†’ LLM done)
+{"message": "TURN COMPLETE total=3710ms (user speech â†’ LLM done)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:59.457282+00:00"}
+2026-07-06 12:26:59,461 - livekit-agent - INFO - SarvamTTS.synthesize called for: আমি আপনার জন্য এটি যাচাই করছি। আমার কাছে এই সঠিক ত...
+{"message": "SarvamTTS.synthesize called for: আমি আপনার জন্য এটি যাচাই করছি। আমার কাছে এই সঠিক ত...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:59.461018+00:00"}
+2026-07-06 12:26:59,464 - livekit-agent - INFO - Synthesizing: আমি আপনার জন্য এটি যাচাই করছি। আমার কাছে এই সঠিক তথ্য নাও থা... (lang=bn-IN, speaker=ritu)
+{"message": "Synthesizing: আমি আপনার জন্য এটি যাচাই করছি। আমার কাছে এই সঠিক তথ্য নাও থা... (lang=bn-IN, speaker=ritu)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:56:59.464163+00:00"}
+2026-07-06 12:26:59,464 - app.services.sarvam_service - INFO - Normalized TTS text: 'আমি আপনার জন্য এটি যাচাই করছি। আমার কাছে এই সঠিক তথ্য নাও থাকতে পারে। অনুগ্রহ করে অন্যভাবে জিজ্ঞাসা করার চেষ্টা করুন।'
+{"message": "Normalized TTS text: 'আমি আপনার জন্য এটি যাচাই করছি। আমার কাছে এই সঠিক তথ্য নাও থাকতে পারে। অনুগ্রহ করে অন্যভাবে জিজ্ঞাসা করার চেষ্টা করুন।'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:56:59.464563+00:00"}
+2026-07-06 12:27:07,413 - app.services.sarvam_service - INFO - TTS generated: 405548 bytes, lang=bn-IN, speaker=ritu
+{"message": "TTS generated: 405548 bytes, lang=bn-IN, speaker=ritu", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:57:07.413697+00:00"}
+2026-07-06 12:27:07,414 - livekit-agent - INFO - [PERF] TTS .............  7952.4 ms  text=আমি আপনার জন্য এটি যাচাই করছি। আমার কাছে
+{"message": "[PERF] TTS .............  7952.4 ms  text=আমি আপনার জন্য এটি যাচাই করছি। আমার কাছে", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:57:07.414234+00:00"}
+2026-07-06 12:27:07,414 - livekit-agent - INFO - [PERF] Playback ........     0.2 ms  (8s audio)
+{"message": "[PERF] Playback ........     0.2 ms  (8s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:57:07.414602+00:00"}
+2026-07-06 12:27:07,711 - app.services.sarvam_service - INFO - STT request: audio_size=117740 bytes, model=saaras:v3, language=None
+{"message": "STT request: audio_size=117740 bytes, model=saaras:v3, language=None", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:57:07.711320+00:00"}
+2026-07-06 12:27:08,991 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+{"message": "Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:57:08.991959+00:00"}
+2026-07-06 12:27:08,992 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260706_321086de-426d-4557-908d-73e135a066b5' transcript='Hello' timestamps=None diarized_transcript=None language_code='en-IN' language_probability=1.0
+{"message": "Sarvam raw response: request_id='20260706_321086de-426d-4557-908d-73e135a066b5' transcript='Hello' timestamps=None diarized_transcript=None language_code='en-IN' language_probability=1.0", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:57:08.992193+00:00"}
+2026-07-06 12:27:08,992 - app.services.sarvam_service - INFO - Extracted transcript: 'Hello'
+{"message": "Extracted transcript: 'Hello'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:57:08.992293+00:00"}
+2026-07-06 12:27:08,992 - app.services.sarvam_service - INFO - STT result: 'Hello...' detected_lang=en-IN
+{"message": "STT result: 'Hello...' detected_lang=en-IN", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:57:08.992373+00:00"}
+2026-07-06 12:27:08,992 - livekit-agent - INFO - [PERF] STT .............  1281.2 ms  transcript='Hello'
+{"message": "[PERF] STT .............  1281.2 ms  transcript='Hello'", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:57:08.992497+00:00"}
+2026-07-06 12:27:08,994 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 1.2528394000320695, "timestamp": "2026-07-06T06:57:08.994111+00:00"}
+2026-07-06 12:27:08,995 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 1.252340499958489, "timestamp": "2026-07-06T06:57:08.995401+00:00"}
+2026-07-06 12:27:09,025 - livekit-agent - INFO - LLM Query: 'Hello...' History: 5 turns
+{"message": "LLM Query: 'Hello...' History: 5 turns", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:57:09.025930+00:00"}
+2026-07-06 12:27:09,028 - app.services.llm.groq_service - INFO - EXPAND: Hello | reason=fallback_text_merge | domain=None | prev_domain=None | prev_q=এবারে বাচ্চার সাথে কথা বলতে থাক না। | expanded-> Hello এবারে বাচ্চার সাথে কথা বলতে থাক না।
+{"message": "EXPAND: Hello | reason=fallback_text_merge | domain=None | prev_domain=None | prev_q=এবারে বাচ্চার সাথে কথা বলতে থাক না। | expanded-> Hello এবারে বাচ্চার সাথে কথা বলতে থাক না।", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:57:09.028047+00:00"}
+2026-07-06 12:27:09,704 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 1.7360742000103926, "timestamp": "2026-07-06T06:57:09.704607+00:00"}
+2026-07-06 12:27:09,706 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 1.7072199999825095, "timestamp": "2026-07-06T06:57:09.706322+00:00"}
+2026-07-06 12:27:10,303 - app.services.llm.groq_service - INFO - STREAM TTFT=1277ms prep=536ms llm_setup=597ms lang=bn q='Hello'
+{"message": "STREAM TTFT=1277ms prep=536ms llm_setup=597ms lang=bn q='Hello'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:57:10.303162+00:00"}
+2026-07-06 12:27:10,303 - livekit-agent - INFO - TURN TTFT=1278ms (user speech â†’ LLM first token)
+{"message": "TURN TTFT=1278ms (user speech â†’ LLM first token)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:57:10.303540+00:00"}
+2026-07-06 12:27:11,477 - app.services.llm.groq_service - INFO - STREAM COMPLETE total=2452ms chars=75 ~30.6cps lang=bn
+{"message": "STREAM COMPLETE total=2452ms chars=75 ~30.6cps lang=bn", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:57:11.477940+00:00"}
+2026-07-06 12:27:11,479 - livekit-agent - INFO - TURN COMPLETE total=2454ms (user speech â†’ LLM done)
+{"message": "TURN COMPLETE total=2454ms (user speech â†’ LLM done)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:57:11.479837+00:00"}
+2026-07-06 12:27:11,481 - livekit-agent - INFO - SarvamTTS.synthesize called for: আপনার সমস্যা সমাধানে আমি সহায়তা করতে পারি। আপনি ক...
+{"message": "SarvamTTS.synthesize called for: আপনার সমস্যা সমাধানে আমি সহায়তা করতে পারি। আপনি ক...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:57:11.481528+00:00"}
+2026-07-06 12:27:11,482 - livekit-agent - INFO - Synthesizing: আপনার সমস্যা সমাধানে আমি সহায়তা করতে পারি। আপনি কি কিছু জিজ... (lang=bn-IN, speaker=ritu)
+{"message": "Synthesizing: আপনার সমস্যা সমাধানে আমি সহায়তা করতে পারি। আপনি কি কিছু জিজ... (lang=bn-IN, speaker=ritu)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:57:11.482832+00:00"}
+2026-07-06 12:27:11,483 - app.services.sarvam_service - INFO - Normalized TTS text: 'আপনার সমস্যা সমাধানে আমি সহায়তা করতে পারি। আপনি কি কিছু জিজ্ঞাসা করতে চান?'
+{"message": "Normalized TTS text: 'আপনার সমস্যা সমাধানে আমি সহায়তা করতে পারি। আপনি কি কিছু জিজ্ঞাসা করতে চান?'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:57:11.483166+00:00"}
+2026-07-06 12:27:18,776 - app.services.sarvam_service - INFO - TTS generated: 290860 bytes, lang=bn-IN, speaker=ritu
+{"message": "TTS generated: 290860 bytes, lang=bn-IN, speaker=ritu", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:57:18.776932+00:00"}
+2026-07-06 12:27:18,777 - livekit-agent - INFO - [PERF] TTS .............  7295.1 ms  text=আপনার সমস্যা সমাধানে আমি সহায়তা করতে পা
+{"message": "[PERF] TTS .............  7295.1 ms  text=আপনার সমস্যা সমাধানে আমি সহায়তা করতে পা", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:57:18.777218+00:00"}
+2026-07-06 12:27:18,777 - livekit-agent - INFO - [PERF] Playback ........     0.1 ms  (6s audio)
+{"message": "[PERF] Playback ........     0.1 ms  (6s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:57:18.777409+00:00"}
+2026-07-06 12:27:44,741 - app.services.sarvam_service - INFO - STT request: audio_size=391148 bytes, model=saaras:v3, language=None
+{"message": "STT request: audio_size=391148 bytes, model=saaras:v3, language=None", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:57:44.741028+00:00"}
+2026-07-06 12:27:46,453 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+{"message": "Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:57:46.453360+00:00"}
+2026-07-06 12:27:46,453 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260706_7eef2d98-f3fd-47d6-8cc7-7269a4f4d0cd' transcript='হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কোথায় আছে? একটু জান্নাত ছিল।' timestamps=None diarized_transcript=None language_code='bn-IN' language_probability=1.0
+{"message": "Sarvam raw response: request_id='20260706_7eef2d98-f3fd-47d6-8cc7-7269a4f4d0cd' transcript='হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কোথায় আছে? একটু জান্নাত ছিল।' timestamps=None diarized_transcript=None language_code='bn-IN' language_probability=1.0", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:57:46.453572+00:00"}
+2026-07-06 12:27:46,453 - app.services.sarvam_service - INFO - Extracted transcript: 'হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কোথায় আছে? একটু জান্নাত ছিল।'
+{"message": "Extracted transcript: 'হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কোথায় আছে? একটু জান্নাত ছিল।'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:57:46.453685+00:00"}
+2026-07-06 12:27:46,453 - app.services.sarvam_service - INFO - STT result: 'হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কোথায় আছে? একটু জান্নাত ছিল।...' detected_lang=bn-IN
+{"message": "STT result: 'হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কোথায় আছে? একটু জান্নাত ছিল।...' detected_lang=bn-IN", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:57:46.453773+00:00"}
+2026-07-06 12:27:46,453 - livekit-agent - INFO - [PERF] STT .............  1713.0 ms  transcript='হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কো'
+{"message": "[PERF] STT .............  1713.0 ms  transcript='হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কো'", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:57:46.453938+00:00"}
+2026-07-06 12:27:46,466 - livekit-agent - INFO - LLM Query: 'হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কোথায় আছে? একটু জান্নাত ছিল।...' History: 7 turns
+{"message": "LLM Query: 'হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কোথায় আছে? একটু জান্নাত ছিল।...' History: 7 turns", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:57:46.466999+00:00"}
+2026-07-06 12:27:46,473 - app.services.normalization.normalizer - INFO - Normalization: 'হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কো' -> 'হ্যাঁ আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কোথ' (1 changes: ['cleanup'])
+{"message": "Normalization: 'হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কো' -> 'হ্যাঁ আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কোথ' (1 changes: ['cleanup'])", "level": "INFO", "name": "app.services.normalization.normalizer", "timestamp": "2026-07-06T06:57:46.473971+00:00"}
+2026-07-06 12:27:46,474 - app.services.llm.groq_service - INFO - [console-95e48ba0] Query normalized (stream): 'হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কো' -> 'হ্যাঁ আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কোথ'
+{"message": "[console-95e48ba0] Query normalized (stream): 'হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কো' -> 'হ্যাঁ আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কোথ'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:57:46.474162+00:00"}
+2026-07-06 12:27:46,474 - app.services.llm.groq_service - INFO - EXPAND: হ্যাঁ আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কোথ | reason=long_query | prev_q=Hello
+{"message": "EXPAND: হ্যাঁ আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কোথ | reason=long_query | prev_q=Hello", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:57:46.474498+00:00"}
+2026-07-06 12:27:46,743 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 0.24523810001043603, "timestamp": "2026-07-06T06:57:46.743823+00:00"}
+2026-07-06 12:27:47,360 - app.services.llm.groq_service - INFO - STREAM TTFT=893ms prep=269ms llm_setup=369ms lang=bn q='হ্যাঁ আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কোথ'
+{"message": "STREAM TTFT=893ms prep=269ms llm_setup=369ms lang=bn q='হ্যাঁ আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কোথ'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:57:47.360459+00:00"}
+2026-07-06 12:27:47,360 - livekit-agent - INFO - TURN TTFT=894ms (user speech â†’ LLM first token)
+{"message": "TURN TTFT=894ms (user speech â†’ LLM first token)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:57:47.360707+00:00"}
+2026-07-06 12:27:47,459 - app.services.llm.groq_service - INFO - STREAM COMPLETE total=992ms chars=66 ~66.5cps lang=bn
+{"message": "STREAM COMPLETE total=992ms chars=66 ~66.5cps lang=bn", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:57:47.459098+00:00"}
+2026-07-06 12:27:47,461 - livekit-agent - INFO - TURN COMPLETE total=994ms (user speech â†’ LLM done)
+{"message": "TURN COMPLETE total=994ms (user speech â†’ LLM done)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:57:47.461173+00:00"}
+2026-07-06 12:27:47,463 - livekit-agent - INFO - SarvamTTS.synthesize called for: ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ দুর্গাপুর, পশ্চ...
+{"message": "SarvamTTS.synthesize called for: ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ দুর্গাপুর, পশ্চ...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:57:47.463525+00:00"}
+2026-07-06 12:27:47,464 - livekit-agent - INFO - Synthesizing: ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ দুর্গাপুর, পশ্চিমবঙ্গে অব... (lang=bn-IN, speaker=ritu)
+{"message": "Synthesizing: ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ দুর্গাপুর, পশ্চিমবঙ্গে অব... (lang=bn-IN, speaker=ritu)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:57:47.464913+00:00"}
+2026-07-06 12:27:47,465 - app.services.sarvam_service - INFO - Normalized TTS text: 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ দুর্গাপুর, পশ্চিমবঙ্গে অবস্থিত।'
+{"message": "Normalized TTS text: 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ দুর্গাপুর, পশ্চিমবঙ্গে অবস্থিত।'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:57:47.465196+00:00"}
+2026-07-06 12:27:50,901 - app.services.sarvam_service - INFO - TTS generated: 204844 bytes, lang=bn-IN, speaker=ritu
+{"message": "TTS generated: 204844 bytes, lang=bn-IN, speaker=ritu", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:57:50.901815+00:00"}
+2026-07-06 12:27:50,902 - livekit-agent - INFO - [PERF] TTS .............  3438.1 ms  text=ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ দুর্গ
+{"message": "[PERF] TTS .............  3438.1 ms  text=ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ দুর্গ", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:57:50.902099+00:00"}
+2026-07-06 12:27:50,902 - livekit-agent - INFO - [PERF] Playback ........     0.1 ms  (4s audio)
+{"message": "[PERF] Playback ........     0.1 ms  (4s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:57:50.902298+00:00"}
+2026-07-06 12:28:03,385 - app.services.sarvam_service - INFO - STT request: audio_size=176108 bytes, model=saaras:v3, language=None
+{"message": "STT request: audio_size=176108 bytes, model=saaras:v3, language=None", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:58:03.385273+00:00"}
+2026-07-06 12:28:04,639 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+{"message": "Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:58:04.639132+00:00"}
+2026-07-06 12:28:04,639 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260706_aff2bc1d-eb09-420d-9440-07c090b4b841' transcript='পশ্চিমবঙ্গের কোথায় অবস্থিত?' timestamps=None diarized_transcript=None language_code='bn-IN' language_probability=1.0
+{"message": "Sarvam raw response: request_id='20260706_aff2bc1d-eb09-420d-9440-07c090b4b841' transcript='পশ্চিমবঙ্গের কোথায় অবস্থিত?' timestamps=None diarized_transcript=None language_code='bn-IN' language_probability=1.0", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:58:04.639355+00:00"}
+2026-07-06 12:28:04,639 - app.services.sarvam_service - INFO - Extracted transcript: 'পশ্চিমবঙ্গের কোথায় অবস্থিত?'
+{"message": "Extracted transcript: 'পশ্চিমবঙ্গের কোথায় অবস্থিত?'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:58:04.639488+00:00"}
+2026-07-06 12:28:04,639 - app.services.sarvam_service - INFO - STT result: 'পশ্চিমবঙ্গের কোথায় অবস্থিত?...' detected_lang=bn-IN
+{"message": "STT result: 'পশ্চিমবঙ্গের কোথায় অবস্থিত?...' detected_lang=bn-IN", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:58:04.639621+00:00"}
+2026-07-06 12:28:04,639 - livekit-agent - INFO - [PERF] STT .............  1254.6 ms  transcript='পশ্চিমবঙ্গের কোথায় অবস্থিত?'
+{"message": "[PERF] STT .............  1254.6 ms  transcript='পশ্চিমবঙ্গের কোথায় অবস্থিত?'", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:58:04.639824+00:00"}
+2026-07-06 12:28:04,641 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 1.224487000035122, "timestamp": "2026-07-06T06:58:04.641102+00:00"}
+2026-07-06 12:28:04,653 - livekit-agent - INFO - LLM Query: 'পশ্চিমবঙ্গের কোথায় অবস্থিত?...' History: 9 turns
+{"message": "LLM Query: 'পশ্চিমবঙ্গের কোথায় অবস্থিত?...' History: 9 turns", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:58:04.653557+00:00"}
+2026-07-06 12:28:04,656 - app.services.normalization.normalizer - INFO - Normalization: 'পশ্চিমবঙ্গের কোথায় অবস্থিত?' -> 'পশ্চিমবঙ্গের কোথায় অবস্থিত' (1 changes: ['cleanup'])
+{"message": "Normalization: 'পশ্চিমবঙ্গের কোথায় অবস্থিত?' -> 'পশ্চিমবঙ্গের কোথায় অবস্থিত' (1 changes: ['cleanup'])", "level": "INFO", "name": "app.services.normalization.normalizer", "timestamp": "2026-07-06T06:58:04.656830+00:00"}
+2026-07-06 12:28:04,657 - app.services.llm.groq_service - INFO - [console-95e48ba0] Query normalized (stream): 'পশ্চিমবঙ্গের কোথায় অবস্থিত?' -> 'পশ্চিমবঙ্গের কোথায় অবস্থিত'
+{"message": "[console-95e48ba0] Query normalized (stream): 'পশ্চিমবঙ্গের কোথায় অবস্থিত?' -> 'পশ্চিমবঙ্গের কোথায় অবস্থিত'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:58:04.657401+00:00"}
+2026-07-06 12:28:04,658 - app.services.llm.groq_service - INFO - DOMAIN=contact | matched='কল' in query='হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কো'
+{"message": "DOMAIN=contact | matched='কল' in query='হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কো'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:58:04.658125+00:00"}
+2026-07-06 12:28:04,658 - app.services.llm.groq_service - INFO - EXPAND: পশ্চিমবঙ্গের কোথায় অবস্থিত | reason=fallback_text_merge | domain=None | prev_domain=contact | prev_q=হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কোথায় আছে? একটু জান্ন | expanded-> পশ্চিমবঙ্গের কোথায় অবস্থিত হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং
+{"message": "EXPAND: পশ্চিমবঙ্গের কোথায় অবস্থিত | reason=fallback_text_merge | domain=None | prev_domain=contact | prev_q=হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ কোথায় আছে? একটু জান্ন | expanded-> পশ্চিমবঙ্গের কোথায় অবস্থিত হ্যাঁ, আমি বলতে চাই যে ডক্টর বি সি রয় ইঞ্জিনিয়ারিং", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:58:04.658330+00:00"}
+2026-07-06 12:28:05,098 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 1.6380497000194154, "timestamp": "2026-07-06T06:58:05.098823+00:00"}
+2026-07-06 12:28:05,825 - app.services.llm.groq_service - INFO - STREAM TTFT=1171ms prep=427ms llm_setup=383ms lang=bn q='পশ্চিমবঙ্গের কোথায় অবস্থিত'
+{"message": "STREAM TTFT=1171ms prep=427ms llm_setup=383ms lang=bn q='পশ্চিমবঙ্গের কোথায় অবস্থিত'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:58:05.825107+00:00"}
+2026-07-06 12:28:05,825 - livekit-agent - INFO - TURN TTFT=1172ms (user speech â†’ LLM first token)
+{"message": "TURN TTFT=1172ms (user speech â†’ LLM first token)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:58:05.825334+00:00"}
+2026-07-06 12:28:05,925 - app.services.llm.groq_service - INFO - STREAM COMPLETE total=1271ms chars=54 ~42.5cps lang=bn
+{"message": "STREAM COMPLETE total=1271ms chars=54 ~42.5cps lang=bn", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:58:05.925040+00:00"}
+2026-07-06 12:28:05,927 - livekit-agent - INFO - TURN COMPLETE total=1274ms (user speech â†’ LLM done)
+{"message": "TURN COMPLETE total=1274ms (user speech â†’ LLM done)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:58:05.927056+00:00"}
+2026-07-06 12:28:05,928 - livekit-agent - INFO - SarvamTTS.synthesize called for: ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ দুর্গাপুরে অবস্...
+{"message": "SarvamTTS.synthesize called for: ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ দুর্গাপুরে অবস্...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:58:05.928356+00:00"}
+2026-07-06 12:28:05,929 - livekit-agent - INFO - Synthesizing: ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ দুর্গাপুরে অবস্থিত।... (lang=bn-IN, speaker=ritu)
+{"message": "Synthesizing: ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ দুর্গাপুরে অবস্থিত।... (lang=bn-IN, speaker=ritu)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:58:05.929483+00:00"}
+2026-07-06 12:28:05,929 - app.services.sarvam_service - INFO - Normalized TTS text: 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ দুর্গাপুরে অবস্থিত।'
+{"message": "Normalized TTS text: 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ দুর্গাপুরে অবস্থিত।'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:58:05.929638+00:00"}
+2026-07-06 12:28:08,588 - app.services.sarvam_service - INFO - TTS generated: 184364 bytes, lang=bn-IN, speaker=ritu
+{"message": "TTS generated: 184364 bytes, lang=bn-IN, speaker=ritu", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:58:08.588422+00:00"}
+2026-07-06 12:28:08,588 - livekit-agent - INFO - [PERF] TTS .............  2659.8 ms  text=ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ দুর্গ
+{"message": "[PERF] TTS .............  2659.8 ms  text=ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজ দুর্গ", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:58:08.588683+00:00"}
+2026-07-06 12:28:08,588 - livekit-agent - INFO - [PERF] Playback ........     0.0 ms  (3s audio)
+{"message": "[PERF] Playback ........     0.0 ms  (3s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:58:08.588830+00:00"}
+2026-07-06 12:28:19,886 - app.services.sarvam_service - INFO - STT request: audio_size=173036 bytes, model=saaras:v3, language=None
+{"message": "STT request: audio_size=173036 bytes, model=saaras:v3, language=None", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:58:19.886779+00:00"}
+2026-07-06 12:28:21,984 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+{"message": "Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:58:21.984352+00:00"}
+2026-07-06 12:28:21,984 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260706_bceb92d6-43b3-43e0-8bf7-420da3131c4e' transcript='দুর্গাপুরের কোথায় অবস্থিত?' timestamps=None diarized_transcript=None language_code='bn-IN' language_probability=1.0
+{"message": "Sarvam raw response: request_id='20260706_bceb92d6-43b3-43e0-8bf7-420da3131c4e' transcript='দুর্গাপুরের কোথায় অবস্থিত?' timestamps=None diarized_transcript=None language_code='bn-IN' language_probability=1.0", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:58:21.984562+00:00"}
+2026-07-06 12:28:21,984 - app.services.sarvam_service - INFO - Extracted transcript: 'দুর্গাপুরের কোথায় অবস্থিত?'
+{"message": "Extracted transcript: 'দুর্গাপুরের কোথায় অবস্থিত?'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:58:21.984663+00:00"}
+2026-07-06 12:28:21,984 - app.services.sarvam_service - INFO - STT result: 'দুর্গাপুরের কোথায় অবস্থিত?...' detected_lang=bn-IN
+{"message": "STT result: 'দুর্গাপুরের কোথায় অবস্থিত?...' detected_lang=bn-IN", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:58:21.984746+00:00"}
+2026-07-06 12:28:21,984 - livekit-agent - INFO - [PERF] STT .............  2098.1 ms  transcript='দুর্গাপুরের কোথায় অবস্থিত?'
+{"message": "[PERF] STT .............  2098.1 ms  transcript='দুর্গাপুরের কোথায় অবস্থিত?'", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:58:21.984889+00:00"}
+2026-07-06 12:28:21,999 - livekit-agent - INFO - LLM Query: 'দুর্গাপুরের কোথায় অবস্থিত?...' History: 11 turns
+{"message": "LLM Query: 'দুর্গাপুরের কোথায় অবস্থিত?...' History: 11 turns", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:58:21.999048+00:00"}
+2026-07-06 12:28:22,001 - app.services.normalization.normalizer - INFO - Normalization: 'দুর্গাপুরের কোথায় অবস্থিত?' -> 'দুর্গাপুরের কোথায় অবস্থিত' (1 changes: ['cleanup'])
+{"message": "Normalization: 'দুর্গাপুরের কোথায় অবস্থিত?' -> 'দুর্গাপুরের কোথায় অবস্থিত' (1 changes: ['cleanup'])", "level": "INFO", "name": "app.services.normalization.normalizer", "timestamp": "2026-07-06T06:58:22.001943+00:00"}
+2026-07-06 12:28:22,002 - app.services.llm.groq_service - INFO - [console-95e48ba0] Query normalized (stream): 'দুর্গাপুরের কোথায় অবস্থিত?' -> 'দুর্গাপুরের কোথায় অবস্থিত'
+{"message": "[console-95e48ba0] Query normalized (stream): 'দুর্গাপুরের কোথায় অবস্থিত?' -> 'দুর্গাপুরের কোথায় অবস্থিত'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:58:22.002241+00:00"}
+2026-07-06 12:28:22,002 - app.services.llm.groq_service - INFO - EXPAND: দুর্গাপুরের কোথায় অবস্থিত | reason=fallback_text_merge | domain=None | prev_domain=None | prev_q=পশ্চিমবঙ্গের কোথায় অবস্থিত? | expanded-> দুর্গাপুরের কোথায় অবস্থিত পশ্চিমবঙ্গের কোথায় অবস্থিত?
+{"message": "EXPAND: দুর্গাপুরের কোথায় অবস্থিত | reason=fallback_text_merge | domain=None | prev_domain=None | prev_q=পশ্চিমবঙ্গের কোথায় অবস্থিত? | expanded-> দুর্গাপুরের কোথায় অবস্থিত পশ্চিমবঙ্গের কোথায় অবস্থিত?", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:58:22.002661+00:00"}
+2026-07-06 12:28:22,225 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 0.19438399997958913, "timestamp": "2026-07-06T06:58:22.225218+00:00"}
+2026-07-06 12:28:22,452 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 7.000000 seconds
+{"message": "Retrying request to /openai/v1/chat/completions in 7.000000 seconds", "level": "INFO", "name": "groq._base_client", "timestamp": "2026-07-06T06:58:22.452381+00:00"}
+2026-07-06 12:28:30,984 - app.services.llm.groq_service - INFO - STREAM TTFT=8985ms prep=218ms llm_setup=8604ms lang=bn q='দুর্গাপুরের কোথায় অবস্থিত'
+{"message": "STREAM TTFT=8985ms prep=218ms llm_setup=8604ms lang=bn q='দুর্গাপুরের কোথায় অবস্থিত'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:58:30.984097+00:00"}
+2026-07-06 12:28:30,984 - livekit-agent - INFO - TURN TTFT=8985ms (user speech â†’ LLM first token)
+{"message": "TURN TTFT=8985ms (user speech â†’ LLM first token)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:58:30.984318+00:00"}
+2026-07-06 12:28:31,027 - app.services.llm.groq_service - INFO - STREAM COMPLETE total=9028ms chars=19 ~2.1cps lang=bn
+{"message": "STREAM COMPLETE total=9028ms chars=19 ~2.1cps lang=bn", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:58:31.027321+00:00"}
+2026-07-06 12:28:31,029 - livekit-agent - INFO - TURN COMPLETE total=9030ms (user speech â†’ LLM done)
+{"message": "TURN COMPLETE total=9030ms (user speech â†’ LLM done)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:58:31.029155+00:00"}
+2026-07-06 12:28:31,030 - livekit-agent - INFO - SarvamTTS.synthesize called for: দুর্গাপুরে অবস্থিত।...
+{"message": "SarvamTTS.synthesize called for: দুর্গাপুরে অবস্থিত।...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:58:31.030482+00:00"}
+2026-07-06 12:28:31,031 - livekit-agent - INFO - Synthesizing: দুর্গাপুরে অবস্থিত।... (lang=bn-IN, speaker=ritu)
+{"message": "Synthesizing: দুর্গাপুরে অবস্থিত।... (lang=bn-IN, speaker=ritu)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:58:31.031590+00:00"}
+2026-07-06 12:28:31,031 - app.services.sarvam_service - INFO - Normalized TTS text: 'দুর্গাপুরে অবস্থিত।'
+{"message": "Normalized TTS text: 'দুর্গাপুরে অবস্থিত।'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:58:31.031751+00:00"}
+2026-07-06 12:28:37,290 - app.services.sarvam_service - INFO - TTS generated: 81964 bytes, lang=bn-IN, speaker=ritu
+{"message": "TTS generated: 81964 bytes, lang=bn-IN, speaker=ritu", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:58:37.290745+00:00"}
+2026-07-06 12:28:37,291 - livekit-agent - INFO - [PERF] TTS .............  6260.1 ms  text=দুর্গাপুরে অবস্থিত।
+{"message": "[PERF] TTS .............  6260.1 ms  text=দুর্গাপুরে অবস্থিত।", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:58:37.291054+00:00"}
+2026-07-06 12:28:37,291 - livekit-agent - INFO - [PERF] Playback ........     0.0 ms  (1s audio)
+{"message": "[PERF] Playback ........     0.0 ms  (1s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:58:37.291238+00:00"}
+2026-07-06 12:28:48,936 - app.services.sarvam_service - INFO - STT request: audio_size=232940 bytes, model=saaras:v3, language=None
+{"message": "STT request: audio_size=232940 bytes, model=saaras:v3, language=None", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:58:48.936734+00:00"}
+2026-07-06 12:28:50,793 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+{"message": "Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:58:50.793544+00:00"}
+2026-07-06 12:28:50,793 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260706_f1a85079-0f22-40f4-901d-ab0f9c5b119f' transcript='ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি?' timestamps=None diarized_transcript=None language_code='bn-IN' language_probability=1.0
+{"message": "Sarvam raw response: request_id='20260706_f1a85079-0f22-40f4-901d-ab0f9c5b119f' transcript='ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি?' timestamps=None diarized_transcript=None language_code='bn-IN' language_probability=1.0", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:58:50.793784+00:00"}
+2026-07-06 12:28:50,793 - app.services.sarvam_service - INFO - Extracted transcript: 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি?'
+{"message": "Extracted transcript: 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি?'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:58:50.793907+00:00"}
+2026-07-06 12:28:50,794 - app.services.sarvam_service - INFO - STT result: 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি?...' detected_lang=bn-IN
+{"message": "STT result: 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি?...' detected_lang=bn-IN", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:58:50.794006+00:00"}
+2026-07-06 12:28:50,794 - livekit-agent - INFO - [PERF] STT .............  1857.5 ms  transcript='ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি?'
+{"message": "[PERF] STT .............  1857.5 ms  transcript='ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি?'", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:58:50.794199+00:00"}
+2026-07-06 12:28:50,808 - livekit-agent - INFO - LLM Query: 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি?...' History: 12 turns
+{"message": "LLM Query: 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি?...' History: 12 turns", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:58:50.808911+00:00"}
+2026-07-06 12:28:50,812 - app.services.normalization.normalizer - INFO - Normalization: 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি?' -> 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি' (1 changes: ['cleanup'])
+{"message": "Normalization: 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি?' -> 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি' (1 changes: ['cleanup'])", "level": "INFO", "name": "app.services.normalization.normalizer", "timestamp": "2026-07-06T06:58:50.812600+00:00"}
+2026-07-06 12:28:50,813 - app.services.llm.groq_service - INFO - [console-95e48ba0] Query normalized (stream): 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি?' -> 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি'
+{"message": "[console-95e48ba0] Query normalized (stream): 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি?' -> 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:58:50.813064+00:00"}
+2026-07-06 12:28:50,813 - app.services.llm.groq_service - INFO - EXPAND: ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি | reason=long_query | prev_q=দুর্গাপুরের কোথায় অবস্থিত?
+{"message": "EXPAND: ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি | reason=long_query | prev_q=দুর্গাপুরের কোথায় অবস্থিত?", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:58:50.813426+00:00"}
+2026-07-06 12:28:51,036 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 0.19610499998740852, "timestamp": "2026-07-06T06:58:51.036743+00:00"}
+2026-07-06 12:28:51,312 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 19.000000 seconds
+{"message": "Retrying request to /openai/v1/chat/completions in 19.000000 seconds", "level": "INFO", "name": "groq._base_client", "timestamp": "2026-07-06T06:58:51.312429+00:00"}
+2026-07-06 12:29:14,769 - app.services.llm.groq_service - INFO - STREAM TTFT=23960ms prep=220ms llm_setup=23475ms lang=bn q='ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি'
+{"message": "STREAM TTFT=23960ms prep=220ms llm_setup=23475ms lang=bn q='ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:59:14.769333+00:00"}
+2026-07-06 12:29:14,769 - livekit-agent - INFO - TURN TTFT=23961ms (user speech â†’ LLM first token)
+{"message": "TURN TTFT=23961ms (user speech â†’ LLM first token)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:59:14.769564+00:00"}
+2026-07-06 12:29:14,838 - livekit-agent - INFO - SarvamTTS.synthesize called for: ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপাল হ...
+{"message": "SarvamTTS.synthesize called for: ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপাল হ...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:59:14.838085+00:00"}
+2026-07-06 12:29:14,839 - livekit-agent - INFO - Synthesizing: ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপাল হলেন ড.... (lang=bn-IN, speaker=ritu)
+{"message": "Synthesizing: ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপাল হলেন ড.... (lang=bn-IN, speaker=ritu)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:59:14.839135+00:00"}
+2026-07-06 12:29:14,839 - app.services.sarvam_service - INFO - Normalized TTS text: 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপাল হলেন ড.'
+{"message": "Normalized TTS text: 'ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপাল হলেন ড.'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:59:14.839317+00:00"}
+2026-07-06 12:29:17,881 - app.services.sarvam_service - INFO - TTS generated: 204844 bytes, lang=bn-IN, speaker=ritu
+{"message": "TTS generated: 204844 bytes, lang=bn-IN, speaker=ritu", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:59:17.881881+00:00"}
+2026-07-06 12:29:17,882 - livekit-agent - INFO - [PERF] TTS .............  3043.6 ms  text=ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্র
+{"message": "[PERF] TTS .............  3043.6 ms  text=ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্র", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:59:17.882140+00:00"}
+2026-07-06 12:29:17,882 - livekit-agent - INFO - [PERF] Playback ........     0.1 ms  (4s audio)
+{"message": "[PERF] Playback ........     0.1 ms  (4s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:59:17.882311+00:00"}
+2026-07-06 12:29:17,896 - app.services.llm.groq_service - INFO - STREAM COMPLETE total=27087ms chars=75 ~2.8cps lang=bn
+{"message": "STREAM COMPLETE total=27087ms chars=75 ~2.8cps lang=bn", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T06:59:17.896696+00:00"}
+2026-07-06 12:29:17,898 - livekit-agent - INFO - TURN COMPLETE total=27090ms (user speech â†’ LLM done)
+{"message": "TURN COMPLETE total=27090ms (user speech â†’ LLM done)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:59:17.898397+00:00"}
+2026-07-06 12:29:17,981 - livekit-agent - INFO - SarvamTTS.synthesize called for: সঞ্জয় এস পাওয়ার।...
+{"message": "SarvamTTS.synthesize called for: সঞ্জয় এস পাওয়ার।...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:59:17.981969+00:00"}
+2026-07-06 12:29:17,990 - livekit-agent - INFO - Synthesizing: সঞ্জয় এস পাওয়ার।... (lang=bn-IN, speaker=ritu)
+{"message": "Synthesizing: সঞ্জয় এস পাওয়ার।... (lang=bn-IN, speaker=ritu)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:59:17.990798+00:00"}
+2026-07-06 12:29:17,990 - app.services.sarvam_service - INFO - Normalized TTS text: 'সঞ্জয় এস পাওয়ার।'
+{"message": "Normalized TTS text: 'সঞ্জয় এস পাওয়ার।'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:59:17.990987+00:00"}
+2026-07-06 12:29:22,239 - app.services.sarvam_service - INFO - TTS generated: 77868 bytes, lang=bn-IN, speaker=ritu
+{"message": "TTS generated: 77868 bytes, lang=bn-IN, speaker=ritu", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:59:22.239198+00:00"}
+2026-07-06 12:29:22,239 - livekit-agent - INFO - [PERF] TTS .............  4249.1 ms  text=সঞ্জয় এস পাওয়ার।
+{"message": "[PERF] TTS .............  4249.1 ms  text=সঞ্জয় এস পাওয়ার।", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:59:22.239515+00:00"}
+2026-07-06 12:29:22,239 - livekit-agent - INFO - [PERF] Playback ........     0.0 ms  (1s audio)
+{"message": "[PERF] Playback ........     0.0 ms  (1s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T06:59:22.239645+00:00"}
+2026-07-06 12:29:22,240 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 4.228723899991717, "timestamp": "2026-07-06T06:59:22.240341+00:00"}
+2026-07-06 12:29:22,240 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 4.229022399994545, "timestamp": "2026-07-06T06:59:22.240762+00:00"}
+2026-07-06 12:29:47,280 - app.services.sarvam_service - INFO - STT request: audio_size=338924 bytes, model=saaras:v3, language=None
+{"message": "STT request: audio_size=338924 bytes, model=saaras:v3, language=None", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T06:59:47.280765+00:00"}
+2026-07-06 12:30:13,719 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+{"message": "Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:00:13.719491+00:00"}
+2026-07-06 12:30:13,719 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260706_ff829eb1-0b75-4fe6-91ae-991e1839d1d8' transcript='হ্যাঁ, আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে?' timestamps=None diarized_transcript=None language_code='bn-IN' language_probability=1.0
+{"message": "Sarvam raw response: request_id='20260706_ff829eb1-0b75-4fe6-91ae-991e1839d1d8' transcript='হ্যাঁ, আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে?' timestamps=None diarized_transcript=None language_code='bn-IN' language_probability=1.0", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:00:13.719757+00:00"}
+2026-07-06 12:30:13,719 - app.services.sarvam_service - INFO - Extracted transcript: 'হ্যাঁ, আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে?'
+{"message": "Extracted transcript: 'হ্যাঁ, আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে?'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:00:13.719866+00:00"}
+2026-07-06 12:30:13,719 - app.services.sarvam_service - INFO - STT result: 'হ্যাঁ, আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে?...' detected_lang=bn-IN
+{"message": "STT result: 'হ্যাঁ, আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে?...' detected_lang=bn-IN", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:00:13.719950+00:00"}
+2026-07-06 12:30:13,720 - livekit-agent - INFO - [PERF] STT ............. 26439.4 ms  transcript='হ্যাঁ, আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে'
+{"message": "[PERF] STT ............. 26439.4 ms  transcript='হ্যাঁ, আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে'", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:00:13.720105+00:00"}
+2026-07-06 12:30:13,720 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 26.409740400041454, "timestamp": "2026-07-06T07:00:13.720640+00:00"}
+2026-07-06 12:30:13,821 - livekit-agent - INFO - LLM Query: 'হ্যাঁ, আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে?...' History: 12 turns
+{"message": "LLM Query: 'হ্যাঁ, আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে?...' History: 12 turns", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:00:13.821074+00:00"}
+2026-07-06 12:30:13,824 - app.services.normalization.normalizer - INFO - Normalization: 'হ্যাঁ, আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে' -> 'হ্যাঁ আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে' (1 changes: ['cleanup'])
+{"message": "Normalization: 'হ্যাঁ, আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে' -> 'হ্যাঁ আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে' (1 changes: ['cleanup'])", "level": "INFO", "name": "app.services.normalization.normalizer", "timestamp": "2026-07-06T07:00:13.824626+00:00"}
+2026-07-06 12:30:13,824 - app.services.llm.groq_service - INFO - [console-95e48ba0] Query normalized (stream): 'হ্যাঁ, আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে' -> 'হ্যাঁ আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে'
+{"message": "[console-95e48ba0] Query normalized (stream): 'হ্যাঁ, আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে' -> 'হ্যাঁ আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:00:13.824871+00:00"}
+2026-07-06 12:30:13,825 - app.services.llm.groq_service - INFO - EXPAND: হ্যাঁ আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে | reason=long_query | prev_q=ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি?
+{"message": "EXPAND: হ্যাঁ আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে | reason=long_query | prev_q=ডক্টর বি সি রয় ইঞ্জিনিয়ারিং কলেজের প্রিন্সিপালের নাম কি?", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:00:13.825260+00:00"}
+2026-07-06 12:30:14,080 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 0.23256069998675957, "timestamp": "2026-07-06T07:00:14.080256+00:00"}
+2026-07-06 12:30:14,100 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 26.632464400046505, "timestamp": "2026-07-06T07:00:14.100917+00:00"}
+2026-07-06 12:30:18,462 - app.services.llm.groq_service - INFO - STREAM TTFT=4641ms prep=253ms llm_setup=4374ms lang=bn q='হ্যাঁ আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে'
+{"message": "STREAM TTFT=4641ms prep=253ms llm_setup=4374ms lang=bn q='হ্যাঁ আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:00:18.462507+00:00"}
+2026-07-06 12:30:18,462 - livekit-agent - INFO - TURN TTFT=4642ms (user speech â†’ LLM first token)
+{"message": "TURN TTFT=4642ms (user speech â†’ LLM first token)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:00:18.462763+00:00"}
+2026-07-06 12:30:18,862 - app.services.llm.groq_service - INFO - STREAM COMPLETE total=5042ms chars=348 ~69.0cps lang=bn
+{"message": "STREAM COMPLETE total=5042ms chars=348 ~69.0cps lang=bn", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:00:18.862874+00:00"}
+2026-07-06 12:30:18,864 - livekit-agent - INFO - TURN COMPLETE total=5044ms (user speech â†’ LLM done)
+{"message": "TURN COMPLETE total=5044ms (user speech â†’ LLM done)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:00:18.864973+00:00"}
+2026-07-06 12:30:18,866 - livekit-agent - INFO - SarvamTTS.synthesize called for: আমাদের কলেজে বিভিন্ন ডিপার্টমেন্ট রয়েছে। এগুলো হল...
+{"message": "SarvamTTS.synthesize called for: আমাদের কলেজে বিভিন্ন ডিপার্টমেন্ট রয়েছে। এগুলো হল...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:00:18.866545+00:00"}
+2026-07-06 12:30:18,868 - livekit-agent - INFO - Synthesizing: আমাদের কলেজে বিভিন্ন ডিপার্টমেন্ট রয়েছে। এগুলো হলো:  কম্পিউ... (lang=bn-IN, speaker=ritu)
+{"message": "Synthesizing: আমাদের কলেজে বিভিন্ন ডিপার্টমেন্ট রয়েছে। এগুলো হলো:  কম্পিউ... (lang=bn-IN, speaker=ritu)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:00:18.868116+00:00"}
+2026-07-06 12:30:18,868 - app.services.sarvam_service - INFO - Normalized TTS text: 'আমাদের কলেজে বিভিন্ন ডিপার্টমেন্ট রয়েছে। এগুলো হলো:  কম্পিউটার সায়েন্স এন্ড ইঞ্জিনিয়ারিং (C S E) - 180 জন ছাত্র ধারণক্ষমতা ইলেক্ট্রনিক্স এন্ড কমিউনিকেশন ইঞ্জিনিয়ারিং (E C E) - 120 জন ছাত্র ধারণক্ষমতা ইলেক্ট্রিক্যাল ইঞ্জিনিয়ারিং (E E) - 120 জন ছাত্র ধারণক্ষমতা মেকানিক্যাল ইঞ্জিনিয়ারিং (M E) - 60 জন ছাত্র ধারণক্ষমতা ইনফরমেশন টেকনোলজি (I T) - 60 জন ছ'
+{"message": "Normalized TTS text: 'আমাদের কলেজে বিভিন্ন ডিপার্টমেন্ট রয়েছে। এগুলো হলো:  কম্পিউটার সায়েন্স এন্ড ইঞ্জিনিয়ারিং (C S E) - 180 জন ছাত্র ধারণক্ষমতা ইলেক্ট্রনিক্স এন্ড কমিউনিকেশন ইঞ্জিনিয়ারিং (E C E) - 120 জন ছাত্র ধারণক্ষমতা ইলেক্ট্রিক্যাল ইঞ্জিনিয়ারিং (E E) - 120 জন ছাত্র ধারণক্ষমতা মেকানিক্যাল ইঞ্জিনিয়ারিং (M E) - 60 জন ছাত্র ধারণক্ষমতা ইনফরমেশন টেকনোলজি (I T) - 60 জন ছ'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:00:18.868392+00:00"}
+2026-07-06 12:31:15,742 - app.services.sarvam_service - INFO - TTS generated: 1320364 bytes, lang=bn-IN, speaker=ritu
+{"message": "TTS generated: 1320364 bytes, lang=bn-IN, speaker=ritu", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:01:15.742298+00:00"}
+2026-07-06 12:31:15,743 - livekit-agent - INFO - [PERF] TTS ............. 56876.0 ms  text=আমাদের কলেজে বিভিন্ন ডিপার্টমেন্ট রয়েছে
+{"message": "[PERF] TTS ............. 56876.0 ms  text=আমাদের কলেজে বিভিন্ন ডিপার্টমেন্ট রয়েছে", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:01:15.743118+00:00"}
+2026-07-06 12:31:15,743 - livekit-agent - INFO - [PERF] Playback ........     0.4 ms  (27s audio)
+{"message": "[PERF] Playback ........     0.4 ms  (27s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:01:15.743678+00:00"}
+2026-07-06 12:31:51,633 - livekit - ERROR - livekit::rtc_engine::rtc_session:1302:livekit::rtc_engine::rtc_session - Publisher pc state failed
+{"message": "livekit::rtc_engine::rtc_session:1302:livekit::rtc_engine::rtc_session - Publisher pc state failed", "level": "ERROR", "name": "livekit", "timestamp": "2026-07-06T07:01:51.633499+00:00"}
+2026-07-06 12:31:51,634 - livekit - WARNING - livekit::rtc_engine:519:livekit::rtc_engine - received session close: "pc_state failed" UnknownReason Resume
+{"message": "livekit::rtc_engine:519:livekit::rtc_engine - received session close: \"pc_state failed\" UnknownReason Resume", "level": "WARNING", "name": "livekit", "timestamp": "2026-07-06T07:01:51.634808+00:00"}
+2026-07-06 12:31:51,635 - livekit - ERROR - livekit::rtc_engine:840:livekit::rtc_engine - resuming connection... attempt: 0
+{"message": "livekit::rtc_engine:840:livekit::rtc_engine - resuming connection... attempt: 0", "level": "ERROR", "name": "livekit", "timestamp": "2026-07-06T07:01:51.635027+00:00"}
+2026-07-06 12:31:52,932 - livekit - ERROR - livekit::rtc_engine::rtc_session:1302:livekit::rtc_engine::rtc_session - Subscriber pc state failed
+{"message": "livekit::rtc_engine::rtc_session:1302:livekit::rtc_engine::rtc_session - Subscriber pc state failed", "level": "ERROR", "name": "livekit", "timestamp": "2026-07-06T07:01:52.932182+00:00"}
+2026-07-06 12:31:52,932 - livekit - WARNING - livekit::rtc_engine:519:livekit::rtc_engine - received session close: "pc_state failed" UnknownReason Resume
+{"message": "livekit::rtc_engine:519:livekit::rtc_engine - received session close: \"pc_state failed\" UnknownReason Resume", "level": "WARNING", "name": "livekit", "timestamp": "2026-07-06T07:01:52.932985+00:00"}
+2026-07-06 12:31:59,524 - livekit - WARNING - livekit::rtc_engine:519:livekit::rtc_engine - received session close: "signal client closed: \"stream closed\"" UnknownReason Resume
+{"message": "livekit::rtc_engine:519:livekit::rtc_engine - received session close: \"signal client closed: \\\"stream closed\\\"\" UnknownReason Resume", "level": "WARNING", "name": "livekit", "timestamp": "2026-07-06T07:01:59.524893+00:00"}
+2026-07-06 12:32:19,237 - app.services.sarvam_service - INFO - STT request: audio_size=156140 bytes, model=saaras:v3, language=None
+{"message": "STT request: audio_size=156140 bytes, model=saaras:v3, language=None", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:02:19.237412+00:00"}
+2026-07-06 12:32:26,319 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+{"message": "Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:02:26.319607+00:00"}
+2026-07-06 12:32:26,319 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260706_a0be7e35-5251-45a2-9cbb-8fe371f9bb80' transcript='And can you tell me?' timestamps=None diarized_transcript=None language_code='en-IN' language_probability=1.0
+{"message": "Sarvam raw response: request_id='20260706_a0be7e35-5251-45a2-9cbb-8fe371f9bb80' transcript='And can you tell me?' timestamps=None diarized_transcript=None language_code='en-IN' language_probability=1.0", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:02:26.319824+00:00"}
+2026-07-06 12:32:26,319 - app.services.sarvam_service - INFO - Extracted transcript: 'And can you tell me?'
+{"message": "Extracted transcript: 'And can you tell me?'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:02:26.319902+00:00"}
+2026-07-06 12:32:26,319 - app.services.sarvam_service - INFO - STT result: 'And can you tell me?...' detected_lang=en-IN
+{"message": "STT result: 'And can you tell me?...' detected_lang=en-IN", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:02:26.319966+00:00"}
+2026-07-06 12:32:26,320 - livekit-agent - INFO - [PERF] STT .............  7082.7 ms  transcript='And can you tell me?'
+{"message": "[PERF] STT .............  7082.7 ms  transcript='And can you tell me?'", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:02:26.320086+00:00"}
+2026-07-06 12:32:26,322 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 7.05403820001008, "timestamp": "2026-07-06T07:02:26.322372+00:00"}
+2026-07-06 12:32:26,353 - livekit-agent - INFO - LLM Query: 'And can you tell me?...' History: 12 turns
+{"message": "LLM Query: 'And can you tell me?...' History: 12 turns", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:02:26.353091+00:00"}
+2026-07-06 12:32:26,356 - app.services.normalization.normalizer - INFO - Normalization: 'And can you tell me?' -> 'and can you tell me' (1 changes: ['cleanup'])
+{"message": "Normalization: 'And can you tell me?' -> 'and can you tell me' (1 changes: ['cleanup'])", "level": "INFO", "name": "app.services.normalization.normalizer", "timestamp": "2026-07-06T07:02:26.356212+00:00"}
+2026-07-06 12:32:26,356 - app.services.llm.groq_service - INFO - [console-95e48ba0] Query normalized (stream): 'And can you tell me?' -> 'and can you tell me'
+{"message": "[console-95e48ba0] Query normalized (stream): 'And can you tell me?' -> 'and can you tell me'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:02:26.356355+00:00"}
+2026-07-06 12:32:26,358 - app.services.llm.groq_service - INFO - [console-95e48ba0] Language: detected=hi, keeping bn (reason: weak evidence, kw markers bn=0 hi=1)
+{"message": "[console-95e48ba0] Language: detected=hi, keeping bn (reason: weak evidence, kw markers bn=0 hi=1)", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:02:26.358929+00:00"}
+2026-07-06 12:32:26,359 - app.services.llm.groq_service - INFO - EXPAND: and can you tell me | reason=fallback_text_merge | domain=None | prev_domain=None | prev_q=হ্যাঁ, আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে? | expanded-> and can you tell me হ্যাঁ, আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে
+{"message": "EXPAND: and can you tell me | reason=fallback_text_merge | domain=None | prev_domain=None | prev_q=হ্যাঁ, আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে? | expanded-> and can you tell me হ্যাঁ, আর বিসির হাতে এমনি কি কি ডিপার্টমেন্ট অ্যাভেলেবেল আছে", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:02:26.359650+00:00"}
+2026-07-06 12:32:26,685 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 0.3007455999678932, "timestamp": "2026-07-06T07:02:26.685229+00:00"}
+2026-07-06 12:32:27,145 - app.services.sarvam_service - INFO - STT request: audio_size=368108 bytes, model=saaras:v3, language=None
+{"message": "STT request: audio_size=368108 bytes, model=saaras:v3, language=None", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:02:27.145203+00:00"}
+2026-07-06 12:32:35,877 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+{"message": "Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:02:35.877403+00:00"}
+2026-07-06 12:32:35,877 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260706_eea38d81-a7ac-44ae-b234-6b6245705144' transcript='In these departments, which is the highest placement got?' timestamps=None diarized_transcript=None language_code='en-IN' language_probability=1.0
+{"message": "Sarvam raw response: request_id='20260706_eea38d81-a7ac-44ae-b234-6b6245705144' transcript='In these departments, which is the highest placement got?' timestamps=None diarized_transcript=None language_code='en-IN' language_probability=1.0", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:02:35.877628+00:00"}
+2026-07-06 12:32:35,877 - app.services.sarvam_service - INFO - Extracted transcript: 'In these departments, which is the highest placement got?'
+{"message": "Extracted transcript: 'In these departments, which is the highest placement got?'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:02:35.877717+00:00"}
+2026-07-06 12:32:35,877 - app.services.sarvam_service - INFO - STT result: 'In these departments, which is the highest placement got?...' detected_lang=en-IN
+{"message": "STT result: 'In these departments, which is the highest placement got?...' detected_lang=en-IN", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:02:35.877789+00:00"}
+2026-07-06 12:32:35,877 - livekit-agent - INFO - [PERF] STT .............  8732.8 ms  transcript='In these departments, which is the highest placement got?'
+{"message": "[PERF] STT .............  8732.8 ms  transcript='In these departments, which is the highest placement got?'", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:02:35.877920+00:00"}
+2026-07-06 12:32:35,878 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 8.70252240001643, "timestamp": "2026-07-06T07:02:35.878476+00:00"}
+2026-07-06 12:32:35,881 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 8.704473199969623, "timestamp": "2026-07-06T07:02:35.881045+00:00"}
+2026-07-06 12:32:35,911 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 0.425035 seconds
+{"message": "Retrying request to /openai/v1/chat/completions in 0.425035 seconds", "level": "INFO", "name": "groq._base_client", "timestamp": "2026-07-06T07:02:35.911199+00:00"}
+2026-07-06 12:32:35,958 - livekit-agent - INFO - LLM Query: 'In these departments, which is the highest placement got?...' History: 12 turns
+{"message": "LLM Query: 'In these departments, which is the highest placement got?...' History: 12 turns", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:02:35.958324+00:00"}
+2026-07-06 12:32:35,962 - app.services.normalization.normalizer - INFO - Normalization: 'In these departments, which is the highest placement got?' -> 'in these departments which is the highest placement got' (1 changes: ['cleanup'])
+{"message": "Normalization: 'In these departments, which is the highest placement got?' -> 'in these departments which is the highest placement got' (1 changes: ['cleanup'])", "level": "INFO", "name": "app.services.normalization.normalizer", "timestamp": "2026-07-06T07:02:35.962330+00:00"}
+2026-07-06 12:32:35,962 - app.services.llm.groq_service - INFO - [console-95e48ba0] Query normalized (stream): 'In these departments, which is the highest placement got?' -> 'in these departments which is the highest placement got'
+{"message": "[console-95e48ba0] Query normalized (stream): 'In these departments, which is the highest placement got?' -> 'in these departments which is the highest placement got'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:02:35.962475+00:00"}
+2026-07-06 12:32:35,968 - app.utils.language_detect - INFO - fasttext not installed — using keyword-only detection
+{"message": "fasttext not installed — using keyword-only detection", "level": "INFO", "name": "app.utils.language_detect", "timestamp": "2026-07-06T07:02:35.968298+00:00"}
+2026-07-06 12:32:35,968 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+{"message": "FastText prediction failed: 'NoneType' object has no attribute 'predict'", "level": "ERROR", "name": "app.utils.language_detect", "timestamp": "2026-07-06T07:02:35.968637+00:00"}
+2026-07-06 12:32:35,968 - app.services.llm.groq_service - INFO - [console-95e48ba0] Language: detected=en, keeping bn (reason: weak evidence, kw markers bn=0 hi=0)
+{"message": "[console-95e48ba0] Language: detected=en, keeping bn (reason: weak evidence, kw markers bn=0 hi=0)", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:02:35.968748+00:00"}
+2026-07-06 12:32:35,968 - app.services.llm.groq_service - INFO - EXPAND: in these departments which is the highest placement got | reason=long_query | prev_q=And can you tell me?
+{"message": "EXPAND: in these departments which is the highest placement got | reason=long_query | prev_q=And can you tell me?", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:02:35.968929+00:00"}
+2026-07-06 12:32:35,969 - app.services.llm.groq_service - INFO - HANDLER: placement matched for query='in these departments which is the highest placement got'
+{"message": "HANDLER: placement matched for query='in these departments which is the highest placement got'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:02:35.969612+00:00"}
+2026-07-06 12:32:35,970 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+{"message": "FastText prediction failed: 'NoneType' object has no attribute 'predict'", "level": "ERROR", "name": "app.utils.language_detect", "timestamp": "2026-07-06T07:02:35.970148+00:00"}
+2026-07-06 12:32:36,213 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 8.68386769995233, "timestamp": "2026-07-06T07:02:36.213791+00:00"}
+2026-07-06 12:32:36,214 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 8.653268300081603, "timestamp": "2026-07-06T07:02:36.214619+00:00"}
+2026-07-06 12:32:38,972 - app.services.llm.groq_service - INFO - STREAM TTFT=3014ms prep=250ms llm_setup=2543ms lang=bn q='in these departments which is the highest placement got'
+{"message": "STREAM TTFT=3014ms prep=250ms llm_setup=2543ms lang=bn q='in these departments which is the highest placement got'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:02:38.972428+00:00"}
+2026-07-06 12:32:38,972 - livekit-agent - INFO - TURN TTFT=3014ms (user speech â†’ LLM first token)
+{"message": "TURN TTFT=3014ms (user speech â†’ LLM first token)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:02:38.972637+00:00"}
+2026-07-06 12:32:39,104 - app.services.llm.groq_service - INFO - STREAM COMPLETE total=3146ms chars=82 ~26.1cps lang=bn
+{"message": "STREAM COMPLETE total=3146ms chars=82 ~26.1cps lang=bn", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:02:39.104582+00:00"}
+2026-07-06 12:32:39,107 - livekit-agent - INFO - TURN COMPLETE total=3149ms (user speech â†’ LLM done)
+{"message": "TURN COMPLETE total=3149ms (user speech â†’ LLM done)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:02:39.107331+00:00"}
+2026-07-06 12:32:39,108 - livekit-agent - INFO - SarvamTTS.synthesize called for: সবচেয়ে উচ্চ স্থানান্তর হলো CSE ডিপার্টমেন্টের। এখ...
+{"message": "SarvamTTS.synthesize called for: সবচেয়ে উচ্চ স্থানান্তর হলো CSE ডিপার্টমেন্টের। এখ...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:02:39.108779+00:00"}
+2026-07-06 12:32:39,109 - livekit-agent - INFO - Synthesizing: সবচেয়ে উচ্চ স্থানান্তর হলো C S E ডিপার্টমেন্টের। এখানে 93.6... (lang=bn-IN, speaker=ritu)
+{"message": "Synthesizing: সবচেয়ে উচ্চ স্থানান্তর হলো C S E ডিপার্টমেন্টের। এখানে 93.6... (lang=bn-IN, speaker=ritu)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:02:39.109960+00:00"}
+2026-07-06 12:32:39,110 - app.services.sarvam_service - INFO - Normalized TTS text: 'সবচেয়ে উচ্চ স্থানান্তর হলো C S E ডিপার্টমেন্টের। এখানে 93.6% ছাত্র স্থানান্তর পায়।'
+{"message": "Normalized TTS text: 'সবচেয়ে উচ্চ স্থানান্তর হলো C S E ডিপার্টমেন্টের। এখানে 93.6% ছাত্র স্থানান্তর পায়।'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:02:39.110199+00:00"}
+2026-07-06 12:32:44,329 - app.services.sarvam_service - INFO - TTS generated: 385068 bytes, lang=bn-IN, speaker=ritu
+{"message": "TTS generated: 385068 bytes, lang=bn-IN, speaker=ritu", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:02:44.329223+00:00"}
+2026-07-06 12:32:44,329 - livekit-agent - INFO - [PERF] TTS .............  5220.5 ms  text=সবচেয়ে উচ্চ স্থানান্তর হলো C S E ডিপার্
+{"message": "[PERF] TTS .............  5220.5 ms  text=সবচেয়ে উচ্চ স্থানান্তর হলো C S E ডিপার্", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:02:44.329784+00:00"}
+2026-07-06 12:32:44,330 - livekit-agent - INFO - [PERF] Playback ........     0.2 ms  (8s audio)
+{"message": "[PERF] Playback ........     0.2 ms  (8s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:02:44.330091+00:00"}
+2026-07-06 12:33:32,932 - app.services.sarvam_service - INFO - STT request: audio_size=314348 bytes, model=saaras:v3, language=None
+{"message": "STT request: audio_size=314348 bytes, model=saaras:v3, language=None", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:03:32.932152+00:00"}
+2026-07-06 12:33:48,258 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+{"message": "Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:03:48.258547+00:00"}
+2026-07-06 12:33:48,258 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260706_36c4c7f6-acab-468e-999a-c4022d820cd0' transcript='Sorry, can you tell me in English which department got the highest placement?' timestamps=None diarized_transcript=None language_code='en-IN' language_probability=1.0
+{"message": "Sarvam raw response: request_id='20260706_36c4c7f6-acab-468e-999a-c4022d820cd0' transcript='Sorry, can you tell me in English which department got the highest placement?' timestamps=None diarized_transcript=None language_code='en-IN' language_probability=1.0", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:03:48.258870+00:00"}
+2026-07-06 12:33:48,259 - app.services.sarvam_service - INFO - Extracted transcript: 'Sorry, can you tell me in English which department got the highest placement?'
+{"message": "Extracted transcript: 'Sorry, can you tell me in English which department got the highest placement?'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:03:48.259001+00:00"}
+2026-07-06 12:33:48,259 - app.services.sarvam_service - INFO - STT result: 'Sorry, can you tell me in English which department got the highest placement?...' detected_lang=en-IN
+{"message": "STT result: 'Sorry, can you tell me in English which department got the highest placement?...' detected_lang=en-IN", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:03:48.259115+00:00"}
+2026-07-06 12:33:48,259 - livekit-agent - INFO - [PERF] STT ............. 15327.2 ms  transcript='Sorry, can you tell me in English which department got the h'
+{"message": "[PERF] STT ............. 15327.2 ms  transcript='Sorry, can you tell me in English which department got the h'", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:03:48.259328+00:00"}
+2026-07-06 12:33:48,427 - livekit-agent - INFO - LLM Query: 'Sorry, can you tell me in English which department got the highest placement?...' History: 12 turns
+{"message": "LLM Query: 'Sorry, can you tell me in English which department got the highest placement?...' History: 12 turns", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:03:48.427868+00:00"}
+2026-07-06 12:33:48,434 - app.services.normalization.normalizer - INFO - Normalization: 'Sorry, can you tell me in English which department got the h' -> 'sorry can you tell me in english which department got the hi' (1 changes: ['cleanup'])
+{"message": "Normalization: 'Sorry, can you tell me in English which department got the h' -> 'sorry can you tell me in english which department got the hi' (1 changes: ['cleanup'])", "level": "INFO", "name": "app.services.normalization.normalizer", "timestamp": "2026-07-06T07:03:48.434416+00:00"}
+2026-07-06 12:33:48,435 - app.services.llm.groq_service - INFO - [console-95e48ba0] Query normalized (stream): 'Sorry, can you tell me in English which department got the h' -> 'sorry can you tell me in english which department got the hi'
+{"message": "[console-95e48ba0] Query normalized (stream): 'Sorry, can you tell me in English which department got the h' -> 'sorry can you tell me in english which department got the hi'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:03:48.435203+00:00"}
+2026-07-06 12:33:48,436 - app.services.llm.groq_service - INFO - [console-95e48ba0] Language change: bn → en (reason: explicit switch command in query)
+{"message": "[console-95e48ba0] Language change: bn → en (reason: explicit switch command in query)", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:03:48.436241+00:00"}
+2026-07-06 12:33:48,437 - app.services.llm.groq_service - INFO - EXPAND: sorry can you tell me in english which department got the hi | reason=long_query | prev_q=In these departments, which is the highest placement got?
+{"message": "EXPAND: sorry can you tell me in english which department got the hi | reason=long_query | prev_q=In these departments, which is the highest placement got?", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:03:48.437446+00:00"}
+2026-07-06 12:33:48,438 - app.services.llm.groq_service - INFO - HANDLER: placement matched for query='sorry can you tell me in english which department got the hi'
+{"message": "HANDLER: placement matched for query='sorry can you tell me in english which department got the hi'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:03:48.438387+00:00"}
+2026-07-06 12:33:48,440 - livekit-agent - INFO - TURN TTFT=13ms (user speech â†’ LLM first token)
+{"message": "TURN TTFT=13ms (user speech â†’ LLM first token)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:03:48.440682+00:00"}
+2026-07-06 12:33:48,604 - livekit-agent - INFO - SarvamTTS.synthesize called for: The placement rate for ME is 72%....
+{"message": "SarvamTTS.synthesize called for: The placement rate for ME is 72%....", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:03:48.604373+00:00"}
+2026-07-06 12:33:48,607 - livekit-agent - INFO - Synthesizing: The placement rate for M E is 72%.... (lang=en-IN, speaker=shubh)
+{"message": "Synthesizing: The placement rate for M E is 72%.... (lang=en-IN, speaker=shubh)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:03:48.607550+00:00"}
+2026-07-06 12:33:48,609 - app.services.sarvam_service - INFO - Normalized TTS text: 'The placement rate for M E is 72%.'
+{"message": "Normalized TTS text: 'The placement rate for M E is 72%.'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:03:48.609046+00:00"}
+2026-07-06 12:33:53,783 - app.services.sarvam_service - INFO - TTS generated: 159788 bytes, lang=en-IN, speaker=shubh
+{"message": "TTS generated: 159788 bytes, lang=en-IN, speaker=shubh", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:03:53.783036+00:00"}
+2026-07-06 12:33:53,783 - livekit-agent - INFO - [PERF] TTS .............  5178.3 ms  text=The placement rate for M E is 72%.
+{"message": "[PERF] TTS .............  5178.3 ms  text=The placement rate for M E is 72%.", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:03:53.783259+00:00"}
+2026-07-06 12:33:53,783 - livekit-agent - INFO - [PERF] Playback ........     0.1 ms  (3s audio)
+{"message": "[PERF] Playback ........     0.1 ms  (3s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:03:53.783449+00:00"}
+2026-07-06 12:33:53,785 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 5.150400399993639, "timestamp": "2026-07-06T07:03:53.785015+00:00"}
+2026-07-06 12:33:53,785 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 5.150328000024427, "timestamp": "2026-07-06T07:03:53.785318+00:00"}
+2026-07-06 12:33:53,887 - livekit-agent - INFO - SarvamTTS.synthesize called for: Average package is 3.2 LPA....
+{"message": "SarvamTTS.synthesize called for: Average package is 3.2 LPA....", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:03:53.887268+00:00"}
+2026-07-06 12:33:53,888 - livekit-agent - INFO - Synthesizing: Average package is 3.2 L P A.... (lang=en-IN, speaker=shubh)
+{"message": "Synthesizing: Average package is 3.2 L P A.... (lang=en-IN, speaker=shubh)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:03:53.888515+00:00"}
+2026-07-06 12:33:53,888 - app.services.sarvam_service - INFO - Normalized TTS text: 'Average package is 3.2 L P A.'
+{"message": "Normalized TTS text: 'Average package is 3.2 L P A.'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:03:53.888788+00:00"}
+2026-07-06 12:33:57,788 - app.services.sarvam_service - INFO - TTS generated: 106540 bytes, lang=en-IN, speaker=shubh
+{"message": "TTS generated: 106540 bytes, lang=en-IN, speaker=shubh", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:03:57.788396+00:00"}
+2026-07-06 12:33:57,788 - livekit-agent - INFO - [PERF] TTS .............  3900.8 ms  text=Average package is 3.2 L P A.
+{"message": "[PERF] TTS .............  3900.8 ms  text=Average package is 3.2 L P A.", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:03:57.788802+00:00"}
+2026-07-06 12:33:57,789 - livekit-agent - INFO - [PERF] Playback ........     0.0 ms  (2s audio)
+{"message": "[PERF] Playback ........     0.0 ms  (2s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:03:57.789015+00:00"}
+2026-07-06 12:33:57,792 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 8.57953049999941, "timestamp": "2026-07-06T07:03:57.792393+00:00"}
+2026-07-06 12:33:57,793 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 8.547980199931189, "timestamp": "2026-07-06T07:03:57.793522+00:00"}
+2026-07-06 12:33:57,948 - livekit-agent - INFO - TURN COMPLETE total=9521ms (user speech â†’ LLM done)
+{"message": "TURN COMPLETE total=9521ms (user speech â†’ LLM done)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:03:57.948356+00:00"}
+2026-07-06 12:33:57,997 - livekit-agent - INFO - SarvamTTS.synthesize called for: Maximum package is 6.5 LPA....
+{"message": "SarvamTTS.synthesize called for: Maximum package is 6.5 LPA....", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:03:57.997947+00:00"}
+2026-07-06 12:33:58,010 - livekit-agent - INFO - Synthesizing: Maximum package is 6.5 L P A.... (lang=en-IN, speaker=shubh)
+{"message": "Synthesizing: Maximum package is 6.5 L P A.... (lang=en-IN, speaker=shubh)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:03:58.010504+00:00"}
+2026-07-06 12:33:58,011 - app.services.sarvam_service - INFO - Normalized TTS text: 'Maximum package is 6.5 L P A.'
+{"message": "Normalized TTS text: 'Maximum package is 6.5 L P A.'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:03:58.011354+00:00"}
+2026-07-06 12:34:03,595 - app.services.sarvam_service - INFO - TTS generated: 176172 bytes, lang=en-IN, speaker=shubh
+{"message": "TTS generated: 176172 bytes, lang=en-IN, speaker=shubh", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:04:03.595741+00:00"}
+2026-07-06 12:34:03,596 - livekit-agent - INFO - [PERF] TTS .............  5586.6 ms  text=Maximum package is 6.5 L P A.
+{"message": "[PERF] TTS .............  5586.6 ms  text=Maximum package is 6.5 L P A.", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:04:03.596288+00:00"}
+2026-07-06 12:34:03,596 - livekit-agent - INFO - [PERF] Playback ........     0.1 ms  (3s audio)
+{"message": "[PERF] Playback ........     0.1 ms  (3s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:04:03.596816+00:00"}
+2026-07-06 12:34:03,597 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 13.996103699928614, "timestamp": "2026-07-06T07:04:03.597795+00:00"}
+2026-07-06 12:34:03,610 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 14.00951279993588, "timestamp": "2026-07-06T07:04:03.610003+00:00"}
+2026-07-06 12:35:07,933 - app.services.sarvam_service - INFO - STT request: audio_size=228332 bytes, model=saaras:v3, language=None
+{"message": "STT request: audio_size=228332 bytes, model=saaras:v3, language=None", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:05:07.933412+00:00"}
+2026-07-06 12:35:53,290 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+{"message": "Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:05:53.290671+00:00"}
+2026-07-06 12:35:53,291 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260706_dbd15ae7-ab57-4177-99f4-7d1f05c4d219' transcript='No, which department got the highest placement?' timestamps=None diarized_transcript=None language_code='en-IN' language_probability=1.0
+{"message": "Sarvam raw response: request_id='20260706_dbd15ae7-ab57-4177-99f4-7d1f05c4d219' transcript='No, which department got the highest placement?' timestamps=None diarized_transcript=None language_code='en-IN' language_probability=1.0", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:05:53.291060+00:00"}
+2026-07-06 12:35:53,291 - app.services.sarvam_service - INFO - Extracted transcript: 'No, which department got the highest placement?'
+{"message": "Extracted transcript: 'No, which department got the highest placement?'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:05:53.291297+00:00"}
+2026-07-06 12:35:53,291 - app.services.sarvam_service - INFO - STT result: 'No, which department got the highest placement?...' detected_lang=en-IN
+{"message": "STT result: 'No, which department got the highest placement?...' detected_lang=en-IN", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:05:53.291443+00:00"}
+2026-07-06 12:35:53,291 - livekit-agent - INFO - [PERF] STT ............. 45358.3 ms  transcript='No, which department got the highest placement?'
+{"message": "[PERF] STT ............. 45358.3 ms  transcript='No, which department got the highest placement?'", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:05:53.291824+00:00"}
+2026-07-06 12:35:53,641 - livekit-agent - INFO - LLM Query: 'No, which department got the highest placement?...' History: 12 turns
+{"message": "LLM Query: 'No, which department got the highest placement?...' History: 12 turns", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:05:53.641281+00:00"}
+2026-07-06 12:35:53,650 - app.services.normalization.normalizer - INFO - Normalization: 'No, which department got the highest placement?' -> 'no which department got the highest placement' (1 changes: ['cleanup'])
+{"message": "Normalization: 'No, which department got the highest placement?' -> 'no which department got the highest placement' (1 changes: ['cleanup'])", "level": "INFO", "name": "app.services.normalization.normalizer", "timestamp": "2026-07-06T07:05:53.650050+00:00"}
+2026-07-06 12:35:53,650 - app.services.llm.groq_service - INFO - [console-95e48ba0] Query normalized (stream): 'No, which department got the highest placement?' -> 'no which department got the highest placement'
+{"message": "[console-95e48ba0] Query normalized (stream): 'No, which department got the highest placement?' -> 'no which department got the highest placement'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:05:53.650516+00:00"}
+2026-07-06 12:35:53,651 - app.utils.language_detect - ERROR - FastText prediction failed: 'NoneType' object has no attribute 'predict'
+{"message": "FastText prediction failed: 'NoneType' object has no attribute 'predict'", "level": "ERROR", "name": "app.utils.language_detect", "timestamp": "2026-07-06T07:05:53.651551+00:00"}
+2026-07-06 12:35:53,652 - app.services.llm.groq_service - INFO - EXPAND: no which department got the highest placement | reason=long_query | prev_q=Sorry, can you tell me in English which department got the highest placement?
+{"message": "EXPAND: no which department got the highest placement | reason=long_query | prev_q=Sorry, can you tell me in English which department got the highest placement?", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:05:53.652162+00:00"}
+2026-07-06 12:35:53,653 - app.services.llm.groq_service - INFO - HANDLER: placement matched for query='no which department got the highest placement'
+{"message": "HANDLER: placement matched for query='no which department got the highest placement'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:05:53.653320+00:00"}
+2026-07-06 12:35:53,653 - app.services.llm.groq_service - INFO - HANDLER: departments matched for query='no which department got the highest placement'
+{"message": "HANDLER: departments matched for query='no which department got the highest placement'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:05:53.653914+00:00"}
+2026-07-06 12:35:53,654 - livekit-agent - INFO - TURN TTFT=14ms (user speech â†’ LLM first token)
+{"message": "TURN TTFT=14ms (user speech â†’ LLM first token)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:05:53.654765+00:00"}
+2026-07-06 12:35:54,586 - app.services.sarvam_service - INFO - STT request: audio_size=411116 bytes, model=saaras:v3, language=None
+{"message": "STT request: audio_size=411116 bytes, model=saaras:v3, language=None", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:05:54.586814+00:00"}
+2026-07-06 12:35:58,501 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+{"message": "Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:05:58.501596+00:00"}
+2026-07-06 12:35:58,502 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260706_0d96fc96-3fc2-4717-a429-d79632c64c85' transcript='Not for only ME, it can be any department. Can you tell me which department got the highest placement?' timestamps=None diarized_transcript=None language_code='en-IN' language_probability=1.0
+{"message": "Sarvam raw response: request_id='20260706_0d96fc96-3fc2-4717-a429-d79632c64c85' transcript='Not for only ME, it can be any department. Can you tell me which department got the highest placement?' timestamps=None diarized_transcript=None language_code='en-IN' language_probability=1.0", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:05:58.502847+00:00"}
+2026-07-06 12:35:58,503 - app.services.sarvam_service - INFO - Extracted transcript: 'Not for only ME, it can be any department. Can you tell me which department got the highest placemen'
+{"message": "Extracted transcript: 'Not for only ME, it can be any department. Can you tell me which department got the highest placemen'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:05:58.503455+00:00"}
+2026-07-06 12:35:58,504 - app.services.sarvam_service - INFO - STT result: 'Not for only ME, it can be any department. Can you tell me which department got the highest placemen...' detected_lang=en-IN
+{"message": "STT result: 'Not for only ME, it can be any department. Can you tell me which department got the highest placemen...' detected_lang=en-IN", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:05:58.504142+00:00"}
+2026-07-06 12:35:58,505 - livekit-agent - INFO - [PERF] STT .............  3918.3 ms  transcript='Not for only ME, it can be any department. Can you tell me w'
+{"message": "[PERF] STT .............  3918.3 ms  transcript='Not for only ME, it can be any department. Can you tell me w'", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:05:58.505208+00:00"}
+2026-07-06 12:35:58,508 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 3.9008953999793157, "timestamp": "2026-07-06T07:05:58.508298+00:00"}
+2026-07-06 12:35:58,513 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 3.9045148000069894, "timestamp": "2026-07-06T07:05:58.513299+00:00"}
+2026-07-06 12:35:58,597 - livekit-agent - INFO - LLM Query: 'Not for only ME, it can be any department. Can you tell me which department got the highest placemen...' History: 12 turns
+{"message": "LLM Query: 'Not for only ME, it can be any department. Can you tell me which department got the highest placemen...' History: 12 turns", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:05:58.597381+00:00"}
+2026-07-06 12:35:58,607 - app.services.normalization.normalizer - INFO - Normalization: 'Not for only ME, it can be any department. Can you tell me w' -> 'not for only me IT can B.Tech any department can you tell me' (3 changes: ['cleanup', 'stt_correction', 'alias_resolution'])
+{"message": "Normalization: 'Not for only ME, it can be any department. Can you tell me w' -> 'not for only me IT can B.Tech any department can you tell me' (3 changes: ['cleanup', 'stt_correction', 'alias_resolution'])", "level": "INFO", "name": "app.services.normalization.normalizer", "timestamp": "2026-07-06T07:05:58.607994+00:00"}
+2026-07-06 12:35:58,608 - app.services.llm.groq_service - INFO - [console-95e48ba0] Query normalized (stream): 'Not for only ME, it can be any department. Can you tell me w' -> 'not for only me IT can B.Tech any department can you tell me'
+{"message": "[console-95e48ba0] Query normalized (stream): 'Not for only ME, it can be any department. Can you tell me w' -> 'not for only me IT can B.Tech any department can you tell me'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:05:58.608705+00:00"}
+2026-07-06 12:35:58,609 - app.services.llm.groq_service - INFO - [console-95e48ba0] Language: detected=hi, keeping en (reason: weak evidence, kw markers bn=0 hi=1)
+{"message": "[console-95e48ba0] Language: detected=hi, keeping en (reason: weak evidence, kw markers bn=0 hi=1)", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:05:58.609578+00:00"}
+2026-07-06 12:35:58,610 - app.services.llm.groq_service - INFO - EXPAND: not for only me IT can B.Tech any department can you tell me | reason=long_query | prev_q=No, which department got the highest placement?
+{"message": "EXPAND: not for only me IT can B.Tech any department can you tell me | reason=long_query | prev_q=No, which department got the highest placement?", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:05:58.610740+00:00"}
+2026-07-06 12:35:58,612 - app.services.llm.groq_service - INFO - HANDLER: placement matched for query='not for only me it can b.tech any department can you tell me'
+{"message": "HANDLER: placement matched for query='not for only me it can b.tech any department can you tell me'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:05:58.612182+00:00"}
+2026-07-06 12:35:58,613 - livekit-agent - INFO - TURN TTFT=16ms (user speech â†’ LLM first token)
+{"message": "TURN TTFT=16ms (user speech â†’ LLM first token)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:05:58.613196+00:00"}
+2026-07-06 12:35:58,768 - livekit-agent - INFO - SarvamTTS.synthesize called for: The placement rate for IT is 88%....
+{"message": "SarvamTTS.synthesize called for: The placement rate for IT is 88%....", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:05:58.768231+00:00"}
+2026-07-06 12:35:58,771 - livekit-agent - INFO - Synthesizing: The placement rate for I T is 88%.... (lang=en-IN, speaker=shubh)
+{"message": "Synthesizing: The placement rate for I T is 88%.... (lang=en-IN, speaker=shubh)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:05:58.771727+00:00"}
+2026-07-06 12:35:58,772 - app.services.sarvam_service - INFO - Normalized TTS text: 'The placement rate for I T is 88%.'
+{"message": "Normalized TTS text: 'The placement rate for I T is 88%.'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:05:58.772233+00:00"}
+2026-07-06 12:36:00,894 - app.services.sarvam_service - INFO - TTS generated: 139308 bytes, lang=en-IN, speaker=shubh
+{"message": "TTS generated: 139308 bytes, lang=en-IN, speaker=shubh", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:00.894626+00:00"}
+2026-07-06 12:36:00,895 - livekit-agent - INFO - [PERF] TTS .............  2125.2 ms  text=The placement rate for I T is 88%.
+{"message": "[PERF] TTS .............  2125.2 ms  text=The placement rate for I T is 88%.", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:00.895235+00:00"}
+2026-07-06 12:36:00,895 - livekit-agent - INFO - [PERF] Playback ........     0.1 ms  (2s audio)
+{"message": "[PERF] Playback ........     0.1 ms  (2s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:00.895580+00:00"}
+2026-07-06 12:36:00,896 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 3.997795099978333, "timestamp": "2026-07-06T07:06:00.896369+00:00"}
+2026-07-06 12:36:00,897 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 3.9680607004077153, "timestamp": "2026-07-06T07:06:00.897216+00:00"}
+2026-07-06 12:36:01,110 - livekit-agent - INFO - SarvamTTS.synthesize called for: Average package is 4.0 LPA....
+{"message": "SarvamTTS.synthesize called for: Average package is 4.0 LPA....", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:01.110982+00:00"}
+2026-07-06 12:36:01,114 - livekit-agent - INFO - Synthesizing: Average package is 4.0 L P A.... (lang=en-IN, speaker=shubh)
+{"message": "Synthesizing: Average package is 4.0 L P A.... (lang=en-IN, speaker=shubh)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:01.114425+00:00"}
+2026-07-06 12:36:01,114 - app.services.sarvam_service - INFO - Normalized TTS text: 'Average package is 4.0 L P A.'
+{"message": "Normalized TTS text: 'Average package is 4.0 L P A.'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:01.114818+00:00"}
+2026-07-06 12:36:02,712 - app.services.sarvam_service - INFO - TTS generated: 110636 bytes, lang=en-IN, speaker=shubh
+{"message": "TTS generated: 110636 bytes, lang=en-IN, speaker=shubh", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:02.712830+00:00"}
+2026-07-06 12:36:02,713 - livekit-agent - INFO - [PERF] TTS .............  1599.7 ms  text=Average package is 4.0 L P A.
+{"message": "[PERF] TTS .............  1599.7 ms  text=Average package is 4.0 L P A.", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:02.713307+00:00"}
+2026-07-06 12:36:02,713 - livekit-agent - INFO - [PERF] Playback ........     0.1 ms  (2s audio)
+{"message": "[PERF] Playback ........     0.1 ms  (2s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:02.713601+00:00"}
+2026-07-06 12:36:02,713 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 5.395489799936765, "timestamp": "2026-07-06T07:06:02.713914+00:00"}
+2026-07-06 12:36:02,714 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 5.365364100355187, "timestamp": "2026-07-06T07:06:02.714729+00:00"}
+2026-07-06 12:36:02,793 - livekit-agent - INFO - TURN COMPLETE total=4196ms (user speech â†’ LLM done)
+{"message": "TURN COMPLETE total=4196ms (user speech â†’ LLM done)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:02.793825+00:00"}
+2026-07-06 12:36:02,901 - livekit-agent - INFO - SarvamTTS.synthesize called for: Maximum package is 10 LPA....
+{"message": "SarvamTTS.synthesize called for: Maximum package is 10 LPA....", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:02.901151+00:00"}
+2026-07-06 12:36:02,905 - livekit-agent - INFO - Synthesizing: Maximum package is 10 L P A.... (lang=en-IN, speaker=shubh)
+{"message": "Synthesizing: Maximum package is 10 L P A.... (lang=en-IN, speaker=shubh)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:02.905329+00:00"}
+2026-07-06 12:36:02,905 - app.services.sarvam_service - INFO - Normalized TTS text: 'Maximum package is 10 L P A.'
+{"message": "Normalized TTS text: 'Maximum package is 10 L P A.'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:02.905967+00:00"}
+2026-07-06 12:36:04,828 - app.services.sarvam_service - INFO - TTS generated: 139308 bytes, lang=en-IN, speaker=shubh
+{"message": "TTS generated: 139308 bytes, lang=en-IN, speaker=shubh", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:04.828081+00:00"}
+2026-07-06 12:36:04,828 - livekit-agent - INFO - [PERF] TTS .............  1924.6 ms  text=Maximum package is 10 L P A.
+{"message": "[PERF] TTS .............  1924.6 ms  text=Maximum package is 10 L P A.", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:04.828771+00:00"}
+2026-07-06 12:36:04,829 - livekit-agent - INFO - [PERF] Playback ........     0.1 ms  (2s audio)
+{"message": "[PERF] Playback ........     0.1 ms  (2s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:04.829390+00:00"}
+2026-07-06 12:36:04,847 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 7.109085900009141, "timestamp": "2026-07-06T07:06:04.847709+00:00"}
+2026-07-06 12:36:04,848 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 7.111421800508161, "timestamp": "2026-07-06T07:06:04.848684+00:00"}
+2026-07-06 12:36:27,038 - app.services.sarvam_service - INFO - STT request: audio_size=295916 bytes, model=saaras:v3, language=None
+{"message": "STT request: audio_size=295916 bytes, model=saaras:v3, language=None", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:27.038766+00:00"}
+2026-07-06 12:36:28,256 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+{"message": "Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:28.256687+00:00"}
+2026-07-06 12:36:28,257 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260706_7b435143-0c8c-491b-9544-0ac369079621' transcript='अच्छा, आईटी का एचओडी का नाम क्या बता सकते हैं क्या?' timestamps=None diarized_transcript=None language_code='hi-IN' language_probability=1.0
+{"message": "Sarvam raw response: request_id='20260706_7b435143-0c8c-491b-9544-0ac369079621' transcript='अच्छा, आईटी का एचओडी का नाम क्या बता सकते हैं क्या?' timestamps=None diarized_transcript=None language_code='hi-IN' language_probability=1.0", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:28.257035+00:00"}
+2026-07-06 12:36:28,257 - app.services.sarvam_service - INFO - Extracted transcript: 'अच्छा, आईटी का एचओडी का नाम क्या बता सकते हैं क्या?'
+{"message": "Extracted transcript: 'अच्छा, आईटी का एचओडी का नाम क्या बता सकते हैं क्या?'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:28.257288+00:00"}
+2026-07-06 12:36:28,257 - app.services.sarvam_service - INFO - STT result: 'अच्छा, आईटी का एचओडी का नाम क्या बता सकते हैं क्या?...' detected_lang=hi-IN
+{"message": "STT result: 'अच्छा, आईटी का एचओडी का नाम क्या बता सकते हैं क्या?...' detected_lang=hi-IN", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:28.257483+00:00"}
+2026-07-06 12:36:28,257 - livekit-agent - INFO - [PERF] STT .............  1219.0 ms  transcript='अच्छा, आईटी का एचओडी का नाम क्या बता सकते हैं क्या?'
+{"message": "[PERF] STT .............  1219.0 ms  transcript='अच्छा, आईटी का एचओडी का नाम क्या बता सकते हैं क्या?'", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:28.257776+00:00"}
+2026-07-06 12:36:28,280 - livekit-agent - INFO - LLM Query: 'अच्छा, आईटी का एचओडी का नाम क्या बता सकते हैं क्या?...' History: 12 turns
+{"message": "LLM Query: 'अच्छा, आईटी का एचओडी का नाम क्या बता सकते हैं क्या?...' History: 12 turns", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:28.280051+00:00"}
+2026-07-06 12:36:28,289 - app.services.normalization.normalizer - INFO - Normalization: 'अच्छा, आईटी का एचओडी का नाम क्या बता सकते हैं क्या?' -> 'अच्छा आईटी का एचओडी का नाम what बता सकते हैं what' (2 changes: ['cleanup', 'language_mapping'])
+{"message": "Normalization: 'अच्छा, आईटी का एचओडी का नाम क्या बता सकते हैं क्या?' -> 'अच्छा आईटी का एचओडी का नाम what बता सकते हैं what' (2 changes: ['cleanup', 'language_mapping'])", "level": "INFO", "name": "app.services.normalization.normalizer", "timestamp": "2026-07-06T07:06:28.289668+00:00"}
+2026-07-06 12:36:28,290 - app.services.llm.groq_service - INFO - [console-95e48ba0] Query normalized (stream): 'अच्छा, आईटी का एचओडी का नाम क्या बता सकते हैं क्या?' -> 'अच्छा आईटी का एचओडी का नाम what बता सकते हैं what'
+{"message": "[console-95e48ba0] Query normalized (stream): 'अच्छा, आईटी का एचओडी का नाम क्या बता सकते हैं क्या?' -> 'अच्छा आईटी का एचओडी का नाम what बता सकते हैं what'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:06:28.290239+00:00"}
+2026-07-06 12:36:28,291 - app.services.llm.groq_service - INFO - [console-95e48ba0] Language change: en → hi (reason: Devanagari script detected in query)
+{"message": "[console-95e48ba0] Language change: en → hi (reason: Devanagari script detected in query)", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:06:28.291332+00:00"}
+2026-07-06 12:36:28,291 - app.services.llm.groq_service - INFO - EXPAND: अच्छा आईटी का एचओडी का नाम what बता सकते हैं what | reason=long_query | prev_q=Not for only ME, it can be any department. Can you tell me which department got 
+{"message": "EXPAND: अच्छा आईटी का एचओडी का नाम what बता सकते हैं what | reason=long_query | prev_q=Not for only ME, it can be any department. Can you tell me which department got ", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:06:28.291965+00:00"}
+2026-07-06 12:36:28,930 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 0.6196176000004634, "timestamp": "2026-07-06T07:06:28.930159+00:00"}
+2026-07-06 12:36:29,835 - app.services.llm.groq_service - INFO - STREAM TTFT=1554ms prep=623ms llm_setup=391ms lang=hi q='अच्छा आईटी का एचओडी का नाम what बता सकते हैं what'
+{"message": "STREAM TTFT=1554ms prep=623ms llm_setup=391ms lang=hi q='अच्छा आईटी का एचओडी का नाम what बता सकते हैं what'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:06:29.835032+00:00"}
+2026-07-06 12:36:29,835 - livekit-agent - INFO - TURN TTFT=1556ms (user speech â†’ LLM first token)
+{"message": "TURN TTFT=1556ms (user speech â†’ LLM first token)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:29.835677+00:00"}
+2026-07-06 12:36:29,865 - livekit-agent - INFO - SarvamTTS.synthesize called for: आईटी विभाग के एचओडी का नाम है डॉ....
+{"message": "SarvamTTS.synthesize called for: आईटी विभाग के एचओडी का नाम है डॉ....", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:29.865342+00:00"}
+2026-07-06 12:36:29,867 - livekit-agent - INFO - Synthesizing: आईटी विभाग के एचओडी का नाम है डॉ.... (lang=hi-IN, speaker=shubh)
+{"message": "Synthesizing: आईटी विभाग के एचओडी का नाम है डॉ.... (lang=hi-IN, speaker=shubh)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:29.867159+00:00"}
+2026-07-06 12:36:29,867 - app.services.sarvam_service - INFO - Normalized TTS text: 'आईटी विभाग के एचओडी का नाम है डॉ.'
+{"message": "Normalized TTS text: 'आईटी विभाग के एचओडी का नाम है डॉ.'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:29.867520+00:00"}
+2026-07-06 12:36:31,683 - app.services.sarvam_service - INFO - TTS generated: 114732 bytes, lang=hi-IN, speaker=shubh
+{"message": "TTS generated: 114732 bytes, lang=hi-IN, speaker=shubh", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:31.683068+00:00"}
+2026-07-06 12:36:31,683 - livekit-agent - INFO - [PERF] TTS .............  1817.3 ms  text=आईटी विभाग के एचओडी का नाम है डॉ.
+{"message": "[PERF] TTS .............  1817.3 ms  text=आईटी विभाग के एचओडी का नाम है डॉ.", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:31.683463+00:00"}
+2026-07-06 12:36:31,683 - livekit-agent - INFO - [PERF] Playback ........     0.1 ms  (2s audio)
+{"message": "[PERF] Playback ........     0.1 ms  (2s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:31.683859+00:00"}
+2026-07-06 12:36:31,706 - app.services.llm.groq_service - INFO - STREAM COMPLETE total=3426ms chars=53 ~15.5cps lang=hi
+{"message": "STREAM COMPLETE total=3426ms chars=53 ~15.5cps lang=hi", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:06:31.706860+00:00"}
+2026-07-06 12:36:31,710 - livekit-agent - INFO - TURN COMPLETE total=3431ms (user speech â†’ LLM done)
+{"message": "TURN COMPLETE total=3431ms (user speech â†’ LLM done)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:31.710790+00:00"}
+2026-07-06 12:36:31,813 - livekit-agent - INFO - SarvamTTS.synthesize called for: दिनेश कुमार प्रधान।...
+{"message": "SarvamTTS.synthesize called for: दिनेश कुमार प्रधान।...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:31.813684+00:00"}
+2026-07-06 12:36:31,816 - livekit-agent - INFO - Synthesizing: दिनेश कुमार प्रधान।... (lang=hi-IN, speaker=shubh)
+{"message": "Synthesizing: दिनेश कुमार प्रधान।... (lang=hi-IN, speaker=shubh)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:31.816293+00:00"}
+2026-07-06 12:36:31,817 - app.services.sarvam_service - INFO - Normalized TTS text: 'दिनेश कुमार प्रधान।'
+{"message": "Normalized TTS text: 'दिनेश कुमार प्रधान।'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:31.817746+00:00"}
+2026-07-06 12:36:32,787 - app.services.sarvam_service - INFO - TTS generated: 65580 bytes, lang=hi-IN, speaker=shubh
+{"message": "TTS generated: 65580 bytes, lang=hi-IN, speaker=shubh", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:32.787050+00:00"}
+2026-07-06 12:36:32,787 - livekit-agent - INFO - [PERF] TTS .............   972.6 ms  text=दिनेश कुमार प्रधान।
+{"message": "[PERF] TTS .............   972.6 ms  text=दिनेश कुमार प्रधान।", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:32.787601+00:00"}
+2026-07-06 12:36:32,787 - livekit-agent - INFO - [PERF] Playback ........     0.1 ms  (1s audio)
+{"message": "[PERF] Playback ........     0.1 ms  (1s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:32.787953+00:00"}
+2026-07-06 12:36:32,788 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 0.945329799963627, "timestamp": "2026-07-06T07:06:32.788499+00:00"}
+2026-07-06 12:36:32,805 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 0.9585216000042855, "timestamp": "2026-07-06T07:06:32.805175+00:00"}
+2026-07-06 12:36:48,584 - app.services.sarvam_service - INFO - STT request: audio_size=286700 bytes, model=saaras:v3, language=None
+{"message": "STT request: audio_size=286700 bytes, model=saaras:v3, language=None", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:48.584426+00:00"}
+2026-07-06 12:36:49,739 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+{"message": "Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:49.739456+00:00"}
+2026-07-06 12:36:49,739 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260706_28b9a7fb-bbe3-47d3-a07a-30ba9374743c' transcript='और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर?' timestamps=None diarized_transcript=None language_code='hi-IN' language_probability=1.0
+{"message": "Sarvam raw response: request_id='20260706_28b9a7fb-bbe3-47d3-a07a-30ba9374743c' transcript='और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर?' timestamps=None diarized_transcript=None language_code='hi-IN' language_probability=1.0", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:49.739847+00:00"}
+2026-07-06 12:36:49,740 - app.services.sarvam_service - INFO - Extracted transcript: 'और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर?'
+{"message": "Extracted transcript: 'और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर?'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:49.740037+00:00"}
+2026-07-06 12:36:49,740 - app.services.sarvam_service - INFO - STT result: 'और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर?...' detected_lang=hi-IN
+{"message": "STT result: 'और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर?...' detected_lang=hi-IN", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:49.740188+00:00"}
+2026-07-06 12:36:49,740 - livekit-agent - INFO - [PERF] STT .............  1156.0 ms  transcript='और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर?'
+{"message": "[PERF] STT .............  1156.0 ms  transcript='और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर?'", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:49.740436+00:00"}
+2026-07-06 12:36:49,760 - livekit-agent - INFO - LLM Query: 'और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर?...' History: 12 turns
+{"message": "LLM Query: 'और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर?...' History: 12 turns", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:49.760916+00:00"}
+2026-07-06 12:36:49,767 - app.services.normalization.normalizer - INFO - Normalization: 'और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर?' -> 'और उनकी what what क्वालिफिकेशंस हैं एज अ प्रोफेसर' (2 changes: ['cleanup', 'language_mapping'])
+{"message": "Normalization: 'और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर?' -> 'और उनकी what what क्वालिफिकेशंस हैं एज अ प्रोफेसर' (2 changes: ['cleanup', 'language_mapping'])", "level": "INFO", "name": "app.services.normalization.normalizer", "timestamp": "2026-07-06T07:06:49.767727+00:00"}
+2026-07-06 12:36:49,768 - app.services.llm.groq_service - INFO - [console-95e48ba0] Query normalized (stream): 'और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर?' -> 'और उनकी what what क्वालिफिकेशंस हैं एज अ प्रोफेसर'
+{"message": "[console-95e48ba0] Query normalized (stream): 'और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर?' -> 'और उनकी what what क्वालिफिकेशंस हैं एज अ प्रोफेसर'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:06:49.768346+00:00"}
+2026-07-06 12:36:49,769 - app.services.llm.groq_service - INFO - EXPAND: और उनकी what what क्वालिफिकेशंस हैं एज अ प्रोफेसर | reason=long_query | prev_q=अच्छा, आईटी का एचओडी का नाम क्या बता सकते हैं क्या?
+{"message": "EXPAND: और उनकी what what क्वालिफिकेशंस हैं एज अ प्रोफेसर | reason=long_query | prev_q=अच्छा, आईटी का एचओडी का नाम क्या बता सकते हैं क्या?", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:06:49.769143+00:00"}
+2026-07-06 12:36:50,206 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 0.4141106999660842, "timestamp": "2026-07-06T07:06:50.206516+00:00"}
+2026-07-06 12:36:50,633 - app.services.llm.groq_service - INFO - STREAM TTFT=872ms prep=429ms llm_setup=315ms lang=hi q='और उनकी what what क्वालिफिकेशंस हैं एज अ प्रोफेसर'
+{"message": "STREAM TTFT=872ms prep=429ms llm_setup=315ms lang=hi q='और उनकी what what क्वालिफिकेशंस हैं एज अ प्रोफेसर'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:06:50.633318+00:00"}
+2026-07-06 12:36:50,633 - livekit-agent - INFO - TURN TTFT=873ms (user speech â†’ LLM first token)
+{"message": "TURN TTFT=873ms (user speech â†’ LLM first token)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:50.633978+00:00"}
+2026-07-06 12:36:50,885 - livekit-agent - INFO - SarvamTTS.synthesize called for: उनकी योग्यता के बारे में जानकारी देने के लिए, आपको...
+{"message": "SarvamTTS.synthesize called for: उनकी योग्यता के बारे में जानकारी देने के लिए, आपको...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:50.885648+00:00"}
+2026-07-06 12:36:50,889 - livekit-agent - INFO - Synthesizing: उनकी योग्यता के बारे में जानकारी देने के लिए, आपको किस विभाग... (lang=hi-IN, speaker=shubh)
+{"message": "Synthesizing: उनकी योग्यता के बारे में जानकारी देने के लिए, आपको किस विभाग... (lang=hi-IN, speaker=shubh)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:50.889791+00:00"}
+2026-07-06 12:36:50,890 - app.services.sarvam_service - INFO - Normalized TTS text: 'उनकी योग्यता के बारे में जानकारी देने के लिए, आपको किस विभाग के Head of Department के बारे में पूछना होगा। हमारे पास C S E, I T, E C E, E E, M C A, M B A, और अन्य विभाग हैं।  लेकिन अगर आप किसी विशिष्ट विभाग के बारे में पूछ रहे हैं, तो मैं आपको बता सकता हूं कि कुछ विभागों के Head of Department की योग्यता के बारे में जानकारी दी गई है। उदाहरण के लिए, C S E विभाग के Head of Department डॉ.'
+{"message": "Normalized TTS text: 'उनकी योग्यता के बारे में जानकारी देने के लिए, आपको किस विभाग के Head of Department के बारे में पूछना होगा। हमारे पास C S E, I T, E C E, E E, M C A, M B A, और अन्य विभाग हैं।  लेकिन अगर आप किसी विशिष्ट विभाग के बारे में पूछ रहे हैं, तो मैं आपको बता सकता हूं कि कुछ विभागों के Head of Department की योग्यता के बारे में जानकारी दी गई है। उदाहरण के लिए, C S E विभाग के Head of Department डॉ.'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:50.890455+00:00"}
+2026-07-06 12:36:58,282 - app.services.sarvam_service - INFO - TTS generated: 1196780 bytes, lang=hi-IN, speaker=shubh
+{"message": "TTS generated: 1196780 bytes, lang=hi-IN, speaker=shubh", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:58.282389+00:00"}
+2026-07-06 12:36:58,284 - livekit-agent - INFO - [PERF] TTS .............  7397.2 ms  text=उनकी योग्यता के बारे में जानकारी देने के
+{"message": "[PERF] TTS .............  7397.2 ms  text=उनकी योग्यता के बारे में जानकारी देने के", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:58.284120+00:00"}
+2026-07-06 12:36:58,285 - livekit-agent - INFO - [PERF] Playback ........     0.7 ms  (24s audio)
+{"message": "[PERF] Playback ........     0.7 ms  (24s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:58.285342+00:00"}
+2026-07-06 12:36:58,288 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 7.374293299980462, "timestamp": "2026-07-06T07:06:58.288440+00:00"}
+2026-07-06 12:36:58,297 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 7.382708200027235, "timestamp": "2026-07-06T07:06:58.297545+00:00"}
+2026-07-06 12:36:58,360 - app.services.llm.groq_service - INFO - STREAM TRUNCATED at 400 chars (lang=hi q='और उनकी what what क्वालिफिकेशंस हैं एज अ...')
+{"message": "STREAM TRUNCATED at 400 chars (lang=hi q='और उनकी what what क्वालिफिकेशंस हैं एज अ...')", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:06:58.360891+00:00"}
+2026-07-06 12:36:58,367 - app.services.llm.groq_service - INFO - STREAM COMPLETE total=8606ms chars=422 ~49.0cps lang=hi
+{"message": "STREAM COMPLETE total=8606ms chars=422 ~49.0cps lang=hi", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:06:58.367814+00:00"}
+2026-07-06 12:36:58,371 - livekit-agent - INFO - TURN COMPLETE total=8611ms (user speech â†’ LLM done)
+{"message": "TURN COMPLETE total=8611ms (user speech â†’ LLM done)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:58.371375+00:00"}
+2026-07-06 12:36:59,946 - livekit-agent - INFO - SarvamTTS.synthesize called for: पबित्रा कुमार दे के पास PhD है, और IT विभाग के HOD...
+{"message": "SarvamTTS.synthesize called for: पबित्रा कुमार दे के पास PhD है, और IT विभाग के HOD...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:59.946982+00:00"}
+2026-07-06 12:36:59,951 - livekit-agent - INFO - Synthesizing: पबित्रा कुमार दे के पास PhD है, और I T विभाग के Head of Depa... (lang=hi-IN, speaker=shubh)
+{"message": "Synthesizing: पबित्रा कुमार दे के पास PhD है, और I T विभाग के Head of Depa... (lang=hi-IN, speaker=shubh)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:06:59.951329+00:00"}
+2026-07-06 12:36:59,951 - app.services.sarvam_service - INFO - Normalized TTS text: 'पबित्रा कुमार दे के पास PhD है, और I T विभाग के Head of Department डॉ.'
+{"message": "Normalized TTS text: 'पबित्रा कुमार दे के पास PhD है, और I T विभाग के Head of Department डॉ.'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:06:59.951726+00:00"}
+2026-07-06 12:37:03,068 - app.services.sarvam_service - INFO - TTS generated: 233516 bytes, lang=hi-IN, speaker=shubh
+{"message": "TTS generated: 233516 bytes, lang=hi-IN, speaker=shubh", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:07:03.068804+00:00"}
+2026-07-06 12:37:03,071 - livekit-agent - INFO - [PERF] TTS .............  3122.3 ms  text=पबित्रा कुमार दे के पास PhD है, और I T व
+{"message": "[PERF] TTS .............  3122.3 ms  text=पबित्रा कुमार दे के पास PhD है, और I T व", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:07:03.071778+00:00"}
+2026-07-06 12:37:03,072 - livekit-agent - INFO - [PERF] Playback ........     0.1 ms  (4s audio)
+{"message": "[PERF] Playback ........     0.1 ms  (4s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:07:03.072391+00:00"}
+2026-07-06 12:37:03,086 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 9.64874170003738, "timestamp": "2026-07-06T07:07:03.086442+00:00"}
+2026-07-06 12:37:03,092 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 9.57867810012819, "timestamp": "2026-07-06T07:07:03.092096+00:00"}
+2026-07-06 12:37:03,398 - livekit-agent - INFO - SarvamTTS.synthesize called for: दिनेश कुमार प्रध...
+{"message": "SarvamTTS.synthesize called for: दिनेश कुमार प्रध...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:07:03.398889+00:00"}
+2026-07-06 12:37:03,415 - livekit-agent - INFO - Synthesizing: दिनेश कुमार प्रध... (lang=hi-IN, speaker=shubh)
+{"message": "Synthesizing: दिनेश कुमार प्रध... (lang=hi-IN, speaker=shubh)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:07:03.415081+00:00"}
+2026-07-06 12:37:03,415 - app.services.sarvam_service - INFO - Normalized TTS text: 'दिनेश कुमार प्रध'
+{"message": "Normalized TTS text: 'दिनेश कुमार प्रध'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:07:03.415919+00:00"}
+2026-07-06 12:37:04,315 - app.services.sarvam_service - INFO - TTS generated: 65580 bytes, lang=hi-IN, speaker=shubh
+{"message": "TTS generated: 65580 bytes, lang=hi-IN, speaker=shubh", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:07:04.315103+00:00"}
+2026-07-06 12:37:04,315 - livekit-agent - INFO - [PERF] TTS .............   901.4 ms  text=दिनेश कुमार प्रध
+{"message": "[PERF] TTS .............   901.4 ms  text=दिनेश कुमार प्रध", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:07:04.315488+00:00"}
+2026-07-06 12:37:04,315 - livekit-agent - INFO - [PERF] Playback ........     0.0 ms  (1s audio)
+{"message": "[PERF] Playback ........     0.0 ms  (1s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:07:04.315750+00:00"}
+2026-07-06 12:37:04,316 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 10.222053200289604, "timestamp": "2026-07-06T07:07:04.316108+00:00"}
+2026-07-06 12:37:04,317 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 10.299122699994125, "timestamp": "2026-07-06T07:07:04.317090+00:00"}
+2026-07-06 12:38:12,332 - app.services.sarvam_service - INFO - STT request: audio_size=163820 bytes, model=saaras:v3, language=None
+{"message": "STT request: audio_size=163820 bytes, model=saaras:v3, language=None", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:08:12.332762+00:00"}
+2026-07-06 12:38:14,490 - app.services.sarvam_service - INFO - Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>
+{"message": "Sarvam raw response type: <class 'sarvamai.types.speech_to_text_response.SpeechToTextResponse'>", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:08:14.490626+00:00"}
+2026-07-06 12:38:14,491 - app.services.sarvam_service - INFO - Sarvam raw response: request_id='20260706_a96c8478-f706-4f20-b761-9d261650e651' transcript='Faculum and Facule' timestamps=None diarized_transcript=None language_code='en-IN' language_probability=1.0
+{"message": "Sarvam raw response: request_id='20260706_a96c8478-f706-4f20-b761-9d261650e651' transcript='Faculum and Facule' timestamps=None diarized_transcript=None language_code='en-IN' language_probability=1.0", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:08:14.491074+00:00"}
+2026-07-06 12:38:14,491 - app.services.sarvam_service - INFO - Extracted transcript: 'Faculum and Facule'
+{"message": "Extracted transcript: 'Faculum and Facule'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:08:14.491297+00:00"}
+2026-07-06 12:38:14,491 - app.services.sarvam_service - INFO - STT result: 'Faculum and Facule...' detected_lang=en-IN
+{"message": "STT result: 'Faculum and Facule...' detected_lang=en-IN", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:08:14.491440+00:00"}
+2026-07-06 12:38:14,491 - livekit-agent - INFO - [PERF] STT .............  2159.0 ms  transcript='Faculum and Facule'
+{"message": "[PERF] STT .............  2159.0 ms  transcript='Faculum and Facule'", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:08:14.491680+00:00"}
+2026-07-06 12:38:14,493 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 2.1299648999767378, "timestamp": "2026-07-06T07:08:14.493608+00:00"}
+2026-07-06 12:38:14,494 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 2.1305015000463463, "timestamp": "2026-07-06T07:08:14.494365+00:00"}
+2026-07-06 12:38:14,523 - livekit-agent - INFO - LLM Query: 'Faculum and Facule...' History: 12 turns
+{"message": "LLM Query: 'Faculum and Facule...' History: 12 turns", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:08:14.523696+00:00"}
+2026-07-06 12:38:14,540 - app.services.llm.groq_service - INFO - DOMAIN=hod | matched='प्रोफेसर' in query='और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर?'
+{"message": "DOMAIN=hod | matched='प्रोफेसर' in query='और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर?'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:08:14.540462+00:00"}
+2026-07-06 12:38:14,545 - app.services.llm.groq_service - INFO - EXPAND: Faculum and Facule | reason=fallback_text_merge | domain=None | prev_domain=hod | prev_q=और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर? | expanded-> Faculum and Facule और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर?
+{"message": "EXPAND: Faculum and Facule | reason=fallback_text_merge | domain=None | prev_domain=hod | prev_q=और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर? | expanded-> Faculum and Facule और उनकी क्या-क्या क्वालिफिकेशंस हैं एज अ प्रोफेसर?", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:08:14.545228+00:00"}
+2026-07-06 12:38:15,003 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 2.578462400079239, "timestamp": "2026-07-06T07:08:15.003020+00:00"}
+2026-07-06 12:38:15,417 - app.services.llm.groq_service - INFO - STREAM TTFT=893ms prep=463ms llm_setup=300ms lang=hi q='Faculum and Facule'
+{"message": "STREAM TTFT=893ms prep=463ms llm_setup=300ms lang=hi q='Faculum and Facule'", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:08:15.417327+00:00"}
+2026-07-06 12:38:15,417 - livekit-agent - INFO - TURN TTFT=894ms (user speech â†’ LLM first token)
+{"message": "TURN TTFT=894ms (user speech â†’ LLM first token)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:08:15.417663+00:00"}
+2026-07-06 12:38:15,492 - app.services.llm.groq_service - INFO - STREAM COMPLETE total=969ms chars=71 ~73.3cps lang=hi
+{"message": "STREAM COMPLETE total=969ms chars=71 ~73.3cps lang=hi", "level": "INFO", "name": "app.services.llm.groq_service", "timestamp": "2026-07-06T07:08:15.492789+00:00"}
+2026-07-06 12:38:15,497 - livekit-agent - INFO - TURN COMPLETE total=973ms (user speech â†’ LLM done)
+{"message": "TURN COMPLETE total=973ms (user speech â†’ LLM done)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:08:15.497003+00:00"}
+2026-07-06 12:38:15,500 - livekit-agent - INFO - SarvamTTS.synthesize called for: कुल शिक्षकों की संख्या 281+ है। छात्र-शिक्षक अनुपा...
+{"message": "SarvamTTS.synthesize called for: कुल शिक्षकों की संख्या 281+ है। छात्र-शिक्षक अनुपा...", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:08:15.500086+00:00"}
+2026-07-06 12:38:15,502 - livekit-agent - INFO - Synthesizing: कुल शिक्षकों की संख्या 281+ है। छात्र-शिक्षक अनुपात 15:1 से ... (lang=hi-IN, speaker=shubh)
+{"message": "Synthesizing: कुल शिक्षकों की संख्या 281+ है। छात्र-शिक्षक अनुपात 15:1 से ... (lang=hi-IN, speaker=shubh)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:08:15.502138+00:00"}
+2026-07-06 12:38:15,502 - app.services.sarvam_service - INFO - Normalized TTS text: 'कुल शिक्षकों की संख्या 281+ है। छात्र-शिक्षक अनुपात 15:1 से 20:1 तक है।'
+{"message": "Normalized TTS text: 'कुल शिक्षकों की संख्या 281+ है। छात्र-शिक्षक अनुपात 15:1 से 20:1 तक है।'", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:08:15.502457+00:00"}
+2026-07-06 12:38:19,251 - app.services.sarvam_service - INFO - TTS generated: 278572 bytes, lang=hi-IN, speaker=shubh
+{"message": "TTS generated: 278572 bytes, lang=hi-IN, speaker=shubh", "level": "INFO", "name": "app.services.sarvam_service", "timestamp": "2026-07-06T07:08:19.251738+00:00"}
+2026-07-06 12:38:19,252 - livekit-agent - INFO - [PERF] TTS .............  3751.0 ms  text=कुल शिक्षकों की संख्या 281+ है। छात्र-शि
+{"message": "[PERF] TTS .............  3751.0 ms  text=कुल शिक्षकों की संख्या 281+ है। छात्र-शि", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:08:19.252145+00:00"}
+2026-07-06 12:38:19,252 - livekit-agent - INFO - [PERF] Playback ........     0.1 ms  (5s audio)
+{"message": "[PERF] Playback ........     0.1 ms  (5s audio)", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:08:19.252455+00:00"}
+2026-07-06 12:41:00,819 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 4.945923900005408, "timestamp": "2026-07-06T07:11:00.819851+00:00"}
+2026-07-06 12:41:00,826 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 4.951203599986155, "timestamp": "2026-07-06T07:11:00.826497+00:00"}
+2026-07-06 12:41:24,570 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 2.1940397999780252, "timestamp": "2026-07-06T07:11:24.570089+00:00"}
+2026-07-06 12:41:24,570 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 2.1941458999710157, "timestamp": "2026-07-06T07:11:24.570718+00:00"}
+2026-07-06 12:42:07,064 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 0.2900562000060454, "timestamp": "2026-07-06T07:12:07.064298+00:00"}
+2026-07-06 12:42:07,067 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 0.2925669000316411, "timestamp": "2026-07-06T07:12:07.067564+00:00"}
+2026-07-06 12:43:25,797 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 0.1733821999579668, "timestamp": "2026-07-06T07:13:25.797873+00:00"}
+2026-07-06 12:43:25,799 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 0.17460950004821643, "timestamp": "2026-07-06T07:13:25.799827+00:00"}
+2026-07-06 12:43:54,720 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 2.546024099988397, "timestamp": "2026-07-06T07:13:54.720710+00:00"}
+2026-07-06 12:43:54,724 - livekit.plugins.silero - WARNING - inference is slower than realtime
+{"message": "inference is slower than realtime", "level": "WARNING", "name": "livekit.plugins.silero", "delay": 2.549216599966865, "timestamp": "2026-07-06T07:13:54.724552+00:00"}
+2026-07-06 12:45:40,998 - livekit.agents - INFO - closing agent session due to participant disconnect (disable via `RoomInputOptions.close_on_disconnect=False`)
+{"message": "closing agent session due to participant disconnect (disable via `RoomInputOptions.close_on_disconnect=False`)", "level": "INFO", "name": "livekit.agents", "room": "console-95e48ba0", "participant": "BCREC Agent", "reason": "CLIENT_INITIATED", "timestamp": "2026-07-06T07:15:40.998484+00:00"}
+2026-07-06 12:46:04,963 - livekit - WARNING - livekit_api::signal_client:530:livekit_api::signal_client - dropping pass-through signal — no stream available
+{"message": "livekit_api::signal_client:530:livekit_api::signal_client - dropping pass-through signal — no stream available", "level": "WARNING", "name": "livekit", "timestamp": "2026-07-06T07:16:04.963983+00:00"}
+2026-07-06 12:46:05,553 - app.utils.conversation_logger - INFO - [TELEMETRY] SESSION_SUMMARY console-95e48ba0: {"type": "SESSION_SUMMARY", "session_id": "console-95e48ba0", "conversation_id": "4ab719ba8b29", "timestamp": "2026-07-06T07:16:05.550787+00:00", "timestamp_unix": 1783322165.5508194, "total_turns": 0, "duration_seconds": 1181.0, "average_retrieval_score": 0.32, "average_retrieval_latency_ms": 585.86, "average_llm_latency_ms": 6202.84, "average_ttft_ms": 4726.0, "average_tts_latency_ms": 0.0, "average_confidence": 0.32, "maximum_latency_ms": 0.0, "minimum_latency_ms": 0.0, "median_llm_latency_ms": 3426, "maximum_llm_latency_ms": 27088.7, "minimum_llm_latency_ms": 969, "total_llm_tokens": 0, "average_tokens_per_second": 0.0, "interruptions": 0, "clarification_prompts": 0, "language_switches": 0, "follow_up_queries": 5, "repeat_requests": 0, "multi_topic_queries": 0, "confidence_rejections": 1, "empty_retrievals": 0, "low_confidence_retrievals": 0, "retrieval_failures": 0, "hallucination_guards_triggered": 0, "ambiguous_queries": 0, "out_of_kb": 0, "total_errors": 1}
+{"message": "[TELEMETRY] SESSION_SUMMARY console-95e48ba0: {\"type\": \"SESSION_SUMMARY\", \"session_id\": \"console-95e48ba0\", \"conversation_id\": \"4ab719ba8b29\", \"timestamp\": \"2026-07-06T07:16:05.550787+00:00\", \"timestamp_unix\": 1783322165.5508194, \"total_turns\": 0, \"duration_seconds\": 1181.0, \"average_retrieval_score\": 0.32, \"average_retrieval_latency_ms\": 585.86, \"average_llm_latency_ms\": 6202.84, \"average_ttft_ms\": 4726.0, \"average_tts_latency_ms\": 0.0, \"average_confidence\": 0.32, \"maximum_latency_ms\": 0.0, \"minimum_latency_ms\": 0.0, \"median_llm_latency_ms\": 3426, \"maximum_llm_latency_ms\": 27088.7, \"minimum_llm_latency_ms\": 969, \"total_llm_tokens\": 0, \"average_tokens_per_second\": 0.0, \"interruptions\": 0, \"clarification_prompts\": 0, \"language_switches\": 0, \"follow_up_queries\": 5, \"repeat_requests\": 0, \"multi_topic_queries\": 0, \"confidence_rejections\": 1, \"empty_retrievals\": 0, \"low_confidence_retrievals\": 0, \"retrieval_failures\": 0, \"hallucination_guards_triggered\": 0, \"ambiguous_queries\": 0, \"out_of_kb\": 0, \"total_errors\": 1}", "level": "INFO", "name": "app.utils.conversation_logger", "timestamp": "2026-07-06T07:16:05.553845+00:00"}
+2026-07-06 12:46:05,554 - livekit-agent - INFO - Room disconnected, session cleared, exiting entrypoint
+{"message": "Room disconnected, session cleared, exiting entrypoint", "level": "INFO", "name": "livekit-agent", "timestamp": "2026-07-06T07:16:05.554487+00:00"}
+2026-07-06 13:58:16,641 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+{"message": "worker is at full capacity, marking as unavailable", "level": "INFO", "name": "livekit.agents", "load": 0.7576000000000024, "threshold": 0.7, "timestamp": "2026-07-06T08:28:16.641359+00:00"}
+2026-07-06 13:58:19,113 - livekit.agents - INFO - worker is below capacity, marking as available
+{"message": "worker is below capacity, marking as available", "level": "INFO", "name": "livekit.agents", "load": 0.6526000000000023, "threshold": 0.7, "timestamp": "2026-07-06T08:28:19.113927+00:00"}
+2026-07-06 14:25:03,661 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+{"message": "worker is at full capacity, marking as unavailable", "level": "INFO", "name": "livekit.agents", "load": 0.709000000000005, "threshold": 0.7, "timestamp": "2026-07-06T08:55:03.661915+00:00"}
+2026-07-06 14:25:06,154 - livekit.agents - INFO - worker is below capacity, marking as available
+{"message": "worker is below capacity, marking as available", "level": "INFO", "name": "livekit.agents", "load": 0.567800000000005, "threshold": 0.7, "timestamp": "2026-07-06T08:55:06.154117+00:00"}
+2026-07-06 14:25:11,157 - livekit.agents - INFO - worker is at full capacity, marking as unavailable
+{"message": "worker is at full capacity, marking as unavailable", "level": "INFO", "name": "livekit.agents", "load": 0.7818000000000049, "threshold": 0.7, "timestamp": "2026-07-06T08:55:11.157848+00:00"}
+2026-07-06 14:25:13,657 - livekit.agents - INFO - worker is below capacity, marking as available
+{"message": "worker is below capacity, marking as available", "level": "INFO", "name": "livekit.agents", "load": 0.6642000000000051, "threshold": 0.7, "timestamp": "2026-07-06T08:55:13.657939+00:00"}

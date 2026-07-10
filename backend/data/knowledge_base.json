@@ -1,9 +1,10 @@
 {
   "$schema": "schema.json",
   "meta": {
-    "version": "1.0.0",
-    "last_updated": "2026-06-28",
-    "schema_version": "1.0.0"
+    "version": "1.1.0",
+    "last_updated": "2026-07-09",
+    "schema_version": "1.0.0",
+    "data_source": "Official BCREC website (faculty-list page + detail pages) + fee structure PDFs (2026-30). Note: faculty email/phone not publicly listed on website."
   },
   "college": {
     "name": "Dr. B.C. Roy Engineering College",
@@ -28,6 +29,9 @@
     "email": "info@bcrec.ac.in",
     "website": "https://www.bcrec.ac.in",
     "timings": "Mon-Fri: 10:00 AM - 5:30 PM | Sat-Sun: Closed",
+    "student_strength": "4816+",
+    "facility_count": "32+",
+    "silver_jubilee": "2025 (25th year)",
     "bank_account": {
       "account_number": "213010100111263",
       "ifsc": "UTIB0000213",
@@ -39,6 +43,13 @@
       "extension": "0343-2501353 extn. 278",
       "email": "accounts@bcrec.ac.in"
     },
+    "admission_helpline": [
+      "9333928874",
+      "9832131164",
+      "9932245570",
+      "9434250472"
+    ],
+    "women_safety_helpline": "9851006415 (24x7)",
     "kolkata_office": {
       "address": "Concord Tower, 92/2A, Bidhannagar Road, Kolkata - 700067",
       "phones": [
@@ -95,86 +106,338 @@
     "phone": "0343-2501353",
     "email": "km.hossain@bcrec.ac.in"
   },
+  "first_year": {
+    "description": "All B.Tech students spend their 1st year under Basic Science and Humanities (BSH), studying common subjects (Physics, Chemistry, Math, English, etc.) with BSH faculty. From 2nd year onward, they move to their respective branch department. BSH is not a separate admission program.",
+    "hod": {
+      "name": "Dr. Arnab Bandyopadhyay (Math)",
+      "designation": "Associate Professor & HOD"
+    },
+    "faculty": [
+      {"name": "Dr. Saurav Ranjan Das (Chem)", "designation": "Associate Professor"},
+      {"name": "Dr. Jayanta Pal (Phys)", "designation": "Associate Professor"},
+      {"name": "Dr. Santanu Patra (Phys)", "designation": "Assistant Professor"},
+      {"name": "Dr. Sourav Bhattacharya (Chem)", "designation": "Assistant Professor"},
+      {"name": "SOHINI GHOSH (Eco)", "designation": "Assistant Professor"},
+      {"name": "SUKARNA DEY MONDAL (Math)", "designation": "Assistant Professor"},
+      {"name": "SREEJATA SEN SARMA (Math)", "designation": "Assistant Professor"},
+      {"name": "DR. AVIJIT DE (Math)", "designation": "Assistant Professor"},
+      {"name": "SUDIP KUMAR GOREY (Math)", "designation": "Assistant Professor"},
+      {"name": "Dr. Taniya Chakraborty (Eng)", "designation": "Assistant Professor"},
+      {"name": "Dr. Subhashish Pal (Phys)", "designation": "Associate Professor"},
+      {"name": "Dr. Arnab Bandyopadhyay (Math) (HOD)", "designation": "Associate Professor"},
+      {"name": "DR. KUSHAL ROY (Math)", "designation": "Assistant Professor"},
+      {"name": "Dr. Abhik Mukherjee (Eng)", "designation": "Assistant Professor"},
+      {"name": "MADHURIMA RAY BARMAN (Bio)", "designation": "Assistant Professor"},
+      {"name": "DR GOURISANKAR PANDA", "designation": "Professor"},
+      {"name": "DR PALLABI MAJI", "designation": "Assistant Professor"},
+      {"name": "DIBYENDU SAHANA", "designation": "Assistant Professor"},
+      {"name": "Dharmadas Mardanya", "designation": "Assistant Professor"},
+      {"name": "Sandipan Gupta", "designation": "Professor"}
+    ]
+  },
   "departments": {
     "CSE": {
       "hod": {
-        "name": "Dr. Pabitra Kumar Dey",
-        "mobile": "9434476503",
-        "email": "pabitra.dey@bcrec.ac.in"
-      }
+        "name": "Prof. (Dr.) Raj Kumar Samanta",
+        "designation": "Professor & HOD"
+      },
+      "faculty": [
+        {"name": "Rajib Kumar Mondal", "designation": "Assistant Professor"},
+        {"name": "Dr. Anirban Bose", "designation": "Assistant Professor"},
+        {"name": "Dr. Chandan Das", "designation": "Assistant Professor"},
+        {"name": "Biswajit Mondal", "designation": "Assistant Professor"},
+        {"name": "Joyjit Patra", "designation": "Assistant Professor"},
+        {"name": "Saindhab Chattaraj", "designation": "Assistant Professor"},
+        {"name": "Amitabha Mandal", "designation": "Assistant Professor"},
+        {"name": "Dr. Sanjib Saha", "designation": "Assistant Professor"},
+        {"name": "Prof. (Dr.) Raj Kumar Samanta (HoD)", "designation": "Professor"},
+        {"name": "Biswadev Goswami", "designation": "Assistant Professor"},
+        {"name": "Ruma Ghosh", "designation": "Assistant Professor"},
+        {"name": "Dr. Deepa Naik", "designation": "Assistant Professor"},
+        {"name": "Dr. Anandaprova Majumder", "designation": "Assistant Professor"},
+        {"name": "Syed Zahir Hasan", "designation": "Assistant Professor"},
+        {"name": "Sabbir Reza Tarafdar", "designation": "Assistant Professor"},
+        {"name": "Hiranmay Samaddar", "designation": "Assistant Professor"},
+        {"name": "Sayan De", "designation": "Assistant Professor"},
+        {"name": "Priyankar Sarkar", "designation": "Assistant Professor"},
+        {"name": "Kuntal Sarkar", "designation": "Assistant Professor"},
+        {"name": "RAVI SINGH", "designation": "Assistant Professor"},
+        {"name": "SUDIPTA KUMAR BISWAS", "designation": "Assistant Professor"},
+        {"name": "Pranab Kumar Sinha", "designation": "Technical Staff"},
+        {"name": "BAPPADITYA CHANDRA", "designation": "Technical Staff"},
+        {"name": "INDRANIL BHATTACHARYYA", "designation": "Technical Staff"},
+        {"name": "SAIKAT DEY", "designation": "Technical Staff"},
+        {"name": "NAYAN KONAR", "designation": "Technical Staff"},
+        {"name": "PRAVASH KUMAR DAS", "designation": "Technical Staff"},
+        {"name": "Kallol Chatterjee", "designation": "Technical Staff"},
+        {"name": "PANKAJ DAS", "designation": "Technical Staff"}
+      ]
     },
     "IT": {
       "hod": {
         "name": "Dr. Dinesh Kumar Pradhan",
         "mobile": "9433303419",
-        "email": "dinesh.pradhan@bcrec.ac.in"
-      }
+        "email": "dinesh.pradhan@bcrec.ac.in",
+        "designation": "Associate Professor & HOD"
+      },
+      "faculty": [
+        {"name": "Suman Dasgupta", "designation": "Assistant Professor"},
+        {"name": "DR. MOUMITA PRADHAN", "designation": "Assistant Professor"},
+        {"name": "PRABAL KUMAR SAHU", "designation": "Assistant Professor"},
+        {"name": "Dr. Suchandra Banerjee", "designation": "Assistant Professor"},
+        {"name": "KINSHUK BANERJEE", "designation": "Assistant Professor"},
+        {"name": "SIDDHARTHA GHOSH", "designation": "Assistant Professor"},
+        {"name": "Shubhranshu Gorai", "designation": "Technical Staff"},
+        {"name": "SOUMYA BHATTACHARYA", "designation": "Technical Staff"}
+      ]
     },
     "ECE": {
       "hod": {
         "name": "Dr. Mrinmoy Chakraborty",
         "mobile": "9932245570",
-        "email": "mrinmoy.chakraborty@bcrec.ac.in"
-      }
+        "email": "mrinmoy.chakraborty@bcrec.ac.in",
+        "designation": "Associate Professor & HOD"
+      },
+      "faculty": [
+        {"name": "DR. BIJOY LAXMI KOLEY", "designation": "Assistant Professor"},
+        {"name": "Dr. Anup Kumar Das", "designation": "Assistant Professor"},
+        {"name": "Moutusi Mondal", "designation": "Assistant Professor"},
+        {"name": "Dr. SNEHA SULTANA", "designation": "Assistant Professor"},
+        {"name": "Dr. Debipriya Dutta", "designation": "Assistant Professor"},
+        {"name": "Dr. Rajdeep Ray", "designation": "Assistant Professor"},
+        {"name": "Dr. Narendra Nath Pathak", "designation": "Professor"},
+        {"name": "DR. KAMALIKA TIWARI", "designation": "Assistant Professor"},
+        {"name": "Dr. Sourav Paul", "designation": "Assistant Professor"},
+        {"name": "Dr. Mrinmoy Chakraborty (HOD)", "designation": "Associate Professor"},
+        {"name": "Dr. Ankita Mitra", "designation": "Assistant Professor"},
+        {"name": "Dr. Bijoy Gupta", "designation": "Assistant Professor"},
+        {"name": "Dr. Surjadeep Dutta", "designation": "Assistant Professor"},
+        {"name": "Dr. Arunava Mookherjee", "designation": "HOD"}
+      ]
     },
     "EE": {
       "hod": {
         "name": "Dr. Shibendu Mahata",
         "mobile": "9832724052",
-        "email": "shibendu.mahata@bcrec.ac.in"
-      }
+        "email": "shibendu.mahata@bcrec.ac.in",
+        "designation": "Associate Professor & HOD"
+      },
+      "faculty": [
+        {"name": "Dr. Mofazzal Hossain Khondekar", "designation": "Professor"},
+        {"name": "Manas Roy", "designation": "Assistant Professor"},
+        {"name": "DR. SUBHAS CHANDRA MOI", "designation": "Assistant Professor"},
+        {"name": "Dr. Suman Bhattacharjee", "designation": "Associate Professor"},
+        {"name": "INDRANIL SENGUPTA", "designation": "Assistant Professor"},
+        {"name": "DR. SNEHASHIS GHOSHAL", "designation": "Assistant Professor"},
+        {"name": "SUNIL CHOUDHARY", "designation": "Assistant Professor"},
+        {"name": "Tapas Roy", "designation": "Assistant Professor"},
+        {"name": "SARADINDU MONDAL", "designation": "Assistant Professor"},
+        {"name": "Dr. Abhijit Banerjee", "designation": "Assistant Professor"},
+        {"name": "NILOY BHATTACHERJEE", "designation": "Assistant Professor"},
+        {"name": "NILKAMAL BHUNIA", "designation": "Assistant Professor"},
+        {"name": "BASUDEB MONDAL", "designation": "Assistant Professor"},
+        {"name": "INDRANI SENGUPTA", "designation": "Assistant Professor"},
+        {"name": "Sandip Mukherjee", "designation": "Associate Professor"},
+        {"name": "BANASHREE CHATTERJEE", "designation": "Assistant Professor"},
+        {"name": "Keka Hajra", "designation": "Assistant Professor"},
+        {"name": "Dipak Dhak", "designation": "Assistant Professor"},
+        {"name": "PRIYANKA ROY", "designation": "Assistant Professor"},
+        {"name": "Dr.Tribeni Prasad Banerjee", "designation": "Associate Professor"},
+        {"name": "Dr. Chaity Sarkar", "designation": "Assistant Professor"},
+        {"name": "DR. DOLA SINHA", "designation": "Associate Professor"},
+        {"name": "MOU DAS MAHAPATRA", "designation": "Assistant Professor"},
+        {"name": "Dr. Saibal Majumder", "designation": "Assistant Professor"},
+        {"name": "PRADIPTA SARKAR", "designation": "Assistant Professor"},
+        {"name": "Dr. Pabitra Kumar Mandal", "designation": "Assistant Professor"},
+        {"name": "SUBHADRA DEB ROY", "designation": "Assistant Professor"},
+        {"name": "SURAJIT BATABYAL", "designation": "Assistant Professor"},
+        {"name": "SAMUJJWAL RAY", "designation": "Assistant Professor"},
+        {"name": "Dr. Ritu Rani De Maity", "designation": "Assistant Professor"},
+        {"name": "Dr. Tapas Mondal", "designation": "Associate Professor"},
+        {"name": "DR. SUSANTA DUTTA", "designation": "Professor"},
+        {"name": "Dr. Arindam Mondal", "designation": "Professor"},
+        {"name": "DR. SOHAM BANDYOPADHYAY", "designation": "Assistant Professor"},
+        {"name": "Prof.(Dr.) Anindya Sen (ex Dean IIM Calcutta)", "designation": "Chairman"}
+      ]
     },
     "ME": {
       "hod": {
         "name": "Dr. Chandan Chattoraj",
         "mobile": "9531591525",
-        "email": "chandan.chattoraj@bcrec.ac.in"
-      }
+        "email": "chandan.chattoraj@bcrec.ac.in",
+        "designation": "Professor & HOD"
+      },
+      "faculty": [
+        {"name": "Subhajit Bhattacharya", "designation": "Assistant Professor"},
+        {"name": "Dr. Chandan Chattoraj (HOD)", "designation": "Professor"},
+        {"name": "Dr Rajeev Ranjan", "designation": "Assistant Professor"},
+        {"name": "DR KANCHAN CHATTERJEE", "designation": "Professor"},
+        {"name": "DR. SUBHAS CHANDRA MOI", "designation": "Assistant Professor"},
+        {"name": "Arka Banerjee", "designation": "Assistant Professor"},
+        {"name": "DR SUBRATA SAMANTA", "designation": "Associate Professor"},
+        {"name": "Chitta Sahana", "designation": "Assistant Professor"},
+        {"name": "DR. SUMAN KARMAKAR", "designation": "Assistant Professor"},
+        {"name": "Dr Manoj Kundu", "designation": "Assistant Professor"},
+        {"name": "DR ARIJIT BANERJEE", "designation": "Associate Professor"},
+        {"name": "Siddhartha Bhowmick", "designation": "Assistant Professor"},
+        {"name": "RAKESH BISWAS", "designation": "Assistant Professor"},
+        {"name": "Deepak Kumar", "designation": "Assistant Professor"},
+        {"name": "Dr. Pabitra Kumar Mandal", "designation": "Assistant Professor"},
+        {"name": "KOUSHIK CHATTERJEE", "designation": "Assistant Professor"},
+        {"name": "DR RUPALI", "designation": "Assistant Professor"},
+        {"name": "ALOK KUMAR DAS", "designation": "Technical Staff"},
+        {"name": "SURAJIT BANERJEE", "designation": "Technical Staff"},
+        {"name": "ANUPAM CHAKRABORTY", "designation": "Technical Staff"},
+        {"name": "SAMIR SAHA", "designation": "Technical Staff"},
+        {"name": "SAGAR DUTTA", "designation": "Technical Staff"},
+        {"name": "SATYAJIT DAS", "designation": "Technical Staff"},
+        {"name": "Debabrata Sarkar", "designation": "Technical Staff"},
+        {"name": "PARTHA SARATHI LAKSHMAN", "designation": "Technical Staff"},
+        {"name": "SUBHANKAR DEY", "designation": "Technical Staff"},
+        {"name": "SHIBDAS GHOSH", "designation": "Technical Staff"},
+        {"name": "ASHOK RAM TARBEY", "designation": "Technical Staff"},
+        {"name": "ARUP GHOSH", "designation": "Technical Staff"},
+        {"name": "LAKSHMI KANTA PAUL", "designation": "Technical Staff"},
+        {"name": "SUVENDU BISWAS", "designation": "Technical Staff"}
+      ]
     },
     "CE": {
       "hod": {
         "name": "Dr. Sanjay Sengupta",
         "mobile": "9836303034",
-        "email": "sanjay.sengupta@bcrec.ac.in"
-      }
+        "email": "sanjay.sengupta@bcrec.ac.in",
+        "designation": "Professor & HOD"
+      },
+      "faculty": [
+        {"name": "Dr. Shovan Roy", "designation": "Assistant Professor"},
+        {"name": "Dr. Sayantan Dutta", "designation": "Assistant Professor"},
+        {"name": "Dr. Anupam Kumar Biswas", "designation": "Assistant Professor"},
+        {"name": "Pranoy Roy", "designation": "Assistant Professor"},
+        {"name": "Amit Kotal", "designation": "Assistant Professor"},
+        {"name": "Koyndrik Bhattacharjee", "designation": "Assistant Professor"},
+        {"name": "Dr. Soumyadip Das", "designation": "Assistant Professor"},
+        {"name": "Md. Hamjala Alam", "designation": "Assistant Professor"},
+        {"name": "Chanchal Das", "designation": "Assistant Professor"},
+        {"name": "Dr. Sanjay Sengupta (HoD)", "designation": "Professor"},
+        {"name": "Dr. ARIJIT KUMAR BANERJI", "designation": "Assistant Professor"},
+        {"name": "Ajitesh Bhattacharjee", "designation": "Technical Staff"},
+        {"name": "Barnali Pandit", "designation": "Technical Staff"},
+        {"name": "Anindita Sengupta", "designation": "Technical Staff"},
+        {"name": "Surajit Sen", "designation": "Technical Staff"},
+        {"name": "Aditya Prasad Roy", "designation": "Technical Staff"}
+      ]
     },
     "CSD": {
       "hod": {
         "name": "Dr. Poulomi Mukherjee Tewari",
-        "email": "poulami.mukherjee@bcrec.ac.in"
-      }
+        "email": "poulami.mukherjee@bcrec.ac.in",
+        "designation": "Assistant Professor & HOD"
+      },
+      "faculty": [
+        {"name": "Swadhin Kumar Mondal", "designation": "Assistant Professor"},
+        {"name": "Koustav Roy", "designation": "Assistant Professor"},
+        {"name": "Nasim anjum Hoque", "designation": "Assistant Professor"},
+        {"name": "Monalisa Chakraborty", "designation": "Assistant Professor"},
+        {"name": "Dr. ARDHENDU SEKHAR CHATTOPADHYAY", "designation": "Assistant Professor"},
+        {"name": "Prasenjit Maji", "designation": "Assistant Professor"},
+        {"name": "Bipul Chanda", "designation": "Assistant Professor"},
+        {"name": "Dr. Poulomi Mukherjee Tewari", "designation": "Assistant Professor"},
+        {"name": "Suman Banerjee", "designation": "Technical Staff"},
+        {"name": "ANUSRUTI MITRA", "designation": "Assistant Professor"}
+      ]
     },
     "AIML": {
       "hod": {
         "name": "Dr. Gour Sundar Mitra Thakur",
-        "email": "gour.mitrathakur@bcrec.ac.in"
-      }
+        "email": "gour.mitrathakur@bcrec.ac.in",
+        "designation": "Professor & HOD"
+      },
+      "faculty": [
+        {"name": "Suman Dasgupta", "designation": "Assistant Professor"},
+        {"name": "Biswajit Saha", "designation": "Assistant Professor"},
+        {"name": "Dr. Gour Sundar Mitra Thakur", "designation": "Professor & HOD"},
+        {"name": "Dr. Arnab Banerjee", "designation": "Assistant Professor"},
+        {"name": "Arya Manikya Sinha", "designation": "Assistant Professor"},
+        {"name": "Raja Dey", "designation": "Assistant Professor"},
+        {"name": "Devlina Karmakar", "designation": "Assistant Professor"}
+      ]
     },
     "DS": {
       "hod": {
         "name": "Dr. Chandan Bandyopadhyay",
-        "email": "chandan.bandyopadhyay@bcrec.ac.in"
-      }
+        "email": "chandan.bandyopadhyay@bcrec.ac.in",
+        "designation": "Associate Professor & HOD"
+      },
+      "faculty": [
+        {"name": "Sudipta Samanta", "designation": "Assistant Professor"},
+        {"name": "Amit Mondal", "designation": "Assistant Professor"}
+      ]
     },
     "CY": {
       "hod": {
         "name": "Dr. Gour Sundar Mitra Thakur",
-        "email": "gour.mitrathakur@bcrec.ac.in"
-      }
+        "email": "gour.mitrathakur@bcrec.ac.in",
+        "designation": "Professor & HOD"
+      },
+      "faculty": [
+        {"name": "Sudipta Samanta", "designation": "Assistant Professor"},
+        {"name": "Amit Mondal", "designation": "Assistant Professor"}
+      ]
     },
     "MBA": {
       "hod": {
         "name": "Somroop Siddhanta",
         "mobile": "9002650046",
-        "email": "somroop.siddhanta@bcrec.ac.in"
-      }
+        "email": "somroop.siddhanta@bcrec.ac.in",
+        "designation": "HOD"
+      },
+      "faculty": [
+        {"name": "RAM PRASAD CHAKRABORTY", "designation": "Assistant Professor"},
+        {"name": "DR. TAPAN KUMAR CHATTOPADHYAY", "designation": "Assistant Professor"},
+        {"name": "MD KERAMOT HOSSAIN MONDAL", "designation": "Assistant Professor"},
+        {"name": "ADHIT ROY", "designation": "Assistant Professor"},
+        {"name": "MOLOY MUKHERJEE", "designation": "Assistant Professor"},
+        {"name": "Sayanti Samanta", "designation": "Assistant Professor"},
+        {"name": "Dr. Anirban Chattopadhyay", "designation": "Assistant Professor"},
+        {"name": "DR. SOHAM DEY", "designation": "Assistant Professor"},
+        {"name": "DIPTA CHAUDHURI", "designation": "Assistant Professor"},
+        {"name": "SUBHASIS DATTA", "designation": "Assistant Professor"},
+        {"name": "DR.RAJIB BANERJEE", "designation": "Assistant Professor"},
+        {"name": "DR. CHANDAN PAUL", "designation": "Assistant Professor"},
+        {"name": "DR SOURAV MOITRA", "designation": "Assistant Professor"},
+        {"name": "Purba Mukhopadhyay", "designation": "Assistant Professor"},
+        {"name": "Dr, Subir Panja", "designation": "Associate Professor"},
+        {"name": "SK MOFIZUL HAQUE", "designation": "Assistant Professor"}
+      ]
     },
     "MCA": {
       "hod": {
         "name": "Dr. Pabitra Kumar Dey",
         "mobile": "9434476503",
-        "email": "pabitra.dey@bcrec.ac.in"
-      }
+        "email": "pabitra.dey@bcrec.ac.in",
+        "designation": "Professor & HOD"
+      },
+      "faculty": [
+        {"name": "Dr. Pabitra Kumar Dey (HOD)", "designation": "Professor"},
+        {"name": "ANUPAM BAIDYA", "designation": "Assistant Professor"},
+        {"name": "Uday Kumar Banerjee", "designation": "Assistant Professor"},
+        {"name": "Debasis Guha", "designation": "Assistant Professor"},
+        {"name": "Pradipta Pal", "designation": "Assistant Professor"},
+        {"name": "Dr. Falguni Chakraborty", "designation": "Associate Professor"},
+        {"name": "Subhrangsu Chandra", "designation": "Assistant Professor"},
+        {"name": "Ansuman Mahanty", "designation": "Assistant Professor"},
+        {"name": "MONALISHA KAR", "designation": "Technical Staff"},
+        {"name": "Biswesar Ghosh", "designation": "Assistant Professor"}
+      ]
+    },
+    "mtech_ctm": {
+      "full_name": "M.Tech (Construction Technology and Management)",
+      "faculty": [
+        {"name": "Dr. Saibal Majumder", "designation": "Assistant Professor"},
+        {"name": "Dr. Sanjay Sengupta", "designation": "Professor"},
+        {"name": "Barnali Pandit", "designation": "Technical Staff"},
+        {"name": "Anindita Sengupta", "designation": "Technical Staff"}
+      ]
     }
   },
   "courses": {
@@ -186,8 +449,12 @@
         "established": 2000,
         "nba_accredited": true,
         "fees": {
-          "total": 604700,
-          "admission": 98225
+          "total": 617700,
+          "admission": 10000,
+          "per_semester": 73925,
+          "tuition_per_sem": 60500,
+          "development_fee_per_sem": 9075,
+          "caution_money_refundable": 5000
         },
         "placement": {
           "rate_2023_24": "93.60%",
@@ -210,8 +477,12 @@
         "established": 2000,
         "nba_accredited": true,
         "fees": {
-          "total": 604700,
-          "admission": 98225
+          "total": 617700,
+          "admission": 10000,
+          "per_semester": 73925,
+          "tuition_per_sem": 60500,
+          "development_fee_per_sem": 9075,
+          "caution_money_refundable": 5000
         },
         "placement": {
           "rate_2023_24": "90%",
@@ -234,8 +505,12 @@
         "established": 2000,
         "nba_accredited": true,
         "fees": {
-          "total": 604700,
-          "admission": 98225
+          "total": 617700,
+          "admission": 10000,
+          "per_semester": 73925,
+          "tuition_per_sem": 60500,
+          "development_fee_per_sem": 9075,
+          "caution_money_refundable": 5000
         },
         "placement": {
           "rate_2023_24": "85%",
@@ -259,8 +534,12 @@
         "established": 2000,
         "nba_accredited": true,
         "fees": {
-          "total": 554100,
-          "admission": 91900
+          "total": 567100,
+          "admission": 10000,
+          "per_semester": 67600,
+          "tuition_per_sem": 55000,
+          "development_fee_per_sem": 8250,
+          "caution_money_refundable": 5000
         },
         "placement": {
           "rate_2023_24": "75%",
@@ -283,8 +562,12 @@
         "established": 2003,
         "nba_accredited": true,
         "fees": {
-          "total": 444100,
-          "admission": 78150
+          "total": 429100,
+          "admission": 10000,
+          "per_semester": 50350,
+          "tuition_per_sem": 40000,
+          "development_fee_per_sem": 6000,
+          "caution_money_refundable": 5000
         },
         "placement": {
           "rate_2023_24": "100%",
@@ -307,8 +590,12 @@
         "established": 2010,
         "nba_accredited": false,
         "fees": {
-          "total": 444100,
-          "admission": 78150
+          "total": 429100,
+          "admission": 10000,
+          "per_semester": 50350,
+          "tuition_per_sem": 40000,
+          "development_fee_per_sem": 6000,
+          "caution_money_refundable": 5000
         },
         "placement": {
           "rate_2023_24": "100%",
@@ -331,8 +618,12 @@
         "established": 2021,
         "nba_accredited": false,
         "fees": {
-          "total": 554100,
-          "admission": 91900
+          "total": 567100,
+          "admission": 10000,
+          "per_semester": 67600,
+          "tuition_per_sem": 55000,
+          "development_fee_per_sem": 8250,
+          "caution_money_refundable": 5000
         },
         "placement": {
           "rate_2023_24": "N/A",
@@ -355,8 +646,12 @@
         "established": 2021,
         "nba_accredited": false,
         "fees": {
-          "total": 554100,
-          "admission": 91900
+          "total": 567100,
+          "admission": 10000,
+          "per_semester": 67600,
+          "tuition_per_sem": 55000,
+          "development_fee_per_sem": 8250,
+          "caution_money_refundable": 5000
         },
         "placement": {
           "rate_2023_24": "N/A",
@@ -379,8 +674,12 @@
         "established": 2022,
         "nba_accredited": false,
         "fees": {
-          "total": 554100,
-          "admission": 91900
+          "total": 567100,
+          "admission": 10000,
+          "per_semester": 67600,
+          "tuition_per_sem": 55000,
+          "development_fee_per_sem": 8250,
+          "caution_money_refundable": 5000
         },
         "placement": {
           "rate_2023_24": "N/A",
@@ -403,8 +702,12 @@
         "established": 2024,
         "nba_accredited": false,
         "fees": {
-          "total": 554100,
-          "admission": 91900
+          "total": 567100,
+          "admission": 10000,
+          "per_semester": 67600,
+          "tuition_per_sem": 55000,
+          "development_fee_per_sem": 8250,
+          "caution_money_refundable": 5000
         },
         "placement": {
           "rate_2023_24": "N/A",
@@ -444,8 +747,9 @@
       "intake": 120,
       "duration": "2 years",
       "fees": {
-        "total": 208800,
-        "admission": 67200
+        "total": 214600,
+        "admission": 67800,
+        "per_semester": 48600
       },
       "eligibility": "JECA qualified"
     },
@@ -473,19 +777,19 @@
   },
   "fees_summary": {
     "btech_cse_it_ece": {
-      "total": "Rs. 6,04,700",
-      "admission": "Rs. 98,225",
-      "per_semester": "Rs. 72,925"
+      "total": "Rs. 617,700",
+      "admission": "Rs. 99,225",
+      "per_semester": "Rs. 73,925"
     },
     "btech_ee_aiml_ds_cy_csd": {
-      "total": "Rs. 5,54,100",
-      "admission": "Rs. 91,900",
-      "per_semester": "Rs. 66,100"
+      "total": "Rs. 567,100",
+      "admission": "Rs. 92,900",
+      "per_semester": "Rs. 67,600"
     },
     "btech_me_ce": {
-      "total": "Rs. 4,44,100",
-      "admission": "Rs. 78,150",
-      "per_semester": "Rs. 40,800"
+      "total": "Rs. 429,100",
+      "admission": "Rs. 75,650",
+      "per_semester": "Rs. 50,350"
     },
     "mba": {
       "total": "Rs. 4,19,200",
@@ -496,12 +800,12 @@
       "admission": "Rs. 1,21,400"
     },
     "mca": {
-      "total": "Rs. 2,08,800",
-      "admission": "Rs. 67,200"
+      "total": "Rs. 2,14,600",
+      "admission": "Rs. 67,800"
     },
     "mtech": {
-      "total": "Rs. 1,26,000 to 2,06,000",
-      "admission": "Rs. 41,200"
+      "total": "Rs. 1,28,000 to 2,27,000",
+      "admission": "Rs. 41,200 (CSE) / Rs. 66,200 (ECE/ME/PS/CE)"
     },
     "payment_modes": [
       "Demand Draft",
@@ -513,26 +817,26 @@
       "Cash"
     ],
     "semester_wise_cse_it_ece": {
-      "first": 98225,
+      "first": 99225,
       "description_first": "Includes admission fee, caution deposit, library fee, and tuition",
-      "per_semester": 72925,
-      "eighth": 73925,
-        "total_btech": 604700,
-        "total_description": "Rs. 6,04,700 for 4-year B.Tech CSE/IT/ECE"
+      "per_semester": 73925,
+      "eighth": 74925,
+      "total_btech": 617700,
+      "total_description": "Rs. 6,17,700 for 4-year B.Tech CSE/IT/ECE"
     },
     "semester_wise_ee_group": {
-      "first": 91900,
-      "per_semester": 66100,
-      "eighth": 67100,
-      "total_btech": 554100,
-      "total_description": "Rs. 5,54,100 for 4-year B.Tech EE/AIML/DS/CS/CSD"
+      "first": 92900,
+      "per_semester": 67600,
+      "eighth": 68600,
+      "total_btech": 567100,
+      "total_description": "Rs. 5,67,100 for 4-year B.Tech EE/AIML/DS/CY/CSD"
     },
     "semester_wise_me_ce": {
-      "first": 78150,
-      "per_semester": 40800,
-      "eighth": 41800,
-      "total_btech": 444100,
-      "total_description": "Rs. 4,44,100 for 4-year B.Tech ME/CE"
+      "first": 75650,
+      "per_semester": 50350,
+      "eighth": 51350,
+      "total_btech": 429100,
+      "total_description": "Rs. 4,29,100 for 4-year B.Tech ME/CE"
     },
     "hidden_charges": "No hidden charges. All fees are transparently listed in the official fee brochure.",
     "refund_policy": {
@@ -817,13 +1121,62 @@
     "rate_2024": "78%",
     "highest_package": {
       "amount": 7.0,
-      "company": "TCS, Wipro, Capgemini, and others",
+      "max_off_campus": 9.0,
+      "company": "TCS, Wipro, Capgemini, Accenture, Amazon (off-campus), and others",
       "year": 2025
     },
     "median_package": "Rs. 4.25 LPA",
     "average_package": "Rs. 3.78 LPA",
-    "companies_visited_2025": 81,
+    "companies_visited_2026": 81,
+    "students_placed_2023": "1017+",
     "students_placed_2025": 244,
+    "companies_visited_2025": 81,
+    "tpo_contact": {
+      "head_tp": "Mr. Bipul Chanda, Head T&P-CRO",
+      "tpo": "Mr. Amit Kumar Mukherjee, TPO",
+      "phone": "8013079636",
+      "email": "tpo.kol@bcrec.ac.in",
+      "campus_incharge": "Prof. Prabal Kumar Sahu, AP-IT (In-charge, T&P Campus)",
+      "department_emails": {
+        "cse": "tpo.cse@bcrec.ac.in",
+        "it": "tpo.it@bcrec.ac.in",
+        "ece": "tpo.ece@bcrec.ac.in",
+        "ee": "tpo.ee@bcrec.ac.in",
+        "me": "tpo.me@bcrec.ac.in",
+        "ce": "tpo.ce@bcrec.ac.in",
+        "csd": "tpo.csd@bcrec.ac.in",
+        "aiml": "tpo.aiml@bcrec.ac.in",
+        "ds": "tpo.ds@bcrec.ac.in",
+        "mca": "tpo.mca@bcrec.ac.in",
+        "mba": "tpo.mba@bcrec.ac.in"
+      },
+      "central_emails": [
+        "tpo.dgp@bcrec.ac.in",
+        "tpo.campus@bcrec.ac.in"
+      ]
+    },
+    "recruiters": [
+      "TCS",
+      "Infosys",
+      "Wipro",
+      "Capgemini",
+      "Accenture",
+      "HCL",
+      "Tech Mahindra",
+      "IBM",
+      "Amazon",
+      "Cognizant (CTS)",
+      "Hewlett Packard",
+      "Indian Navy",
+      "2Coms",
+      "Action Tesa",
+      "Aarohi Embedded Systems",
+      "Aartronix Innovation",
+      "PwC",
+      "L&T",
+      "Byju's",
+      "ICICI Bank"
+    ],
     "top_recruiters": [
       "TCS",
       "Infosys",
@@ -892,7 +1245,10 @@
       "Tech Mahindra",
       "Indian Navy"
     ],
-    "highest_salary_branch": "CSE (Computer Science) - traditionally secures highest volume and packages"
+    "highest_salary_branch": "CSE (Computer Science) - traditionally secures highest volume and packages",
+    "nirf_median_salary_2025": "Rs. 3,86,000",
+    "nirf_students_placed_2025": 503,
+    "nirf_higher_studies_2025": 42
   },
   "hostel": {
     "available": true,
@@ -918,9 +1274,15 @@
         "availability": "Maximum"
       }
     ],
-    "caution_money": 2000,
+    "caution_money": {
+      "hostel_caution_deposit": 2000,
+      "admission_caution_without_hostel": 5000,
+      "admission_caution_with_hostel": 7000,
+      "refundable": true,
+      "note": "Rs. 2,000 hostel caution deposit is separate from admission caution deposit of Rs. 10,000 (without hostel) or Rs. 12,000 (with hostel). All refundable."
+    },
     "mess": {
-      "monthly_charge": 5000,
+      "monthly_charge": 5500,
       "months_per_year": 11,
       "meals_per_day": 4,
       "veg": true,
@@ -966,8 +1328,9 @@
   },
   "academics": {
     "faculty": {
-      "total": "281+",
-      "description": "Core branches have experienced professors with PhDs. Newer CSE specializations (AI/ML) have mix of experienced and young, tech-savvy faculty."
+      "total": "208+",
+      "description": "Department-wise faculty roster available under 'departments' and 'first_year' sections. Individual contact info (email/phone) is not publicly listed on the website.",
+      "first_year_note": "All B.Tech students spend their 1st year under Basic Science and Humanities (BSH) with common faculty, then move to their respective branch from 2nd year."
     },
     "student_teacher_ratio": "15:1 to 20:1",
     "teaching_methodology": "Combination of lectures, practicals, projects, and industry-oriented learning.",

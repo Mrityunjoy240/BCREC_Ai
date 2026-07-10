@@ -30,7 +30,11 @@ _HAS_FASTTEXT = None
 BANGLA_ROMAN_WORDS = frozenset(
     {
         "ami",
+        "amar",
+        "amake",
+        "amra",
         "tumi",
+        "tomake",
         "amader",
         "kotha",
         "bolte",
@@ -122,6 +126,10 @@ HINDI_ROMAN_WORDS = frozenset(
         "se",
         "ko",
         "wo",
+        "he",
+        "hu",
+        "tha",
+        "thi",
     }
 )
 
@@ -222,6 +230,9 @@ def detect_language(text: str) -> Literal["en", "hi", "bn"]:
 
     # Fall back to FastText for ambiguous/clear English text
     model = _load_model()
+
+    if model is None:
+        return "en"
 
     try:
         # FastText expects single-line input, no newlines

@@ -6,6 +6,22 @@ import re
 import time
 from typing import Any, Callable, Optional
 
+# Banglish (Roman-script Bengali) word markers used when Bengali Unicode ratio is low.
+# Kept local to avoid import coupling — these match the words used in language_detect.py.
+_BANGLISH_WORDS = frozenset({
+    "ami", "amar", "amake", "amra", "tumi", "tomake", "amader",
+    "kotha", "bolte", "ache", "korte", "hobe", "thik", "bhalo",
+    "kothay", "ekhane", "apnar", "jabe", "asbe", "dite", "nite",
+    "niye", "kemon", "dekho", "bole", "jano", "koto", "theke",
+    "diye", "jonno", "moddhe", "lagbe", "lage", "laga", "chai",
+    "chay", "ki", "keno", "karon", "jani", "jana", "bolun",
+    "bolben", "bishoy", "kaj", "help", "kintu", "tobe", "tahole",
+    "hoye", "hoy", "mone", "motto", "somporke", "songe", "bar",
+    "achen", "achena", "achhen", "achhena", "tar", "take", "na",
+    "ar", "ebong", "ba", "jodi", "thake", "thakena",
+    "thakle", "pare", "pari", "hote", "hocche", "hoyechhe",
+})
+
 logger = logging.getLogger(__name__)
 
 
@@ -102,19 +118,10 @@ def _detect_handoff(query: str) -> Optional[str]:
 
 
 def _add_personality(text: str) -> str:
-    text = text.strip()
-    if not text:
-        return text
-    prefix = random.choice(PERSONALITY_PREFIXES)
-    suffix = random.choice(PERSONALITY_SUFFIXES)
-    if text.startswith(("Certainly", "Of course", "Yes", "Absolutely", "One moment")):
-        prefix = ""
-    if text.endswith(("help", "else?", "today?")):
-        suffix = ""
-    result = prefix + text
-    if suffix:
-        result += suffix
-    return result
+    """Add natural conversational framing to responses.
+    Keeps responses clean — no random prefixes or suffixes.
+    The structured handlers and LLM prompt already produce complete sentences."""
+    return text.strip()
 
 
 def _is_unknown_response(text: str) -> bool:
@@ -218,12 +225,21 @@ async def safe_generate_response(service, query: str, session_id: str, lang: str
 
 
 def _bengali_confidence_ok(query: str) -> bool:
+    """Check if query is legitimately Bengali (script or Banglish).
+    Passes if ≥30% Bengali Unicode chars OR ≥30% of words are Banglish markers."""
     bengali_chars = sum(1 for c in query if "\u0980" <= c <= "\u09ff")
-    total = len(query.strip())
-    if total == 0:
+    total_chars = len(query.strip())
+    if total_chars == 0:
         return False
-    ratio = bengali_chars / total
-    return ratio >= 0.3
+    # Native Bengali script check
+    if bengali_chars / total_chars >= 0.3:
+        return True
+    # Banglish (Roman-script Bengali) check — ≥30% of words are Banglish markers
+    words = re.sub(r"[^\w]", " ", query.lower()).split()
+    if not words:
+        return False
+    banglish_matches = sum(1 for w in words if w in _BANGLISH_WORDS)
+    return banglish_matches / len(words) >= 0.3
 
 
 def post_process_response(service, query: str, result: dict, lang: str) -> dict:
@@ -235,12 +251,20 @@ def post_process_response(service, query: str, result: dict, lang: str) -> dict:
     answer = result["answer"]
     voice = result.get("voice_text", answer)
 
+    is_fallback = (
+        answer == UNKNOWN_RESPONSE or answer == BENGALI_LOW_CONFIDENCE or answer == TIMEOUT_FALLBACK
+    )
+
     if _is_unknown_response(answer):
         answer = UNKNOWN_RESPONSE
         voice = UNKNOWN_RESPONSE
         result["answer"] = answer
         result["voice_text"] = voice
         result["source"] = result.get("source", "") + "+safe_point_unknown"
+        is_fallback = True
+
+    if is_fallback:
+        return result
 
     answer = _add_personality(answer)
     voice = _add_personality(voice)

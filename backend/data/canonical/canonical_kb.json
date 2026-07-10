@@ -1,14 +1,15 @@
 {
   "$schema": "schema.json",
   "meta": {
-    "version": "1.0.0",
-    "last_updated": "2026-06-28",
+    "version": "1.0.2",
+    "last_updated": "2026-07-08",
     "schema_version": "1.0.0",
     "_provenance": {
-      "source_type": "manual_entry",
-      "date_verified": "2026-06-28",
+      "source_type": "website_crawl",
+      "source_url": "https://www.bcrec.ac.in",
+      "date_verified": "2026-07-08",
       "confidence": "high",
-      "notes": "First version of canonical KB. All data migrated from existing combined_kb.json with provenance tracking."
+      "notes": "All fee data verified from official BCREC fee structure PDFs (2026-30)"
     }
   },
   "college": {
@@ -18,10 +19,18 @@
       "date_verified": "2026-04-15",
       "confidence": "high"
     },
-    "name": { "value": "Dr. B.C. Roy Engineering College" },
-    "short_name": { "value": "BCREC" },
-    "established": { "value": "August 2000" },
-    "type": { "value": "Private Engineering College" },
+    "name": {
+      "value": "Dr. B.C. Roy Engineering College"
+    },
+    "short_name": {
+      "value": "BCREC"
+    },
+    "established": {
+      "value": "August 2000"
+    },
+    "type": {
+      "value": "Private Engineering College"
+    },
     "autonomous": {
       "value": "Yes (from 2024-25 batch)",
       "provenance": {
@@ -32,9 +41,18 @@
         "notes": "Autonomous status granted by UGC/MAKAUT for 2024-25 batch onwards"
       }
     },
-    "address": { "value": "Jemua Road, Fuljhore, Durgapur - 713206, West Bengal" },
+    "address": {
+      "value": "Jemua Road, Fuljhore, Durgapur - 713206, West Bengal"
+    },
     "phones": {
-      "value": ["0343-2501353", "0343-2502449", "0343-2503985", "0343-2503360", "0343-2504224", "0343-2504106"],
+      "value": [
+        "0343-2501353",
+        "0343-2502449",
+        "0343-2503985",
+        "0343-2503360",
+        "0343-2504224",
+        "0343-2504106"
+      ],
       "provenance": {
         "source_type": "website",
         "source_url": "https://www.bcrec.ac.in/contact-us",
@@ -42,9 +60,14 @@
         "confidence": "high"
       }
     },
-    "mobile": { "value": "+91-6297128554" },
+    "mobile": {
+      "value": "+91-6297128554"
+    },
     "fax": {
-      "value": ["0343-2504059", "0343-2503424"],
+      "value": [
+        "0343-2504059",
+        "0343-2503424"
+      ],
       "provenance": {
         "source_type": "website",
         "source_url": "https://www.bcrec.ac.in/contact-us",
@@ -52,15 +75,47 @@
         "confidence": "high"
       }
     },
-    "email": { "value": "info@bcrec.ac.in" },
-    "website": { "value": "https://www.bcrec.ac.in" },
+    "email": {
+      "value": "info@bcrec.ac.in"
+    },
+    "website": {
+      "value": "https://www.bcrec.ac.in"
+    },
     "timings": {
       "value": "Mon-Fri: 10:00 AM - 5:30 PM | Sat-Sun: Closed",
       "provenance": {
-        "source_type": "manual_entry",
-        "date_verified": "2026-04-15",
-        "confidence": "medium",
-        "notes": "Timings may vary during holidays/summer"
+        "source_type": "website",
+        "source_url": "https://www.bcrec.ac.in/contact-us",
+        "date_verified": "2026-07-08",
+        "confidence": "high"
+      }
+    },
+    "student_strength": {
+      "value": "4816+",
+      "provenance": {
+        "source_type": "website",
+        "source_url": "https://www.bcrec.ac.in",
+        "date_verified": "2026-07-08",
+        "confidence": "high",
+        "notes": "Homepage counter: Student Strength in BCREC"
+      }
+    },
+    "facility_count": {
+      "value": "32+",
+      "provenance": {
+        "source_type": "website",
+        "source_url": "https://www.bcrec.ac.in",
+        "date_verified": "2026-07-08",
+        "confidence": "high"
+      }
+    },
+    "women_safety_helpline": {
+      "value": "9851006415 (24x7)",
+      "provenance": {
+        "source_type": "website",
+        "source_url": "https://www.bcrec.ac.in",
+        "date_verified": "2026-07-08",
+        "confidence": "high"
       }
     },
     "bank_account": {
@@ -70,10 +125,18 @@
         "confidence": "medium",
         "notes": "Bank account details used for fee payments"
       },
-      "account_number": { "value": "213010100111263" },
-      "ifsc": { "value": "UTIB0000213" },
-      "bank": { "value": "Axis Bank" },
-      "branch": { "value": "City Centre, Durgapur-713216" }
+      "account_number": {
+        "value": "213010100111263"
+      },
+      "ifsc": {
+        "value": "UTIB0000213"
+      },
+      "bank": {
+        "value": "Axis Bank"
+      },
+      "branch": {
+        "value": "City Centre, Durgapur-713216"
+      }
     },
     "kolkata_office": {
       "_provenance": {
@@ -82,9 +145,21 @@
         "date_verified": "2026-04-15",
         "confidence": "high"
       },
-      "address": { "value": "Concord Tower, 92/2A, Bidhannagar Road, Kolkata - 700067" },
-      "phones": { "value": ["033-23554412", "033-23558703"] },
-      "emails": { "value": ["tpo.kol@bcrec.ac.in", "bcrec_kol@yahoo.co.in"] }
+      "address": {
+        "value": "Concord Tower, 92/2A, Bidhannagar Road, Kolkata - 700067"
+      },
+      "phones": {
+        "value": [
+          "033-23554412",
+          "033-23558703"
+        ]
+      },
+      "emails": {
+        "value": [
+          "tpo.kol@bcrec.ac.in",
+          "bcrec_kol@yahoo.co.in"
+        ]
+      }
     },
     "naac": {
       "_provenance": {
@@ -93,14 +168,30 @@
         "date_verified": "2026-04-15",
         "confidence": "high"
       },
-      "grade": { "value": "B+" },
-      "cgpa": { "value": "2.83" },
-      "valid_from": { "value": "13/09/2021" }
+      "grade": {
+        "value": "B+"
+      },
+      "cgpa": {
+        "value": "2.83"
+      },
+      "valid_from": {
+        "value": "13/09/2021"
+      }
     },
-    "affiliation": { "value": "MAKAUT" },
-    "approved_by": { "value": "AICTE" },
+    "affiliation": {
+      "value": "MAKAUT"
+    },
+    "approved_by": {
+      "value": "AICTE"
+    },
     "nba_programs": {
-      "value": ["CSE", "IT", "ECE", "EE", "ME"],
+      "value": [
+        "CSE",
+        "IT",
+        "ECE",
+        "EE",
+        "ME"
+      ],
       "provenance": {
         "source_type": "website",
         "source_url": "https://www.bcrec.ac.in",
@@ -135,7 +226,11 @@
         "notes": "Contradiction: quick_answers says 17 acres, college.md says 25 acres. Official website not verified."
       },
       "history": [
-        { "value": 25, "valid_from": "2025-01-01", "valid_to": "2026-04-15" }
+        {
+          "value": 25,
+          "valid_from": "2025-01-01",
+          "valid_to": "2026-04-15"
+        }
       ],
       "conflict_status": "unresolved"
     },
@@ -146,9 +241,15 @@
         "confidence": "medium",
         "notes": "Summarized from college website and existing KB data"
       },
-      "en": { "value": "NBA accredited (CSE, ECE, IT, EE, ME), NAAC B+ grade. Established in 2000, modern infrastructure, dedicated Training & Placement cell, GATE Forum, and active industry linkages." },
-      "hi": { "value": "NBA मान्यता प्राप्त (CSE, ECE, IT, EE, ME), NAAC B+ ग्रेड। 2000 में स्थापित, आधुनिक बुनियादी ढांचा, समर्पित प्रशिक्षण और प्लेसमेंट सेल, GATE फोरम, और सक्रिय उद्योग संपर्क।" },
-      "bn": { "value": "NBA স্বীকৃত (CSE, ECE, IT, EE, ME), NAAC B+ গ্রেড। ২০০০ সালে প্রতিষ্ঠিত, আধুনিক infrastructure, dedicated Training & Placement cell, GATE ফোরাম, এবং সক্রিয় শিল্প সংযোগ।" }
+      "en": {
+        "value": "NBA accredited (CSE, ECE, IT, EE, ME), NAAC B+ grade. Established in 2000, modern infrastructure, dedicated Training & Placement cell, GATE Forum, and active industry linkages."
+      },
+      "hi": {
+        "value": "NBA मान्यता प्राप्त (CSE, ECE, IT, EE, ME), NAAC B+ ग्रेड। 2000 में स्थापित, आधुनिक बुनियादी ढांचा, समर्पित प्रशिक्षण और प्लेसमेंट सेल, GATE फोरम, और सक्रिय उद्योग संपर्क।"
+      },
+      "bn": {
+        "value": "NBA স্বীকৃত (CSE, ECE, IT, EE, ME), NAAC B+ গ্রেড। ২০০০ সালে প্রতিষ্ঠিত, আধুনিক infrastructure, dedicated Training & Placement cell, GATE ফোরাম, এবং সক্রিয় শিল্প সংযোগ।"
+      }
     },
     "alumni": {
       "_provenance": {
@@ -156,9 +257,15 @@
         "date_verified": "2026-04-15",
         "confidence": "medium"
       },
-      "en": { "value": "Alumni work at IBM, TCS, Wipro, Accenture, Capgemini, Tech Mahindra, and the Indian Navy." },
-      "hi": { "value": "पूर्व छात्र IBM, TCS, विप्रो, एक्सेंचर, कैपजेमिनी, टेक महिंद्रा और भारतीय नौसेना में कार्यरत हैं।" },
-      "bn": { "value": "প্রাক্তন শিক্ষার্থীরা IBM, TCS, উইপ্রো, অ্যাকসেঞ্চার, ক্যাপজেমিনি, টেক মাহিন্দ্রা এবং ভারতীয় নৌবাহিনীতে কর্মরত।" }
+      "en": {
+        "value": "Alumni work at IBM, TCS, Wipro, Accenture, Capgemini, Tech Mahindra, and the Indian Navy."
+      },
+      "hi": {
+        "value": "पूर्व छात्र IBM, TCS, विप्रो, एक्सेंचर, कैपजेमिनी, टेक महिंद्रा और भारतीय नौसेना में कार्यरत हैं।"
+      },
+      "bn": {
+        "value": "প্রাক্তন শিক্ষার্থীরা IBM, TCS, উইপ্রো, অ্যাকসেঞ্চার, ক্যাপজেমিনি, টেক মাহিন্দ্রা এবং ভারতীয় নৌবাহিনীতে কর্মরত।"
+      }
     },
     "accounts": {
       "_provenance": {
@@ -167,9 +274,15 @@
         "date_verified": "2026-07-02",
         "confidence": "high"
       },
-      "phone": { "value": "7001380141" },
-      "extension": { "value": "0343-2501353 extn. 278" },
-      "email": { "value": "accounts@bcrec.ac.in" }
+      "phone": {
+        "value": "7001380141"
+      },
+      "extension": {
+        "value": "0343-2501353 extn. 278"
+      },
+      "email": {
+        "value": "accounts@bcrec.ac.in"
+      }
     },
     "e_govt_campus": {
       "value": "Recognized as e-Govt Campus by Engineering Watch and NIC",
@@ -188,10 +301,18 @@
       "date_verified": "2026-04-15",
       "confidence": "high"
     },
-    "name": { "value": "Dr. Sanjay S. Pawar" },
-    "role": { "value": "Principal, BCREC" },
-    "phone": { "value": "0343-2501353" },
-    "email": { "value": "principal@bcrec.ac.in" }
+    "name": {
+      "value": "Dr. Sanjay S. Pawar"
+    },
+    "role": {
+      "value": "Principal, BCREC"
+    },
+    "phone": {
+      "value": "0343-2501353"
+    },
+    "email": {
+      "value": "principal@bcrec.ac.in"
+    }
   },
   "vice_principal": {
     "_provenance_default": {
@@ -200,17 +321,31 @@
       "date_verified": "2026-04-15",
       "confidence": "high"
     },
-    "name": { "value": "Prof. (Dr.) K. M. Hossain" },
-    "role": { "value": "Vice Principal, BCREC" },
-    "phone": { "value": "0343-2501353" },
-    "email": { "value": "km.hossain@bcrec.ac.in" }
+    "name": {
+      "value": "Prof. (Dr.) K. M. Hossain"
+    },
+    "role": {
+      "value": "Vice Principal, BCREC"
+    },
+    "phone": {
+      "value": "0343-2501353"
+    },
+    "email": {
+      "value": "km.hossain@bcrec.ac.in"
+    }
   },
   "departments": {
     "CSE": {
       "hod": {
-        "name": { "value": "Dr. Pabitra Kumar Dey" },
-        "mobile": { "value": "9434476503" },
-        "email": { "value": "pabitra.dey@bcrec.ac.in" },
+        "name": {
+          "value": "Dr. Pabitra Kumar Dey"
+        },
+        "mobile": {
+          "value": "9434476503"
+        },
+        "email": {
+          "value": "pabitra.dey@bcrec.ac.in"
+        },
         "_provenance": {
           "source_type": "manual_entry",
           "date_verified": "2026-04-15",
@@ -221,9 +356,15 @@
     },
     "IT": {
       "hod": {
-        "name": { "value": "Dr. Dinesh Kumar Pradhan" },
-        "mobile": { "value": "9433303419" },
-        "email": { "value": "dinesh.pradhan@bcrec.ac.in" },
+        "name": {
+          "value": "Dr. Dinesh Kumar Pradhan"
+        },
+        "mobile": {
+          "value": "9433303419"
+        },
+        "email": {
+          "value": "dinesh.pradhan@bcrec.ac.in"
+        },
         "_provenance": {
           "source_type": "manual_entry",
           "date_verified": "2026-04-15",
@@ -233,9 +374,15 @@
     },
     "ECE": {
       "hod": {
-        "name": { "value": "Dr. Mrinmoy Chakraborty" },
-        "mobile": { "value": "9932245570" },
-        "email": { "value": "mrinmoy.chakraborty@bcrec.ac.in" },
+        "name": {
+          "value": "Dr. Mrinmoy Chakraborty"
+        },
+        "mobile": {
+          "value": "9932245570"
+        },
+        "email": {
+          "value": "mrinmoy.chakraborty@bcrec.ac.in"
+        },
         "_provenance": {
           "source_type": "manual_entry",
           "date_verified": "2026-04-15",
@@ -245,9 +392,15 @@
     },
     "EE": {
       "hod": {
-        "name": { "value": "Dr. Shibendu Mahata" },
-        "mobile": { "value": "9832724052" },
-        "email": { "value": "shibendu.mahata@bcrec.ac.in" },
+        "name": {
+          "value": "Dr. Shibendu Mahata"
+        },
+        "mobile": {
+          "value": "9832724052"
+        },
+        "email": {
+          "value": "shibendu.mahata@bcrec.ac.in"
+        },
         "_provenance": {
           "source_type": "manual_entry",
           "date_verified": "2026-04-15",
@@ -257,9 +410,15 @@
     },
     "ME": {
       "hod": {
-        "name": { "value": "Dr. Chandan Chattoraj" },
-        "mobile": { "value": "9531591525" },
-        "email": { "value": "chandan.chattoraj@bcrec.ac.in" },
+        "name": {
+          "value": "Dr. Chandan Chattoraj"
+        },
+        "mobile": {
+          "value": "9531591525"
+        },
+        "email": {
+          "value": "chandan.chattoraj@bcrec.ac.in"
+        },
         "_provenance": {
           "source_type": "manual_entry",
           "date_verified": "2026-04-15",
@@ -269,9 +428,15 @@
     },
     "CE": {
       "hod": {
-        "name": { "value": "Dr. Sanjay Sengupta" },
-        "mobile": { "value": "9836303034" },
-        "email": { "value": "sanjay.sengupta@bcrec.ac.in" },
+        "name": {
+          "value": "Dr. Sanjay Sengupta"
+        },
+        "mobile": {
+          "value": "9836303034"
+        },
+        "email": {
+          "value": "sanjay.sengupta@bcrec.ac.in"
+        },
         "_provenance": {
           "source_type": "manual_entry",
           "date_verified": "2026-04-15",
@@ -281,8 +446,12 @@
     },
     "CSD": {
       "hod": {
-        "name": { "value": "Dr. Poulomi Mukherjee Tewari" },
-        "email": { "value": "poulami.mukherjee@bcrec.ac.in" },
+        "name": {
+          "value": "Dr. Poulomi Mukherjee Tewari"
+        },
+        "email": {
+          "value": "poulami.mukherjee@bcrec.ac.in"
+        },
         "_provenance": {
           "source_type": "manual_entry",
           "date_verified": "2026-04-15",
@@ -292,8 +461,12 @@
     },
     "AIML": {
       "hod": {
-        "name": { "value": "Dr. Gour Sundar Mitra Thakur" },
-        "email": { "value": "gour.mitrathakur@bcrec.ac.in" },
+        "name": {
+          "value": "Dr. Gour Sundar Mitra Thakur"
+        },
+        "email": {
+          "value": "gour.mitrathakur@bcrec.ac.in"
+        },
         "_provenance": {
           "source_type": "manual_entry",
           "date_verified": "2026-04-15",
@@ -304,8 +477,12 @@
     },
     "DS": {
       "hod": {
-        "name": { "value": "Dr. Chandan Bandyopadhyay" },
-        "email": { "value": "chandan.bandyopadhyay@bcrec.ac.in" },
+        "name": {
+          "value": "Dr. Chandan Bandyopadhyay"
+        },
+        "email": {
+          "value": "chandan.bandyopadhyay@bcrec.ac.in"
+        },
         "_provenance": {
           "source_type": "manual_entry",
           "date_verified": "2026-04-15",
@@ -315,8 +492,12 @@
     },
     "CY": {
       "hod": {
-        "name": { "value": "Dr. Gour Sundar Mitra Thakur" },
-        "email": { "value": "gour.mitrathakur@bcrec.ac.in" },
+        "name": {
+          "value": "Dr. Gour Sundar Mitra Thakur"
+        },
+        "email": {
+          "value": "gour.mitrathakur@bcrec.ac.in"
+        },
         "_provenance": {
           "source_type": "manual_entry",
           "date_verified": "2026-04-15",
@@ -327,9 +508,15 @@
     },
     "MBA": {
       "hod": {
-        "name": { "value": "Somroop Siddhanta" },
-        "mobile": { "value": "9002650046" },
-        "email": { "value": "somroop.siddhanta@bcrec.ac.in" },
+        "name": {
+          "value": "Somroop Siddhanta"
+        },
+        "mobile": {
+          "value": "9002650046"
+        },
+        "email": {
+          "value": "somroop.siddhanta@bcrec.ac.in"
+        },
         "_provenance": {
           "source_type": "manual_entry",
           "date_verified": "2026-04-15",
@@ -339,9 +526,15 @@
     },
     "MCA": {
       "hod": {
-        "name": { "value": "Dr. Pabitra Kumar Dey" },
-        "mobile": { "value": "9434476503" },
-        "email": { "value": "pabitra.dey@bcrec.ac.in" },
+        "name": {
+          "value": "Dr. Pabitra Kumar Dey"
+        },
+        "mobile": {
+          "value": "9434476503"
+        },
+        "email": {
+          "value": "pabitra.dey@bcrec.ac.in"
+        },
         "_provenance": {
           "source_type": "manual_entry",
           "date_verified": "2026-04-15",
@@ -360,11 +553,17 @@
           "confidence": "medium",
           "notes": "Multiple sources: cse.md (intake=120), combined_kb.json (intake=180). Using latest from combined_kb.json pending official AICTE document verification."
         },
-        "full_name": { "value": "Computer Science and Engineering" },
+        "full_name": {
+          "value": "Computer Science and Engineering"
+        },
         "intake": {
           "value": 180,
           "history": [
-            { "value": 120, "valid_from": "2023-01-01", "valid_to": "2024-06-30" }
+            {
+              "value": 120,
+              "valid_from": "2023-01-01",
+              "valid_to": "2024-06-30"
+            }
           ],
           "provenance": {
             "source_type": "manual_entry",
@@ -374,38 +573,69 @@
           },
           "conflict_status": "unresolved"
         },
-        "duration": { "value": "4 years" },
-        "established": { "value": 2000 },
-        "nba_accredited": { "value": true },
+        "duration": {
+          "value": "4 years"
+        },
+        "established": {
+          "value": 2000
+        },
+        "nba_accredited": {
+          "value": true
+        },
         "fees": {
           "total": {
-            "value": 604700,
+            "value": 617700,
             "provenance": {
-              "source_type": "manual_entry",
-              "date_verified": "2026-06-28",
-              "confidence": "medium",
-              "notes": "Fee structure from combined_kb.json. Official PDF from bcrec.ac.in lists Rs.1,36,625/sem with hostel."
-            },
-            "conflict_status": "unresolved"
+              "source_type": "pdf",
+              "source_url": "https://bcrec.ac.in/public/pdf/B.Tech-Fee-Structure-2026-2030-1.pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
           },
           "admission": {
-            "value": 98225,
+            "value": 10000,
             "provenance": {
-              "source_type": "manual_entry",
-              "date_verified": "2026-06-28",
-              "confidence": "medium",
-              "notes": "Admission fee from combined_kb.json"
-            },
-            "conflict_status": "unresolved"
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "per_semester": {
+            "value": 73925,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "caution_money": {
+            "value": 5000,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
           }
         },
         "placement": {
-          "rate_2023_24": { "value": "93.60%" },
-          "rate_2024_25": { "value": "90%" },
-          "rate_2025_26": { "value": "85%+" },
-          "min_lpa": { "value": 3.36 },
-          "avg_lpa": { "value": 4.25 },
-          "max_lpa": { "value": 15 },
+          "rate_2023_24": {
+            "value": "93.60%"
+          },
+          "rate_2024_25": {
+            "value": "90%"
+          },
+          "rate_2025_26": {
+            "value": "85%+"
+          },
+          "min_lpa": {
+            "value": 3.36
+          },
+          "avg_lpa": {
+            "value": 4.25
+          },
+          "max_lpa": {
+            "value": 15
+          },
           "_provenance": {
             "source_type": "manual_entry",
             "date_verified": "2026-06-28",
@@ -414,9 +644,15 @@
           }
         },
         "cutoff": {
-          "2024": { "value": 16059 },
-          "2025": { "value": 67761 },
-          "2026_est": { "value": "~65000" },
+          "2024": {
+            "value": 16059
+          },
+          "2025": {
+            "value": 67761
+          },
+          "2026_est": {
+            "value": "~65000"
+          },
           "_provenance": {
             "source_type": "manual_entry",
             "date_verified": "2026-06-28",
@@ -431,57 +667,177 @@
           "date_verified": "2026-06-28",
           "confidence": "medium"
         },
-        "full_name": { "value": "Information Technology" },
+        "full_name": {
+          "value": "Information Technology"
+        },
         "intake": {
           "value": 60,
           "history": [
-            { "value": 120, "valid_from": "2023-01-01", "valid_to": "2026-04-15" }
+            {
+              "value": 120,
+              "valid_from": "2023-01-01",
+              "valid_to": "2026-04-15"
+            }
           ],
           "conflict_status": "unresolved"
         },
-        "duration": { "value": "4 years" },
-        "established": { "value": 2000 },
-        "nba_accredited": { "value": true },
+        "duration": {
+          "value": "4 years"
+        },
+        "established": {
+          "value": 2000
+        },
+        "nba_accredited": {
+          "value": true
+        },
         "fees": {
-          "total": { "value": 604700 },
-          "admission": { "value": 98225 }
+          "total": {
+            "value": 617700,
+            "provenance": {
+              "source_type": "pdf",
+              "source_url": "https://bcrec.ac.in/public/pdf/B.Tech-Fee-Structure-2026-2030-1.pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "admission": {
+            "value": 10000,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "per_semester": {
+            "value": 73925,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "caution_money": {
+            "value": 5000,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          }
         },
         "placement": {
-          "rate_2023_24": { "value": "90%" },
-          "rate_2024_25": { "value": "88%" },
-          "rate_2025_26": { "value": "80%+" },
-          "min_lpa": { "value": 3.0 },
-          "avg_lpa": { "value": 4.0 },
-          "max_lpa": { "value": 10 }
+          "rate_2023_24": {
+            "value": "90%"
+          },
+          "rate_2024_25": {
+            "value": "88%"
+          },
+          "rate_2025_26": {
+            "value": "80%+"
+          },
+          "min_lpa": {
+            "value": 3.0
+          },
+          "avg_lpa": {
+            "value": 4.0
+          },
+          "max_lpa": {
+            "value": 10
+          }
         },
         "cutoff": {
-          "2024": { "value": 18421 },
-          "2025": { "value": 97611 },
-          "2026_est": { "value": "~95000" }
+          "2024": {
+            "value": 18421
+          },
+          "2025": {
+            "value": 97611
+          },
+          "2026_est": {
+            "value": "~95000"
+          }
         }
       },
       "ECE": {
-        "full_name": { "value": "Electronics and Communication Engineering" },
-        "intake": { "value": 120 },
-        "duration": { "value": "4 years" },
-        "established": { "value": 2000 },
-        "nba_accredited": { "value": true },
+        "full_name": {
+          "value": "Electronics and Communication Engineering"
+        },
+        "intake": {
+          "value": 120
+        },
+        "duration": {
+          "value": "4 years"
+        },
+        "established": {
+          "value": 2000
+        },
+        "nba_accredited": {
+          "value": true
+        },
         "fees": {
-          "total": { "value": 604700 },
-          "admission": { "value": 98225 }
+          "total": {
+            "value": 617700,
+            "provenance": {
+              "source_type": "pdf",
+              "source_url": "https://bcrec.ac.in/public/pdf/B.Tech-Fee-Structure-2026-2030-1.pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "admission": {
+            "value": 10000,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "per_semester": {
+            "value": 73925,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "caution_money": {
+            "value": 5000,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          }
         },
         "placement": {
-          "rate_2023_24": { "value": "85%" },
-          "rate_2024_25": { "value": "82%" },
-          "rate_2025_26": { "value": "75%+" },
-          "min_lpa": { "value": 2.4 },
-          "avg_lpa": { "value": 3.8 },
-          "max_lpa": { "value": 7.5 }
+          "rate_2023_24": {
+            "value": "85%"
+          },
+          "rate_2024_25": {
+            "value": "82%"
+          },
+          "rate_2025_26": {
+            "value": "75%+"
+          },
+          "min_lpa": {
+            "value": 2.4
+          },
+          "avg_lpa": {
+            "value": 3.8
+          },
+          "max_lpa": {
+            "value": 7.5
+          }
         },
         "cutoff": {
-          "2024": { "value": 34169 },
-          "2025": { "value": 96243 },
-          "2026_est": { "value": "~98000" }
+          "2024": {
+            "value": 34169
+          },
+          "2025": {
+            "value": 96243
+          },
+          "2026_est": {
+            "value": "~98000"
+          }
         },
         "_provenance_default": {
           "source_type": "manual_entry",
@@ -490,28 +846,89 @@
         }
       },
       "EE": {
-        "full_name": { "value": "Electrical Engineering" },
-        "intake": { "value": 120 },
-        "intake_note": { "value": "Intake reducing to 60 from AY 2026-27" },
-        "duration": { "value": "4 years" },
-        "established": { "value": 2000 },
-        "nba_accredited": { "value": true },
+        "full_name": {
+          "value": "Electrical Engineering"
+        },
+        "intake": {
+          "value": 120
+        },
+        "intake_note": {
+          "value": "Intake reducing to 60 from AY 2026-27"
+        },
+        "duration": {
+          "value": "4 years"
+        },
+        "established": {
+          "value": 2000
+        },
+        "nba_accredited": {
+          "value": true
+        },
         "fees": {
-          "total": { "value": 554100 },
-          "admission": { "value": 91900 }
+          "total": {
+            "value": 567100,
+            "provenance": {
+              "source_type": "pdf",
+              "source_url": "https://bcrec.ac.in/public/pdf/B.Tech-Fee-Structure-2026-2030-1.pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "admission": {
+            "value": 10000,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "per_semester": {
+            "value": 67600,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "caution_money": {
+            "value": 5000,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          }
         },
         "placement": {
-          "rate_2023_24": { "value": "75%" },
-          "rate_2024_25": { "value": "70%" },
-          "rate_2025_26": { "value": "65%+" },
-          "min_lpa": { "value": 1.8 },
-          "avg_lpa": { "value": 3.2 },
-          "max_lpa": { "value": 6.5 }
+          "rate_2023_24": {
+            "value": "75%"
+          },
+          "rate_2024_25": {
+            "value": "70%"
+          },
+          "rate_2025_26": {
+            "value": "65%+"
+          },
+          "min_lpa": {
+            "value": 1.8
+          },
+          "avg_lpa": {
+            "value": 3.2
+          },
+          "max_lpa": {
+            "value": 6.5
+          }
         },
         "cutoff": {
-          "2024": { "value": 29776 },
-          "2025": { "value": 93045 },
-          "2026_est": { "value": "~90000" }
+          "2024": {
+            "value": 29776
+          },
+          "2025": {
+            "value": 93045
+          },
+          "2026_est": {
+            "value": "~90000"
+          }
         },
         "_provenance_default": {
           "source_type": "manual_entry",
@@ -520,27 +937,86 @@
         }
       },
       "ME": {
-        "full_name": { "value": "Mechanical Engineering" },
-        "intake": { "value": 60 },
-        "duration": { "value": "4 years" },
-        "established": { "value": 2003 },
-        "nba_accredited": { "value": true },
+        "full_name": {
+          "value": "Mechanical Engineering"
+        },
+        "intake": {
+          "value": 60
+        },
+        "duration": {
+          "value": "4 years"
+        },
+        "established": {
+          "value": 2003
+        },
+        "nba_accredited": {
+          "value": true
+        },
         "fees": {
-          "total": { "value": 444100 },
-          "admission": { "value": 78150 }
+          "total": {
+            "value": 429100,
+            "provenance": {
+              "source_type": "pdf",
+              "source_url": "https://bcrec.ac.in/public/pdf/B.Tech-Fee-Structure-2026-2030-1.pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "admission": {
+            "value": 10000,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "per_semester": {
+            "value": 50350,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "caution_money": {
+            "value": 5000,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          }
         },
         "placement": {
-          "rate_2023_24": { "value": "100%" },
-          "rate_2024_25": { "value": "72%" },
-          "rate_2025_26": { "value": "60%+" },
-          "min_lpa": { "value": 1.8 },
-          "avg_lpa": { "value": 3.2 },
-          "max_lpa": { "value": 6.5 }
+          "rate_2023_24": {
+            "value": "100%"
+          },
+          "rate_2024_25": {
+            "value": "72%"
+          },
+          "rate_2025_26": {
+            "value": "60%+"
+          },
+          "min_lpa": {
+            "value": 1.8
+          },
+          "avg_lpa": {
+            "value": 3.2
+          },
+          "max_lpa": {
+            "value": 6.5
+          }
         },
         "cutoff": {
-          "2024": { "value": 104490 },
-          "2025": { "value": 96926 },
-          "2026_est": { "value": "~100000" }
+          "2024": {
+            "value": 104490
+          },
+          "2025": {
+            "value": 96926
+          },
+          "2026_est": {
+            "value": "~100000"
+          }
         },
         "_provenance_default": {
           "source_type": "manual_entry",
@@ -549,27 +1025,86 @@
         }
       },
       "CE": {
-        "full_name": { "value": "Civil Engineering" },
-        "intake": { "value": 60 },
-        "duration": { "value": "4 years" },
-        "established": { "value": 2010 },
-        "nba_accredited": { "value": false },
+        "full_name": {
+          "value": "Civil Engineering"
+        },
+        "intake": {
+          "value": 60
+        },
+        "duration": {
+          "value": "4 years"
+        },
+        "established": {
+          "value": 2010
+        },
+        "nba_accredited": {
+          "value": false
+        },
         "fees": {
-          "total": { "value": 444100 },
-          "admission": { "value": 78150 }
+          "total": {
+            "value": 429100,
+            "provenance": {
+              "source_type": "pdf",
+              "source_url": "https://bcrec.ac.in/public/pdf/B.Tech-Fee-Structure-2026-2030-1.pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "admission": {
+            "value": 10000,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "per_semester": {
+            "value": 50350,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "caution_money": {
+            "value": 5000,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          }
         },
         "placement": {
-          "rate_2023_24": { "value": "100%" },
-          "rate_2024_25": { "value": "68%" },
-          "rate_2025_26": { "value": "55%+" },
-          "min_lpa": { "value": 1.8 },
-          "avg_lpa": { "value": 3.2 },
-          "max_lpa": { "value": 6.5 }
+          "rate_2023_24": {
+            "value": "100%"
+          },
+          "rate_2024_25": {
+            "value": "68%"
+          },
+          "rate_2025_26": {
+            "value": "55%+"
+          },
+          "min_lpa": {
+            "value": 1.8
+          },
+          "avg_lpa": {
+            "value": 3.2
+          },
+          "max_lpa": {
+            "value": 6.5
+          }
         },
         "cutoff": {
-          "2024": { "value": 104490 },
-          "2025": { "value": 96926 },
-          "2026_est": { "value": "~100000" }
+          "2024": {
+            "value": 104490
+          },
+          "2025": {
+            "value": 96926
+          },
+          "2026_est": {
+            "value": "~100000"
+          }
         },
         "_provenance_default": {
           "source_type": "manual_entry",
@@ -578,27 +1113,86 @@
         }
       },
       "CSD": {
-        "full_name": { "value": "Computer Science and Design" },
-        "intake": { "value": 60 },
-        "duration": { "value": "4 years" },
-        "established": { "value": 2021 },
-        "nba_accredited": { "value": false },
+        "full_name": {
+          "value": "Computer Science and Design"
+        },
+        "intake": {
+          "value": 60
+        },
+        "duration": {
+          "value": "4 years"
+        },
+        "established": {
+          "value": 2021
+        },
+        "nba_accredited": {
+          "value": false
+        },
         "fees": {
-          "total": { "value": 554100 },
-          "admission": { "value": 91900 }
+          "total": {
+            "value": 567100,
+            "provenance": {
+              "source_type": "pdf",
+              "source_url": "https://bcrec.ac.in/public/pdf/B.Tech-Fee-Structure-2026-2030-1.pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "admission": {
+            "value": 10000,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "per_semester": {
+            "value": 67600,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "caution_money": {
+            "value": 5000,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          }
         },
         "placement": {
-          "rate_2023_24": { "value": "N/A" },
-          "rate_2024_25": { "value": "83%" },
-          "rate_2025_26": { "value": "78%+" },
-          "min_lpa": { "value": 4.0 },
-          "avg_lpa": { "value": 4.5 },
-          "max_lpa": { "value": 7 }
+          "rate_2023_24": {
+            "value": "N/A"
+          },
+          "rate_2024_25": {
+            "value": "83%"
+          },
+          "rate_2025_26": {
+            "value": "78%+"
+          },
+          "min_lpa": {
+            "value": 4.0
+          },
+          "avg_lpa": {
+            "value": 4.5
+          },
+          "max_lpa": {
+            "value": 7
+          }
         },
         "cutoff": {
-          "2024": { "value": "N/A" },
-          "2025": { "value": "N/A" },
-          "2026_est": { "value": "~95000" }
+          "2024": {
+            "value": "N/A"
+          },
+          "2025": {
+            "value": "N/A"
+          },
+          "2026_est": {
+            "value": "~95000"
+          }
         },
         "_provenance_default": {
           "source_type": "manual_entry",
@@ -607,27 +1201,86 @@
         }
       },
       "AIML": {
-        "full_name": { "value": "CSE (Artificial Intelligence and Machine Learning)" },
-        "intake": { "value": 60 },
-        "duration": { "value": "4 years" },
-        "established": { "value": 2021 },
-        "nba_accredited": { "value": false },
+        "full_name": {
+          "value": "CSE (Artificial Intelligence and Machine Learning)"
+        },
+        "intake": {
+          "value": 60
+        },
+        "duration": {
+          "value": "4 years"
+        },
+        "established": {
+          "value": 2021
+        },
+        "nba_accredited": {
+          "value": false
+        },
         "fees": {
-          "total": { "value": 554100 },
-          "admission": { "value": 91900 }
+          "total": {
+            "value": 567100,
+            "provenance": {
+              "source_type": "pdf",
+              "source_url": "https://bcrec.ac.in/public/pdf/B.Tech-Fee-Structure-2026-2030-1.pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "admission": {
+            "value": 10000,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "per_semester": {
+            "value": 67600,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "caution_money": {
+            "value": 5000,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          }
         },
         "placement": {
-          "rate_2023_24": { "value": "N/A" },
-          "rate_2024_25": { "value": "85%" },
-          "rate_2025_26": { "value": "80%+" },
-          "min_lpa": { "value": 4.0 },
-          "avg_lpa": { "value": 4.5 },
-          "max_lpa": { "value": 7 }
+          "rate_2023_24": {
+            "value": "N/A"
+          },
+          "rate_2024_25": {
+            "value": "85%"
+          },
+          "rate_2025_26": {
+            "value": "80%+"
+          },
+          "min_lpa": {
+            "value": 4.0
+          },
+          "avg_lpa": {
+            "value": 4.5
+          },
+          "max_lpa": {
+            "value": 7
+          }
         },
         "cutoff": {
-          "2024": { "value": 19576 },
-          "2025": { "value": 78384 },
-          "2026_est": { "value": "~75000" }
+          "2024": {
+            "value": 19576
+          },
+          "2025": {
+            "value": 78384
+          },
+          "2026_est": {
+            "value": "~75000"
+          }
         },
         "_provenance_default": {
           "source_type": "manual_entry",
@@ -636,27 +1289,86 @@
         }
       },
       "DS": {
-        "full_name": { "value": "CSE (Data Science)" },
-        "intake": { "value": 60 },
-        "duration": { "value": "4 years" },
-        "established": { "value": 2022 },
-        "nba_accredited": { "value": false },
+        "full_name": {
+          "value": "CSE (Data Science)"
+        },
+        "intake": {
+          "value": 60
+        },
+        "duration": {
+          "value": "4 years"
+        },
+        "established": {
+          "value": 2022
+        },
+        "nba_accredited": {
+          "value": false
+        },
         "fees": {
-          "total": { "value": 554100 },
-          "admission": { "value": 91900 }
+          "total": {
+            "value": 567100,
+            "provenance": {
+              "source_type": "pdf",
+              "source_url": "https://bcrec.ac.in/public/pdf/B.Tech-Fee-Structure-2026-2030-1.pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "admission": {
+            "value": 10000,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "per_semester": {
+            "value": 67600,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "caution_money": {
+            "value": 5000,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          }
         },
         "placement": {
-          "rate_2023_24": { "value": "N/A" },
-          "rate_2024_25": { "value": "84%" },
-          "rate_2025_26": { "value": "81%+" },
-          "min_lpa": { "value": 4.0 },
-          "avg_lpa": { "value": 4.5 },
-          "max_lpa": { "value": 7 }
+          "rate_2023_24": {
+            "value": "N/A"
+          },
+          "rate_2024_25": {
+            "value": "84%"
+          },
+          "rate_2025_26": {
+            "value": "81%+"
+          },
+          "min_lpa": {
+            "value": 4.0
+          },
+          "avg_lpa": {
+            "value": 4.5
+          },
+          "max_lpa": {
+            "value": 7
+          }
         },
         "cutoff": {
-          "2024": { "value": 70424 },
-          "2025": { "value": 97669 },
-          "2026_est": { "value": "~98000" }
+          "2024": {
+            "value": 70424
+          },
+          "2025": {
+            "value": 97669
+          },
+          "2026_est": {
+            "value": "~98000"
+          }
         },
         "_provenance_default": {
           "source_type": "manual_entry",
@@ -665,27 +1377,86 @@
         }
       },
       "CY": {
-        "full_name": { "value": "CSE (Cyber Security)" },
-        "intake": { "value": 60 },
-        "duration": { "value": "4 years" },
-        "established": { "value": 2024 },
-        "nba_accredited": { "value": false },
+        "full_name": {
+          "value": "CSE (Cyber Security)"
+        },
+        "intake": {
+          "value": 60
+        },
+        "duration": {
+          "value": "4 years"
+        },
+        "established": {
+          "value": 2024
+        },
+        "nba_accredited": {
+          "value": false
+        },
         "fees": {
-          "total": { "value": 554100 },
-          "admission": { "value": 91900 }
+          "total": {
+            "value": 567100,
+            "provenance": {
+              "source_type": "pdf",
+              "source_url": "https://bcrec.ac.in/public/pdf/B.Tech-Fee-Structure-2026-2030-1.pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "admission": {
+            "value": 10000,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "per_semester": {
+            "value": 67600,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          },
+          "caution_money": {
+            "value": 5000,
+            "provenance": {
+              "source_type": "pdf",
+              "date_verified": "2026-07-08",
+              "confidence": "high"
+            }
+          }
         },
         "placement": {
-          "rate_2023_24": { "value": "N/A" },
-          "rate_2024_25": { "value": "82%" },
-          "rate_2025_26": { "value": "75%+" },
-          "min_lpa": { "value": 4.0 },
-          "avg_lpa": { "value": 4.5 },
-          "max_lpa": { "value": 7 }
+          "rate_2023_24": {
+            "value": "N/A"
+          },
+          "rate_2024_25": {
+            "value": "82%"
+          },
+          "rate_2025_26": {
+            "value": "75%+"
+          },
+          "min_lpa": {
+            "value": 4.0
+          },
+          "avg_lpa": {
+            "value": 4.5
+          },
+          "max_lpa": {
+            "value": 7
+          }
         },
         "cutoff": {
-          "2024": { "value": "N/A" },
-          "2025": { "value": "N/A" },
-          "2026_est": { "value": "~95000" }
+          "2024": {
+            "value": "N/A"
+          },
+          "2025": {
+            "value": "N/A"
+          },
+          "2026_est": {
+            "value": "~95000"
+          }
         },
         "_provenance_default": {
           "source_type": "manual_entry",
@@ -700,13 +1471,23 @@
         "date_verified": "2026-06-28",
         "confidence": "medium"
       },
-      "intake": { "value": 90 },
-      "duration": { "value": "2 years" },
-      "fees": {
-        "total": { "value": 419200 },
-        "admission": { "value": 121400 }
+      "intake": {
+        "value": 90
       },
-      "scholarship": { "value": "10% tuition fee scholarship for eligible candidates" }
+      "duration": {
+        "value": "2 years"
+      },
+      "fees": {
+        "total": {
+          "value": 419200
+        },
+        "admission": {
+          "value": 121400
+        }
+      },
+      "scholarship": {
+        "value": "10% tuition fee scholarship for eligible candidates"
+      }
     },
     "mba_hosp_management": {
       "_provenance_default": {
@@ -716,12 +1497,22 @@
         "confidence": "medium",
         "notes": "MBA (Hospital Management) fee structure PDF available on bcrec.ac.in. Exact intake not confirmed from parsed document."
       },
-      "full_name": { "value": "MBA (Hospital Management)" },
-      "intake": { "value": 30 },
-      "duration": { "value": "2 years" },
+      "full_name": {
+        "value": "MBA (Hospital Management)"
+      },
+      "intake": {
+        "value": 30
+      },
+      "duration": {
+        "value": "2 years"
+      },
       "fees": {
-        "total": { "value": 419200 },
-        "admission": { "value": 121400 }
+        "total": {
+          "value": 419200
+        },
+        "admission": {
+          "value": 121400
+        }
       }
     },
     "mca": {
@@ -733,22 +1524,36 @@
       "intake": {
         "value": 120,
         "history": [
-          { "value": 60, "valid_from": "2023-01-01", "valid_to": "2026-04-15" }
+          {
+            "value": 60,
+            "valid_from": "2023-01-01",
+            "valid_to": "2026-04-15"
+          }
         ],
         "conflict_status": "unresolved"
       },
       "duration": {
         "value": "2 years",
         "history": [
-          { "value": "3 years", "valid_from": "2023-01-01", "valid_to": "2026-04-15" }
+          {
+            "value": "3 years",
+            "valid_from": "2023-01-01",
+            "valid_to": "2026-04-15"
+          }
         ],
         "conflict_status": "unresolved"
       },
       "fees": {
-        "total": { "value": 208800 },
-        "admission": { "value": 67200 }
+        "total": {
+          "value": 208800
+        },
+        "admission": {
+          "value": 67200
+        }
       },
-      "eligibility": { "value": "JECA qualified" }
+      "eligibility": {
+        "value": "JECA qualified"
+      }
     },
     "mtech": {
       "_provenance_default": {
@@ -757,15 +1562,31 @@
         "confidence": "medium"
       },
       "programs": {
-        "value": ["M.Tech ECE", "M.Tech Power Systems", "M.Tech CSE", "M.Tech ME", "M.Tech Construction Technology and Management"]
+        "value": [
+          "M.Tech ECE",
+          "M.Tech Power Systems",
+          "M.Tech CSE",
+          "M.Tech ME",
+          "M.Tech Construction Technology and Management"
+        ]
       },
-      "intake": { "value": 18 },
-      "duration": { "value": "2 years" },
+      "intake": {
+        "value": 18
+      },
+      "duration": {
+        "value": "2 years"
+      },
       "fees": {
-        "total": { "value": 120400 },
-        "admission": { "value": 40800 }
+        "total": {
+          "value": 120400
+        },
+        "admission": {
+          "value": 40800
+        }
       },
-      "stipend": { "value": "Rs. 3000/month for eligible students" }
+      "stipend": {
+        "value": "Rs. 3000/month for eligible students"
+      }
     },
     "internships": {
       "_provenance": {
@@ -773,9 +1594,15 @@
         "date_verified": "2026-06-28",
         "confidence": "medium"
       },
-      "en": { "value": "Academic programs include industrial training and paid internships. The Civil Engineering department organizes paid internships and industrial training for students." },
-      "hi": { "value": "शैक्षणिक कार्यक्रमों में औद्योगिक प्रशिक्षण और सवेतन इंटर्नशिप शामिल हैं। सिविल इंजीनियरिंग विभाग छात्रों के लिए सवेतन इंटर्नशिप और औद्योगिक प्रशिक्षण आयोजित करता है।" },
-      "bn": { "value": "একাডেমিক প্রোগ্রামগুলিতে শিল্প প্রশিক্ষণ এবং বেতনভুক্ত ইন্টার্নশিপ অন্তর্ভুক্ত। সিভিল ইঞ্জিনিয়ারিং বিভাগ শিক্ষার্থীদের জন্য বেতনভুক্ত ইন্টার্নশিপ এবং শিল্প প্রশিক্ষণের আয়োজন করে।" }
+      "en": {
+        "value": "Academic programs include industrial training and paid internships. The Civil Engineering department organizes paid internships and industrial training for students."
+      },
+      "hi": {
+        "value": "शैक्षणिक कार्यक्रमों में औद्योगिक प्रशिक्षण और सवेतन इंटर्नशिप शामिल हैं। सिविल इंजीनियरिंग विभाग छात्रों के लिए सवेतन इंटर्नशिप और औद्योगिक प्रशिक्षण आयोजित करता है।"
+      },
+      "bn": {
+        "value": "একাডেমিক প্রোগ্রামগুলিতে শিল্প প্রশিক্ষণ এবং বেতনভুক্ত ইন্টার্নশিপ অন্তর্ভুক্ত। সিভিল ইঞ্জিনিয়ারিং বিভাগ শিক্ষার্থীদের জন্য বেতনভুক্ত ইন্টার্নশিপ এবং শিল্প প্রশিক্ষণের আয়োজন করে।"
+      }
     }
   },
   "fees_summary": {
@@ -786,57 +1613,132 @@
       "notes": "Fee summary from combined_kb.json. See official PDF from bcrec.ac.in for semester-wise breakdown."
     },
     "btech_cse_it_ece": {
-      "total": { "value": "Rs. 6,04,700" },
-      "admission": { "value": "Rs. 98,225" },
-      "per_semester": { "value": "Rs. 72,925" }
+      "total": {
+        "value": "Rs. 617,700"
+      },
+      "admission": {
+        "value": "Rs. 99,225"
+      },
+      "per_semester": {
+        "value": "Rs. 73,925"
+      }
     },
     "btech_ee_aiml_ds_cy_csd": {
-      "total": { "value": "Rs. 5,54,100" },
-      "admission": { "value": "Rs. 91,900" },
-      "per_semester": { "value": "Rs. 66,100" }
+      "total": {
+        "value": "Rs. 567,100"
+      },
+      "admission": {
+        "value": "Rs. 92,900"
+      },
+      "per_semester": {
+        "value": "Rs. 67,600"
+      }
     },
     "btech_me_ce": {
-      "total": { "value": "Rs. 4,44,100" },
-      "admission": { "value": "Rs. 78,150" },
-      "per_semester": { "value": "Rs. 40,800" }
+      "total": {
+        "value": "Rs. 429,100"
+      },
+      "admission": {
+        "value": "Rs. 75,650"
+      },
+      "per_semester": {
+        "value": "Rs. 50,350"
+      }
     },
     "mba": {
-      "total": { "value": "Rs. 4,19,200" },
-      "admission": { "value": "Rs. 1,21,400" }
+      "total": {
+        "value": "Rs. 4,19,200"
+      },
+      "admission": {
+        "value": "Rs. 1,21,400"
+      }
     },
     "mca": {
-      "total": { "value": "Rs. 2,08,800" },
-      "admission": { "value": "Rs. 67,200" }
+      "total": {
+        "value": "Rs. 2,14,600"
+      },
+      "admission": {
+        "value": "Rs. 67,800"
+      }
     },
     "mtech": {
-      "total": { "value": "Rs. 1,26,000 to 2,06,000" },
-      "admission": { "value": "Rs. 41,200" }
+      "total": {
+        "value": "Rs. 1,28,000 to 2,27,000"
+      },
+      "admission": {
+        "value": "Rs. 41,200 (CSE) / Rs. 66,200 (ECE/ME/PS/CE)"
+      }
     },
-    "payment_modes": { "value": ["Demand Draft", "Debit Card", "Credit Card"] },
-    "not_accepted": { "value": ["Cheque", "Cash"] },
+    "payment_modes": {
+      "value": [
+        "Demand Draft",
+        "Debit Card",
+        "Credit Card"
+      ]
+    },
+    "not_accepted": {
+      "value": [
+        "Cheque",
+        "Cash"
+      ]
+    },
     "semester_wise_cse_it_ece": {
-      "first": { "value": 98225 },
-      "description_first": { "value": "Includes admission fee, caution deposit, library fee, and tuition" },
-      "per_semester": { "value": 72925 },
-      "eighth": { "value": 73925 },
-      "total_btech": { "value": 604700 },
-      "total_description": { "value": "Rs. 6,04,700 for 4-year B.Tech CSE/IT/ECE" }
+      "first": {
+        "value": 99225
+      },
+      "description_first": {
+        "value": "Includes admission fee, caution deposit, library fee, and tuition"
+      },
+      "per_semester": {
+        "value": 73925
+      },
+      "eighth": {
+        "value": 74925
+      },
+      "total_btech": {
+        "value": 617700
+      },
+      "total_description": {
+        "value": "Rs. 617,700 for 4-year B.Tech CSE/IT/ECE"
+      }
     },
     "semester_wise_ee_group": {
-      "first": { "value": 91900 },
-      "per_semester": { "value": 66100 },
-      "eighth": { "value": 67100 },
-      "total_btech": { "value": 554100 },
-      "total_description": { "value": "Rs. 5,54,100 for 4-year B.Tech EE/AIML/DS/CS/CSD" }
+      "first": {
+        "value": 92900
+      },
+      "per_semester": {
+        "value": 67600
+      },
+      "eighth": {
+        "value": 68600
+      },
+      "total_btech": {
+        "value": 567100
+      },
+      "total_description": {
+        "value": "Rs. 567,100 for 4-year B.Tech EE/AIML/DS/CY/CSD"
+      }
     },
     "semester_wise_me_ce": {
-      "first": { "value": 78150 },
-      "per_semester": { "value": 40800 },
-      "eighth": { "value": 41800 },
-      "total_btech": { "value": 444100 },
-      "total_description": { "value": "Rs. 4,44,100 for 4-year B.Tech ME/CE" }
+      "first": {
+        "value": 75650
+      },
+      "per_semester": {
+        "value": 50350
+      },
+      "eighth": {
+        "value": 51350
+      },
+      "total_btech": {
+        "value": 429100
+      },
+      "total_description": {
+        "value": "Rs. 429,100 for 4-year B.Tech ME/CE"
+      }
     },
-    "hidden_charges": { "value": "No hidden charges. All fees are transparently listed in the official fee brochure." },
+    "hidden_charges": {
+      "value": "No hidden charges. All fees are transparently listed in the official fee brochure."
+    },
     "refund_policy": {
       "_provenance": {
         "source_type": "manual_entry",
@@ -844,12 +1746,22 @@
         "confidence": "medium",
         "notes": "Based on combined_kb.json fee structure data"
       },
-      "guidelines": { "value": "As per AICTE/UGC guidelines" },
-      "within_timeline": { "value": "Full refund minus Rs. 1,000 processing fee, prospectus fee, and dress kit charges (if already made)" },
-      "post_timeline_with_replacement": { "value": "Refund minus processing fee and proportionate tuition/hostel charges if replacement student fills the seat" },
-      "post_timeline_no_replacement": { "value": "Only caution deposit is refundable; all other academic and admission fees are forfeited" }
+      "guidelines": {
+        "value": "As per AICTE/UGC guidelines"
+      },
+      "within_timeline": {
+        "value": "Full refund minus Rs. 1,000 processing fee, prospectus fee, and dress kit charges (if already made)"
+      },
+      "post_timeline_with_replacement": {
+        "value": "Refund minus processing fee and proportionate tuition/hostel charges if replacement student fills the seat"
+      },
+      "post_timeline_no_replacement": {
+        "value": "Only caution deposit is refundable; all other academic and admission fees are forfeited"
+      }
     },
-    "installments": { "value": "Semester-wise payment. Contact college for hardship cases." }
+    "installments": {
+      "value": "Semester-wise payment. Contact college for hardship cases."
+    }
   },
   "admission": {
     "_provenance_default": {
@@ -858,13 +1770,44 @@
       "confidence": "medium"
     },
     "eligibility": {
-      "btech": { "value": "10+2 with PCM, minimum 50% marks for general category" },
-      "entrance": { "value": "WBJEE or JEE Main" }
+      "btech": {
+        "value": "Passed 10+2 (H.S.) or equivalent with PCM. Qualified WBJEE or JEE Main. 50% marks may be WBJEEB requirement.",
+        "provenance": {
+          "source_type": "website",
+          "source_url": "https://www.bcrec.ac.in/custom-page/62a71b1551f19",
+          "date_verified": "2026-07-08",
+          "confidence": "high",
+          "notes": "Official site states 'Passed 10+2 examination... or equivalent' and 'Qualified Joint Entrance Examination'. No explicit minimum percentage on BCREC admission page."
+        }
+      },
+      "entrance": {
+        "value": "WBJEE or JEE Main"
+      }
     },
     "seat_distribution": {
-      "wbjee": { "value": "80%" },
-      "jee_main": { "value": "10%" },
-      "management": { "value": "10%" }
+      "wbjee": {
+        "value": "80%"
+      },
+      "jee_main": {
+        "value": "10%"
+      },
+      "management": {
+        "value": "10%"
+      }
+    },
+    "admission_helpline": {
+      "value": [
+        "9333928874",
+        "9832131164",
+        "9932245570",
+        "9434250472"
+      ],
+      "provenance": {
+        "source_type": "website",
+        "source_url": "https://www.bcrec.ac.in/contact-us",
+        "date_verified": "2026-07-08",
+        "confidence": "high"
+      }
     },
     "lateral_entry": {
       "value": "10% of approved intake via JELET",
@@ -875,7 +1818,9 @@
         "confidence": "high"
       }
     },
-    "counseling": { "value": "WBJEEB at wbjeeb.nic.in" },
+    "counseling": {
+      "value": "WBJEEB at wbjeeb.nic.in"
+    },
     "portal": {
       "value": "https://bcrecdgp.ac.in",
       "provenance": {
@@ -888,22 +1833,46 @@
       "conflict_status": "resolved"
     },
     "contacts": {
-      "general": { "value": ["9333928874", "9832131164", "9932245570", "9434250472", "7063189887"] },
-      "mba": { "value": "8370989772" }
+      "general": {
+        "value": [
+          "9333928874",
+          "9832131164",
+          "9932245570",
+          "9434250472",
+          "7063189887"
+        ]
+      },
+      "mba": {
+        "value": "8370989772"
+      }
     },
     "age_limit": {
-      "en": { "value": "There is no upper age limit. Candidates must be at least 17 years old by December 31st of the admission year as per WBJEEB norms." },
-      "hi": { "value": "कोई ऊपरी आयु सीमा नहीं है। उम्मीदवारों की आयु प्रवेश वर्ष के 31 दिसंबर तक कम से कम 17 वर्ष होनी चाहिए।" },
-      "bn": { "value": "কোনো ঊর্ধ্ব বয়সসীমা নেই। প্রার্থীদের ভর্তি বছরের ৩১ ডিসেম্বরের মধ্যে কমপক্ষে ১৭ বছর বয়স হতে হবে।" }
+      "en": {
+        "value": "There is no upper age limit. Candidates must be at least 17 years old by December 31st of the admission year as per WBJEEB norms."
+      },
+      "hi": {
+        "value": "कोई ऊपरी आयु सीमा नहीं है। उम्मीदवारों की आयु प्रवेश वर्ष के 31 दिसंबर तक कम से कम 17 वर्ष होनी चाहिए।"
+      },
+      "bn": {
+        "value": "কোনো ঊর্ধ্ব বয়সসীমা নেই। প্রার্থীদের ভর্তি বছরের ৩১ ডিসেম্বরের মধ্যে কমপক্ষে ১৭ বছর বয়স হতে হবে।"
+      }
     },
     "spot_round": {
       "value": "Mid-September to early October",
-      "notes": { "value": "Standard admission fees plus Rs. 500-1000 processing" }
+      "notes": {
+        "value": "Standard admission fees plus Rs. 500-1000 processing"
+      }
     },
     "nri_quota": {
-      "seats": { "value": "5% of total intake" },
-      "fee_range": { "value": "$3000-5000 per year" },
-      "contact": { "value": "+91-6297128554" }
+      "seats": {
+        "value": "5% of total intake"
+      },
+      "fee_range": {
+        "value": "$3000-5000 per year"
+      },
+      "contact": {
+        "value": "+91-6297128554"
+      }
     },
     "online_application": {
       "_provenance": {
@@ -911,9 +1880,15 @@
         "date_verified": "2026-06-28",
         "confidence": "medium"
       },
-      "en": { "value": "Apply online at the WBJEEB website (wbjeeb.nic.in) or the college admission portal at bcrecdgp.ac.in." },
-      "hi": { "value": "WBJEEB वेबसाइट (wbjeeb.nic.in) या कॉलेज एडमिशन पोर्टल bcrecdgp.ac.in पर ऑनलाइन आवेदन करें।" },
-      "bn": { "value": "WBJEEB ওয়েবসাইট (wbjeeb.nic.in) বা কলেজ ভর্তি পোর্টাল bcrecdgp.ac.in এ অনলাইনে আবেদন করুন।" }
+      "en": {
+        "value": "Apply online at the WBJEEB website (wbjeeb.nic.in) or the college admission portal at bcrecdgp.ac.in."
+      },
+      "hi": {
+        "value": "WBJEEB वेबसाइट (wbjeeb.nic.in) या कॉलेज एडमिशन पोर्टल bcrecdgp.ac.in पर ऑनलाइन आवेदन करें।"
+      },
+      "bn": {
+        "value": "WBJEEB ওয়েবসাইট (wbjeeb.nic.in) বা কলেজ ভর্তি পোর্টাল bcrecdgp.ac.in এ অনলাইনে আবেদন করুন।"
+      }
     }
   },
   "admission_documents": {
@@ -923,15 +1898,63 @@
       "confidence": "medium",
       "notes": "Document checklist from combined_kb.json"
     },
-    "entrance": { "value": ["WBJEE/JEE-Main Rank Card", "WBJEE/JEE-Main Admit Card"] },
-    "academic": { "value": ["Class 10 Marksheet and Pass Certificate", "Class 12 Marksheet and Pass Certificate"] },
-    "counseling": { "value": ["Allotment Letter from WBJEEB"] },
-    "character": { "value": ["Character Certificate from last attended institution"] },
-    "photographs": { "value": ["6 copies of color stamp-size photographs"] },
-    "certificates": { "value": ["Domicile Certificate (for West Bengal students)", "Aadhar Card", "Caste Certificate (if applicable)"] },
-    "other": { "value": ["Migration Certificate (if applicable)", "Aadhar Card", "6-8 Passport-size Photographs"] },
-    "scholarship": { "value": ["Income Certificate (for TFW candidates)"] },
-    "hostel_items": { "value": ["Big and small lock", "Bedding with mosquito net", "Steel glass", "Bucket", "Mug", "Torch", "Big trunk for storage"] }
+    "entrance": {
+      "value": [
+        "WBJEE/JEE-Main Rank Card",
+        "WBJEE/JEE-Main Admit Card"
+      ]
+    },
+    "academic": {
+      "value": [
+        "Class 10 Marksheet and Pass Certificate",
+        "Class 12 Marksheet and Pass Certificate"
+      ]
+    },
+    "counseling": {
+      "value": [
+        "Allotment Letter from WBJEEB"
+      ]
+    },
+    "character": {
+      "value": [
+        "Character Certificate from last attended institution"
+      ]
+    },
+    "photographs": {
+      "value": [
+        "6 copies of color stamp-size photographs"
+      ]
+    },
+    "certificates": {
+      "value": [
+        "Domicile Certificate (for West Bengal students)",
+        "Aadhar Card",
+        "Caste Certificate (if applicable)"
+      ]
+    },
+    "other": {
+      "value": [
+        "Migration Certificate (if applicable)",
+        "Aadhar Card",
+        "6-8 Passport-size Photographs"
+      ]
+    },
+    "scholarship": {
+      "value": [
+        "Income Certificate (for TFW candidates)"
+      ]
+    },
+    "hostel_items": {
+      "value": [
+        "Big and small lock",
+        "Bedding with mosquito net",
+        "Steel glass",
+        "Bucket",
+        "Mug",
+        "Torch",
+        "Big trunk for storage"
+      ]
+    }
   },
   "infrastructure": {
     "_provenance_default": {
@@ -940,48 +1963,133 @@
       "confidence": "medium"
     },
     "wifi": {
-      "enabled": { "value": true },
-      "coverage": { "value": "Full campus including all academic blocks and hostels" }
+      "enabled": {
+        "value": true
+      },
+      "coverage": {
+        "value": "Full campus including all academic blocks and hostels"
+      }
     },
     "auditoriums": {
       "value": [
-        { "name": "Dulal Mitra Auditorium", "type": "AC" },
-        { "name": "Nazrul Manch", "capacity": "900+", "type": "Open-air" },
-        { "name": "Albert Einstein Hall", "type": "AC Seminar Hall" }
+        {
+          "name": "Dulal Mitra Auditorium",
+          "type": "AC"
+        },
+        {
+          "name": "Nazrul Manch",
+          "capacity": "900+",
+          "type": "Open-air"
+        },
+        {
+          "name": "Albert Einstein Hall",
+          "type": "AC Seminar Hall"
+        }
       ]
     },
     "library": {
-      "description": { "value": "Multi-floor facility with vast collection of text and reference books" },
-      "books": { "value": "80,000+" },
-      "journals": { "value": "National and International" },
-      "e_resources": { "value": ["IEEE", "Springer", "Elsevier", "ScienceDirect", "INDEST-AICTE Consortium"] },
-      "book_bank": { "value": "Students can borrow one book per subject for the entire semester" }
+      "description": {
+        "value": "Multi-floor facility with vast collection of text and reference books"
+      },
+      "books": {
+        "value": "80,000+"
+      },
+      "journals": {
+        "value": "National and International"
+      },
+      "e_resources": {
+        "value": [
+          "IEEE",
+          "Springer",
+          "Elsevier",
+          "ScienceDirect",
+          "INDEST-AICTE Consortium"
+        ]
+      },
+      "book_bank": {
+        "value": "Students can borrow one book per subject for the entire semester"
+      }
     },
     "computer_labs": {
-      "description": { "value": "Well-equipped labs with modern hardware" },
-      "special_labs": {
-        "khorana_research_lab": { "value": "UV-Vis spectrophotometers, digital pH meters" }
+      "description": {
+        "value": "Well-equipped labs with modern hardware"
       },
-      "config": { "value": "Intel Core i5/i7, 8-16GB RAM" },
-      "internet": { "value": "High-speed internet connectivity" },
-      "software": { "value": ["MATLAB", "Simulink", "TensorFlow", "Python", "Xilinx", "ANSYS", "AutoCAD", "CREO", "Department-specific software"] }
+      "special_labs": {
+        "khorana_research_lab": {
+          "value": "UV-Vis spectrophotometers, digital pH meters"
+        }
+      },
+      "config": {
+        "value": "Intel Core i5/i7, 8-16GB RAM"
+      },
+      "internet": {
+        "value": "High-speed internet connectivity"
+      },
+      "software": {
+        "value": [
+          "MATLAB",
+          "Simulink",
+          "TensorFlow",
+          "Python",
+          "Xilinx",
+          "ANSYS",
+          "AutoCAD",
+          "CREO",
+          "Department-specific software"
+        ]
+      }
     },
-    "canteen": { "available": { "value": true } },
+    "canteen": {
+      "available": {
+        "value": true
+      }
+    },
     "sports": {
-      "outdoor": { "value": ["Cricket", "Football", "Basketball", "Athletics", "Volleyball", "Badminton"] },
-      "indoor": { "value": ["Table Tennis", "Carrom", "Chess"] },
-      "gym": { "value": "Multi-Gym available" },
-      "ground": { "value": "Football and cricket grounds" }
+      "outdoor": {
+        "value": [
+          "Cricket",
+          "Football",
+          "Basketball",
+          "Athletics",
+          "Volleyball",
+          "Badminton"
+        ]
+      },
+      "indoor": {
+        "value": [
+          "Table Tennis",
+          "Carrom",
+          "Chess"
+        ]
+      },
+      "gym": {
+        "value": "Multi-Gym available"
+      },
+      "ground": {
+        "value": "Football and cricket grounds"
+      }
     },
     "medical": {
-      "available": { "value": true },
-      "emergency": { "value": "24/7 access to emergency services" },
-      "hospital": { "value": "Tie-up with Mission Hospital" },
-      "womens_safety_helpline": { "value": "9851006415 (24x7)" }
+      "available": {
+        "value": true
+      },
+      "emergency": {
+        "value": "24/7 access to emergency services"
+      },
+      "hospital": {
+        "value": "Tie-up with Mission Hospital"
+      },
+      "womens_safety_helpline": {
+        "value": "9851006415 (24x7)"
+      }
     },
     "guest_house": {
-      "available": { "value": true },
-      "description": { "value": "Guest house facility available for parents and visitors" },
+      "available": {
+        "value": true
+      },
+      "description": {
+        "value": "Guest house facility available for parents and visitors"
+      },
       "_provenance": {
         "source_type": "website",
         "source_url": "https://www.bcrec.ac.in",
@@ -1014,15 +2122,41 @@
         "date_verified": "2026-07-02",
         "confidence": "high"
       },
-      "psychological": { "value": "Psychological Counselling Services available" },
-      "mental_health": { "value": "Mental Health Support Services available" },
-      "internal_complaints": { "value": "Internal Complaints Committee available" }
+      "psychological": {
+        "value": "Psychological Counselling Services available"
+      },
+      "mental_health": {
+        "value": "Mental Health Support Services available"
+      },
+      "internal_complaints": {
+        "value": "Internal Complaints Committee available"
+      }
     },
-    "facilities": { "value": ["ATM", "Medical (Mission Hospital)", "Cafeteria", "Gym", "Solar Power", "24x7 CCTV Security", "Guest House", "Language Lab (IIT Kharagpur)", "NCC", "Psychological Counselling", "EDUSAT"] },
+    "facilities": {
+      "value": [
+        "ATM",
+        "Medical (Mission Hospital)",
+        "Cafeteria",
+        "Gym",
+        "Solar Power",
+        "24x7 CCTV Security",
+        "Guest House",
+        "Language Lab (IIT Kharagpur)",
+        "NCC",
+        "Psychological Counselling",
+        "EDUSAT"
+      ]
+    },
     "transportation": {
-      "en": { "value": "Students typically commute by private or public means. Dedicated college transport is not detailed on the official site." },
-      "hi": { "value": "छात्र आमतौर पर निजी या सार्वजनिक साधनों से आते हैं। समर्पित कॉलेज परिवहन का आधिकारिक साइट पर विवरण नहीं है।" },
-      "bn": { "value": "শিক্ষার্থীরা সাধারণত ব্যক্তিগত বা সরকারি মাধ্যম ব্যবহার করে আসে। উত্সর্গীকৃত কলেজ পরিবহন অফিসিয়াল সাইটে বিস্তারিত নেই।" }
+      "en": {
+        "value": "Students typically commute by private or public means. Dedicated college transport is not detailed on the official site."
+      },
+      "hi": {
+        "value": "छात्र आमतौर पर निजी या सार्वजनिक साधनों से आते हैं। समर्पित कॉलेज परिवहन का आधिकारिक साइट पर विवरण नहीं है।"
+      },
+      "bn": {
+        "value": "শিক্ষার্থীরা সাধারণত ব্যক্তিগত বা সরকারি মাধ্যম ব্যবহার করে আসে। উত্সর্গীকৃত কলেজ পরিবহন অফিসিয়াল সাইটে বিস্তারিত নেই।"
+      }
     },
     "labs_detail": {
       "_provenance": {
@@ -1030,9 +2164,15 @@
         "date_verified": "2026-06-28",
         "confidence": "medium"
       },
-      "en": { "value": "State-of-the-art laboratories for all disciplines including departmental and central labs." },
-      "hi": { "value": "सभी विषयों के लिए अत्याधुनिक प्रयोगशालाएं जिनमें विभागीय और केंद्रीय प्रयोगशालाएं शामिल हैं।" },
-      "bn": { "value": "সব বিষয়ের জন্য অত্যাধুনিক ল্যাবরেটরি যা বিভাগীয় এবং কেন্দ্রীয় ল্যাব অন্তর্ভুক্ত।" }
+      "en": {
+        "value": "State-of-the-art laboratories for all disciplines including departmental and central labs."
+      },
+      "hi": {
+        "value": "सभी विषयों के लिए अत्याधुनिक प्रयोगशालाएं जिनमें विभागीय और केंद्रीय प्रयोगशालाएं शामिल हैं।"
+      },
+      "bn": {
+        "value": "সব বিষয়ের জন্য অত্যাধুনিক ল্যাবরেটরি যা বিভাগীয় এবং কেন্দ্রীয় ল্যাব অন্তর্ভুক্ত।"
+      }
     }
   },
   "student_life": {
@@ -1042,27 +2182,68 @@
       "confidence": "medium"
     },
     "tech_fest": {
-      "name": { "value": "HORIZON" },
-      "month": { "value": "February" },
-      "latest": { "value": "HORIZON 2K26" }
+      "name": {
+        "value": "HORIZON"
+      },
+      "month": {
+        "value": "February"
+      },
+      "latest": {
+        "value": "HORIZON 2K26"
+      }
     },
     "cultural_fest": {
-      "name": { "value": "ZEAL" },
-      "month": { "value": "January" }
+      "name": {
+        "value": "ZEAL"
+      },
+      "month": {
+        "value": "January"
+      }
     },
     "events": {
       "value": [
-        { "name": "Moksha", "month": "November", "type": "Freshers' Welcome" },
-        { "name": "Agomoni", "month": "September", "type": "Pre-Durga Puja" },
-        { "name": "Sports Meet", "month": "January" },
-        { "name": "National Youth Day", "type": "Annual celebration" }
+        {
+          "name": "Moksha",
+          "month": "November",
+          "type": "Freshers' Welcome"
+        },
+        {
+          "name": "Agomoni",
+          "month": "September",
+          "type": "Pre-Durga Puja"
+        },
+        {
+          "name": "Sports Meet",
+          "month": "January"
+        },
+        {
+          "name": "National Youth Day",
+          "type": "Annual celebration"
+        }
       ]
     },
-    "clubs": { "value": ["NSS", "IIC (Innovation Council)", "Coding Clubs", "Photography & Media", "Literary & Debate", "Sports Club", "IEEE Student Branch", "IIC-BCREC (Institution's Innovation Council)"] },
+    "clubs": {
+      "value": [
+        "NSS",
+        "IIC (Innovation Council)",
+        "Coding Clubs",
+        "Photography & Media",
+        "Literary & Debate",
+        "Sports Club",
+        "IEEE Student Branch",
+        "IIC-BCREC (Institution's Innovation Council)"
+      ]
+    },
     "gate_forum": {
-      "en": { "value": "BCREC has a dedicated GATE Forum to prepare students for competitive exams like GATE." },
-      "hi": { "value": "बीसीआरईसी में GATE जैसी प्रतियोगी परीक्षाओं की तैयारी के लिए समर्पित GATE फोरम है।" },
-      "bn": { "value": "বিসিআরইসি তে GATE এর মতো প্রতিযোগিতামূলক পরীক্ষার প্রস্তুতির জন্য একটি GATE ফোরাম রয়েছে।" }
+      "en": {
+        "value": "BCREC has a dedicated GATE Forum to prepare students for competitive exams like GATE."
+      },
+      "hi": {
+        "value": "बीसीआरईसी में GATE जैसी प्रतियोगी परीक्षाओं की तैयारी के लिए समर्पित GATE फोरम है।"
+      },
+      "bn": {
+        "value": "বিসিআরইসি তে GATE এর মতো প্রতিযোগিতামূলক পরীক্ষার প্রস্তুতির জন্য একটি GATE ফোরাম রয়েছে।"
+      }
     },
     "description": {
       "value": "Vibrant campus life with various clubs, tech fests, cultural events, and celebrations",
@@ -1080,27 +2261,51 @@
       "confidence": "medium"
     },
     "eligibility": {
-      "merit": { "value": "Based on WBJEE/JEE Main rank" },
-      "means": { "value": "Annual family income below Rs. 2.5 - 6 Lakhs (varies by scheme)" }
+      "merit": {
+        "value": "Based on WBJEE/JEE Main rank"
+      },
+      "means": {
+        "value": "Annual family income below Rs. 2.5 - 6 Lakhs (varies by scheme)"
+      }
     },
     "schemes": {
       "tfw": {
-        "name": { "value": "TFW (Tuition Fee Waiver)" },
-        "seats": { "value": "5% of total intake via WBJEE counseling" },
-        "benefit": { "value": "Full tuition fee waiver for economically weaker students" }
+        "name": {
+          "value": "TFW (Tuition Fee Waiver)"
+        },
+        "seats": {
+          "value": "5% of total intake via WBJEE counseling"
+        },
+        "benefit": {
+          "value": "Full tuition fee waiver for economically weaker students"
+        }
       },
       "svmcm": {
-        "name": { "value": "Swami Vivekananda Merit-cum-Means Scholarship" },
-        "amount": { "value": "Rs. 60,000/year" },
-        "eligible": { "value": "West Bengal residents" }
+        "name": {
+          "value": "Swami Vivekananda Merit-cum-Means Scholarship"
+        },
+        "amount": {
+          "value": "Rs. 60,000/year"
+        },
+        "eligible": {
+          "value": "West Bengal residents"
+        }
       },
       "kanyashree": {
-        "name": { "value": "Kanyashree K3" },
-        "eligible": { "value": "Female students pursuing specific UG levels" }
+        "name": {
+          "value": "Kanyashree K3"
+        },
+        "eligible": {
+          "value": "Female students pursuing specific UG levels"
+        }
       },
       "oasis_aikyashree": {
-        "name": { "value": "OASIS/Aikyashree" },
-        "eligible": { "value": "SC/ST/OBC and Minority students" }
+        "name": {
+          "value": "OASIS/Aikyashree"
+        },
+        "eligible": {
+          "value": "SC/ST/OBC and Minority students"
+        }
       }
     }
   },
@@ -1114,57 +2319,176 @@
     "overall_rate_2025": {
       "value": "91%",
       "history": [
-        { "value": "80.62%", "valid_from": "2025-01-01", "valid_to": "2026-06-27" }
+        {
+          "value": "80.62%",
+          "valid_from": "2025-01-01",
+          "valid_to": "2026-06-27"
+        }
       ],
       "conflict_status": "unresolved"
     },
-    "cse_rate_2025": { "value": "93.6%" },
-    "rate_2023": { "value": "86%" },
-    "rate_2024": { "value": "78%" },
+    "cse_rate_2025": {
+      "value": "93.6%"
+    },
+    "rate_2023": {
+      "value": "86%"
+    },
+    "rate_2024": {
+      "value": "78%"
+    },
     "highest_package": {
       "amount": {
         "value": 7.0,
+        "max_off_campus": {
+          "value": 9.0,
+          "provenance": {
+            "source_type": "website",
+            "source_url": "https://bcrec.ac.in/placements",
+            "date_verified": "2026-07-08",
+            "confidence": "medium",
+            "notes": "Amazon off-campus placement reported at 9.0 LPA"
+          }
+        },
         "history": [
-          { "value": 30, "valid_from": "2025-01-01", "valid_to": "2026-06-27" }
+          {
+            "value": 30,
+            "valid_from": "2025-01-01",
+            "valid_to": "2026-06-27"
+          }
         ],
-        "conflict_status": "unresolved",
+        "conflict_status": "resolved",
         "provenance": {
-          "source_type": "manual_entry",
-          "date_verified": "2026-06-28",
-          "confidence": "low",
-          "notes": "Combined_kb.json says 7 LPA. Previous version said 30 LPA (Cyberwissen). Needs official T&P cell data."
+          "source_type": "website",
+          "source_url": "https://bcrec.ac.in",
+          "date_verified": "2026-07-08",
+          "confidence": "high",
+          "notes": "Verified from official BCREC website homepage and placement page. On-campus highest 7.0 LPA, off-campus up to 9.0 LPA."
         }
       },
-      "company": { "value": "TCS, Wipro, Capgemini, and others" },
-      "year": { "value": 2025 }
+      "company": {
+        "value": "TCS, Wipro, Capgemini, Accenture, Amazon (off-campus), and others"
+      },
+      "year": {
+        "value": 2025
+      }
     },
-    "median_package": { "value": "Rs. 4.25 LPA" },
-    "average_package": { "value": "Rs. 3.78 LPA" },
-    "companies_visited_2025": { "value": 81 },
-    "students_placed_2025": { "value": 244 },
-    "top_recruiters": { "value": ["TCS", "Infosys", "Wipro", "HCL", "Capgemini", "L&T Infotech", "NHAI", "Federal Bank", "Tata Power", "Accenture", "Tech Mahindra", "IBM", "Cognizant", "Godrej", "Genpact"] },
-    "placement_partners": { "value": ["TCS", "Infosys", "Wipro", "HCL", "Capgemini", "L&T Infotech", "NHAI", "Federal Bank", "Tata Power", "MEIL", "Ultratech Cements", "Sobha Developers"] },
+    "median_package": {
+      "value": "Rs. 4.25 LPA"
+    },
+    "average_package": {
+      "value": "Rs. 3.78 LPA"
+    },
+    "companies_visited_2025": {
+      "value": 81
+    },
+    "students_placed_2025": {
+      "value": 244
+    },
+    "top_recruiters": {
+      "value": [
+        "TCS",
+        "Infosys",
+        "Wipro",
+        "HCL",
+        "Capgemini",
+        "L&T Infotech",
+        "NHAI",
+        "Federal Bank",
+        "Tata Power",
+        "Accenture",
+        "Tech Mahindra",
+        "IBM",
+        "Cognizant",
+        "Godrej",
+        "Genpact"
+      ]
+    },
+    "placement_partners": {
+      "value": [
+        "TCS",
+        "Infosys",
+        "Wipro",
+        "HCL",
+        "Capgemini",
+        "L&T Infotech",
+        "NHAI",
+        "Federal Bank",
+        "Tata Power",
+        "MEIL",
+        "Ultratech Cements",
+        "Sobha Developers"
+      ]
+    },
     "internship": {
-      "available": { "value": true },
-      "top_partners": { "value": ["TCS", "Wipro", "Cognizant", "SAIL", "Tata Power", "NHAI"] }
+      "available": {
+        "value": true
+      },
+      "top_partners": {
+        "value": [
+          "TCS",
+          "Wipro",
+          "Cognizant",
+          "SAIL",
+          "Tata Power",
+          "NHAI"
+        ]
+      }
     },
     "training_cell": {
-      "name": { "value": "Training & Placement (T&P) Cell" },
-      "programs": { "value": ["aptitude", "technical", "coding", "soft_skills", "mock_interviews", "resume_building"] },
-      "starts_from": { "value": "3rd year onwards" }
+      "name": {
+        "value": "Training & Placement (T&P) Cell"
+      },
+      "programs": {
+        "value": [
+          "aptitude",
+          "technical",
+          "coding",
+          "soft_skills",
+          "mock_interviews",
+          "resume_building"
+        ]
+      },
+      "starts_from": {
+        "value": "3rd year onwards"
+      }
     },
     "contacts": {
-      "head_cro": { "value": "Mr. Atanu Maity" },
-      "manager": { "value": "Mr. Deepraj Mondal" },
-      "campus_incharge": { "value": "Prof. Prabal Kumar Sahu" }
+      "head_cro": {
+        "value": "Mr. Atanu Maity"
+      },
+      "manager": {
+        "value": "Mr. Deepraj Mondal"
+      },
+      "campus_incharge": {
+        "value": "Prof. Prabal Kumar Sahu"
+      }
     },
-    "alumni_companies": { "value": ["IBM", "TCS", "Wipro", "Accenture", "Capgemini", "Tech Mahindra", "Indian Navy"] },
+    "alumni_companies": {
+      "value": [
+        "IBM",
+        "TCS",
+        "Wipro",
+        "Accenture",
+        "Capgemini",
+        "Tech Mahindra",
+        "Indian Navy"
+      ]
+    },
     "highest_salary_branch": {
       "value": "CSE (Computer Science) - traditionally secures highest volume and packages",
       "_provenance": {
         "source_type": "manual_entry",
         "date_verified": "2026-06-28",
         "confidence": "medium"
+      }
+    },
+    "nirf_median_salary_2025": {
+      "value": "Rs. 3,86,000",
+      "provenance": {
+        "source_type": "pdf",
+        "source_url": "https://bcrec.ac.in/public/pdf/NIRF2026.pdf",
+        "date_verified": "2026-07-08",
+        "confidence": "high"
       }
     }
   },
@@ -1174,17 +2498,41 @@
       "date_verified": "2026-06-28",
       "confidence": "medium"
     },
-    "available": { "value": true },
-    "compulsory": { "value": false },
-    "total_hostels": { "value": 5 },
-    "boys_hostels": { "value": 3 },
-    "girls_hostels": { "value": 2 },
-    "total_capacity": { "value": 1500 },
+    "available": {
+      "value": true
+    },
+    "compulsory": {
+      "value": false
+    },
+    "total_hostels": {
+      "value": 5
+    },
+    "boys_hostels": {
+      "value": 3
+    },
+    "girls_hostels": {
+      "value": 2
+    },
+    "total_capacity": {
+      "value": 1500
+    },
     "room_types": {
       "value": [
-        { "type": "Single Bed", "rent_per_sem": 30000, "availability": "Limited (need-based)" },
-        { "type": "Double/Triple Bed", "rent_per_sem": 10000, "availability": "Standard" },
-        { "type": "4-Bed", "rent_per_sem": 10000, "availability": "Maximum" }
+        {
+          "type": "Single Bed",
+          "rent_per_sem": 30000,
+          "availability": "Limited (need-based)"
+        },
+        {
+          "type": "Double/Triple Bed",
+          "rent_per_sem": 10000,
+          "availability": "Standard"
+        },
+        {
+          "type": "4-Bed",
+          "rent_per_sem": 10000,
+          "availability": "Maximum"
+        }
       ]
     },
     "caution_money": {
@@ -1197,52 +2545,96 @@
         "notes": "Official PDF from bcrec.ac.in says ₹12,000 (with hostel) / ₹10,000 (without) as admission caution deposit. Hostel section lists ₹2,000 as hostel caution money. These are two separate deposits."
       },
       "history": [
-        { "value": 2000, "valid_from": "2023-01-01", "valid_to": "2026-06-28" },
-        { "value": "Rs. 10,000 (without hostel) / Rs. 12,000 (with hostel)", "valid_from": "2026-06-28" }
+        {
+          "value": 2000,
+          "valid_from": "2023-01-01",
+          "valid_to": "2026-06-28"
+        },
+        {
+          "value": "Rs. 10,000 (without hostel) / Rs. 12,000 (with hostel)",
+          "valid_from": "2026-06-28"
+        }
       ],
       "conflict_status": "resolved"
     },
     "mess": {
       "monthly_charge": {
-        "value": 5000,
-        "history": [
-          { "value": 4800, "valid_from": "2023-01-01", "valid_to": "2024-06-30" },
-          { "value": 5000, "valid_from": "2024-07-01", "valid_to": "2026-06-28" }
-        ],
+        "value": 5500,
         "provenance": {
-          "source_type": "website",
-          "source_url": "https://www.bcrec.ac.in",
-          "date_verified": "2026-07-02",
-          "confidence": "medium",
-          "notes": "Official PDF was ₹4,800/month. Combined_kb says ₹5,000. quick_answers says ₹5,500. Using ₹5,000 as the reconciled value (consistent with majority of internal sources)."
-        },
-        "conflict_status": "resolved"
+          "source_type": "pdf",
+          "source_url": "https://bcrec.ac.in/public/pdf/MBA-Fee-Structure-2026-2028.pdf",
+          "date_verified": "2026-07-08",
+          "confidence": "high",
+          "notes": "Mess charge from MBA fee PDF: Rs. 5,500 per month"
+        }
       },
-      "months_per_year": { "value": 11 },
-      "meals_per_day": { "value": 4 },
-      "veg": { "value": true },
-      "non_veg": { "value": "Available 3-4 days/week (Chicken/Fish/Egg)" },
-      "veg_options": { "value": "Paneer and Soybean available daily" },
+      "months_per_year": {
+        "value": 11
+      },
+      "meals_per_day": {
+        "value": 4
+      },
+      "veg": {
+        "value": true
+      },
+      "non_veg": {
+        "value": "Available 3-4 days/week (Chicken/Fish/Egg)"
+      },
+      "veg_options": {
+        "value": "Paneer and Soybean available daily"
+      },
       "timings": {
-        "breakfast": { "value": "07:30 - 09:00 AM" },
-        "lunch": { "value": "12:30 - 02:00 PM" },
-        "snacks": { "value": "Evening" },
-        "dinner": { "value": "07:30 - 09:30 PM" }
+        "breakfast": {
+          "value": "07:30 - 09:00 AM"
+        },
+        "lunch": {
+          "value": "12:30 - 02:00 PM"
+        },
+        "snacks": {
+          "value": "Evening"
+        },
+        "dinner": {
+          "value": "07:30 - 09:30 PM"
+        }
       }
     },
-    "facilities": { "value": ["24-hour WiFi", "Bed/Table/Chair/Wardrobe provided", "Laundry service (paid)"] },
+    "facilities": {
+      "value": [
+        "24-hour WiFi",
+        "Bed/Table/Chair/Wardrobe provided",
+        "Laundry service (paid)"
+      ]
+    },
     "rules": {
-      "boys_curfew": { "value": "08:30 PM (winter: 07:30 PM)" },
-      "girls_curfew": { "value": "06:30 PM (winter: 06:00 PM)" },
-      "guests": { "value": "Day guests allowed with permission, no overnight stays" },
-      "entry_exit": { "value": "Students must sign in/out when leaving campus after curfew" },
-      "maintenance": { "value": "Report room issues to warden - addressed within 24-48 hours" },
-      "visitors": { "value": "Parents can visit during designated hours on weekends" }
+      "boys_curfew": {
+        "value": "08:30 PM (winter: 07:30 PM)"
+      },
+      "girls_curfew": {
+        "value": "06:30 PM (winter: 06:00 PM)"
+      },
+      "guests": {
+        "value": "Day guests allowed with permission, no overnight stays"
+      },
+      "entry_exit": {
+        "value": "Students must sign in/out when leaving campus after curfew"
+      },
+      "maintenance": {
+        "value": "Report room issues to warden - addressed within 24-48 hours"
+      },
+      "visitors": {
+        "value": "Parents can visit during designated hours on weekends"
+      }
     },
     "contacts": {
-      "helpline": { "value": "0343-2501353" },
-      "emergency": { "value": "+91-6297128554" },
-      "womens_safety": { "value": "9851006415" }
+      "helpline": {
+        "value": "0343-2501353"
+      },
+      "emergency": {
+        "value": "+91-6297128554"
+      },
+      "womens_safety": {
+        "value": "9851006415"
+      }
     }
   },
   "anti_ragging": {
@@ -1251,10 +2643,24 @@
       "date_verified": "2026-06-28",
       "confidence": "medium"
     },
-    "policy": { "value": "Zero Tolerance" },
-    "measures": { "value": ["Dedicated Anti-Ragging Committee", "Active Anti-Ragging Squad that conducts surprise raids", "Legal affidavit signed by both students and parents at admission", "Separate fresher hostels for safety", "Regular monitoring and surprise checks"] },
-    "reporting": { "value": "Contact college helpline 0343-2501353 or log on to anti-ragging portal" },
-    "safety": { "value": "Women's Safety Helpline: 9851006415 (24x7)" }
+    "policy": {
+      "value": "Zero Tolerance"
+    },
+    "measures": {
+      "value": [
+        "Dedicated Anti-Ragging Committee",
+        "Active Anti-Ragging Squad that conducts surprise raids",
+        "Legal affidavit signed by both students and parents at admission",
+        "Separate fresher hostels for safety",
+        "Regular monitoring and surprise checks"
+      ]
+    },
+    "reporting": {
+      "value": "Contact college helpline 0343-2501353 or log on to anti-ragging portal"
+    },
+    "safety": {
+      "value": "Women's Safety Helpline: 9851006415 (24x7)"
+    }
   },
   "academics": {
     "_provenance_default": {
@@ -1263,23 +2669,50 @@
       "confidence": "medium"
     },
     "faculty": {
-      "total": { "value": "281+" },
-      "description": { "value": "Core branches have experienced professors with PhDs. Newer CSE specializations (AI/ML) have mix of experienced and young, tech-savvy faculty." }
+      "total": {
+        "value": "281+"
+      },
+      "description": {
+        "value": "Core branches have experienced professors with PhDs. Newer CSE specializations (AI/ML) have mix of experienced and young, tech-savvy faculty."
+      }
     },
-    "student_teacher_ratio": { "value": "15:1 to 20:1" },
-    "teaching_methodology": { "value": "Combination of lectures, practicals, projects, and industry-oriented learning." },
+    "student_teacher_ratio": {
+      "value": "15:1 to 20:1"
+    },
+    "teaching_methodology": {
+      "value": "Combination of lectures, practicals, projects, and industry-oriented learning."
+    },
     "exam_pattern": {
-      "structure": { "value": "Continuous Assessment (CA) + Mid-semesters + Semester-end theory/practical exams" },
-      "ca_components": { "value": ["Class tests", "Assignments", "Presentations", "Viva voce"] }
+      "structure": {
+        "value": "Continuous Assessment (CA) + Mid-semesters + Semester-end theory/practical exams"
+      },
+      "ca_components": {
+        "value": [
+          "Class tests",
+          "Assignments",
+          "Presentations",
+          "Viva voce"
+        ]
+      }
     },
     "syllabus": {
-      "status": { "value": "Regularly updated" },
-      "authority": { "value": "MAKAUT (Autonomous Institute curriculum from 2024-25 batch)" }
+      "status": {
+        "value": "Regularly updated"
+      },
+      "authority": {
+        "value": "MAKAUT (Autonomous Institute curriculum from 2024-25 batch)"
+      }
     },
     "practicals": {
-      "conducted": { "value": "Strictly as per academic calendar" },
-      "labs": { "value": "Well-equipped labs including AICTE IDEA Lab" },
-      "special_labs": { "value": "Khorana Research Laboratory with UV-Vis spectrophotometers and digital pH meters" }
+      "conducted": {
+        "value": "Strictly as per academic calendar"
+      },
+      "labs": {
+        "value": "Well-equipped labs including AICTE IDEA Lab"
+      },
+      "special_labs": {
+        "value": "Khorana Research Laboratory with UV-Vis spectrophotometers and digital pH meters"
+      }
     },
     "teaching_quality": {
       "_provenance": {
@@ -1287,11 +2720,27 @@
         "date_verified": "2026-06-28",
         "confidence": "medium"
       },
-      "approach": { "value": "Student-centric with focus on practical applications" },
-      "methods": { "value": ["Interactive classroom teaching", "Lab sessions with hands-on practice", "Industry projects and case studies", "Guest lectures from industry experts", "Regular assessments and feedback"] },
-      "evaluation": { "value": "Continuous evaluation through assignments, presentations, and exams" },
-      "support": { "value": "Mentor system for each student batch, doubt-clearing sessions, and extra classes for weak students" },
-      "faculty_development": { "value": "Regular faculty training programs and workshops to stay updated with industry trends" }
+      "approach": {
+        "value": "Student-centric with focus on practical applications"
+      },
+      "methods": {
+        "value": [
+          "Interactive classroom teaching",
+          "Lab sessions with hands-on practice",
+          "Industry projects and case studies",
+          "Guest lectures from industry experts",
+          "Regular assessments and feedback"
+        ]
+      },
+      "evaluation": {
+        "value": "Continuous evaluation through assignments, presentations, and exams"
+      },
+      "support": {
+        "value": "Mentor system for each student batch, doubt-clearing sessions, and extra classes for weak students"
+      },
+      "faculty_development": {
+        "value": "Regular faculty training programs and workshops to stay updated with industry trends"
+      }
     }
   },
   "branch_change": {
@@ -1300,12 +2749,24 @@
       "date_verified": "2026-06-28",
       "confidence": "medium"
     },
-    "allowed": { "value": true },
-    "timing": { "value": "After 1st Year" },
-    "criteria": { "value": "Merit-based (GPA/CGPA) + Seat vacancy in target branch" },
-    "authority": { "value": "Governed by MAKAUT/College regulations" },
-    "process": { "value": "Apply through academic section after declaring 1st year results" },
-    "note": { "value": "Subject to availability of seats and college policy" }
+    "allowed": {
+      "value": true
+    },
+    "timing": {
+      "value": "After 1st Year"
+    },
+    "criteria": {
+      "value": "Merit-based (GPA/CGPA) + Seat vacancy in target branch"
+    },
+    "authority": {
+      "value": "Governed by MAKAUT/College regulations"
+    },
+    "process": {
+      "value": "Apply through academic section after declaring 1st year results"
+    },
+    "note": {
+      "value": "Subject to availability of seats and college policy"
+    }
   },
   "important_links": {
     "_provenance_default": {
@@ -1314,9 +2775,17 @@
       "date_verified": "2026-04-15",
       "confidence": "high"
     },
-    "website": { "value": "https://www.bcrec.ac.in" },
-    "admission_portal": { "value": "https://bcrecdgp.ac.in" },
-    "placements": { "value": "https://bcrec.ac.in/placements" },
-    "contact": { "value": "https://bcrec.ac.in/contact-us" }
+    "website": {
+      "value": "https://www.bcrec.ac.in"
+    },
+    "admission_portal": {
+      "value": "https://bcrecdgp.ac.in"
+    },
+    "placements": {
+      "value": "https://bcrec.ac.in/placements"
+    },
+    "contact": {
+      "value": "https://bcrec.ac.in/contact-us"
+    }
   }
 }

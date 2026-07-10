@@ -15,8 +15,8 @@
 
 ## Fee Structure
 
-- **Total Fee**: Rs. 604700
-- **Admission Fee**: Rs. 98225
+- **Total Fee**: Rs. 617700
+- **Admission Fee**: Rs. 99225
 
 ## Placement Statistics
 

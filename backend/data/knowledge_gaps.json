@@ -1300,5 +1300,271 @@
     "reason": "hallucination_guard_stream: entities not found in context: ['750', '375', '375']",
     "timestamp": "2026-07-04T13:51:14.262552Z",
     "count": 1
+  },
+  {
+    "query": "repeat",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-07-04T18:39:52.278465Z",
+    "count": 1
+  },
+  {
+    "query": "এবারে বাচ্চার সাথে কথা বলতে থাক না।",
+    "lang": "bn",
+    "reason": "low_confidence_retrieval_0.119",
+    "timestamp": "2026-07-06T06:56:58.911690Z",
+    "count": 1
+  },
+  {
+    "query": "broo i need healp",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-07-08T13:23:10.702811Z",
+    "count": 1
+  },
+  {
+    "query": "amar akta sem a back ache amar ki r scholership paoaholona",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-07-08T13:24:11.019966Z",
+    "count": 1
+  },
+  {
+    "query": "mera ak back lag geya he",
+    "lang": "hi",
+    "reason": "low_confidence_retrieval_0.141",
+    "timestamp": "2026-07-08T15:07:37.971495Z",
+    "count": 1
+  },
+  {
+    "query": "repeat",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-07-08T15:13:31.423211Z",
+    "count": 1
+  },
+  {
+    "query": "or kya acha he",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-07-08T18:41:20.951640Z",
+    "count": 1
+  },
+  {
+    "query": "mughe convinse koro ki me idhar q admission lu",
+    "lang": "hi",
+    "reason": "hallucination_guard: entities not found in context: ['2000', '201', '250']",
+    "timestamp": "2026-07-08T18:46:53.211206Z",
+    "count": 1
+  },
+  {
+    "query": "mughe convinse koro ki me idhar q admission lu",
+    "lang": "hi",
+    "reason": "hallucination_guard: entities not found in context: ['2000', '281', '80000']",
+    "timestamp": "2026-07-08T18:50:01.381049Z",
+    "count": 1
+  },
+  {
+    "query": "ai ka nam bohut sunne me a raha he",
+    "lang": "hi",
+    "reason": "post_llm_fact_guard: invented numbers",
+    "timestamp": "2026-07-08T19:34:36.544897Z",
+    "count": 1
+  },
+  {
+    "query": "BCREC complaints",
+    "lang": "en",
+    "reason": "post_llm_fact_guard: invented numbers",
+    "timestamp": "2026-07-08T19:34:50.472844Z",
+    "count": 1
+  },
+  {
+    "query": "college me kya facilities hai",
+    "lang": "hi",
+    "reason": "post_llm_fact_guard: invented numbers",
+    "timestamp": "2026-07-08T19:36:31.593932Z",
+    "count": 1
+  },
+  {
+    "query": "or kya acha he",
+    "lang": "hi",
+    "reason": "post_llm_fact_guard: invented numbers",
+    "timestamp": "2026-07-08T19:37:16.383853Z",
+    "count": 1
+  },
+  {
+    "query": "or kya acha he",
+    "lang": "hi",
+    "reason": "post_llm_fact_guard: invented numbers",
+    "timestamp": "2026-07-08T19:45:27.663329Z",
+    "count": 1
+  },
+  {
+    "query": "college me kya hai",
+    "lang": "hi",
+    "reason": "post_llm_fact_guard: invented numbers",
+    "timestamp": "2026-07-08T19:45:50.140471Z",
+    "count": 1
+  },
+  {
+    "query": "mene suna he is college ki faculty ache nahi he is IT true",
+    "lang": "hi",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-07-08T19:48:25.339204Z",
+    "count": 1
+  },
+  {
+    "query": "or kya acha he",
+    "lang": "hi",
+    "reason": "post_llm_fact_guard: invented numbers",
+    "timestamp": "2026-07-08T19:49:41.500117Z",
+    "count": 1
+  },
+  {
+    "query": "vice Dr. Sanjay S. Pawar name",
+    "lang": "en",
+    "reason": "post_llm_fact_guard: invented numbers",
+    "timestamp": "2026-07-09T02:32:46.338343Z",
+    "count": 1
+  },
+  {
+    "query": "vice Dr. Sanjay S. Pawar name",
+    "lang": "en",
+    "reason": "post_llm_fact_guard: invented numbers",
+    "timestamp": "2026-07-09T02:32:55.993633Z",
+    "count": 1
+  },
+  {
+    "query": "or kya acha he",
+    "lang": "hi",
+    "reason": "post_llm_fact_guard: invented numbers",
+    "timestamp": "2026-07-09T02:47:05.917583Z",
+    "count": 1
+  },
+  {
+    "query": "college me kya hai",
+    "lang": "hi",
+    "reason": "post_llm_fact_guard: invented numbers",
+    "timestamp": "2026-07-09T02:49:10.858820Z",
+    "count": 1
+  },
+  {
+    "query": "what his concact info number or mil",
+    "lang": "en",
+    "reason": "post_llm_fact_guard: invented numbers",
+    "timestamp": "2026-07-09T02:50:52.948538Z",
+    "count": 1
+  },
+  {
+    "query": "principal er name ki",
+    "lang": "en",
+    "reason": "hallucination_guard: entities not found in context: ['0343', '2501353', '03432501353']",
+    "timestamp": "2026-07-09T03:13:22.451875Z",
+    "count": 1
+  },
+  {
+    "query": "princepal r vice princepal ar nam ki",
+    "lang": "en",
+    "reason": "post_llm_fact_guard: invented numbers",
+    "timestamp": "2026-07-09T03:13:26.945398Z",
+    "count": 1
+  },
+  {
+    "query": "principal er name ki",
+    "lang": "en",
+    "reason": "hallucination_guard: entities not found in context: ['2024', '0343', '2501353', '03432501353']",
+    "timestamp": "2026-07-09T03:15:18.877590Z",
+    "count": 1
+  },
+  {
+    "query": "or kya acha he",
+    "lang": "hi",
+    "reason": "post_llm_fact_guard: invented numbers",
+    "timestamp": "2026-07-09T03:17:11.886641Z",
+    "count": 1
+  },
+  {
+    "query": "fuck you",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-07-09T03:17:58.591022Z",
+    "count": 1
+  },
+  {
+    "query": "fuck you",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-07-09T03:20:20.378550Z",
+    "count": 1
+  },
+  {
+    "query": "what his contact info number or mil",
+    "lang": "en",
+    "reason": "hallucination_guard: entities not found in context: ['0343', '2501353', '03432501353']",
+    "timestamp": "2026-07-09T03:20:27.072319Z",
+    "count": 1
+  },
+  {
+    "query": "or kya acha he",
+    "lang": "hi",
+    "reason": "post_llm_fact_guard: invented numbers",
+    "timestamp": "2026-07-09T03:23:11.905912Z",
+    "count": 1
+  },
+  {
+    "query": "college me kya hai",
+    "lang": "hi",
+    "reason": "post_llm_fact_guard: invented numbers",
+    "timestamp": "2026-07-09T03:23:31.395680Z",
+    "count": 1
+  },
+  {
+    "query": "or kya acha he",
+    "lang": "hi",
+    "reason": "post_llm_fact_guard: invented numbers",
+    "timestamp": "2026-07-09T03:25:51.276232Z",
+    "count": 1
+  },
+  {
+    "query": "ai ka nam bohut sunne me a raha he",
+    "lang": "hi",
+    "reason": "post_llm_fact_guard: invented numbers",
+    "timestamp": "2026-07-09T03:26:01.494830Z",
+    "count": 1
+  },
+  {
+    "query": "college me kya hai",
+    "lang": "hi",
+    "reason": "post_llm_fact_guard: invented numbers",
+    "timestamp": "2026-07-09T03:26:10.237595Z",
+    "count": 1
+  },
+  {
+    "query": "fuck you",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-07-09T03:26:36.204177Z",
+    "count": 1
+  },
+  {
+    "query": "broo i am cooked",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-07-09T03:30:13.316402Z",
+    "count": 1
+  },
+  {
+    "query": "bc mera back aa geya or tu yeha mazak kar raha he",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-07-09T03:31:11.627876Z",
+    "count": 1
+  },
+  {
+    "query": "backlog",
+    "lang": "en",
+    "reason": "out_of_kb_deflection",
+    "timestamp": "2026-07-09T03:31:40.350523Z",
+    "count": 1
   }
 ]

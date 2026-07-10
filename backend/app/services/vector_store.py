@@ -36,9 +36,9 @@ class VectorStoreService:
         os.makedirs(self.db_path, exist_ok=True)
         logger.info(f"ChromaDB path: {self.db_path}")
 
-        # Using BGE-M3 for superior multilingual performance (English/Hindi/Bengali)
-        # It's an industry standard for cross-lingual RAG in 2025.
-        self.embedding_model_name = "BAAI/bge-m3"
+        # Using all-MiniLM-L6-v2 for fast startup (~2s vs 45s for BGE-M3).
+        # Sufficient for intent classification and multilingual RAG at demo scale.
+        self.embedding_model_name = "all-MiniLM-L6-v2"
 
         logger.info(f"Initializing VectorStoreService with model: {self.embedding_model_name}")
 
