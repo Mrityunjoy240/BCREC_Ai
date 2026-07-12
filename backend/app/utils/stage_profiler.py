@@ -15,12 +15,6 @@ class StageProfiler:
     def mark(self, name: str):
         self._marks.append((name, time.perf_counter()))
 
-    def to_dict(self) -> dict[str, float]:
-        if not self._marks:
-            return {}
-        base = self._marks[0][1]
-        return {name: round((t - base) * 1000, 1) for name, t in self._marks}
-
     def report(self) -> str:
         if len(self._marks) < 2:
             return ""

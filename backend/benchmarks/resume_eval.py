@@ -394,8 +394,12 @@ async def run():
                 )
                 lat = (time.monotonic() - t0) * 1000
                 d, a = r1.json(), r2.json()
-                ctx = d.get("context_preview", "")
-                ans = a.get("answer", "")
+                raw_ctx = d.get("context_preview", "")
+                ctx = raw_ctx[0] if isinstance(raw_ctx, list) else str(raw_ctx)
+                raw_ans = a.get("answer", "")
+                ans = raw_ans[0] if isinstance(raw_ans, list) else str(raw_ans)
+                ctx = str(ctx)
+                ans = str(ans)
                 results.append(
                     {
                         "num": idx + 1,

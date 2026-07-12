@@ -64,35 +64,6 @@ LANG_SPEAKER_MAP: dict[str, str] = {
     "en": "shubh",
 }
 
-
-def split_into_tts_chunks(text: str) -> list[str]:
-    """
-    Split text into sentence-level chunks for Sarvam AI TTS.
-    Sarvam truncates / errors on very long strings, so we split at
-    sentence boundaries and recombine the punctuation correctly.
-
-    Previously copy-pasted in both tts.py and livekit_agent.py.
-    """
-    raw_chunks = re.split(r"([.!?।]+)", text)
-    chunks: list[str] = []
-    temp = ""
-    for item in raw_chunks:
-        if not item:
-            continue
-        if re.match(r"^[.!?।]+$", item):
-            temp += item
-            chunks.append(temp.strip())
-            temp = ""
-        else:
-            if temp:
-                chunks.append(temp.strip())
-            temp = item
-    if temp:
-        chunks.append(temp.strip())
-    chunks = [c for c in chunks if c.strip()]
-    return chunks or [text]
-
-
 def indian_number_to_words(num: int) -> str:
     if num == 0:
         return "zero"

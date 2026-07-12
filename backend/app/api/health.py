@@ -41,5 +41,5 @@ async def tts_health_check():
         "sarvam_available": sarvam_available,
         "active_provider": active_provider,
         "status": "healthy" if sarvam_available else "degraded",
-        "key_prefix": settings.sarvam_api_key[:10] if settings.sarvam_api_key else "none",
+        "key_configured": bool(settings.sarvam_api_key),
     }

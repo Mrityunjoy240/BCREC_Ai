@@ -5,9 +5,7 @@ POST /qa/stt - Transcribe audio to text
 GET /qa/stt/languages - List supported languages
 """
 from fastapi import APIRouter, HTTPException, UploadFile, File, Form
-from typing import Optional
 import logging
-import os
 
 from app.config import settings
 from app.services.sarvam_service import get_sarvam_service, init_sarvam_service

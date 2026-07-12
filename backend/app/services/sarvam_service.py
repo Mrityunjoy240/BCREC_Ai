@@ -9,7 +9,6 @@ Provides Text-to-Speech (TTS) and Speech-to-Text (STT) using Sarvam AI APIs.
 import base64
 import logging
 import io
-import json
 from typing import Optional, Dict, Any
 
 logger = logging.getLogger(__name__)

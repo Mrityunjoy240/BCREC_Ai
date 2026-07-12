@@ -21,14 +21,11 @@ import unicodedata
 from dataclasses import dataclass, field
 from difflib import SequenceMatcher
 from pathlib import Path
-from typing import Optional
+
 
 logger = logging.getLogger(__name__)
 
 # --- Configuration ---
-CONFIDENCE_EXACT = 1.0
-CONFIDENCE_ALIAS = 0.95
-CONFIDENCE_STT_CORRECT = 0.9
 CONFIDENCE_FUZZY_AUTO = 0.75
 CONFIDENCE_FUZZY_SUGGEST = 0.55
 
@@ -132,6 +129,14 @@ FUZZY_STOP_WORDS: set[str] = {
     "office",
     "room",
     "building",
+    "fail",
+    "failed",
+    "failing",
+    "failure",
+    "backlog",
+    "arrear",
+    "supplementary",
+    "reappear",
 }
 
 ENTITY_DICT_PATH = (

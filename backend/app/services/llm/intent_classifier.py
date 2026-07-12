@@ -24,7 +24,6 @@ logger = logging.getLogger(__name__)
 # Threshold for high-confidence intent classification
 # Above this → use structured handler (exact data)
 # Below this → route to RAG + LLM (natural understanding)
-HIGH_CONFIDENCE_THRESHOLD = 0.70
 
 # Reference phrases per intent — each is a list of example queries
 # covering English, Hindi, Banglish, and Bengali as appropriate
@@ -362,8 +361,7 @@ UNSTRUCTURED_INTENTS = frozenset({
     "placement_eligibility", "backlog",
 })
 
-# All known intents
-ALL_INTENTS = frozenset(STRUCTURED_INTENTS | UNSTRUCTURED_INTENTS)
+
 
 
 class IntentClassifier:
@@ -499,12 +497,5 @@ class IntentClassifier:
         return best_intent, best_score
 
 
-# Singleton
-_instance = None
 
 
-def get_intent_classifier() -> IntentClassifier:
-    global _instance
-    if _instance is None:
-        _instance = IntentClassifier()
-    return _instance

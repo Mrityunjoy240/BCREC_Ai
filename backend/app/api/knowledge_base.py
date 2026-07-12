@@ -5,7 +5,6 @@ Provides a reindex endpoint so you never have to manually run
 `python scripts/ingest_knowledge_base.py` again.
 """
 import logging
-import os
 from pathlib import Path
 
 from fastapi import APIRouter, Depends, HTTPException

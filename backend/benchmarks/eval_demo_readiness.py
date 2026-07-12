@@ -267,8 +267,12 @@ async def evaluate_single(client, kb, idx, lang_family, category, query):
         )
         answer_data = resp2.json()
         latency = (time.monotonic() - start) * 1000
-        context = debug.get("context_preview", "")
-        answer = answer_data.get("answer", "")
+        raw_ctx = debug.get("context_preview", "")
+        context = raw_ctx[0] if isinstance(raw_ctx, list) else str(raw_ctx)
+        raw_ans = answer_data.get("answer", "")
+        answer = raw_ans[0] if isinstance(raw_ans, list) else str(raw_ans)
+        context = str(context)
+        answer = str(answer)
         source = answer_data.get("source", "")
         model = answer_data.get("model", "")
     except Exception as e:

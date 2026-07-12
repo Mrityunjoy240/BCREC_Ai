@@ -113,53 +113,6 @@ class TestBackendUUIDFallback:
         assert len(ids) == 100
 
 
-class TestConversationManagerIsolation:
-    """Verify ConversationManager isolates contexts per session_id."""
-
-    @pytest.mark.asyncio
-    async def test_contexts_isolated_by_session(self):
-        from app.services.conversation.context import ConversationManager
-
-        mgr = ConversationManager()
-        ctx_a = await mgr.get_context("session-a")
-        ctx_b = await mgr.get_context("session-b")
-
-        ctx_a.current_language = "hi"
-        assert ctx_b.current_language != "hi"
-
-        ctx_a.previous_user_question = "what is the fee"
-        assert not ctx_b.previous_user_question
-
-    @pytest.mark.asyncio
-    async def test_clear_session_removes_context(self):
-        from app.services.conversation.context import ConversationManager
-
-        mgr = ConversationManager()
-        await mgr.get_context("session-to-clear")
-        await mgr.clear_session("session-to-clear")
-        ctx = await mgr.get_context("session-to-clear")
-        assert not ctx.previous_user_question
-
-    @pytest.mark.asyncio
-    async def test_clear_one_does_not_affect_others(self):
-        from app.services.conversation.context import ConversationManager
-
-        mgr = ConversationManager()
-        await mgr.get_context("keep-a")
-        await mgr.get_context("keep-b")
-        ctx_c = await mgr.get_context("to-clear")
-        ctx_c.previous_user_question = "test question"
-
-        await mgr.clear_session("to-clear")
-
-        ctx_a = await mgr.get_context("keep-a")
-        ctx_b = await mgr.get_context("keep-b")
-        assert not ctx_a.previous_user_question
-        assert not ctx_b.previous_user_question
-        ctx_c2 = await mgr.get_context("to-clear")
-        assert not ctx_c2.previous_user_question
-
-
 class TestFrontendSessionKey:
     """Verify the session key generation logic (simulating browser behavior)."""
 

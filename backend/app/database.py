@@ -1,7 +1,6 @@
 import sqlite3
 import os
 import logging
-from datetime import datetime
 from app.config import settings
 
 logger = logging.getLogger(__name__)
@@ -15,6 +14,8 @@ def get_db():
     conn.row_factory = sqlite3.Row
     # Enable WAL mode for better concurrency
     conn.execute("PRAGMA journal_mode=WAL")
+    # Retry for up to 5 seconds on write collisions
+    conn.execute("PRAGMA busy_timeout = 5000")
     return conn
 
 def init_db():

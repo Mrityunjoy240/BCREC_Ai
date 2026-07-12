@@ -1,10 +1,11 @@
 import asyncio
+from collections import deque
 import logging
 import os
 import random
 import re
 import time
-from typing import Any, Callable, Optional
+from typing import Optional
 
 # Banglish (Roman-script Bengali) word markers used when Bengali Unicode ratio is low.
 # Kept local to avoid import coupling — these match the words used in language_detect.py.
@@ -54,13 +55,6 @@ GREETINGS = [
     "Welcome to Dr. B.C. Roy Engineering College. How can I assist you with admissions or general information?",
 ]
 
-FILLER_RESPONSES = [
-    "One moment please, I am checking that for you.",
-    "Let me look that up for you. One moment please.",
-    "I am checking that information. Please hold on a moment.",
-    "Let me find that for you. One moment please.",
-]
-
 HANDOFF_PATTERNS = re.compile(
     r"\b(human|operator|speak\s*(to|with)|talk\s*(to|with)|connect\s*me|transfer|"
     r"real\s*person|counselor|"
@@ -75,22 +69,6 @@ HANDOFF_RESPONSES = {
     "human": "Certainly. You can reach the college office at 0343-2501353. Our staff will be happy to help you.",
     "default": "I will share the correct admission office contact. Please call 0343-2501353.",
 }
-
-PERSONALITY_PREFIXES = [
-    "Certainly. ",
-    "Of course. ",
-    "Yes. ",
-    "Absolutely. ",
-    "",
-]
-
-PERSONALITY_SUFFIXES = [
-    " Glad to help.",
-    " Thanks for asking.",
-    " I hope that helps.",
-    " Let me know if you need anything else.",
-    " Is there anything else I can help you with?",
-]
 
 UNKNOWN_RESPONSE = (
     "I am not completely sure about that information, "
@@ -136,8 +114,10 @@ def _is_unknown_response(text: str) -> bool:
 
 
 class DemoLogger:
+    MAX_LOG_ENTRIES = 1000
+
     def __init__(self):
-        self.logs: list[dict] = []
+        self.logs: deque = deque(maxlen=self.MAX_LOG_ENTRIES)
 
     def log(self, session_id: str, entry: dict):
         entry["ts"] = time.time()
@@ -151,26 +131,6 @@ class DemoLogger:
 
 
 _demo_logger = DemoLogger()
-
-
-class TimeoutGuard:
-    """Raises TimeoutError if the wrapped call exceeds the given seconds."""
-
-    def __init__(self, timeout: float = 2.0):
-        self.timeout = timeout
-        self._timed_out = False
-
-    @property
-    def did_timeout(self) -> bool:
-        return self._timed_out
-
-    async def __call__(self, coro, fallback: str = "") -> Any:
-        try:
-            return await asyncio.wait_for(coro, timeout=self.timeout)
-        except asyncio.TimeoutError:
-            self._timed_out = True
-            logger.warning(f"TimeoutGuard: operation exceeded {self.timeout}s")
-            return fallback
 
 
 async def safe_generate_response(service, query: str, session_id: str, lang: str) -> dict:
@@ -226,7 +186,8 @@ async def safe_generate_response(service, query: str, session_id: str, lang: str
 
 def _bengali_confidence_ok(query: str) -> bool:
     """Check if query is legitimately Bengali (script or Banglish).
-    Passes if ≥30% Bengali Unicode chars OR ≥30% of words are Banglish markers."""
+    Passes if ≥30% Bengali Unicode chars OR ≥30% of words are Banglish markers.
+    Also passes if query contains college-related keywords (legitimate query, not noise)."""
     bengali_chars = sum(1 for c in query if "\u0980" <= c <= "\u09ff")
     total_chars = len(query.strip())
     if total_chars == 0:
@@ -234,12 +195,23 @@ def _bengali_confidence_ok(query: str) -> bool:
     # Native Bengali script check
     if bengali_chars / total_chars >= 0.3:
         return True
-    # Banglish (Roman-script Bengali) check — ≥30% of words are Banglish markers
+    # Banglish (Roman-script Bengali) check — ≥25% of words are Banglish markers
     words = re.sub(r"[^\w]", " ", query.lower()).split()
     if not words:
         return False
     banglish_matches = sum(1 for w in words if w in _BANGLISH_WORDS)
-    return banglish_matches / len(words) >= 0.3
+    if banglish_matches / len(words) >= 0.25:
+        return True
+    # College keyword check — if query mentions known college terms, it's legitimate
+    _college_kw = {
+        "cse", "ece", "ee", "me", "ce", "it", "csd", "ds", "cy", "aiml",
+        "fee", "fees", "admission", "placement", "hostel", "faculty",
+        "bcrec", "principal", "hod", "department", "library", "lab",
+        "sports", "scholarship", "cutoff", "seat", "seats",
+    }
+    if any(w in _college_kw for w in words):
+        return True
+    return False
 
 
 def post_process_response(service, query: str, result: dict, lang: str) -> dict:

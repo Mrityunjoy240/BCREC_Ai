@@ -4,11 +4,9 @@ from typing import List, Optional
 import logging
 import time
 import json
-from datetime import datetime
 from fastapi.responses import StreamingResponse
 
 from app.config import settings
-from app.database import get_db
 from app.services.llm.groq_service import get_groq_service
 
 logger = logging.getLogger(__name__)
@@ -37,41 +35,6 @@ class QueryResponse(BaseModel):
     source: str = "groq_rag"
     intent: str = "llm_generated"
     confidence: float = 0.95
-
-
-# ---------------------------------------------------------------------------
-# HELPERS (DB Management)
-# ---------------------------------------------------------------------------
-async def _get_history(conversation_id: str, limit: int = 6):
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute(
-        "SELECT role, content FROM messages WHERE conversation_id = ? ORDER BY created_at DESC LIMIT ?",
-        (conversation_id, limit),
-    )
-    messages = cursor.fetchall()
-    conn.close()
-    return [{"role": m["role"], "content": m["content"]} for m in reversed(messages)]
-
-
-async def _save_turn(conversation_id: str, user_msg: str, assistant_msg: str):
-    conn = get_db()
-    cursor = conn.cursor()
-    now = datetime.now().isoformat()
-    # Save User
-    cursor.execute(
-        "INSERT INTO messages (conversation_id, role, content, created_at) VALUES (?, ?, ?, ?)",
-        (conversation_id, "user", user_msg, now),
-    )
-    # Save Assistant
-    cursor.execute(
-        "INSERT INTO messages (conversation_id, role, content, created_at) VALUES (?, ?, ?, ?)",
-        (conversation_id, "assistant", assistant_msg, now),
-    )
-    # Update Conversation Timestamp
-    cursor.execute("UPDATE conversations SET updated_at = ? WHERE id = ?", (now, conversation_id))
-    conn.commit()
-    conn.close()
 
 
 # ---------------------------------------------------------------------------

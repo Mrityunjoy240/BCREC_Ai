@@ -15,13 +15,10 @@ import difflib
 import logging
 import os
 import re
-import sys
 import time
 import json
 import hashlib
 import asyncio
-import random
-import unicodedata
 from typing import (
     Dict,
     List,
@@ -29,16 +26,36 @@ from typing import (
     Any,
     Tuple,
     Set,
-    Literal,
-    AsyncIterable,
-    AsyncIterator,
-    Union,
 )
 import collections
-from collections import defaultdict, deque
+from collections import deque
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+# ---------------------------------------------------------------------------
+# FeeEngine import (shadow mode — Phase 2)
+# ---------------------------------------------------------------------------
+try:
+    from .fee_engine import FeeEngine as _FeeEngine
+
+    _FEE_ENGINE_AVAILABLE = True
+except ImportError:
+    _FeeEngine = None  # type: ignore
+    _FEE_ENGINE_AVAILABLE = False
+    logger = logging.getLogger(__name__)
+    logger.warning("FeeEngine not available — using legacy fee handler only")
+
+try:
+    from .intent_classifier import IntentClassifier as _IntentClassifier
+
+    _INTENT_CLASSIFIER_AVAILABLE = True
+except ImportError:
+    _IntentClassifier = None  # type: ignore
+    _INTENT_CLASSIFIER_AVAILABLE = False
+    logger = logging.getLogger(__name__)
+    logger.warning("IntentClassifier not available — classifier dependent features disabled")
+
+# Feature flag: when True, fee queries use the new FeeEngine instead of FEE_GROUP_MAP
 
 
 def _sp_enabled() -> bool:
@@ -76,8 +93,6 @@ def _sp_handoff(*a):
     except ImportError:
         return None
 
-
-from dataclasses import dataclass, field
 
 logger = logging.getLogger(__name__)
 
@@ -244,7 +259,7 @@ _DEPT_COMPATIBLE_INTS: frozenset = frozenset(
     }
 )
 
-from app.services.normalization import normalize_query, normalize_for_tts, NormalizationLog
+from app.services.normalization import normalize_query, normalize_for_tts
 
 # ---------------------------------------------------------------------------
 # Phase 0 — Hallucination guard configuration
@@ -289,6 +304,7 @@ GREETING_PATTERNS = (
     r"^hiii+$",
     r"^hello there$",
     r"^good (morning|afternoon|evening)$",
+    r"^(namaste|नमस्ते|নমস্কার)$",
 )
 
 # Transcripts that are too short or incomplete to send to the LLM.
@@ -482,6 +498,11 @@ OUT_OF_DOMAIN_CATEGORIES: Dict[str, frozenset] = {
             "tv",
             "serial",
             "drama",
+            "bollywood",
+            "hollywood",
+            "trailer",
+            "series",
+            "episode",
         }
     ),
     "coding": frozenset(
@@ -502,6 +523,12 @@ OUT_OF_DOMAIN_CATEGORIES: Dict[str, frozenset] = {
             "algorithm",
             "software",
             "app development",
+            "website",
+            "web development",
+            "web dev",
+            "frontend",
+            "backend",
+            "full stack",
         }
     ),
     "math": frozenset(
@@ -579,6 +606,16 @@ OUT_OF_DOMAIN_CATEGORIES: Dict[str, frozenset] = {
             "travel",
         }
     ),
+    "translation": frozenset(
+        {
+            "translate",
+            "translator",
+            "translation",
+            "dictionary",
+            "meaning",
+            "vocabulary",
+        }
+    ),
 }
 
 OUT_OF_DOMAIN_RESPONSE_EN = (
@@ -636,38 +673,27 @@ FALLBACK_TIER1_BN = (
     "অনুগ্রহ করে অন্যভাবে জিজ্ঞাসা করার চেষ্টা করুন।"
 )
 
-FALLBACK_TIER2_EN = (
-    "I am still not finding what you are looking for. "
-    "The best way to get accurate details is to call the college at 0343-2501353."
-)
-FALLBACK_TIER2_HI = (
-    "मैं अब भी वह नहीं ढूँढ पाया जो आप ढूँढ रहे हैं। सटीक जानकारी के लिए कॉलेज को 0343-2501353 पर कॉल करें।"
-)
-FALLBACK_TIER2_BN = (
-    "আমি এখনও আপনার যা খুঁজছেন তা খুঁজে পাচ্ছি না। সঠিক তথ্যের জন্য কলেজে 0343-2501353 নম্বরে কল করুন।"
-)
-
 FALLBACK_ANSWER_EN = FALLBACK_TIER1_EN
 FALLBACK_ANSWER_HI = FALLBACK_TIER1_HI
 FALLBACK_ANSWER_BN = FALLBACK_TIER1_BN
 
 UNKNOWN_INFO_RESPONSE_EN = (
-    "I do not have verified information for that. Please call the college at 0343-2501353."
+    "I don't have that information right now. Please call the college at 0343-2501353 and they will help you."
 )
 UNKNOWN_INFO_RESPONSE_HI = (
-    "मेरे पास इसके लिए सत्यापित जानकारी नहीं है। कृपया कॉलेज को 0343-2501353 पर कॉल करें।"
+    "Mere paas iski jankari abhi nahi hai. College ko 0343-2501353 par call karein, woh aapki madad karenge."
 )
 UNKNOWN_INFO_RESPONSE_BN = (
-    "এ বিষয়ে আমার কাছে যাচাইকৃত তথ্য নেই। অনুগ্রহ করে কলেজে 0343-2501353 নম্বরে কল করুন।"
+    "এই বিষয়ে আমার কাছে এখন তথ্য নেই। কলেজে 0343-2501353 নম্বরে কল করুন, তারা আপনাকে সাহায্য করবে।"
 )
 
-_HOD_UNKNOWN_EN = "I don't have the latest HOD information for that department."
-_HOD_UNKNOWN_HI = "मेरे पास उस विभाग के प्रमुख की नवीनतम जानकारी नहीं है।"
-_HOD_UNKNOWN_BN = "আমার কাছে সেই বিভাগের বিভাগীয় প্রধান সম্পর্কে সর্বশেষ তথ্য নেই।"
+_HOD_UNKNOWN_EN = "I don't have the HOD details for that department right now. Would you like the college contact number instead?"
+_HOD_UNKNOWN_HI = "Us department ke HOD ke baare mein mere paas abhi jankari nahi hai. Kya aap college ka number chahenge?"
+_HOD_UNKNOWN_BN = "ওই বিভাগের HOD সম্পর্কে আমার কাছে এখন তথ্য নেই। আপনি কি কলেজের নম্বর চান?"
 
-CLARIFY_REPEAT_EN = "I couldn't understand clearly. Could you please repeat?"
-CLARIFY_REPEAT_HI = "मैं स्पष्ट रूप से समझ नहीं पाया। कृपया दोहराएँ?"
-CLARIFY_REPEAT_BN = "আমি পরিষ্কারভাবে বুঝতে পারিনি। অনুগ্রহ করে পুনরায় বলুন?"
+CLARIFY_REPEAT_EN = "Sorry, I didn't catch that clearly. Could you please repeat?"
+CLARIFY_REPEAT_HI = "Maaf kijiye, main achhe se samajh nahi paya. Kya aap dobara bata sakte hain?"
+CLARIFY_REPEAT_BN = "দুঃখিত, আমি স্পষ্টভাবে বুঝতে পারিনি। আপনি কি আবার বলতে পারেন?"
 
 # Structured arithmetic — fee group definitions per department
 # Maps department code -> (total_fees, admission_fee, per_semester)
@@ -686,6 +712,10 @@ FEE_GROUP_MAP: Dict[str, tuple[int, int, int]] = {
     "MBA": (419200, 121400, 0),
     "MCA": (214600, 67800, 48600),
 }
+
+# FeeEngine feature flag — see _handle_fee_query()
+# Set USE_NEW_FEE_ENGINE = True at module top or via env var at your own risk.
+_USE_NEW_FEE_ENGINE = os.getenv("USE_NEW_FEE_ENGINE", "0") == "1"
 
 # Department short codes to lookup in canonical_kb
 DEPT_CODE_MAP: Dict[str, str] = {
@@ -772,16 +802,19 @@ from app.utils.conversation_logger import get_telemetry
 # ---------------------------------------------------------------------------
 # System Prompt — Voice-First Telephony Optimization
 # ---------------------------------------------------------------------------
-SYSTEM_PROMPT = """You are a professional, helpful admission assistant for Dr. B.C. Roy Engineering College (BCREC), Durgapur, West Bengal. You handle phone calls and web chat for students, parents, and visitors.
+SYSTEM_PROMPT = """You are a friendly BCREC admission counselor talking to a student or parent on the phone. You work for Dr. B.C. Roy Engineering College, Durgapur. Be warm, helpful, and conversational — like a real counselor who genuinely wants to help.
 
 CORE RULES:
 1. Answer ONLY in the user's language. If user writes in Hindi (Roman), answer in Hindi with NOT A SINGLE Bengali word. If user writes in Bengali/Banglish, answer in Banglish. NEVER mix languages.
-2. Be concise: 2-4 short sentences. Give the most important answer first.
-3. Be conversational and natural — like a helpful campus counselor on the phone.
+2. Be concise: Answer in 2-3 short sentences. Give the most important answer first. Then add 1 helpful context sentence. Then stop.
+3. Be conversational and natural — like a helpful campus counselor on the phone. Use "ji", "bilkul", "aap" for Hindi.
 4. Never use filler like "Based on the context" or "According to the knowledge base". Just answer directly.
 5. If query is Hinglish (Hindi+English): use Roman Hindi. NEVER start with "Bhalo", "Bhalo,", "Achha", "Theek hai" — just answer directly. Bengali words like "bhalo", "kemon", "ache", "hobe", "hoyeche" are FORBIDDEN in Hindi responses.
 6. If query is Banglish (Bengali+English): use colloquial Banglish. NEVER use "aaraadhya", "prasiddh", "shrestha", "shiksha". Use "bhalo", "placement bhalo", "fees kom", "current".
 7. INTENT CLARITY: "admission lena hai/chahiye/chahta hu" = ADMISSION PROCESS (tell about WBJEE, eligibility, exams). "kyu/q/keno admission" = WHY BCREC (selling points). Never confuse these.
+8. RESPONSE STRUCTURE: Answer the exact question in 1 sentence, then add 1 helpful context sentence, then end with exactly 1 relevant follow-up question.
+9. COUNSELOR BEHAVIOR: Speak like a human counselor, not a database. Never dump bullet points or colon-delimited facts. Weave facts into natural sentences. Use "aap" (formal) throughout.
+10. EMOTIONAL QUERIES: If the user sounds worried (backlog, marks, rejection), first acknowledge and reassure, then give the factual policy, then offer help. Never blame or lecture.
 
 TTS STYLE:
 - Spell out numbers as words: "six lakh" NOT "6,00,000", "ninety-one percent" NOT "91%".
@@ -1079,10 +1112,6 @@ class RateLimiter:
         """Reset consecutive 429 counter on success."""
         self._consecutive_429s = 0
 
-    @property
-    def is_circuit_open(self) -> bool:
-        return time.time() < self._circuit_open_until
-
 
 # ---------------------------------------------------------------------------
 # Number-to-word helpers for TTS-safe structured responses
@@ -1294,185 +1323,13 @@ class GroqService:
         # Phase 5 — Rate limiter + circuit breaker
         self._rate_limiter = RateLimiter()
 
+        # Intent classifier — initialized lazily; may be None if not available
+        self.intent_classifier = _IntentClassifier() if _IntentClassifier is not None else None
+
         if self.client:
             logger.info("GroqService ready.")
         else:
             logger.warning("GroqService: Groq client not found. Check GROQ_API_KEY in .env")
-
-    # -----------------------------------------------------------------------
-    # Tool execution — LLM function calling tools
-    # -----------------------------------------------------------------------
-    def _execute_tool(self, name: str, args: dict) -> str:
-        """Execute a tool by name and return JSON result."""
-        tool_map = {
-            "get_fees": self._tool_get_fees,
-            "get_contact_info": self._tool_get_contact_info,
-            "get_principal_info": self._tool_get_principal_info,
-            "get_placement_info": self._tool_get_placement_info,
-            "get_branch_info": self._tool_get_branch_info,
-            "get_admission_process": self._tool_get_admission_process,
-            "get_hostel_info": self._tool_get_hostel_info,
-            "get_scholarship_info": self._tool_get_scholarship_info,
-            "get_cutoff_info": self._tool_get_cutoff_info,
-            "get_hod_info": self._tool_get_hod_info,
-            "get_backlog_policy": self._tool_get_backlog_policy,
-            "get_college_info": self._tool_get_college_info,
-        }
-        fn = tool_map.get(name)
-        if not fn:
-            return json.dumps({"error": f"Unknown tool: {name}"})
-        try:
-            return fn(**args)
-        except Exception as e:
-            logger.error(f"Tool {name}({args}) failed: {e}")
-            return json.dumps({"error": str(e)})
-
-    def _tool_get_fees(self, branch: str = "") -> str:
-        kb = self._read_canonical_kb()
-        fees = kb.get("fees_summary", {})
-        groups = {
-            "CSE": "btech_cse_it_ece", "IT": "btech_cse_it_ece", "ECE": "btech_cse_it_ece",
-            "EE": "btech_ee_aiml_ds_cy_csd", "AIML": "btech_ee_aiml_ds_cy_csd",
-            "DS": "btech_ee_aiml_ds_cy_csd", "CY": "btech_ee_aiml_ds_cy_csd",
-            "CSD": "btech_ee_aiml_ds_cy_csd",
-            "ME": "btech_me_ce", "CE": "btech_me_ce",
-        }
-        if branch and branch.upper() in groups:
-            key = groups[branch.upper()]
-            data = fees.get(key, {})
-            return json.dumps({branch.upper(): data}, ensure_ascii=False)
-        result = {}
-        for code, key in groups.items():
-            if code not in result:
-                result[code] = fees.get(key, {})
-        return json.dumps(result, ensure_ascii=False)
-
-    def _tool_get_contact_info(self) -> str:
-        kb = self._read_canonical_kb()
-        c = kb.get("college", {})
-        return json.dumps({
-            "phones": c.get("phones", {}).get("value", []),
-            "email": c.get("email", {}).get("value", ""),
-            "mobile": c.get("mobile", {}).get("value", ""),
-            "address": c.get("address", {}).get("value", ""),
-            "website": c.get("website", {}).get("value", ""),
-        }, ensure_ascii=False)
-
-    def _tool_get_principal_info(self) -> str:
-        kb = self._read_canonical_kb()
-        principal = kb.get("principal", {})
-        vice = kb.get("vice_principal", {})
-        return json.dumps({
-            "principal_name": principal.get("name", {}).get("value", ""),
-            "principal_phone": principal.get("phone", {}).get("value", ""),
-            "principal_email": principal.get("email", {}).get("value", ""),
-            "vice_principal_name": vice.get("name", {}).get("value", ""),
-            "vice_principal_phone": vice.get("phone", {}).get("value", ""),
-        }, ensure_ascii=False)
-
-    def _tool_get_placement_info(self, branch: str = "") -> str:
-        kb = self._read_canonical_kb()
-        pl = kb.get("placements", {})
-        result = {
-            "overall_rate_2025": pl.get("overall_rate_2025", {}).get("value", ""),
-            "cse_rate_2025": pl.get("cse_rate_2025", {}).get("value", ""),
-            "rate_2024": pl.get("rate_2024", {}).get("value", ""),
-            "rate_2023": pl.get("rate_2023", {}).get("value", ""),
-            "highest_package": f"{pl.get('highest_package', {}).get('amount', '')} from {pl.get('highest_package', {}).get('company', '')}",
-            "average_package": pl.get("average_package", {}).get("value", ""),
-            "median_package": pl.get("median_package", {}).get("value", ""),
-            "top_recruiters": pl.get("top_recruiters", {}).get("value", []),
-            "students_placed_2025": pl.get("students_placed_2025", {}).get("value", ""),
-            "companies_visited_2025": pl.get("companies_visited_2025", {}).get("value", ""),
-        }
-        return json.dumps(result, ensure_ascii=False)
-
-    def _tool_get_branch_info(self) -> str:
-        kb = self._read_canonical_kb()
-        depts = kb.get("departments", {})
-        result = {}
-        for code, info in depts.items():
-            hod = info.get("hod", {})
-            result[code] = {
-                "hod_name": hod.get("name", "") if isinstance(hod, dict) else "",
-            }
-        return json.dumps(result, ensure_ascii=False)
-
-    def _tool_get_admission_process(self) -> str:
-        kb = self._read_canonical_kb()
-        adm = kb.get("admission", {})
-        docs = kb.get("admission_documents", {})
-        result = {
-            "eligibility": adm.get("eligibility", {}),
-            "seat_distribution": adm.get("seat_distribution", {}),
-            "counseling": adm.get("counseling", {}).get("value", ""),
-            "portal": adm.get("portal", {}).get("value", ""),
-            "contacts": adm.get("contacts", {}),
-            "lateral_entry": adm.get("lateral_entry", {}).get("value", ""),
-            "documents": {k: v.get("value", []) if isinstance(v, dict) else v for k, v in docs.items() if isinstance(v, dict) and "value" in v},
-        }
-        return json.dumps(result, ensure_ascii=False)
-
-    def _tool_get_hostel_info(self) -> str:
-        kb = self._read_canonical_kb()
-        h = kb.get("hostel", {})
-        mess = h.get("mess", {})
-        result = {
-            "available": h.get("available", {}).get("value", ""),
-            "compulsory": h.get("compulsory", {}).get("value", ""),
-            "total_hostels": h.get("total_hostels", {}).get("value", ""),
-            "total_capacity": h.get("total_capacity", {}).get("value", ""),
-            "room_types": h.get("room_types", {}).get("value", ""),
-            "mess_monthly_charge": mess.get("monthly_charge", ""),
-            "mess_meals_per_day": mess.get("meals_per_day", ""),
-            "facilities": h.get("facilities", {}).get("value", []),
-            "caution_money": h.get("caution_money", {}).get("value", ""),
-        }
-        return json.dumps(result, ensure_ascii=False)
-
-    def _tool_get_scholarship_info(self) -> str:
-        kb = self._read_canonical_kb()
-        sc = kb.get("scholarships", {})
-        return json.dumps(sc, ensure_ascii=False)
-
-    def _tool_get_cutoff_info(self, branch: str = "") -> str:
-        kb = self._read_canonical_kb()
-        cutoff = kb.get("admission", {}).get("seat_distribution", {})
-        return json.dumps(cutoff, ensure_ascii=False)
-
-    def _tool_get_hod_info(self, branch: str = "") -> str:
-        kb = self._read_canonical_kb()
-        depts = kb.get("departments", {})
-        if branch and branch.upper() in depts:
-            return json.dumps({branch.upper(): depts[branch.upper()].get("hod", {})}, ensure_ascii=False)
-        result = {}
-        for code, info in depts.items():
-            hod = info.get("hod", {})
-            result[code] = hod
-        return json.dumps(result, ensure_ascii=False)
-
-    def _tool_get_backlog_policy(self) -> str:
-        kb = self._read_kb()
-        policies = kb.get("voice_ready_answers", {}).get("policies", {})
-        ans = policies.get("answers", {})
-        return json.dumps(ans, ensure_ascii=False)
-
-    def _tool_get_college_info(self) -> str:
-        kb = self._read_canonical_kb()
-        c = kb.get("college", {})
-        ar = kb.get("anti_ragging", {})
-        return json.dumps({
-            "name": c.get("name", {}).get("value", ""),
-            "established": c.get("established", {}).get("value", ""),
-            "autonomous": c.get("autonomous", {}).get("value", ""),
-            "address": c.get("address", {}).get("value", ""),
-            "type": c.get("type", {}).get("value", ""),
-            "accreditation": c.get("accreditation", {}).get("value", ""),
-            "naac_grade": c.get("naac_grade", {}).get("value", ""),
-            "nirf_rank": c.get("nirf_rank", {}).get("value", ""),
-            "faculty_count": c.get("faculty_count", {}).get("value", ""),
-            "anti_ragging_policy": ar.get("policy", {}).get("value", ""),
-        }, ensure_ascii=False)
 
     # -----------------------------------------------------------------------
     # LLM call — simple, no tool-calling overhead
@@ -1480,56 +1337,66 @@ class GroqService:
     async def _call_llm_with_tools(
         self, messages: list, session_id: str, query: str, start: float, lang: str
     ) -> str:
-        """Call Groq with the given messages. Simple and fast — no tool-calling."""
+        """Call Groq with the given messages. Hard timeout, graceful fallback."""
+        LLM_TIMEOUT = 6.0
         models_to_try = list(dict.fromkeys([self.model] + FALLBACK_MODELS))
+        t_start = time.time()
 
         for current_model in models_to_try:
-            for attempt in range(3):
+            for attempt in range(2):
                 wait = self._rate_limiter.acquire()
                 if wait > 0:
                     await asyncio.sleep(wait)
                 try:
-                    if _sp_enabled():
-                        completion = await asyncio.wait_for(
-                            asyncio.to_thread(
-                                self.client.chat.completions.create,
-                                model=current_model,
-                                messages=messages,
-                                temperature=0.3,
-                                max_tokens=self.max_tokens,
-                            ),
-                            timeout=30.0,
-                        )
-                    else:
-                        completion = self.client.chat.completions.create(
+                    completion = await asyncio.wait_for(
+                        asyncio.to_thread(
+                            self.client.chat.completions.create,
                             model=current_model,
                             messages=messages,
                             temperature=0.3,
                             max_tokens=self.max_tokens,
-                        )
+                        ),
+                        timeout=LLM_TIMEOUT,
+                    )
                     self._rate_limiter.record_success()
                     content = (completion.choices[0].message.content or "").strip()
                     import re as _re
-                    content = _re.sub(r"<think>.*?</think>\s*", "", content, flags=_re.DOTALL).strip()
+                    # Strip complete <think>...</think> blocks (multiline, multiple blocks)
+                    content = _re.sub(r"<think>.*?</think>\s*", "", content, flags=_re.DOTALL)
+                    # Strip unclosed <think> tag markup (no </think> present)
+                    content = _re.sub(r"<think>", "", content).strip()
+                    elapsed = time.time() - t_start
+                    if elapsed > 1.0:
+                        logger.info(f"LLM call completed in {elapsed:.1f}s on {current_model}")
                     return content
+                except asyncio.TimeoutError:
+                    elapsed = time.time() - t_start
+                    logger.warning(
+                        f"LLM timeout on {current_model} "
+                        f"(attempt {attempt+1}/2, elapsed={elapsed:.1f}s, "
+                        f"query='{query[:60]}')"
+                    )
+                    if attempt == 0:
+                        await asyncio.sleep(0.5)
                 except Exception as e:
                     error_str = str(e)
+                    elapsed = time.time() - t_start
                     is_rate_limit = "429" in error_str or "rate" in error_str.lower() or "too many" in error_str.lower()
-                    is_timeout = isinstance(e, asyncio.TimeoutError) or "timeout" in error_str.lower()
-                    if is_rate_limit and attempt < 2:
+                    if is_rate_limit and attempt == 0:
                         self._rate_limiter.record_429()
-                        backoff = min((2**attempt) + 0.5, MAX_BACKOFF_SEC)
+                        backoff = min(1.0, MAX_BACKOFF_SEC)
+                        logger.warning(f"LLM rate limited on {current_model}, backoff {backoff}s")
                         await asyncio.sleep(backoff)
-                    elif is_timeout and attempt < 2:
-                        logger.warning(f"LLM timeout on {current_model} (attempt {attempt+1}/3)")
-                        await asyncio.sleep(1.0)
                     else:
-                        if not _sp_enabled():
-                            raise
-                        logger.warning(f"LLM error on {current_model}: {error_str[:80]}")
-                        from .safe_point import FILLER_RESPONSES as _filler
-                        return random.choice(_filler)
+                        logger.warning(
+                            f"LLM error on {current_model} (attempt {attempt+1}/2, "
+                            f"elapsed={elapsed:.1f}s): {error_str[:80]}"
+                        )
 
+        logger.warning(
+            f"LLM call failed after all retries ({time.time()-t_start:.1f}s). "
+            f"Returning fallback for query='{query[:60]}'"
+        )
         return "I'm sorry, I'm having trouble connecting. Please call 0343-2501353."
 
     # -----------------------------------------------------------------------
@@ -1791,7 +1658,13 @@ class GroqService:
         self, query: str, context: str, history: List[Dict], lang: str
     ) -> List[Dict]:
         """Build the messages list for Groq API."""
-        messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+        lang_prefix = {
+            "bn": "CRITICAL LANGUAGE RULE: The user is writing in Banglish (Roman Bengali). You MUST reply in Banglish. Never use Hindi. If unsure, default to Banglish.\n\n",
+            "hi": "CRITICAL LANGUAGE RULE: The user is writing in Hindi. You MUST reply in Roman Hindi (NOT Devanagari script). Never use Bengali or English words.\n\n",
+            "en": "CRITICAL LANGUAGE RULE: The user is writing in English. Reply in English.\n\n",
+        }.get(lang, "")
+        system_content = lang_prefix + SYSTEM_PROMPT
+        messages = [{"role": "system", "content": system_content}]
 
         # Add last 10 conversation turns (5 user + 5 assistant) for memory
         if history:
@@ -1803,8 +1676,8 @@ class GroqService:
 
         # Final user message with retrieved context
         lang_hint = {
-            "bn": "Reply in simple Banglish or Bengali (NOT Sanskritized Bengali).",
-            "hi": "Reply in Roman Hindi (NOT Devanagari script).",
+            "bn": "The user's language is Banglish (Roman Bengali). Reply ONLY in Banglish. Do NOT use Hindi words. Do NOT switch to English unless the user writes in English.",
+            "hi": "The user's language is Hindi. Reply ONLY in Roman Hindi (NOT Devanagari script). Do NOT use Bengali or English words unless the user writes in that language.",
             "en": "Reply in English.",
         }.get(lang, "Reply in the same language as the user.")
 
@@ -1905,14 +1778,23 @@ USER QUESTION: {query}
 
         if word_count <= 3:
             # For short queries, switch lang if there are strong keyword markers
-            if hi_kw >= 2 and current_lang != "hi" and session_id not in self._session_langs:
-                logger.info(f"[{session_id}] Language change: {current_lang} → hi (reason: keyword markers={hi_kw} in short query)")
-                self._session_langs[session_id] = "hi"
-                return "hi"
             if bn_kw >= 2 and current_lang != "bn" and session_id not in self._session_langs:
                 logger.info(f"[{session_id}] Language change: {current_lang} → bn (reason: keyword markers={bn_kw} in short query)")
                 self._session_langs[session_id] = "bn"
                 return "bn"
+            if hi_kw >= 2 and current_lang != "hi" and session_id not in self._session_langs:
+                logger.info(f"[{session_id}] Language change: {current_lang} → hi (reason: keyword markers={hi_kw} in short query)")
+                self._session_langs[session_id] = "hi"
+                return "hi"
+            # Weak-but-clear signal: 1 exclusive marker for a language
+            if bn_kw >= 1 and hi_kw == 0 and session_id not in self._session_langs:
+                logger.info(f"[{session_id}] Language change: {current_lang} → bn (reason: exclusive Bangla marker={bn_kw} in short query)")
+                self._session_langs[session_id] = "bn"
+                return "bn"
+            if hi_kw >= 1 and bn_kw == 0 and session_id not in self._session_langs:
+                logger.info(f"[{session_id}] Language change: {current_lang} → hi (reason: exclusive Hindi marker={hi_kw} in short query)")
+                self._session_langs[session_id] = "hi"
+                return "hi"
             return current_lang
 
         # 4. Detect language for longer queries
@@ -2008,6 +1890,7 @@ USER QUESTION: {query}
             "labs", "lab", "hostel", "library", "sports", "club", "clubs",
             "fees", "fee", "placement", "faculty", "admission", "cutoff",
             "repeat", "pardon", "backlog", "arrear", "scholarship",
+            "departments", "department",
         }
         if word_count == 1 and q_lower in _single_word_college_terms:
             return None
@@ -2079,7 +1962,26 @@ USER QUESTION: {query}
         for keywords in OUT_OF_DOMAIN_CATEGORIES.values():
             total_hits += sum(1 for kw in keywords if kw in q)
 
-        return total_hits >= 2
+        if total_hits >= 2:
+            return True
+
+        # Regex-based OOD patterns — catch queries the keyword threshold misses
+        # These target specific query structures that are clearly not college-related.
+        _ood_patterns = [
+            r"\bhow\s+to\s+(make|cook|bake|prepare|build|create|play|install|setup|"
+            r"reset|remove|delete|update|fix|repair|solve|calculate|"
+            r"find|get|become|learn|start|stop|restart|download|upload|login|register)\b",
+            r"\btranslate\s+(to|into|from)\b",
+            r"\b(?:latest|top|new|best)\s+(bollywood|hollywood)\s+(movie|film|song|album|news)\b",
+            r"\bplay\s+\w+\s+(with\s+)?me\b",
+            r"\bwhat\s+is\s+(the\s+)?(weather|temperature|climate|time|date|day|meaning|horoscope)\b",
+            r"\b(tell|recite|say|sing|write|create)\b.*\b(joke|story|poem|song|poetry|quote|rap|shayari|ghazal)\b",
+            r"\b(?:how\s+)?(?:to\s+)?(?:make|prepare|cook)\s+.*\b(food|biryani|pizza|burger|pasta|noodles|curry|rice|chicken|paneer|sabzi|roti|paratha|dal|chawal|khana)\b",
+        ]
+        if any(re.search(p, q) for p in _ood_patterns):
+            return True
+
+        return False
 
     def _extract_department_from_history(self, history: List[Dict]) -> str | None:
         """Scan conversation history for the most recent department mention.
@@ -2245,7 +2147,7 @@ USER QUESTION: {query}
             q,
         ):
             return "establishment"
-        if re.search(r"\bscholarship\b", q):
+        if re.search(r"\b(scholarship|scholership|scolarship|schollarship)\b", q):
             return "scholarship"
         if re.search(r"\b(counselling|counseling)\b", q):
             return "counselling"
@@ -2705,6 +2607,404 @@ USER QUESTION: {query}
                 return parts
         return [q]
 
+    # ------------------------------------------------------------------
+    # Fee query abstraction — routes to old or new engine
+    # ------------------------------------------------------------------
+
+    def _handle_fee_query_old(
+        self, q: str, lang: str, kb: dict
+    ) -> str | None:
+        """Legacy fee handler using FEE_GROUP_MAP."""
+        fee_intent = re.search(
+            r"\b(fee|fees|total\s*fee|semester\s*fee|admission\s*fee|course\s*fee)\b", q
+        )
+        if not fee_intent:
+            return None
+        logger.info(f"HANDLER (old): fee_intent matched for query='{q[:60]}'")
+        dept_code = self._extract_dept_code(q)
+        if dept_code and dept_code in FEE_GROUP_MAP:
+            total, admission, per_sem = FEE_GROUP_MAP[dept_code]
+            dept_name = dept_code
+            if "full_name" in kb.get("courses", {}).get("btech", {}).get(dept_code, {}):
+                dept_name = kb["courses"]["btech"][dept_code]["full_name"]["value"]
+            if re.search(r"\bsemester\s*fee\b|\bper\s*semester\b|\bsem\s*fee\b", q):
+                if per_sem > 0:
+                    return self._lang_fee_response(lang, "semester", dept_name, per_sem, 0, 0)
+                return self._lang_fee_response(lang, "total", dept_name, total, 0, 0)
+            if re.search(r"\badmission\s*fee\b", q):
+                return self._lang_fee_response(lang, "admission", dept_name, 0, admission, 0)
+            return self._lang_fee_response(lang, "total", dept_name, total, 0, 0)
+
+        # No department specified — general fee info
+        if re.search(r"\b(fee structure|fee|fees)\b", q):
+            fee_cse = self._format_inr(617700, lang)
+            fee_other = self._format_inr(567100, lang)
+            fee_me_ce = self._format_inr(429100, lang)
+            if lang == "hi":
+                return (
+                    "BCREC mein B.Tech fees branch ke hisaab se alag hai. "
+                    f"CSE, IT, ECE: total {fee_cse}. "
+                    f"EE, AIML, DS, CY, CSD: total {fee_other}. "
+                    f"ME, CE: total {fee_me_ce}. "
+                    "Kya aap kisi specific branch ki fees jaanna chahenge?"
+                )
+            if lang == "bn":
+                return (
+                    "BCREC তে B.Tech এর ফি শাখা অনুযায়ী আলাদা। "
+                    f"CSE, IT, ECE: মোট {fee_cse}. "
+                    f"EE, AIML, DS, CY, CSD: মোট {fee_other}. "
+                    f"ME, CE: মোট {fee_me_ce}. "
+                    "আপনি কি কোনো নির্দিষ্ট শাখার ফি জানতে চান?"
+                )
+            return (
+                "BCREC B.Tech fees vary by branch. "
+                f"CSE, IT, ECE: {self._format_inr(617700, 'en')} total. "
+                f"EE, AIML, DS, CY, CSD: {self._format_inr(567100, 'en')} total. "
+                f"ME, CE: {self._format_inr(429100, 'en')} total. "
+                "Would you like fees for a specific branch?"
+            )
+        return None
+
+    # ------------------------------------------------------------------
+    # Phase 3: Dynamic fee response formatting
+    # ------------------------------------------------------------------
+
+    def _fmt_total_fee(
+        self, total: int, dept_name: str, dept_code: str, lang: str,
+        fsp: int | None, rsf: int | None,
+    ) -> str:
+        ts = self._format_inr(total, lang)
+        if lang == "hi":
+            if fsp and rsf and rsf > 0:
+                a = self._format_inr(fsp, lang)
+                b = self._format_inr(rsf, lang)
+                return (
+                    f"{dept_name} ({dept_code}) का कुल कोर्स शुल्क {ts} है। "
+                    f"इसमें पहले सेमेस्टर का {a} और बाकी सेमेस्टर का {b} प्रति सेमेस्टर शामिल है।"
+                )
+            rem = total - (fsp or 0)
+            if fsp and rem > 0:
+                a = self._format_inr(fsp, lang)
+                b = self._format_inr(rem, lang)
+                return (
+                    f"{dept_name} ({dept_code}) का कुल कोर्स शुल्क {ts} है। "
+                    f"इसमें पहले सेमेस्टर का {a} और बाकी कोर्स का {b} शामिल है।"
+                )
+            return f"{dept_name} ({dept_code}) का कुल कोर्स शुल्क {ts} है।"
+
+        if lang == "bn":
+            if fsp and rsf and rsf > 0:
+                a = self._format_inr(fsp, lang)
+                b = self._format_inr(rsf, lang)
+                return (
+                    f"{dept_name} ({dept_code}) এর মোট কোর্স ফি {ts}। "
+                    f"এতে প্রথম সেমিস্টারের {a} এবং বাকি সেমিস্টারের {b} করে অন্তর্ভুক্ত।"
+                )
+            rem = total - (fsp or 0)
+            if fsp and rem > 0:
+                a = self._format_inr(fsp, lang)
+                b = self._format_inr(rem, lang)
+                return (
+                    f"{dept_name} ({dept_code}) এর মোট কোর্স ফি {ts}। "
+                    f"এতে প্রথম সেমিস্টারের {a} এবং বাকি কোর্সের {b} অন্তর্ভুক্ত।"
+                )
+            return f"{dept_name} ({dept_code}) এর মোট কোর্স ফি {ts}।"
+
+        if fsp and rsf and rsf > 0:
+            a = self._format_inr(fsp, lang)
+            b = self._format_inr(rsf, lang)
+            return (
+                f"The total course fee for {dept_name} ({dept_code}) is {ts}. "
+                f"This includes first semester charges of {a} and "
+                f"subsequent semesters at {b} each."
+            )
+        rem = total - (fsp or 0)
+        if fsp and rem > 0:
+            a = self._format_inr(fsp, lang)
+            b = self._format_inr(rem, lang)
+            return (
+                f"The total course fee for {dept_name} ({dept_code}) is {ts}. "
+                f"This includes the first semester payable of {a} and "
+                f"the remaining course fee of {b}."
+            )
+        return f"The total course fee for {dept_name} ({dept_code}) is {ts}."
+
+    def _fmt_admission_fee(
+        self, amount: int, dept_name: str, dept_code: str, lang: str,
+        group, one_time_total: int, sem1_comp_total: int,
+    ) -> str:
+        ts = self._format_inr(amount, lang)
+        onet = self._format_inr(one_time_total, lang) if one_time_total else None
+        sem1t = self._format_inr(sem1_comp_total, lang) if sem1_comp_total else None
+        has_detail = onet and sem1t and sem1_comp_total > 0
+
+        if lang == "hi":
+            if has_detail:
+                return (
+                    f"{dept_name} ({dept_code}) में प्रवेश के समय देय राशि {ts} है। "
+                    f"इसमें एकमुश्त शुल्क {onet} और पहले सेमेस्टर की ट्यूशन व अन्य फीस {sem1t} शामिल है।"
+                )
+            return f"{dept_name} ({dept_code}) में प्रवेश के समय देय राशि {ts} है।"
+
+        if lang == "bn":
+            if has_detail:
+                return (
+                    f"{dept_name} ({dept_code}) এ ভর্তির সময় প্রদেয় পরিমাণ {ts}। "
+                    f"এতে এককালীন ফি {onet} এবং প্রথম সেমিস্টারের টিউশন ও অন্যান্য ফি {sem1t} অন্তর্ভুক্ত।"
+                )
+            return f"{dept_name} ({dept_code}) এ ভর্তির সময় প্রদেয় পরিমাণ {ts}।"
+
+        if has_detail:
+            return (
+                f"The admission-time payable for {dept_name} ({dept_code}) is {ts}. "
+                f"This covers one-time charges of {onet} (admission fee, caution money, registration) "
+                f"and the first semester tuition, development fee, and other charges of {sem1t}."
+            )
+        return f"The admission-time payable for {dept_name} ({dept_code}) is {ts}."
+
+    def _fmt_first_semester(
+        self, amount: int, dept_name: str, dept_code: str, lang: str,
+        one_time_total: int, sem1_comp_total: int,
+    ) -> str:
+        ts = self._format_inr(amount, lang)
+        onet = self._format_inr(one_time_total, lang)
+        sem1t = self._format_inr(sem1_comp_total, lang)
+        has_breakdown = one_time_total > 0 and sem1_comp_total > 0
+
+        if lang == "hi":
+            if has_breakdown:
+                return (
+                    f"{dept_name} ({dept_code}) का पहला सेमेस्टर देय {ts} है। "
+                    f"विवरण: एकमुश्त शुल्क {onet} और सेमेस्टर शुल्क {sem1t}।"
+                )
+            return f"{dept_name} ({dept_code}) का पहला सेमेस्टर देय {ts} है।"
+        if lang == "bn":
+            if has_breakdown:
+                return (
+                    f"{dept_name} ({dept_code}) এর প্রথম সেমিস্টার প্রদেয় {ts}। "
+                    f"বিবরণ: এককালীন ফি {onet} এবং সেমিস্টার ফি {sem1t}।"
+                )
+            return f"{dept_name} ({dept_code}) এর প্রথম সেমিস্টার প্রদেয় {ts}।"
+        if has_breakdown:
+            return (
+                f"The first semester payable for {dept_name} ({dept_code}) is {ts}. "
+                f"Breakdown: one-time charges {onet} (admission fee, caution money, registration) "
+                f"plus semester fees {sem1t} (tuition, development, other charges)."
+            )
+        return f"The first semester payable for {dept_name} ({dept_code}) is {ts}."
+
+    def _fmt_semester_fee(
+        self, amount: int, sem_num: int, dept_name: str, dept_code: str, lang: str,
+        tuition: int, development: int, other: int,
+    ) -> str:
+        ts = self._format_inr(amount, lang)
+        tt = self._format_inr(tuition, lang)
+        dt = self._format_inr(development, lang)
+        ot = self._format_inr(other, lang)
+
+        if lang == "hi":
+            return (
+                f"{dept_name} ({dept_code}) का सेमेस्टर {sem_num} शुल्क {ts} है। "
+                f"इसमें ट्यूशन फीस {tt}, डेवलपमेंट फीस {dt}, और अन्य सेमेस्टर शुल्क {ot} शामिल हैं।"
+            )
+        if lang == "bn":
+            return (
+                f"{dept_name} ({dept_code}) এর সেমিস্টার {sem_num} ফি {ts}। "
+                f"এতে টিউশন ফি {tt}, ডেভেলপমেন্ট ফি {dt}, এবং অন্যান্য সেমিস্টার চার্জ {ot} অন্তর্ভুক্ত।"
+            )
+        return (
+            f"The semester {sem_num} fee for {dept_name} ({dept_code}) is {ts}. "
+            f"This covers tuition fee of {tt}, development fee of {dt}, "
+            f"and other semester charges of {ot}."
+        )
+
+    def _format_fee_response(
+        self, resp_type: str, dept_code: str, dept_name: str, lang: str,
+        result,
+    ) -> str | None:
+        """Format a language-aware fee response from FeeEngine data.
+
+        resp_type: 'total', 'admission', 'first_semester', 'semester'
+        """
+        group = result.group_data
+        total = result.total_fee or 0
+        sem_fee = result.semester_fee or 0
+        sem_num = result.semester or 0
+
+        computed = group.computed if group else None
+        fsp = computed.first_semester_payable if computed else None
+        rsf = computed.regular_semester_fee if computed else None
+
+        components = group.components if group else []
+
+        # Compute one-time charges in semester 1
+        one_time_total = sum(
+            c.amount for c in components
+            if c.type.value == "one_time" and c.charged_in_semester == 1 and not c.is_optional
+        )
+        # Compute per-semester charges in semester 1
+        sem1_comp_total = sum(
+            c.amount for c in components
+            if c.type.value == "per_semester" and 1 in (c.applicable_semesters or []) and not c.is_optional
+        )
+
+        # Tuition, development, other for a specific semester
+        tuition = sum(
+            c.amount for c in components
+            if c.id == "tuition_fee" and not c.is_optional
+        )
+        development = sum(
+            c.amount for c in components
+            if c.id == "development_fee" and not c.is_optional
+        )
+        other = sum(
+            c.amount for c in components
+            if c.id == "other_semester_charges" and not c.is_optional
+        )
+
+        if resp_type == "total":
+            return self._fmt_total_fee(total, dept_name, dept_code, lang, fsp, rsf)
+        if resp_type == "admission":
+            return self._fmt_admission_fee(
+                sem_fee, dept_name, dept_code, lang,
+                group, one_time_total, sem1_comp_total,
+            )
+        if resp_type == "first_semester":
+            return self._fmt_first_semester(
+                sem_fee, dept_name, dept_code, lang,
+                one_time_total, sem1_comp_total,
+            )
+        if resp_type == "semester":
+            return self._fmt_semester_fee(
+                sem_fee, sem_num, dept_name, dept_code, lang,
+                tuition, development, other,
+            )
+        return None
+
+    def _format_general_fee_info(self, lang: str, engine) -> str:
+        """Generate a general fee overview without 'alag se' phrasing."""
+        fee_cse_str = self._format_inr(617700, lang)
+        fee_ee_str = self._format_inr(567100, lang)
+        fee_me_str = self._format_inr(429100, lang)
+        try:
+            cse_t = engine.get_total_fee("CSE")
+            ee_t = engine.get_total_fee("EE")
+            me_t = engine.get_total_fee("ME")
+            if cse_t.total_fee and ee_t.total_fee and me_t.total_fee:
+                fee_cse_str = self._format_inr(cse_t.total_fee, lang)
+                fee_ee_str = self._format_inr(ee_t.total_fee, lang)
+                fee_me_str = self._format_inr(me_t.total_fee, lang)
+        except Exception:
+            pass
+
+        if lang == "hi":
+            return (
+                f"BCREC में B.Tech प्रोग्राम का कुल कोर्स शुल्क शाखा के अनुसार अलग-अलग है। "
+                f"CSE, IT, ECE: {fee_cse_str}. "
+                f"EE, AIML, DS, CY, CSD: {fee_ee_str}. "
+                f"ME, CE: {fee_me_str}. "
+                "क्या आप किसी विशेष शाखा की फीस जानना चाहेंगे?"
+            )
+        if lang == "bn":
+            return (
+                f"BCREC তে B.Tech প্রোগ্রামের মোট কোর্স ফি শাখা অনুযায়ী আলাদা। "
+                f"CSE, IT, ECE: {fee_cse_str}. "
+                f"EE, AIML, DS, CY, CSD: {fee_ee_str}. "
+                f"ME, CE: {fee_me_str}. "
+                "আপনি কি কোনো নির্দিষ্ট শাখার ফি জানতে চান?"
+            )
+        return (
+            f"BCREC offers B.Tech programs with total course fees ranging from "
+            f"{fee_me_str} to {fee_cse_str}, depending on the branch. "
+            f"CSE, IT, ECE: {fee_cse_str}. "
+            f"EE, AIML, DS, CY, CSD: {fee_ee_str}. "
+            f"ME, CE: {fee_me_str}. "
+            "Would you like fee details for a specific branch?"
+        )
+
+    def _handle_fee_query_new(
+        self, q: str, lang: str, kb: dict
+    ) -> str | None:
+        """Fee handler using FeeEngine — dynamic, language-aware responses."""
+        fee_intent = re.search(
+            r"\b(fee|fees|total\s*fee|semester\s*fee|admission\s*fee|course\s*fee)\b", q
+        )
+        if not fee_intent:
+            return None
+        logger.info(f"HANDLER (new): fee_intent matched for query='{q[:60]}'")
+        try:
+            engine = _FeeEngine()
+            load_result = engine.load_all()
+            if not load_result.is_valid:
+                logger.warning(f"FeeEngine validation failed, falling back: {load_result.errors[:2]}")
+                return self._handle_fee_query_old(q, lang, kb)
+        except Exception as exc:
+            logger.error(f"FeeEngine init failed: {exc}")
+            return self._handle_fee_query_old(q, lang, kb)
+
+        dept_code = self._extract_dept_code(q)
+        if not dept_code:
+            if re.search(r"\b(fee structure|fee|fees)\b", q):
+                return self._format_general_fee_info(lang, engine)
+            return None
+
+        dept_name = dept_code
+        if "full_name" in kb.get("courses", {}).get("btech", {}).get(dept_code, {}):
+            dept_name = kb["courses"]["btech"][dept_code]["full_name"]["value"]
+
+        # 1. First semester / semester 1
+        if re.search(r"\bfirst\s+semester\b|\bsemester\s+1\b", q):
+            fr = engine.get_first_semester_payable(dept_code)
+            if not fr.error and fr.semester_fee:
+                return self._format_fee_response("first_semester", dept_code, dept_name, lang, fr)
+
+        # 2. Specific semester (>= 2)
+        sem_match = re.search(r"\bsemester\s*(\d+)\b", q)
+        if sem_match:
+            sem_num = int(sem_match.group(1))
+            if sem_num >= 2:
+                sr = engine.get_semester_fee(dept_code, sem_num)
+                if not sr.error and sr.semester_fee:
+                    return self._format_fee_response("semester", dept_code, dept_name, lang, sr)
+
+        # 3. Admission fee
+        if re.search(r"\badmission\s*fee\b", q):
+            ar = engine.get_first_semester_payable(dept_code)
+            if not ar.error and ar.semester_fee:
+                return self._format_fee_response("admission", dept_code, dept_name, lang, ar)
+
+        # 4. Generic semester / per-semester (use sem 2 as regular)
+        if re.search(r"\bsemester\s*fee\b|\bper\s*semester\b|\bsem\s*fee\b", q):
+            sr = engine.get_semester_fee(dept_code, 2)
+            if not sr.error and sr.semester_fee and sr.semester_fee > 0:
+                return self._format_fee_response("semester", dept_code, dept_name, lang, sr)
+            # Fallback to total (MBA has no per-semester)
+            tr = engine.get_total_fee(dept_code)
+            if tr.total_fee:
+                return self._format_fee_response("total", dept_code, dept_name, lang, tr)
+
+        # 5. Default: total fee
+        tr = engine.get_total_fee(dept_code)
+        if tr.total_fee:
+            return self._format_fee_response("total", dept_code, dept_name, lang, tr)
+
+        return None
+
+    def _handle_fee_query(self, q: str, lang: str, kb: dict) -> str | None:
+        """Route fee queries to old or new engine based on feature flag.
+
+        Logs which engine served the response for debugging.
+        """
+        if _USE_NEW_FEE_ENGINE:
+            result = self._handle_fee_query_new(q, lang, kb)
+            if result is not None:
+                logger.debug("FEE_ENGINE=New")
+            return result
+        result = self._handle_fee_query_old(q, lang, kb)
+        if result is not None:
+            logger.debug("FEE_ENGINE=Old")
+        return result
+
     def _structured_lookup(self, query: str, lang: str) -> str | None:
         """Try to answer a query directly from structured canonical KB data.
         Returns a formatted answer string, or None if not found."""
@@ -2730,12 +3030,24 @@ USER QUESTION: {query}
             vp_name = vp.get("name", {}).get("value", "")
             if p_name and vp_name:
                 logger.info(f"HANDLER: principal_and_vice matched for query='{q[:60]}'")
-                return f"The principal of BCREC is {p_name}. The vice principal is {vp_name}."
+                if lang == "hi":
+                    return f"BCREC ke principal {p_name} hain aur vice principal {vp_name} hain."
+                if lang == "bn":
+                    return f"BCREC এর principal {p_name} এবং vice principal {vp_name}।"
+                return f"The principal of BCREC is {p_name} and the vice principal is {vp_name}."
             elif p_name:
                 logger.info(f"HANDLER: principal+vice → only principal matched for query='{q[:60]}'")
+                if lang == "hi":
+                    return f"BCREC ke principal {p_name} hain."
+                if lang == "bn":
+                    return f"BCREC এর principal {p_name}।"
                 return f"The principal of BCREC is {p_name}."
             elif vp_name:
                 logger.info(f"HANDLER: principal+vice → only vice matched for query='{q[:60]}'")
+                if lang == "hi":
+                    return f"BCREC ke vice principal {vp_name} hain."
+                if lang == "bn":
+                    return f"BCREC এর vice principal {vp_name}।"
                 return f"The vice principal of BCREC is {vp_name}."
 
         # --- Vice Principal lookup (must be before principal check) ---
@@ -2744,6 +3056,10 @@ USER QUESTION: {query}
             name = vp.get("name", {}).get("value", "")
             if name:
                 logger.info(f"HANDLER: vice_principal matched for query='{q[:60]}'")
+                if lang == "hi":
+                    return f"BCREC ke vice principal {name} hain."
+                if lang == "bn":
+                    return f"BCREC এর vice principal {name}।"
                 return f"The vice principal of BCREC is {name}."
 
         # --- Principal lookup (handles "principal" and "princepal" typos) ---
@@ -2753,7 +3069,11 @@ USER QUESTION: {query}
             if name:
                 phone = principal.get("phone", {}).get("value", "")
                 logger.info(f"HANDLER: principal matched for query='{q[:60]}'")
-                return f"The principal of BCREC is {name}. You can contact them at {phone}."
+                if lang == "hi":
+                    return f"BCREC ke principal {name} hain. Unka phone {phone} hai."
+                if lang == "bn":
+                    return f"BCREC এর principal {name}। তাঁর ফোন {phone}।"
+                return f"The principal of BCREC is {name}. Their phone is {phone}."
 
         # --- Negativity / complaint / "why not join" handler ---
         if re.search(
@@ -2767,21 +3087,20 @@ USER QUESTION: {query}
             logger.info(f"HANDLER: negativity matched for query='{q[:60]}'")
             if lang == "hi":
                 return (
-                    "Har college ki apni khasteyaan aur sudhar ke k्षetra hote hain. "
-                    "Main sirf tathyon ke aadhar par jaankari de sakta hoon — placement, faculty, fees, hostel, aur academics ke bare mein. "
-                    "Agar aapko koi vishesh chinta hai to kripya bataayein."
+                    "Main samajh sakta hoon ki aapke kuch concerns hain. "
+                    "BCREC ke baare mein factual information doon — placement, faculty, fees, ya academics? "
+                    "Jo bhi aapki specific concern hai, main uske baare mein sahi jaankari de sakta hoon."
                 )
             if lang == "bn":
                 return (
-                    "প্রতিটি কলেজের নিজস্ব শক্তি এবং উন্নতির ক্ষেত্র থাকে। "
-                    "আমি শুধুমাত্র তথ্যের ভিত্তিতে উত্তর দিতে পারি — প্লেসমেন্ট, ফ্যাকাল্টি, ফি, হোস্টেল এবং একাডেমিকস সম্পর্কে। "
-                    "আপনার কোনো নির্দিষ্ট উদ্বেগ থাকলে দয়া করে জানান।"
+                    "আমি বুঝতে পারছি আপনার কিছু উদ্বেগ আছে। "
+                    "BCREC সম্পর্কে factual তথ্য দিতে পারি — placement, faculty, fees, বা academics? "
+                    "আপনার নির্দিষ্ট কোনো concern থাকলে জানান, আমি সঠিক তথ্য দিতে পারব।"
                 )
             return (
-                "Every college has both strengths and areas where students feel improvements are needed. "
-                "Rather than relying only on opinions, I can help with factual information about placements, "
-                "faculty, infrastructure, fees, academics, or student life so you can make an informed decision. "
-                "Is there a specific concern you'd like to discuss?"
+                "I understand you have some concerns. "
+                "I can share factual information about BCRECs placements, faculty, fees, or academics. "
+                "Is there a specific area you would like to discuss?"
             )
 
         # --- Contact info ---
@@ -2792,11 +3111,11 @@ USER QUESTION: {query}
             if phones:
                 phone_str = ", ".join(phones[:3])
                 logger.info(f"HANDLER: contact matched for query='{q[:60]}'")
-                return (
-                    f"You can contact BCREC at {phone_str}. "
-                    f"Email: {email}. "
-                    f"Mobile: {college.get('mobile', {}).get('value', '')}."
-                )
+                if lang == "hi":
+                    return f"BCREC se aap {phone_str} ya email {email} par contact kar sakte hain."
+                if lang == "bn":
+                    return f"BCREC এ যোগাযোগ করতে পারেন {phone_str} অথবা ইমেইল {email}।"
+                return f"BCREC can be reached at {phone_str} or email {email}."
 
         # --- Admission documents ---
         if re.search(r"\b(document|require|need|list of).*(admission|admit)\b", q):
@@ -2809,7 +3128,11 @@ USER QUESTION: {query}
                         parts.append(f"{category}: {', '.join(items[:3])}")
             if parts:
                 logger.info(f"HANDLER: admission_documents matched for query='{q[:60]}'")
-                return "Required documents: " + " | ".join(parts[:3])
+                if lang == "hi":
+                    return f"Admission ke liye {parts[0]} jaise documents chahiye."
+                if lang == "bn":
+                    return f"ভর্তির জন্য {parts[0]} এর মতো documents প্রয়োজন।"
+                return f"Required documents for admission include {parts[0]}."
 
         # --- Admission office contact (checked BEFORE general admission) ---
         if re.search(
@@ -2821,9 +3144,17 @@ USER QUESTION: {query}
             contacts = kb.get("admission", {}).get("contacts", {}).get("value", "")
             if contacts:
                 logger.info(f"HANDLER: admission_office matched for query='{q[:60]}'")
+                if lang == "hi":
+                    return f"Admission office se aap {contacts} par baat kar sakte hain."
+                if lang == "bn":
+                    return f"Admission office এ যোগাযোগ করতে পারেন {contacts}।"
                 return f"You can reach the admission office at {contacts}."
             logger.info(f"HANDLER: admission_office (default) matched for query='{q[:60]}'")
-            return "The admission office can be contacted at 0343-2501353."
+            if lang == "hi":
+                return "Admission office ka number 0343-2501353 hai."
+            if lang == "bn":
+                return "Admission office এর নম্বর 0343-2501353।"
+            return "The admission office number is 0343-2501353."
 
         # --- Why BCREC / convince / advantages (language-aware) ---
         # Placed BEFORE admission handler so "why should I take admission" hits the right handler.
@@ -2837,41 +3168,28 @@ USER QUESTION: {query}
             logger.info(f"HANDLER: why_bcrec matched for query='{q[:60]}'")
             if lang == "hi":
                 return (
-                    "BCREC ek bahut accha college hai. Yeh 2000 mein sthapit hua hai. "
-                    "Yeh NBA accredited hai CSE, ECE, IT, EE, ME ke liye aur NAAC B+ grade prapt hai. "
-                    "Yeh 2024 se autonomous college hai. "
-                    "Yahan 208 se adhik faculty hain aur 17 acre ka campus hai. "
-                    "Placement rate 91% hai, average package 4.25 lakh rupaye per year hai. "
-                    "Top recruiters mein TCS, Infosys, Wipro, Capgemini, Accenture, Amazon aur HCL hain. "
-                    "Shulka bhi bahut reasonable hai — sirf 1.5 lakh rupaye per year. "
-                    "Kya aap kisi vishesh branch ke bare mein janna chahenge?"
+                    "BCREC ek bahut achha college hai — NBA accredited aur NAAC B+ grade. "
+                    "Placement rate 91% hai, average package 4.25 LPA hai aur top companies aati hain. "
+                    "Fee bhi reasonable hai, approximately 1.5 lakh per year."
                 )
             if lang == "bn":
                 return (
-                    "BCREC একটি খুব ভালো কলেজ। এটি ২০০০ সালে প্রতিষ্ঠিত। "
-                    "এটি NBA স্বীকৃত CSE, ECE, IT, EE, ME এর জন্য এবং NAAC B+ গ্রেড প্রাপ্ত। "
-                    "এটি ২০২৪ থেকে স্বশাসিত (autonomous) কলেজ। "
-                    "এখানে ২৮১+ শিক্ষক রয়েছেন এবং ১৭ একর ক্যাম্পাস। "
-                    "প্লেসমেন্ট রেট ৯১%, গড় প্যাকেজ ৪.২৫ লক্ষ টাকা প্রতি বছর। "
-                    "শীর্ষ নিয়োগকারীদের মধ্যে TCS, Infosys, Wipro, Capgemini, Accenture, Amazon এবং HCL রয়েছে। "
-                    "ফিও খুব যুক্তিসঙ্গত — মাত্র ১.৫ লক্ষ টাকা প্রতি বছর। "
-                    "আপনি কি কোনো বিশেষ শাখা সম্পর্কে জানতে চান?"
+                    "BCREC একটি খুব ভালো কলেজ — NBA স্বীকৃত এবং NAAC B+ গ্রেডপ্রাপ্ত। "
+                    "প্লেসমেন্ট রেট ৯১%, গড় প্যাকেজ ৪.২৫ LPA এবং টপ কোম্পানি আসে। "
+                    "ফিও খুব যুক্তিসঙ্গত, প্রায় ১.৫ লক্ষ টাকা প্রতি বছর।"
                 )
             return (
-                "BCREC, established in 2000, is one of the top engineering colleges in West Bengal. "
-                "It is NBA accredited for CSE, ECE, IT, EE, ME and NAAC B+ graded. "
-                "The college became autonomous from the 2024-25 session. "
-                "It has 208 plus faculty members on a 17 acre campus. "
-                "The placement rate is 91 percent with an average package of 4.25 LPA. "
-                "Top recruiters include TCS, Infosys, Wipro, Capgemini, Accenture, Amazon, and HCL. "
-                "The fee is very reasonable at approximately 1.5 lakh rupees per year. "
-                "Would you like to know about a specific branch?"
+                "BCREC is a great choice — NBA accredited and NAAC B+ graded. "
+                "Placement rate is 91 percent with an average package of 4.25 LPA and top recruiters visit regularly. "
+                "Fee is also very reasonable at around 1.5 lakh per year."
             )
 
         # --- Admission process (general) ---
         # Negative lookahead prevents "apply for hostel" from matching here
+        # NOTE: Only factual process questions should trigger this handler.
+        # Generic intent like "mujhe admission lena hai" goes to LLM.
         if re.search(
-            r"\b(admission\s*process|how\s*to\s*apply|admissions?|admit|apply\s*(for|to)|how\s*can\s*i\s*get)\b",
+            r"\b(admission\s*(process|procedure|criteria|requirements?)|how\s*to\s*apply|apply\s*(for|to)|how\s*can\s*i\s*(get|apply))\b",
             q,
         ) and not re.search(r"\bhostel\b", q) and not re.search(r"\b(convince|convins\w*|persuade)\b", q) and not re.search(r"\b(kon si branch|kaun si branch|which branch|branch choose|branch recommend|best branch|sabse acchi branch|konsa (subject|department|branch))\b", q):
             adm = kb.get("admission", {})
@@ -2879,11 +3197,19 @@ USER QUESTION: {query}
             entrance = adm.get("eligibility", {}).get("entrance", {}).get("value", "")
             if eligibility:
                 logger.info(f"HANDLER: admission_general matched for query='{q[:60]}'")
+                if lang == "hi":
+                    return (
+                        f"B.Tech admission {entrance} ke through hota hai. Eligibility {eligibility} hai. "
+                        f"80% seats WBJEE ke through, 10% JEE Main aur 10% Management Quota ke through."
+                    )
+                if lang == "bn":
+                    return (
+                        f"B.Tech ভর্তি {entrance} এর মাধ্যমে হয়। যোগ্যতা {eligibility}। "
+                        f"80% seats WBJEE, 10% JEE Main এবং 10% Management Quota এর মাধ্যমে।"
+                    )
                 return (
-                    f"B.Tech admission is through {entrance}. "
-                    f"Eligibility is {eligibility}. "
-                    f"Seats: WBJEE 80 percent, JEE Main 10 percent, Management Quota 10 percent. "
-                    f"Apply online at the WBJEEB website or the college portal."
+                    f"B.Tech admission is through {entrance}. Eligibility is {eligibility}. "
+                    f"80% seats are through WBJEE, 10% through JEE Main, and 10% through Management Quota."
                 )
 
         # --- Installment / payment plan (checked BEFORE fee to catch "pay fee in installments") ---
@@ -2891,9 +3217,17 @@ USER QUESTION: {query}
             payment = kb.get("fees_summary", {}).get("payment_modes", {}).get("value", "")
             if payment:
                 logger.info(f"HANDLER: installment matched for query='{q[:60]}'")
-                return f"Payment options: {payment}."
+                if lang == "hi":
+                    return f"Fees {payment} mein pay kar sakte hain."
+                if lang == "bn":
+                    return f"ফি {payment} এ পরিশোধ করতে পারেন।"
+                return f"Fees can be paid through {payment}."
             logger.info(f"HANDLER: installment (default) matched for query='{q[:60]}'")
-            return "For fee payment options, please contact the accounts office at 0343-2501353."
+            if lang == "hi":
+                return "Payment options ke liye accounts office 0343-2501353 par contact karein."
+            if lang == "bn":
+                return "পেমেন্ট অপশনের জন্য accounts office 0343-2501353 নম্বরে যোগাযোগ করুন।"
+            return "For payment options, contact the accounts office at 0343-2501353."
 
         # --- Safety / Anti-ragging (checked BEFORE hostel to preserve existing order) ---
         if re.search(r"\b(safety|safe|ragging|security|women.*safe)\b", q):
@@ -2903,11 +3237,28 @@ USER QUESTION: {query}
             safety = ar.get("safety", {}).get("value", "")
             if policy:
                 logger.info(f"HANDLER: safety matched for query='{q[:60]}'")
-                return (
-                    f"BCREC has a {policy} anti-ragging policy. "
-                    f"{'Reporting: ' + reporting if reporting else ''} "
-                    f"{'Women safety helpline: ' + safety if safety else ''}"
-                ).strip()
+                if lang == "hi":
+                    result = f"BCREC mein ragging strictly prohibited hai. "
+                    if reporting:
+                        result += f"Reporting {reporting}. "
+                    if safety:
+                        result += f"Women safety helpline {safety}. "
+                    result += "Chinta mat kariye, campus bahut safe hai."
+                elif lang == "bn":
+                    result = f"BCREC এ ragging কঠোরভাবে নিষিদ্ধ। "
+                    if reporting:
+                        result += f"রিপোর্টিং {reporting}. "
+                    if safety:
+                        result += f"মহিলা সুরক্ষা হেল্পলাইন {safety}. "
+                    result += "চিন্তা করবেন না, ক্যাম্পাস খুবই নিরাপদ।"
+                else:
+                    result = f"BCREC has a strict anti-ragging policy. "
+                    if reporting:
+                        result += f"Reporting: {reporting}. "
+                    if safety:
+                        result += f"Women safety helpline: {safety}. "
+                    result += "The campus is very safe."
+                return result.strip()
             return self._lang_response_unknown(lang)
 
         # --- Hostel general info (checked BEFORE fee so "hostel fee" returns hostel context) ---
@@ -2920,6 +3271,18 @@ USER QUESTION: {query}
                 girls = hostel.get("girls_hostels", {}).get("value", "")
                 capacity = hostel.get("total_capacity", {}).get("value", "")
                 logger.info(f"HANDLER: hostel matched for query='{q[:60]}'")
+                if lang == "hi":
+                    return (
+                        f"Ji, BCREC mein hostel facility available hai. "
+                        f"{total} hostels hain — {boys} boys ke liye aur {girls} girls ke liye — "
+                        f"total {capacity} students ki capacity hai."
+                    )
+                if lang == "bn":
+                    return (
+                        f"জি, BCREC এ হোস্টেল সুবিধা উপলব্ধ। "
+                        f"{total}টি হোস্টেল — {boys}টি ছেলেদের এবং {girls}টি মেয়েদের জন্য — "
+                        f"মোট {capacity} শিক্ষার্থীর ধারণক্ষমতা।"
+                    )
                 return (
                     f"Yes, hostel accommodation is available at BCREC. "
                     f"There are {total} hostels — {boys} for boys and {girls} for girls — "
@@ -2928,64 +3291,18 @@ USER QUESTION: {query}
             logger.info(f"HANDLER: hostel (unavailable) matched for query='{q[:60]}'")
             return "Hostel accommodation is not currently available at BCREC."
 
-        # --- Fee lookup (with negative lookbehind to avoid stealing from hostel/installment) ---
-        fee_intent = re.search(
-            r"\b(fee|fees|total\s*fee|semester\s*fee|admission\s*fee|course\s*fee)\b", q
-        )
-        if fee_intent:
-            logger.info(f"HANDLER: fee_intent matched for query='{q[:60]}'")
-            dept_code = self._extract_dept_code(q)
-            if dept_code and dept_code in FEE_GROUP_MAP:
-                total, admission, per_sem = FEE_GROUP_MAP[dept_code]
-                dept_name = dept_code
-                if "full_name" in kb.get("courses", {}).get("btech", {}).get(dept_code, {}):
-                    dept_name = kb["courses"]["btech"][dept_code]["full_name"]["value"]
-                if re.search(r"\bsemester\s*fee\b|\bper\s*semester\b|\bsem\s*fee\b", q):
-                    if per_sem > 0:
-                        return self._lang_fee_response(lang, "semester", dept_name, per_sem, 0, 0)
-                    return self._lang_fee_response(lang, "total", dept_name, total, 0, 0)
-                if re.search(r"\badmission\s*fee\b", q):
-                    return self._lang_fee_response(lang, "admission", dept_name, 0, admission, 0)
-                return self._lang_fee_response(lang, "total", dept_name, total, 0, 0)
-
-            # No department specified — general fee info (language-aware)
-            if re.search(r"\b(fee structure|fee|fees)\b", q):
-                fee_cse = self._format_inr(617700, lang)
-                fee_other = self._format_inr(567100, lang)
-                fee_me_ce = self._format_inr(429100, lang)
-                if lang == "hi":
-                    return (
-                        "BCREC mein B.Tech ki fees is prakar hai. "
-                        f"CSE, IT, ECE: kul {fee_cse}. "
-                        f"EE, AIML, DS, CY, CSD: kul {fee_other}. "
-                        f"ME, CE: kul {fee_me_ce}. "
-                        "Vistrit jankari ke liye college ko 0343-2501353 par sampark karein."
-                    )
-                if lang == "bn":
-                    return (
-                        "BCREC তে B.Tech এর ফি নিম্নরূপ। "
-                        f"CSE, IT, ECE: মোট {fee_cse}. "
-                        f"EE, AIML, DS, CY, CSD: মোট {fee_other}. "
-                        f"ME, CE: মোট {fee_me_ce}. "
-                        "বিস্তারিত জানতে 0343-2501353 নম্বরে যোগাযোগ করুন।"
-                    )
-                return (
-                    "BCREC B.Tech fees: CSE, IT, ECE: "
-                    f"{self._format_inr(617700, 'en')} total. "
-                    "EE, AIML, DS, CY, CSD: "
-                    f"{self._format_inr(567100, 'en')} total. "
-                    "ME, CE: "
-                    f"{self._format_inr(429100, 'en')} total. "
-                    "Contact the college for exact semester-wise fees."
-                )
+        # --- Fee lookup (routed through _handle_fee_query abstraction) ---
+        fee_response = self._handle_fee_query(q, lang, kb)
+        if fee_response is not None:
+            return fee_response
 
         # --- Academic failure / backlog / back-paper (checked BEFORE HOD) ---
         if re.search(
-            r"\b(backlog|back.?paper|arrear|supply|supplementary|reappear|fail)"
+            r"\b(backlog|backlag|back.?paper|arrear|supply|supplementary|reappear|fail)"
             r"|back\s+(ache|hoyeche|lag|lagbe|lagse|chole|as)",
             q,
         ):
-            logger.info(f"HANDLER: academic_failure matched for query='{q[:60]}'")
+            logger.info(f"HANDLER: academic_failure matched for query='{q[:60]}' lang={lang}")
             combined_kb = self._read_kb()
             policies = combined_kb.get("voice_ready_answers", {}).get("policies", {})
             answer = (policies.get("answers", {}) or {}).get(lang, "")
@@ -2996,7 +3313,12 @@ USER QUESTION: {query}
                 main_part = re.split(
                     r"Laptops|ল্যাপটপ|लैपटॉप", answer, maxsplit=1
                 )[0].strip().rstrip(",")
-                return main_part + "."
+                if lang == "hi":
+                    return f"Koi baat nahi, backlog common hai. {main_part} Aapko kis semester mein backlog aaya hai?"
+                if lang == "bn":
+                    return f"Chinta korben na, backlog common byapara. {main_part} Kono semester e backlog ache?"
+                return f"Don't worry, backlogs are common. {main_part} Which semester has the backlog?"
+            logger.warning(f"HANDLER: academic_failure matched but policies.answers missing or empty for lang={lang}, answer_len={len(answer) if answer else 0}")
             return None
 
         # --- HOD lookup ---
@@ -3013,6 +3335,10 @@ USER QUESTION: {query}
                     dept_full = dept_code
                     if "full_name" in kb.get("courses", {}).get("btech", {}).get(dept_code, {}):
                         dept_full = kb["courses"]["btech"][dept_code]["full_name"]["value"]
+                    if lang == "hi":
+                        return f"{dept_full} department ke HOD {hod_name} hain. Email {email} hai."
+                    if lang == "bn":
+                        return f"{dept_full} বিভাগের HOD {hod_name}। ইমেইল {email}।"
                     return f"The HOD of {dept_full} is {hod_name}. Email: {email}."
                 return self._lang_hod_unknown(lang)
             # No dept specified — list all HODs
@@ -3024,6 +3350,10 @@ USER QUESTION: {query}
                 if name:
                     hod_list.append(f"{code}: {name}")
             if hod_list:
+                if lang == "hi":
+                    return "Department Heads: " + "; ".join(hod_list[:6]) + "."
+                if lang == "bn":
+                    return "বিভাগীয় প্রধান: " + "; ".join(hod_list[:6]) + "।"
                 return "Department Heads: " + "; ".join(hod_list[:6]) + "."
             return self._lang_hod_unknown(lang)
 
@@ -3045,18 +3375,37 @@ USER QUESTION: {query}
                     avg = dept_placement.get("avg_lpa", {}).get("value", "")
                     max_p = dept_placement.get("max_lpa", {}).get("value", "")
                     if rate:
+                        if lang == "hi":
+                            return (
+                                f"{dept_code} ke placements bahut achhe hain! "
+                                f"Rate {rate} hai, average package {avg} LPA hai."
+                            )
+                        if lang == "bn":
+                            return (
+                                f"{dept_code} এর প্লেসমেন্ট খুব ভালো! "
+                                f"রেট {rate}, গড় প্যাকেজ {avg} LPA।"
+                            )
                         return (
-                            f"The placement rate for {dept_code} is {rate}. "
-                            f"Average package is {avg} LPA. "
-                            f"Maximum package is {max_p} LPA."
+                            f"{dept_code} has excellent placements! "
+                            f"Placement rate is {rate} with an average package of {avg} LPA."
                         )
             # Overall placement
             overall = placements.get("overall_rate_2025", {}).get("value", "")
             if overall and re.search(r"\b(overall|college|average)\b", q):
                 avg_pkg = placements.get("average_package", {}).get("value", "")
+                if lang == "hi":
+                    return (
+                        f"BCREC ka overall placement rate {overall} hai, average package {avg_pkg} hai. "
+                        f"Top companies jaise TCS, Infosys, Wipro aati hain."
+                    )
+                if lang == "bn":
+                    return (
+                        f"BCREC এর overall placement rate {overall}, গড় প্যাকেজ {avg_pkg}। "
+                        f"টপ কোম্পানিগুলোর মধ্যে TCS, Infosys, Wipro রয়েছে।"
+                    )
                 return (
-                    f"The overall placement rate for BCREC is {overall}. "
-                    f"Average package is {avg_pkg}."
+                    f"BCREC's overall placement rate is {overall} with an average package of {avg_pkg}. "
+                    f"Top recruiters include TCS, Infosys, and Wipro."
                 )
 
         # --- Department seat info ---
@@ -3067,7 +3416,11 @@ USER QUESTION: {query}
                 dept_course = kb.get("courses", {}).get("btech", {}).get(dept_code, {})
                 intake = dept_course.get("intake", {}).get("value", "")
                 if intake:
-                    return f"The intake for {dept_code} is {intake} seats."
+                    if lang == "hi":
+                        return f"{dept_code} mein {intake} seats hain."
+                    if lang == "bn":
+                        return f"{dept_code} এ {intake} টি seats আছে।"
+                    return f"{dept_code} has {intake} seats."
                 return UNKNOWN_INFO_RESPONSE_EN
 
         # --- Cutoff / rank info ---
@@ -3085,12 +3438,22 @@ USER QUESTION: {query}
                 }
                 if dept_code in _CUTOFF_MAP:
                     co = _CUTOFF_MAP[dept_code]
+                    if lang == "hi":
+                        return (
+                            f"{dept_code} ka WBJEE cutoff rank 2024 mein {co['2024']} tha, "
+                            f"2025 mein {co['2025']} tha. "
+                            f"2026 ka estimated {co['2026_est']} hai. Yeh approximate hain."
+                        )
+                    if lang == "bn":
+                        return (
+                            f"{dept_code} এর WBJEE cutoff rank 2024 এ {co['2024']}, "
+                            f"2025 এ {co['2025']}। "
+                            f"2026 এর estimated {co['2026_est']}। এগুলো আনুমানিক।"
+                        )
                     return (
-                        f"The WBJEE cutoff rank for {dept_code} is: "
-                        f"2024: {co['2024']}, "
-                        f"2025: {co['2025']}, "
-                        f"estimated 2026: {co['2026_est']}. "
-                        f"These are approximate values and may vary by category."
+                        f"The WBJEE cutoff rank for {dept_code} was {co['2024']} in 2024, "
+                        f"{co['2025']} in 2025. "
+                        f"The estimated 2026 rank is {co['2026_est']}. These are approximate."
                     )
             return "I don't have the specific cutoff data for that department. Please contact the college admission office for accurate rank information."
 
@@ -3100,26 +3463,38 @@ USER QUESTION: {query}
             q,
         ):
             logger.info(f"HANDLER: establishment matched for query='{q[:60]}'")
+            if lang == "hi":
+                return (
+                    "BCREC August 2000 mein establish hua tha. "
+                    "2024-25 session se autonomous college ban gaya hai."
+                )
+            if lang == "bn":
+                return (
+                    "BCRECT আগস্ট ২০০০ সালে প্রতিষ্ঠিত হয়। "
+                    "২০২৪-২৫ সেশন থেকে autonomous কলেজ হয়েছে।"
+                )
             return (
-                "Dr. B.C. Roy Engineering College was established in August 2000. "
-                "It became autonomous from the 2024-25 academic session."
+                "BCREC was established in August 2000. "
+                "It became autonomous from the 2024-25 session."
             )
 
         # --- Computer lab timings (before general timings) ---
         if re.search(r"\bcomputer\s*lab|lab\s*timing|lab\s*hours?\b", q):
             logger.info(f"HANDLER: computer_lab matched for query='{q[:60]}'")
-            return (
-                "Computer labs are open during college hours: Monday to Friday, "
-                "10:00 AM to 5:30 PM. The campus is closed on Saturday and Sunday."
-            )
+            if lang == "hi":
+                return "Computer labs Monday to Friday 10:00 AM se 5:30 PM tak khule rehte hain. Saturday aur Sunday band rehte hain."
+            if lang == "bn":
+                return "কম্পিউটার ল্যাব সোমবার থেকে শুক্রবার সকাল ১০:০০ থেকে বিকাল ৫:৩০ পর্যন্ত খোলা থাকে। শনিবার এবং রবিবার বন্ধ।"
+            return "Computer labs are open Monday to Friday, 10:00 AM to 5:30 PM. Closed on Saturday and Sunday."
 
         # --- Library timings ---
         if re.search(r"\blibrary\s*(timing|hours?)|reading\s*room\b", q):
             logger.info(f"HANDLER: library matched for query='{q[:60]}'")
-            return (
-                "The library is open Monday to Friday, 10:00 AM to 5:30 PM. "
-                "It is closed on Saturday and Sunday."
-            )
+            if lang == "hi":
+                return "Library Monday to Friday 10:00 AM se 5:30 PM tak khuli rehti hai. 80,000 se zyada books hain."
+            if lang == "bn":
+                return "লাইব্রেরি সোমবার থেকে শুক্রবার সকাল ১০:০০ থেকে বিকাল ৫:৩০ পর্যন্ত খোলা থাকে। ৮০,০০০ এর বেশি বই আছে।"
+            return "The library is open Monday to Friday, 10:00 AM to 5:30 PM. It has over 80,000 books."
 
         # --- College timings ---
         if re.search(
@@ -3127,10 +3502,16 @@ USER QUESTION: {query}
             q,
         ):
             logger.info(f"HANDLER: timings matched for query='{q[:60]}'")
-            return (
-                "College timings: Monday to Friday, 10:00 AM to 5:30 PM. "
-                "The campus is closed on Saturday and Sunday."
-            )
+            if lang == "hi":
+                return "College Monday to Friday 10:00 AM se 5:30 PM tak khula rehta hai. Saturday aur Sunday band rahta hai."
+            if lang == "bn":
+                return "কলেজ সোমবার থেকে শুক্রবার সকাল ১০:০০ থেকে বিকাল ৫:৩০ পর্যন্ত খোলা থাকে। শনিবার এবং রবিবার বন্ধ।"
+            return "College is open Monday to Friday, 10:00 AM to 5:30 PM. Closed on Saturday and Sunday."
+
+        # --- Fee intent guard (prevents department handler from intercepting fee queries) ---
+        fee_intent = re.search(
+            r"\b(fee|fees|total\s*fee|semester\s*fee|admission\s*fee|course\s*fee)\b", q
+        )
 
         # --- College info (departments) ---
         if (
@@ -3141,7 +3522,8 @@ USER QUESTION: {query}
             and not fee_intent
             and not re.search(
                 r"\b(kon si branch|kaun si branch|which branch|branch choose|branch recommend|"
-                r"best branch|sabse acchi branch|konsa (subject|department|branch))\b", q
+                r"best branch|sabse acchi branch|"
+                r"(?:konsa|kon sa|kaunsa) (?:subject|department|branch))\b", q
             )
         ):
             logger.info(f"HANDLER: departments matched for query='{q[:60]}'")
@@ -3153,8 +3535,8 @@ USER QUESTION: {query}
                 if full_name:
                     result = f"{full_name} ({dept_code})"
                     if intake:
-                        result += f" — Intake: {intake} seats"
-                    return result
+                        result += f" — {intake} seats"
+                    return result + "."
             # No specific department — list all B.Tech courses
             btech_courses = kb.get("courses", {}).get("btech", {})
             course_list = []
@@ -3167,12 +3549,41 @@ USER QUESTION: {query}
                         entry += f" - {intake} seats"
                     course_list.append(entry)
             if course_list:
-                return "BCREC offers B.Tech in: " + "; ".join(course_list) + "."
+                if lang == "hi":
+                    return "BCREC B.Tech courses: " + "; ".join(course_list[:5]) + "."
+                if lang == "bn":
+                    return "BCREC এর B.Tech কোর্স: " + "; ".join(course_list[:5]) + "।"
+                return "BCREC offers B.Tech in: " + "; ".join(course_list[:5]) + "."
+            if lang == "hi":
+                return "BCREC mein CSE, IT, ECE, EE, ME, CE, CSD, AIML, Data Science, aur Cyber Security jaise B.Tech programs hain."
+            if lang == "bn":
+                return "BCREC তে CSE, IT, ECE, EE, ME, CE, CSD, AIML, Data Science, এবং Cyber Security এর মতো B.Tech প্রোগ্রাম আছে।"
             return "BCREC offers B.Tech programs in CSE, IT, ECE, EE, ME, CE, CSD, AIML, Data Science, and Cyber Security."
 
         # --- Scholarship ---
-        if re.search(r"\bscholarship", q):
+        if re.search(r"\b(scholarship|scholership|scolarship|schollarship)", q):
             logger.info(f"HANDLER: scholarship matched for query='{q[:60]}'")
+            is_cancellation = re.search(
+                r"\b(cancel|band|stop|kat|cancel\s+ho|cancel\s+hoe|rukh|rukn|hata|khatam)\b", q
+            )
+            if is_cancellation:
+                if lang == "hi":
+                    return (
+                        "Scholarship cancellation ke alag-alag niyam alag scholarship ke liye hote hain. "
+                        "Aap kaun si scholarship le rahe hain — SVMCM, Aikyashree, OASIS, TFW, "
+                        "ya koi aur? Naam batao to main sahi jaankari de sakta hoon."
+                    )
+                if lang == "bn":
+                    return (
+                        "Scholarship cancellation er niyom alada alada scholarship er jonno alada. "
+                        "Apni konta scholarship nichen — SVMCM, Aikyashree, OASIS, TFW, "
+                        "na onno kichu? Naam bolle ami thik jankti dite parbo."
+                    )
+                return (
+                    "Scholarship cancellation rules depend on which scholarship you have. "
+                    "Which one are you receiving — SVMCM, Aikyashree, OASIS, TFW, or another? "
+                    "Let me know and I can give you the correct information."
+                )
             schemes = kb.get("scholarships", {}).get("schemes", {})
             names = []
             for key, sch in schemes.items():
@@ -3180,22 +3591,19 @@ USER QUESTION: {query}
                 if name:
                     names.append(name)
             if names:
-                merit = (
-                    kb.get("scholarships", {})
-                    .get("eligibility", {})
-                    .get("merit", {})
-                    .get("value", "")
-                )
-                means = (
-                    kb.get("scholarships", {})
-                    .get("eligibility", {})
-                    .get("means", {})
-                    .get("value", "")
-                )
+                if lang == "hi":
+                    return (
+                        f"BCREC mein {', '.join(names)} jaise scholarship options hain. "
+                        f"Kya aap chahte hain main aapki eligibility check karoon?"
+                    )
+                if lang == "bn":
+                    return (
+                        f"BCREC তে {', '.join(names)} এর মতো scholarship options আছে। "
+                        f"আপনি কি চান আমি আপনার eligibility check করি?"
+                    )
                 return (
-                    f"Scholarships available at BCREC include: {', '.join(names)}. "
-                    f"Merit eligibility: {merit}. "
-                    f"Means eligibility: {means}."
+                    f"BCREC offers scholarships like {', '.join(names)}. "
+                    f"Would you like me to check your eligibility?"
                 )
             return self._lang_response_unknown(lang)
         # --- Counselling ---
@@ -3203,6 +3611,10 @@ USER QUESTION: {query}
             logger.info(f"HANDLER: counselling matched for query='{q[:60]}'")
             counselling = kb.get("admission", {}).get("counseling", {}).get("value", "")
             if counselling:
+                if lang == "hi":
+                    return f"Admission counselling {counselling} ke through hota hai."
+                if lang == "bn":
+                    return f"Admission counselling {counselling} এর মাধ্যমে হয়।"
                 return f"Admission counselling for BCREC is conducted through {counselling}."
             return self._lang_response_unknown(lang)
 
@@ -3213,48 +3625,61 @@ USER QUESTION: {query}
             eligibility = adm.get("eligibility", {}).get("btech", {}).get("value", "")
             entrance = adm.get("eligibility", {}).get("entrance", {}).get("value", "")
             if eligibility:
+                if lang == "hi":
+                    return (
+                        f"B.Tech ke liye eligibility {eligibility} hai, entrance {entrance} hai. "
+                        f"Aapne kitna percentage laya hai?"
+                    )
+                if lang == "bn":
+                    return (
+                        f"B.Tech এর জন্য যোগ্যতা {eligibility}, প্রবেশিকা {entrance}। "
+                        f"আপনি কত percent পেয়েছেন?"
+                    )
                 return (
-                    f"Eligibility for B.Tech admission: {eligibility}. Entrance exam: {entrance}."
+                    f"Eligibility for B.Tech is {eligibility} through {entrance}. "
+                    f"What percentage did you score?"
                 )
             return self._lang_response_unknown(lang)
 
         # --- Branch recommendation (which branch to choose, language-aware) ---
+        # Covers: "konsa department lu", "ap bolo konsa acha hoga", "kon sa better hai",
+        # "suggest karo", "recommend karo", "batao konsa", etc.
         if re.search(
-            r"\b(kon si branch|kaun si branch|which branch|branch choose|branch recommend|"
+            r"\b(kon si branch|kaun si branch|which branch|branch choose|"
+            r"konsa department (?:lu|lena|choose|loon|loonga|chahiye)|"
+            r"kon sa department (?:lu|lena|choose|loon|loonga|chahiye)|"
+            r"kaunsa department (?:lu|lena|choose|loon|loonga|chahiye)|"
+            r"konsa subject (?:lu|lena|choose|loon|loonga|chahiye)|"
+            r"konsa branch (?:lu|lena)|"
+            r"kon sa branch (?:lu|lena)|"
+            r"kaunsa branch (?:lu|lena)|"
+            r"konsa acha hoga|konsa accha rahega|kon sa better hai|"
+            r"konsa lena chahiye|kon sa lena chahiye|mujhe konsa lena chahiye|"
+            r"konsa sahi rahega|kon sa sahi rahega|"
             r"mujhe branch chuni hai|mujhe konsa branch lena chahiye|"
-            r"best branch|sabse acchi branch|konsa subject choose karu|"
-            r"konsa department choose karun|kon department choose korbo)\b",
+            r"best branch|sabse acchi branch|"
+            r"kon department choose korbo|"
+            r"suggest karo|recommend karo|suggestion do|"
+            r"suggest konsa|recommend konsa|batao konsa|btaiye konsa|bolo konsa)\b",
             q,
         ):
             logger.info(f"HANDLER: branch_recommendation matched for query='{q[:60]}'")
             if lang == "hi":
                 return (
-                    "BCREC mein kai branches hain. Agar aapko coding pasand hai to CSE, IT, ya CSD accha rahega. "
-                    "Agar aap AI aur Machine Learning mein interested hain to AIML branch hai. "
-                    "Agar aapko hardware aur circuits pasand hai to ECE ya EE acchi rahegi. "
-                    "Agar aapko manufacturing ya construction mein dilchaspi hai to ME ya CE le sakte hain. "
-                    "Placement ke hisab se CSE, IT, aur AIML ki demand sabse zyada hai "
-                    "jahan average package 6 se 8 lakh rupaye per year hai. "
-                    "Kya aapko kisi specific branch ki jankari chahiye?"
+                    "Ji, aapke interest ke hisaab se main suggest kar sakta hoon! "
+                    "Aapko kis field mein interest hai — coding, AI aur Machine Learning, hardware aur circuits, "
+                    "ya manufacturing aur construction?"
                 )
             if lang == "bn":
                 return (
-                    "BCREC তে বিভিন্ন শাখা আছে। আপনার যদি কোডিং পছন্দ হয় তবে CSE, IT, বা CSD ভাল হবে। "
-                    "AI এবং Machine Learning এ আগ্রহী হলে AIML শাখা আছে। "
-                    "হার্ডওয়্যার বা সার্কিট পছন্দ হলে ECE বা EE ভাল হবে। "
-                    "ম্যানুফ্যাকচারিং বা কন্সট্রাকশনে আগ্রহী হলে ME বা CE নিতে পারেন। "
-                    "প্লেসমেন্টের দিক থেকে CSE, IT, এবং AIML এর চাহিদা সবচেয়ে বেশি "
-                    "যেখানে গড় প্যাকেজ ৬ থেকে ৮ লক্ষ টাকা প্রতি বছর। "
-                    "আপনি কি কোনো নির্দিষ্ট শাখা সম্পর্কে জানতে চান?"
+                    "আপনার আগ্রহ অনুযায়ী আমি suggest করতে পারি! "
+                    "আপনার কোন field এ interest — coding, AI এবং Machine Learning, hardware এবং circuits, "
+                    "নাকি manufacturing এবং construction?"
                 )
             return (
-                "BCREC offers several B.Tech branches. If you enjoy coding, CSE, IT, or CSD would be a great fit. "
-                "If you are interested in AI and Machine Learning, choose AIML. "
-                "For hardware and circuits, ECE or EE are good options. "
-                "If manufacturing or construction interests you, go for ME or CE. "
-                "In terms of placement demand, CSE, IT, and AIML have the highest packages "
-                "ranging from 6 to 8 lakh rupees per year on average. "
-                "Would you like details about a specific branch?"
+                "I can suggest a branch based on your interest! "
+                "What field interests you — coding, AI and Machine Learning, hardware and circuits, "
+                "or manufacturing and construction?"
             )
 
         # --- "What else" / "or kya" follow-up — let LLM handle with conversation history ---
@@ -3269,11 +3694,180 @@ USER QUESTION: {query}
         # --- Campus visit ---
         if re.search(r"\bcampus\s*visit\b|\bvisit\s*campus\b|\btour\b", q):
             logger.info(f"HANDLER: campus_visit matched for query='{q[:60]}'")
-            return (
-                "You are welcome to visit the BCREC campus. "
-                "College timings are Monday to Friday, 10:00 AM to 5:30 PM. "
-                "Please call 0343-2501353 to schedule a visit."
-            )
+            if lang == "hi":
+                return "Aap BCREC campus visit kar sakte hain. College Monday to Friday 10:00 AM se 5:30 PM tak khula rehta hai. Schedule ke liye 0343-2501353 par call karein."
+            if lang == "bn":
+                return "আপনি BCREC ক্যাম্পাস ভিজিট করতে পারেন। কলেজ সোমবার থেকে শুক্রবার সকাল ১০:০০ থেকে বিকাল ৫:৩০ পর্যন্ত খোলা থাকে। শিডিউলের জন্য 0343-2501353 নম্বরে কল করুন।"
+            return "You are welcome to visit the BCREC campus. College is open Monday to Friday, 10:00 AM to 5:30 PM. Call 0343-2501353 to schedule a visit."
+
+        # --- College email (standalone, without "contact" context which is handled above) ---
+        if re.search(r"\bemail\b", q) and not re.search(r"\b(contact|phone|mobile|call|helpline|number)\b", q):
+            college = kb.get("college", {})
+            email = college.get("email", {}).get("value", "")
+            if email:
+                logger.info(f"HANDLER: email matched for query='{q[:60]}'")
+                if lang == "hi":
+                    return f"BCREC ka email address {email} hai."
+                if lang == "bn":
+                    return f"BCREC এর ইমেইল {email}।"
+                return f"The college email address is {email}."
+            if lang == "hi":
+                return "BCREC ka email info@bcrec.ac.in hai."
+            if lang == "bn":
+                return "BCREC এর ইমেইল info@bcrec.ac.in।"
+            return "The college email is info@bcrec.ac.in."
+
+        # --- College address (standalone, without "contact" context) ---
+        if re.search(r"\baddress\b", q) and not re.search(r"\b(contact|phone|mobile|call|helpline|number)\b", q):
+            college = kb.get("college", {})
+            addr = college.get("address", {}).get("value", "")
+            if addr:
+                logger.info(f"HANDLER: address matched for query='{q[:60]}'")
+                if lang == "hi":
+                    return f"BCREC ka address {addr} hai."
+                if lang == "bn":
+                    return f"BCREC এর ঠিকানা {addr}।"
+                return f"BCREC is located at {addr}."
+            if lang == "hi":
+                return "BCREC ka address — Jemua Road, Fuljhore, Durgapur - 713206, West Bengal hai."
+            if lang == "bn":
+                return "BCREC এর ঠিকানা — Jemua Road, Fuljhore, Durgapur - 713206, West Bengal।"
+            return "BCREC is located at Jemua Road, Fuljhore, Durgapur - 713206, West Bengal."
+
+        # --- How to reach / directions ---
+        if re.search(r"\b(reach|direction|route|map|kaise\s*(pahuche?|jaaye?|aaye?)|kivabe\s*(pou?chbo|jabo|asbo)|kemon\s*?(ja?bo|yaben)|raasta|rasta|way\s*to)\b", q):
+            logger.info(f"HANDLER: directions matched for query='{q[:60]}'")
+            if lang == "hi":
+                return "BCREC Durgapur mein, Jemua Road, Fuljhore mein hai. Aap Durgapur station se auto ya cab le sakte hain. Address: Jemua Road, Fuljhore, Durgapur - 713206."
+            if lang == "bn":
+                return "BCREC দুর্গাপুরে, Jemua Road, Fuljhore-এ অবস্থিত। আপনি দুর্গাপুর স্টেশন থেকে অটো বা ক্যাব নিতে পারেন। ঠিকানা: Jemua Road, Fuljhore, Durgapur - 713206।"
+            return "BCREC is in Durgapur on Jemua Road, Fuljhore. You can take an auto or cab from Durgapur station. Address: Jemua Road, Fuljhore, Durgapur - 713206."
+
+        # --- College website ---
+        if re.search(r"\b(website|site|online\s*portal|web.*address)\b", q):
+            logger.info(f"HANDLER: website matched for query='{q[:60]}'")
+            if lang == "hi":
+                return "BCREC ki official website www.bcrec.ac.in hai. Wahan aapko sabhi details mil jaayengi."
+            if lang == "bn":
+                return "BCREC এর অফিসিয়াল ওয়েবসাইট www.bcrec.ac.in। সেখানে সব তথ্য পাবেন।"
+            return "The official BCREC website is www.bcrec.ac.in. You will find all details there."
+
+        # --- Affiliation / recognition ---
+        if re.search(r"\b(affiliation|affiliated|recogni|recognised|recognized|under\s*which\s*university|approved\s*by|permanent\s*affiliation)\b", q):
+            logger.info(f"HANDLER: affiliation matched for query='{q[:60]}'")
+            if lang == "hi":
+                return "BCREC Maulana Abul Kalam Azad University of Technology, West Bengal se affiliated hai, AICTE approved hai, aur 2024-25 se autonomous college hai."
+            if lang == "bn":
+                return "BCREC Maulana Abul Kalam Azad University of Technology, West Bengal এর অধিভুক্ত, AICTE অনুমোদিত, এবং ২০২৪-২৫ থেকে autonomous কলেজ।"
+            return "BCREC is affiliated to Maulana Abul Kalam Azad University of Technology, West Bengal, approved by AICTE, and is autonomous from the 2024-25 session."
+
+        # --- Accreditation / NBA / NAAC ---
+        if re.search(r"\b(nba|naac|grade|accredit|accreditation|certif)\b", q):
+            logger.info(f"HANDLER: accreditation matched for query='{q[:60]}'")
+            if lang == "hi":
+                return "BCREC NAAC B+ grade (CGPA 2.83) hai aur CSE, ECE, IT, EE, ME NBA accredited hain."
+            if lang == "bn":
+                return "BCRECT NAAC B+ গ্রেড (CGPA ২.৮৩) এবং CSE, ECE, IT, EE, ME NBA স্বীকৃত।"
+            return "BCREC is NAAC B+ grade (CGPA 2.83) and has NBA accreditation for CSE, ECE, IT, EE, ME."
+
+        # --- Admission last date / deadline ---
+        if re.search(r"\b(last\s*date|deadline|closing\s*date|admission\s*till|last\s*day|kab\s*tak|f.or\s*tak|last\s*chance)\b", q):
+            logger.info(f"HANDLER: admission_deadline matched for query='{q[:60]}'")
+            if lang == "hi":
+                return "Admission dates ke liye kripya college ko call karein 0343-2501353 par. WBJEE counselling ke through admission hota hai aur uski dates WBJEE board announce karta hai."
+            if lang == "bn":
+                return "ভর্তির তারিখের জন্য অনুগ্রহ করে কলেজে 0343-2501353 নম্বরে কল করুন। WBJEE কাউন্সেলিং এর মাধ্যমে ভর্তি হয় এবং তারিখগুলো WBJEE বোর্ড announces করে।"
+            return "For admission dates, please call the college at 0343-2501353. Admission is through WBJEE counselling and dates are announced by the WBJEE board."
+
+        # --- Dean ---
+        if re.search(r"\bdean\b", q):
+            logger.info(f"HANDLER: dean matched for query='{q[:60]}'")
+            if lang == "hi":
+                return "Dean ke baare mein jaankari ke liye college office 0343-2501353 par contact karein."
+            if lang == "bn":
+                return "Dean সম্পর্কে জানতে কলেজ অফিসে 0343-2501353 নম্বরে যোগাযোগ করুন।"
+            return "For dean details, please contact the college office at 0343-2501353."
+
+        # --- Chairman ---
+        if re.search(r"\bchairman\b", q):
+            logger.info(f"HANDLER: chairman matched for query='{q[:60]}'")
+            if lang == "hi":
+                return "Chairman ke baare mein jaankari ke liye college office 0343-2501353 par contact karein."
+            if lang == "bn":
+                return "Chairman সম্পর্কে জানতে কলেজ অফিসে 0343-2501353 নম্বরে যোগাযোগ করুন।"
+            return "For chairman details, please contact the college office at 0343-2501353."
+
+        # --- Canteen / food facilities ---
+        if re.search(r"\b(canteen|cafeteria|food|mess|khana|khabar)\b", q):
+            logger.info(f"HANDLER: canteen matched for query='{q[:60]}'")
+            if lang == "hi":
+                return "Ji, BCREC mein canteen facility available hai. Students ke liye khane ki achhi arrangement hai."
+            if lang == "bn":
+                return "জি, BCREC এ canteen facility আছে। ছাত্রদের খাওয়ার ভালো ব্যবস্থা আছে।"
+            return "Yes, BCREC has a canteen facility with good food arrangements for students."
+
+        # --- Laboratory facilities ---
+        if re.search(r"\b(laborator|lab\s*facility|lab\s*available|lab\s*equipment|laboratory\s*facility)\b", q):
+            logger.info(f"HANDLER: lab_facilities matched for query='{q[:60]}'")
+            if lang == "hi":
+                return "BCREC mein sabhi departments ke liye well-equipped laboratories hain. Computer lab bhi available hai."
+            if lang == "bn":
+                return "BCRECT সব বিভাগের জন্য well-equipped laboratories আছে। কম্পিউটার ল্যাবও উপলব্ধ।"
+            return "BCREC has well-equipped laboratories for all departments. Computer labs are also available."
+
+        # --- Sports facilities ---
+        if re.search(r"\b(sport|playground|ground|gym|play\s*field|indoor|outdoor\s*game|khel|khela|krida)\b", q):
+            logger.info(f"HANDLER: sports matched for query='{q[:60]}'")
+            if lang == "hi":
+                return "BCREC mein sports facilities hain — playground, indoor games aur sports events hote hain."
+            if lang == "bn":
+                return "BCRECT খেলাধূলার সুবিধা আছে — playground, indoor games এবং sports events হয়।"
+            return "BCREC has sports facilities including a playground, indoor games, and regular sports events."
+
+        # --- Faculty list / faculty count ---
+        if re.search(r"\b(faculty\s*list|list\s*of\s*faculty|all\s*faculty|faculty\s*member|teachers?\s*list|how\s*many\s*faculty|total\s*faculty|faculty\s*strength|faculty\s*count|kitne\s*faculty|koto\s*faculty|professor\s*list)\b", q):
+            logger.info(f"HANDLER: faculty_list matched for query='{q[:60]}'")
+            if lang == "hi":
+                return "BCREC mein 208 se zyada faculty members hain 15 departments mein. Kisi specific department ki faculty chahiye to batao."
+            if lang == "bn":
+                return "BCREC এ ২০৮ এর বেশি faculty members আছে ১৫ টি department এ। কোনো নির্দিষ্ট department এর faculty চাইলে জানান।"
+            return "BCREC has over 208 faculty members across 15 departments. Let me know if you need faculty from a specific department."
+
+        # --- Student strength / total students ---
+        if re.search(r"\b(total\s*student|student\s*strength|how\s*many\s*student|intake\s*total|kitne\s*student|koto\s*student|student\s*population|number\s*of\s*student|students?\s*count)\b", q):
+            logger.info(f"HANDLER: student_strength matched for query='{q[:60]}'")
+            if lang == "hi":
+                return "BCREC mein total students ki sankhya 3000 ke aas-paas hai, har saal 600-700 naye students admit hote hain."
+            if lang == "bn":
+                return "BCREC তে মোট students সংখ্যা প্রায় ৩০০০, প্রতিবছর ৬০০-৭০০ নতুন students ভর্তি হয়।"
+            return "BCREC has approximately 3000 total students, with 600-700 new students admitted each year."
+
+        # --- College type / government / private ---
+        if re.search(r"\b(government|private|aided|college\s*type|kya\s*college|kon\s*dhoroner|sarkari|bessarkari)\b", q):
+            logger.info(f"HANDLER: college_type matched for query='{q[:60]}'")
+            if lang == "hi":
+                return "BCREC ek private engineering college hai, jo MAKAUT, West Bengal se affiliated hai aur AICTE approved hai."
+            if lang == "bn":
+                return "BCRECT একটি private engineering college, যা MAKAUT, West Bengal এর অধিভুক্ত এবং AICTE অনুমোদিত।"
+            return "BCREC is a private engineering college affiliated to MAKAUT, West Bengal and approved by AICTE."
+
+        # --- Approvals (AICTE, UGC, etc.) ---
+        if re.search(r"\b(approval|approved|aicte|ugc|dte)\b", q):
+            logger.info(f"HANDLER: approval matched for query='{q[:60]}'")
+            if lang == "hi":
+                return "BCREC AICTE approved hai aur MAKAUT, West Bengal se affiliated hai. 2024-25 se autonomous status mil gaya hai."
+            if lang == "bn":
+                return "BCRECT AICTE অনুমোদিত এবং MAKAUT, West Bengal এর অধিভুক্ত। ২০২৪-২৫ থেকে autonomous status পেয়েছে।"
+            return "BCREC is AICTE approved and affiliated to MAKAUT, West Bengal. It has autonomous status from 2024-25."
+
+        # --- How many departments / total departments ---
+        if re.search(r"\b(how\s*many\s*department|total\s*department|list\s*all\s*department|departments?\s*offer|department\s*count)\b", q):
+            logger.info(f"HANDLER: department_count matched for query='{q[:60]}'")
+            if lang == "hi":
+                return "BCREC mein total 15 departments hain. B.Tech programs: CSE, IT, ECE, EE, ME, CE, CSD, AIML, Data Science, aur Cyber Security."
+            if lang == "bn":
+                return "BCREC তে মোট ১৫ টি department আছে। B.Tech programs: CSE, IT, ECE, EE, ME, CE, CSD, AIML, Data Science, এবং Cyber Security।"
+            return "BCREC has 15 departments. B.Tech programs: CSE, IT, ECE, EE, ME, CE, CSD, AIML, Data Science, and Cyber Security."
 
         return None
 
@@ -3372,7 +3966,7 @@ USER QUESTION: {query}
                         break
                 if "principal" in canonical.lower():
                     dept_name = " (Principal, BCREC)"
-                return f"Did you mean {canonical}{dept_name}?"
+                return f"Kya aap {canonical}{dept_name} ke baare mein poochh rahe hain?"
 
         # 2. Build faculty index and try difflib fuzzy matching
         faculty_idx = self._build_faculty_index(kb)
@@ -3443,10 +4037,10 @@ USER QUESTION: {query}
         if best_score >= 0.7:
             dept_suffix = f" ({best_dept})" if best_dept else ""
             if best_score < 0.85:
-                return f"Did you mean {best_display}{dept_suffix}?"
-            return f"{best_display}{dept_suffix}."
+                return f"Kya aap {best_display}{dept_suffix} ke baare mein poochh rahe hain?"
+                return f"{best_display}{dept_suffix} hain."
         if best_score >= 0.5:
-            return f"Did you mean {best_display}?"
+            return f"Kya aap {best_display} ke baare mein poochh rahe hain?"
         return None
 
     # -----------------------------------------------------------------------
@@ -3805,21 +4399,21 @@ USER QUESTION: {query}
         amount_str = self._format_inr(amount, lang)
         if lang == "hi":
             if fee_type == "semester":
-                return f"{dept} ka semester shulk {amount_str} hai."
+                return f"{dept} ka semester fee {amount_str} hai. Admission fee alag se hai."
             if fee_type == "admission":
-                return f"{dept} ka admission shulk {self._format_inr(admission, lang)} hai."
-            return f"{dept} ka kul shulk {amount_str} hai."
+                return f"{dept} ka admission fee {self._format_inr(admission, lang)} hai. Semester fee alag hai."
+            return f"{dept} ka total fee {amount_str} hai. Admission aur semester fee alag se hain."
         if lang == "bn":
             if fee_type == "semester":
-                return f"{dept} এর সেমিস্টার ফি {amount_str}।"
+                return f"{dept} এর সেমিস্টার ফি {amount_str}। ভর্তি ফি আলাদা।"
             if fee_type == "admission":
-                return f"{dept} এর ভর্তি ফি {self._format_inr(admission, lang)}।"
-            return f"{dept} এর মোট ফি {amount_str}।"
+                return f"{dept} এর ভর্তি ফি {self._format_inr(admission, lang)}। সেমিস্টার ফি আলাদা।"
+            return f"{dept} এর মোট ফি {amount_str}। ভর্তি এবং সেমিস্টার ফি আলাদা।"
         if fee_type == "semester":
-            return f"The semester fee for {dept} is {amount_str}."
+            return f"The semester fee for {dept} is {amount_str}. Admission fee is separate."
         if fee_type == "admission":
-            return f"The admission fee for {dept} is {self._format_inr(admission, 'en')}."
-        return f"The total fee for {dept} is {amount_str}."
+            return f"The admission fee for {dept} is {self._format_inr(admission, 'en')}. Semester fee is separate."
+        return f"The total fee for {dept} is {amount_str}. Admission and semester fees are separate."
 
     def _log_gap(self, query: str, lang: str, reason: str) -> None:
         """Log an unanswered query to knowledge_gaps.json so admins know what to add."""
@@ -3928,6 +4522,31 @@ USER QUESTION: {query}
                                 "tokens": {"prompt": 0, "completion": 0},
                                 "cache_hit": False,
                             }
+
+            # 0.6 Standalone yes/no — single-word acknowledgment not in "would you like" context
+            q_lower = query.strip().lower()
+            if q_lower in ("yes", "yeah", "yep", "हाँ", "जी", "जी हाँ", "হ্যাঁ", "জী", "জী হ্যাঁ"):
+                lang = self._session_langs.get(session_id, "en")
+                ack_map = {"hi": ACKNOWLEDGMENT_HI, "bn": ACKNOWLEDGMENT_BN}
+                ack = ack_map.get(lang, ACKNOWLEDGMENT_EN)
+                logger.info(f"[{session_id}] Standalone yes — acknowledgment")
+                self._append_session_turn(session_id, query, ack)
+                return {
+                    "answer": ack, "voice_text": ack, "source": "yes_no_continuation",
+                    "model": "none", "latency_ms": round((time.time() - start) * 1000),
+                    "hallucination_validated": True, "tokens": {"prompt": 0, "completion": 0}, "cache_hit": False,
+                }
+            if q_lower in ("no", "nah", "nope", "नहीं", "जी नहीं", "না", "জী না"):
+                lang = self._session_langs.get(session_id, "en")
+                ack_map = {"hi": ACKNOWLEDGMENT_HI, "bn": ACKNOWLEDGMENT_BN}
+                ack = ack_map.get(lang, ACKNOWLEDGMENT_EN)
+                logger.info(f"[{session_id}] Standalone no — acknowledgment")
+                self._append_session_turn(session_id, query, ack)
+                return {
+                    "answer": ack, "voice_text": ack, "source": "yes_no_continuation",
+                    "model": "none", "latency_ms": round((time.time() - start) * 1000),
+                    "hallucination_validated": True, "tokens": {"prompt": 0, "completion": 0}, "cache_hit": False,
+                }
 
             # 0.75 Transcript validation — reject STT noise / fragments before RAG+LLM
             validation_result = self._validate_transcript(query, session_id)
@@ -4106,20 +4725,58 @@ USER QUESTION: {query}
                     }
                 logger.info("REPEAT HIT but no history — falling through to normal flow")
 
-            # 2.9 LLM + Tool-calling — single path for ALL queries
+            # 2.9 Structured lookup — KB handlers for known query types
+            # Handles backlog, fees, admission, HOD, principal, contact, etc.
+            # Only falls through to LLM when no handler matches.
+            _profiler.mark("structured_lookup")
+            structured_result = self._structured_lookup(query, lang)
+            if structured_result:
+                logger.info(
+                    f"[{session_id}] Structured lookup hit (len={len(structured_result)})"
+                )
+                telemetry.log_turn_input(
+                    session_id,
+                    turn_number=turn_number,
+                    raw_transcript=query,
+                    detected_language=lang,
+                    detected_intent="structured_lookup",
+                )
+                self._append_session_turn(session_id, query, structured_result)
+                return {
+                    "answer": structured_result,
+                    "voice_text": structured_result,
+                    "source": "structured_lookup",
+                    "model": "none",
+                    "latency_ms": round((time.time() - start) * 1000),
+                    "hallucination_validated": True,
+                    "tokens": {"prompt": 0, "completion": 0},
+                    "cache_hit": False,
+                }
+
+            # 2.9.5 LLM + Tool-calling — single path for ALL other queries
             # The LLM handles intent, follow-ups, profanity, mixed language naturally.
             # Tools provide exact data (fees, contacts, etc.) when the LLM requests them.
             _profiler.mark("llm_tools_start")
 
             # Build messages: system prompt + history + current query
-            messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+            lang_prefix = {
+                "bn": "CRITICAL LANGUAGE RULE: The user is writing in Banglish (Roman Bengali). You MUST reply in Banglish. Never use Hindi. If unsure, default to Banglish.\n\n",
+                "hi": "CRITICAL LANGUAGE RULE: The user is writing in Hindi. You MUST reply in Roman Hindi (NOT Devanagari script). Never use Bengali or English words.\n\n",
+                "en": "CRITICAL LANGUAGE RULE: The user is writing in English. Reply in English.\n\n",
+            }.get(lang, "")
+            lang_hint = {
+                "bn": " The user's language is Banglish (Roman Bengali). Reply ONLY in Banglish. Do NOT use Hindi words.",
+                "hi": " The user's language is Hindi. Reply ONLY in Roman Hindi (NOT Devanagari script). Do NOT use Bengali words.",
+                "en": " Reply in English.",
+            }.get(lang, "")
+            messages = [{"role": "system", "content": lang_prefix + SYSTEM_PROMPT}]
             if history:
                 for turn in history[-10:]:
                     role = turn.get("role", "user")
                     content = turn.get("content", "")
                     if role in ("user", "assistant") and content:
                         messages.append({"role": role, "content": content})
-            messages.append({"role": "user", "content": query})
+            messages.append({"role": "user", "content": query + lang_hint})
 
             # Call LLM with tools — let it decide whether to use tools or answer directly
             answer = await self._call_llm_with_tools(messages, session_id, query, start, lang)
@@ -4313,16 +4970,46 @@ USER QUESTION: {query}
                     return
                 logger.info("REPEAT HIT (stream) but no history — falling through")
 
+            # Structured lookup (stream path) — KB handlers for known query types
+            structured_result = self._structured_lookup(query, lang)
+            if structured_result:
+                logger.info(
+                    f"[{session_id}] Structured lookup hit (stream, len={len(structured_result)})"
+                )
+                telemetry.log_turn_input(
+                    session_id,
+                    turn_number=turn_number,
+                    raw_transcript=query,
+                    detected_language=lang,
+                    detected_intent="structured_lookup",
+                )
+                for word in structured_result.split():
+                    yield word + " "
+                    await asyncio.sleep(0.02)
+                if conversation_history is None:
+                    self._append_session_turn(session_id, query, structured_result)
+                return
+
             # LLM + Tool-calling (stream path) — tool resolution + streaming
             # Build messages: system prompt + history + current query
-            messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+            lang_prefix = {
+                "bn": "CRITICAL LANGUAGE RULE: The user is writing in Banglish (Roman Bengali). You MUST reply in Banglish. Never use Hindi. If unsure, default to Banglish.\n\n",
+                "hi": "CRITICAL LANGUAGE RULE: The user is writing in Hindi. You MUST reply in Roman Hindi (NOT Devanagari script). Never use Bengali or English words.\n\n",
+                "en": "CRITICAL LANGUAGE RULE: The user is writing in English. Reply in English.\n\n",
+            }.get(lang, "")
+            lang_hint = {
+                "bn": " The user's language is Banglish (Roman Bengali). Reply ONLY in Banglish. Do NOT use Hindi words.",
+                "hi": " The user's language is Hindi. Reply ONLY in Roman Hindi (NOT Devanagari script). Do NOT use Bengali words.",
+                "en": " Reply in English.",
+            }.get(lang, "")
+            messages = [{"role": "system", "content": lang_prefix + SYSTEM_PROMPT}]
             if history:
                 for turn in history[-10:]:
                     role = turn.get("role", "user")
                     content = turn.get("content", "")
                     if role in ("user", "assistant") and content:
                         messages.append({"role": role, "content": content})
-            messages.append({"role": "user", "content": query})
+            messages.append({"role": "user", "content": query + lang_hint})
 
             # Resolve tool calls (non-streaming, up to 4 turns), then stream final answer
             answer = await self._call_llm_with_tools(messages, session_id, query, t0, lang)

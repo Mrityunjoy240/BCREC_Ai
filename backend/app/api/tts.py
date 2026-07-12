@@ -6,14 +6,12 @@ GET /qa/tts/voices - List available voices
 GET /qa/tts/languages - List supported languages
 """
 from fastapi import APIRouter, HTTPException, Request, Response
-from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from typing import Optional
 import logging
 import os
 import time
 import uuid
-import io
 
 from app.config import settings
 from app.services.sarvam_service import get_sarvam_service, init_sarvam_service

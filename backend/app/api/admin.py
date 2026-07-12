@@ -10,13 +10,14 @@ from typing import Annotated, Optional
 _scripts_path = str(Path(__file__).resolve().parent.parent.parent.parent / "scripts")
 if _scripts_path not in sys.path:
     sys.path.insert(0, _scripts_path)
-from fastapi import APIRouter, BackgroundTasks, Depends, File, HTTPException, UploadFile, Query
+from fastapi import APIRouter, BackgroundTasks, Depends, File, HTTPException, Request, UploadFile, Query
 from pydantic import BaseModel
 
 from app.services.llm.groq_service import get_groq_service
 
 from app.auth import get_current_admin
 from app.config import settings
+from app.limiter import limiter
 from app.services.backup import BackupService
 from app.services.document_processor import DocumentProcessor
 from ingest_knowledge_base import ingest_kb
@@ -29,7 +30,9 @@ backup_service = BackupService()
 
 
 @router.post("/upload")
+@limiter.limit("5/minute")
 async def upload_files(
+    request: Request,
     files: Annotated[list[UploadFile], File(...)],
     current_user: Annotated[str, Depends(get_current_admin)],
     background_tasks: BackgroundTasks = None,
@@ -154,7 +157,8 @@ async def process_and_index_files(filenames: list[str]):
 
 
 @router.post("/backup/create")
-async def create_backup(current_user: str = Depends(get_current_admin)):
+@limiter.limit("5/minute")
+async def create_backup(request: Request, current_user: str = Depends(get_current_admin)):
     """Create a new backup"""
     try:
         result = backup_service.create_backup()
@@ -224,7 +228,9 @@ class FAQEntryIn(BaseModel):
 
 
 @router.post("/kb/faq/{key}")
+@limiter.limit("10/minute")
 async def add_or_update_faq(
+    request: Request,
     key: str,
     entry: FAQEntryIn,
     current_user: str = Depends(get_current_admin),
@@ -245,7 +251,8 @@ async def add_or_update_faq(
 
 
 @router.delete("/kb/faq/{key}")
-async def delete_faq(key: str, current_user: str = Depends(get_current_admin)):
+@limiter.limit("10/minute")
+async def delete_faq(request: Request, key: str, current_user: str = Depends(get_current_admin)):
     """Delete a FAQ entry from voice_ready_answers. Reloads KB immediately."""
     kb = _load_kb()
     vra = kb.get("voice_ready_answers", {})
@@ -259,14 +266,16 @@ async def delete_faq(key: str, current_user: str = Depends(get_current_admin)):
 
 
 @router.post("/kb/reload")
-async def reload_kb(current_user: str = Depends(get_current_admin)):
+@limiter.limit("5/minute")
+async def reload_kb(request: Request, current_user: str = Depends(get_current_admin)):
     """Force-reload the KB from disk (no service restart needed)."""
     count = get_groq_service().reload_kb()
     return {"message": "KB reloaded", "faq_count": count}
 
 
 @router.post("/cache/invalidate")
-async def invalidate_cache(current_user: str = Depends(get_current_admin)):
+@limiter.limit("5/minute")
+async def invalidate_cache(request: Request, current_user: str = Depends(get_current_admin)):
     """Clear the in-memory query cache."""
     cleared = get_groq_service().invalidate_cache()
     return {"message": "Query cache invalidated", "entries_cleared": cleared}
@@ -280,7 +289,9 @@ async def cache_stats(current_user: str = Depends(get_current_admin)):
 
 
 @router.post("/kb/update-anchor")
+@limiter.limit("10/minute")
 async def update_semantic_anchor(
+    request: Request,
     section: str = Query(...),
     subsection: Optional[str] = Query(None),
     new_anchor: str = Query(...),

@@ -1,5 +1,5 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from typing import List, Optional, Any
+from typing import Optional, Any
 import os
 import logging
 from dotenv import load_dotenv
@@ -39,10 +39,10 @@ class Settings(BaseSettings):
     twilio_auth_token: str = ""
     twilio_phone_number: str = ""
 
-    # Auth Settings
-    admin_username: str = "admin"
-    admin_password: str = "admin"
-    secret_key: str = "college-agent-secret-key-2026"
+    # Auth Settings (MUST be set via .env or environment variables)
+    admin_username: str = ""
+    admin_password: str = ""
+    secret_key: str = ""
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 60
 

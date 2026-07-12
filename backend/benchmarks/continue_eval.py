@@ -358,7 +358,12 @@ async def run():
                 )
             lat = (time.monotonic() - t0) * 1000
             dj, aj = d.json(), a.json()
-            ctx, ans = dj.get("context_preview", ""), aj.get("answer", "")
+            raw_ctx = dj.get("context_preview", "")
+            ctx = raw_ctx[0] if isinstance(raw_ctx, list) else str(raw_ctx)
+            raw_ans = aj.get("answer", "")
+            ans = raw_ans[0] if isinstance(raw_ans, list) else str(raw_ans)
+            ctx = str(ctx)
+            ans = str(ans)
             return {
                 "num": idx + 1,
                 "lang": lf,

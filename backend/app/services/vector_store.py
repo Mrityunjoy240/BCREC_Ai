@@ -1,13 +1,11 @@
 import os
 import logging
-from typing import List, Dict, Any, Optional
+from typing import List, Any
 from pathlib import Path
 
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.documents import Document
-from app.config import settings
-
 logger = logging.getLogger(__name__)
 
 

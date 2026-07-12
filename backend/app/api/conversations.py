@@ -1,13 +1,9 @@
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
-from typing import List, Optional, Dict, Any
+from typing import List, Dict, Any
 from datetime import datetime, UTC
-import sqlite3
-import json
-import os
 import uuid
 
-from app.config import settings
 from app.database import get_db
 
 router = APIRouter()
