@@ -220,7 +220,7 @@ All 12 files below have identical evidence patterns → **zero incoming referenc
 
 | File | Line | Content |
 |------|------|---------|
-| `backend/.env` | 4 | `GEMINI_API_KEY=AIzaSyBFYi_pDma2xSlBXFZWkXaIM_OV09MIb_8` |
+| `backend/.env` | 4 | `GEMINI_API_KEY=<redacted>` |
 | `backend/app/config.py` | 31 | `gemini_api_key: str = ""` |
 
 **Search for usage of `gemini_api_key` across all `.py` files:**
