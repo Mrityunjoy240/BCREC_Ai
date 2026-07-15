@@ -125,6 +125,7 @@ class SarvamService:
         pace: float = 1.0,
         model: str = "bulbul:v3",
         normalize: bool = True,
+        temperature: float = 0.8,
     ) -> Dict[str, Any]:
         """
         Convert text to speech using Sarvam TTS API.
@@ -151,6 +152,7 @@ class SarvamService:
                 model=model,
                 pace=pace,
                 speech_sample_rate=24000,
+                temperature=temperature,
             )
 
             # Combine all audio chunks
@@ -181,6 +183,7 @@ class SarvamService:
         pace: float = 1.0,
         model: str = "bulbul:v3",
         normalize: bool = True,
+        temperature: float = 0.8,
     ):
         """Like text_to_speech, but yields individual audio chunks as they arrive.
 
@@ -206,6 +209,7 @@ class SarvamService:
                 model=model,
                 pace=pace,
                 speech_sample_rate=24000,
+                temperature=temperature,
             )
             for audio_b64 in response.audios:
                 chunk = base64.b64decode(audio_b64)

@@ -56,11 +56,11 @@ _ACRONYMS = [
 # Used by: tts.py API endpoint AND livekit_agent.py voice pipeline
 # ──────────────────────────────────────────────
 LANG_SPEAKER_MAP: dict[str, str] = {
-    "hi-IN": "shubh",  # Hindi — bulbul:v3 compatible
-    "hi": "shubh",
-    "bn-IN": "ritu",  # Bengali — bulbul:v3 compatible
+    "hi-IN": "rahul",  # Hindi — natural male voice, better Hindi pronunciation
+    "hi": "rahul",
+    "bn-IN": "ritu",   # Bengali — bulbul:v3 compatible
     "bn": "ritu",
-    "en-IN": "shubh",  # English — bulbul:v3 compatible
+    "en-IN": "shubh",  # English — bulbul:v3 default
     "en": "shubh",
 }
 

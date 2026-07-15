@@ -60,7 +60,7 @@ class Settings(BaseSettings):
     demo_safepoint: bool = False
 
     # College information
-    college_name: str = "Dr. B.C. Roy Engineering College"
+    college_name: str = "Dr. Bidhan Chandra Roy Engineering College"
     admissions_phone: str = "0343-2501353"
     support_email: str = "info@bcrec.ac.in"
 

@@ -208,6 +208,11 @@ BANGLA_ROMAN_WORDS = frozenset(
         "bolte",
         "bolchi",
         "bollam",
+        # Additional common Bengali words
+        "kon", "nebo", "kobe", "kivabe", "kichu", "khub",
+        "dao", "debo", "khushi", "emon", "tobe", "karon",
+        "bolte", "cholte", "jete", "este", "aste", "dсте",
+        "ki", "ke", "kake", "kar", "kothay", "kokhon",
     }
 )
 

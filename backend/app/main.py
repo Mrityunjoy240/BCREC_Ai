@@ -40,6 +40,54 @@ try:
 except Exception as e:
     logger.warning(f"Vector store pre-warm failed (will init lazily): {e}")
 
+# ---------------------------------------------------------------------------
+# Phase 0: Foundation — interfaces, event bus, DI, feature flags
+# ---------------------------------------------------------------------------
+from app.core.feature_flags import feature_flags
+from app.core.event_bus import InMemoryEventBus
+from app.core.di import container
+
+event_bus = InMemoryEventBus()
+container.register_singleton("event_bus", event_bus)
+container.register_singleton("feature_flags", feature_flags)
+
+if feature_flags.is_enabled("use_pipeline"):
+    from app.pipeline.runner import PipelineRunner
+    from app.pipeline.stages import (
+        LanguageDetectionStage,
+        IntentClassificationStage,
+        KnowledgeRetrievalStage,
+        LLMGenerationStage,
+        SafetyGuardStage,
+        ResponseFormatterStage,
+    )
+
+    pipeline_runner = PipelineRunner(stages=[
+        LanguageDetectionStage(),
+        IntentClassificationStage(),
+        KnowledgeRetrievalStage(),
+        LLMGenerationStage(),
+        SafetyGuardStage(),
+        ResponseFormatterStage(),
+    ])
+    container.register_singleton("pipeline_runner", pipeline_runner)
+    logger.info("Phase 0: Pipeline runner initialized with 6 stages")
+
+from app.core.conversation_engine import ConversationEngine
+
+engine = ConversationEngine(
+    pipeline_runner=container.get("pipeline_runner")
+)
+container.register_singleton("conversation_engine", engine)
+
+if feature_flags.is_enabled("use_channel_adapters"):
+    from app.channel.web_adapter import WebChannelAdapter
+
+    web_adapter = WebChannelAdapter(engine=engine)
+    container.register_singleton("web_channel_adapter", web_adapter)
+    logger.info("Phase 0: Channel adapters enabled")
+# ---------------------------------------------------------------------------
+
 # Create FastAPI app
 app = FastAPI(title="College Voice Agent API", version="1.0.0")
 

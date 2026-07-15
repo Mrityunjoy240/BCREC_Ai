@@ -137,6 +137,13 @@ FUZZY_STOP_WORDS: set[str] = {
     "arrear",
     "supplementary",
     "reappear",
+    # Hindi common words (prevent fuzzy matching to college acronyms)
+    "naam", "hai", "kya", "ka", "ki", "ke", "me", "mein", "se", "ko",
+    "bol", "bata", "poora", "pura", "hota", "hai", "hain", "ho",
+    "ye", "wo", "yeh", "woh", "aur", "par", "pe", "ya", "to", "do",
+    # Bengali common words
+    "ache", "hobe", "na", "ki", "te", "e", "ar", "o", "r", "tumi", "ami",
+    "apni", "amake", "tumar", "apnar", "jonno", "ta", "eta", "ota",
 }
 
 ENTITY_DICT_PATH = (
@@ -270,9 +277,21 @@ def _normalize_whitespace(text: str) -> str:
 def _normalize_mixed_language(text: str, edict: dict) -> str:
     lang_maps = edict.get("language_mappings", {})
     result = text
+
+    # Check if text is predominantly Bengali script (not Banglish)
+    # Bengali Unicode range: 0980-09FF
+    bengali_chars = sum(1 for c in text if '\u0980' <= c <= '\u09FF')
+    total_alpha = sum(1 for c in text if c.isalpha())
+    if total_alpha > 0 and bengali_chars / total_alpha > 0.5:
+        # Pure Bengali script - skip language mapping to avoid breaking the query
+        return result
+
     for lang_key, word_map in lang_maps.items():
-        for native, english in word_map.items():
-            result = re.sub(re.escape(native), english, result, flags=re.IGNORECASE)
+        # Sort by length (longest first) to prevent partial matches
+        for native, english in sorted(word_map.items(), key=lambda x: -len(x[0])):
+            # Use word boundaries to prevent substring matching
+            pattern = re.compile(r"(?<!\w)" + re.escape(native) + r"(?!\w)", re.IGNORECASE)
+            result = pattern.sub(english, result)
     return result
 
 
@@ -429,6 +448,269 @@ def normalize_for_tts(text: str) -> str:
     for canonical, spoken in tts_map.items():
         pattern = re.compile(r"\b" + re.escape(canonical) + r"\b")
         result = pattern.sub(spoken, result)
+    return result
+
+
+# ---------------------------------------------------------------------------
+# Number-to-word normalization for TTS
+# Converts domain-specific number patterns to natural spoken forms.
+# Only operates on TTS text — chat text remains unchanged.
+# ---------------------------------------------------------------------------
+
+# Hindi number words (0-100)
+_HI_ONES = {0: "शून्य", 1: "एक", 2: "दो", 3: "तीन", 4: "चार", 5: "पाँच",
+            6: "छह", 7: "सात", 8: "आठ", 9: "नौ", 10: "दस",
+            11: "ग्यारह", 12: "बारह", 13: "तेरह", 14: "चौदह", 15: "पंद्रह",
+            16: "सोलह", 17: "सत्रह", 18: "अठारह", 19: "उन्नीस",
+            20: "बीस", 21: "इक्कीस", 22: "बाईस", 23: "तेईस", 24: "चौबीस",
+            25: "पच्चीस", 26: "छब्बीस", 27: "सत्ताईस", 28: "अट्ठाईस", 29: "उनतीस",
+            30: "तीस", 31: "इकतीस", 32: "बत्तीस", 33: "तैंतीस", 34: "चौंतीस",
+            35: "पैंतीस", 36: "छत्तीस", 37: "सैंतीस", 38: "अड़तीस", 39: "उनतालीस",
+            40: "चालीस", 41: "इकतालीस", 42: "बयालीस", 43: "तैंतालीस", 44: "चौंतालीस",
+            45: "पैंतालीस", 46: "छियालीस", 47: "सैंतालीस", 48: "अड़तालीस", 49: "उनचास",
+            50: "पचास", 51: "इक्यावन", 52: "बावन", 53: "तिरपन", 54: "चौवन",
+            55: "पचपन", 56: "छप्पन", 57: "सत्तावन", 58: "अट्ठावन", 59: "उनसठ",
+            60: "साठ", 61: "इकसठ", 62: "बासठ", 63: "तिरसठ", 64: "चौंसठ",
+            65: "पैंसठ", 66: "छियासठ", 67: "सड़सठ", 68: "अड़सठ", 69: "उनहत्तर",
+            70: "सत्तर", 71: "इकहत्तर", 72: "बहत्तर", 73: "तिहत्तर", 74: "चौहत्तर",
+            75: "पचहत्तर", 76: "छिहत्तर", 77: "सतहत्तर", 78: "अठहत्तर", 79: "उन्यासी",
+            80: "अस्सी", 81: "इक्यासी", 82: "बयासी", 83: "तिरासी", 84: "चौरासी",
+            85: "पचासी", 86: "छियासी", 87: "सत्तासी", 88: "अठासी", 89: "नवासी",
+            90: "नब्बे", 91: "इक्यानवे", 92: "बानवे", 93: "तिरानवे", 94: "चौरानवे",
+            95: "पचानवे", 96: "छियानवे", 97: "सत्तानवे", 98: "अठानवे", 99: "निन्यानवे",
+            100: "सौ"}
+
+# Bengali number words (0-100)
+_BN_ONES = {0: "শূন্য", 1: "এক", 2: "দুই", 3: "তিন", 4: "চার", 5: "পাঁচ",
+            6: "ছয়", 7: "সাত", 8: "আট", 9: "নয়", 10: "দশ",
+            11: "এগারো", 12: "বারো", 13: "তেরো", 14: "চোদ্দো", 15: "পনেরো",
+            16: "ষোলো", 17: "সতেরো", 18: "আঠারো", 19: "উনিশ",
+            20: "কুড়ি", 21: "একুশ", 22: "বাইশ", 23: "তেইশ", 24: "চব্বিশ",
+            25: "পঁচিশ", 26: "ছাব্বিশ", 27: "সাতাশ", 28: "আটাশ", 29: "ঊনত্রিশ",
+            30: "ত্রিশ", 31: "একত্রিশ", 32: "বত্রিশ", 33: "তেত্রিশ", 34: "চুয়ত্রিশ",
+            35: "পঁয়ত্রিশ", 36: "ছত্রিশ", 37: "সাঁইত্রিশ", 38: "আত্রিশ", 39: "ঊনচল্লিশ",
+            40: "চল্লিশ", 41: "একচল্লিশ", 42: "বিয়াল্লিশ", 43: "তেতাল্লিশ", 44: "চুয়াল্লিশ",
+            45: "পঁয়াল্লিশ", 46: "ছিচল্লিশ", 47: "সাতচল্লিশ", 48: "আতচল্লিশ", 49: "ঊনপঞ্চাশ",
+            50: "পঞ্চাশ", 51: "একান্ন", 52: "বায়ান্ন", 53: "তিপ্পান্ন", 54: "চুয়ান্ন",
+            55: "পঁচান্ন", 56: "ছায়ান্ন", 57: "সাতান্ন", 58: "আটান্ন", 59: "ঊনষাট",
+            60: "ষাট", 61: "একষট্টি", 62: "বাষট্টি", 63: "তেষট্টি", 64: "চুয়াষট্টি",
+            65: "পঁয়াষট্টি", 66: "ছেষট্টি", 67: "সাতষট্টি", 68: "আটষট্টি", 69: "ঊনসত্তর",
+            70: "সত্তর", 71: "একাত্তর", 72: "বাহাত্তর", 73: "তিহাত্তর", 74: "চুয়াত্তর",
+            75: "পঁচাত্তর", 76: "ছিহাত্তর", 77: "সাতাত্তর", 78: "আটাত্তর", 79: "ঊনাশি",
+            80: "আশি", 81: "একাশি", 82: "বিরাশি", 83: "তিরাশি", 84: "চুরাশি",
+            85: "পঁচাশি", 86: "ছিয়াশি", 87: "সাতাশি", 88: "আটাশি", 89: "নব্বী",
+            90: "নব্বী", 91: "একান্নী", 92: "বান্নী", 93: "তিরান্নী", 94: "চুরান্নী",
+            95: "পঁচান্নী", 96: "ছিয়ান্নী", 97: "সাতান্নী", 98: "আটান্নী", 99: "নিরান্নী",
+            100: "একশ"}
+
+
+def _num_to_words_hi(n: int) -> str:
+    """Convert integer to Hindi spoken words (handles up to 99,99,999)."""
+    if n in _HI_ONES:
+        return _HI_ONES[n]
+    parts = []
+    if n >= 100000:
+        parts.append(f"{_HI_ONES.get(n // 100000, str(n // 100000))} लाख")
+        n %= 100000
+    if n >= 1000:
+        parts.append(f"{_HI_ONES.get(n // 1000, str(n // 1000))} हज़ार")
+        n %= 1000
+    if n >= 100:
+        parts.append(f"{_HI_ONES.get(n // 100, str(n // 100))} सौ")
+        n %= 100
+    if n > 0:
+        parts.append(_HI_ONES.get(n, str(n)))
+    return " ".join(parts) if parts else "शून्य"
+
+
+def _num_to_words_bn(n: int) -> str:
+    """Convert integer to Bengali spoken words (handles up to 99,99,999)."""
+    if n in _BN_ONES:
+        return _BN_ONES[n]
+    parts = []
+    if n >= 100000:
+        parts.append(f"{_BN_ONES.get(n // 100000, str(n // 100000))} লাখ")
+        n %= 100000
+    if n >= 1000:
+        parts.append(f"{_BN_ONES.get(n // 1000, str(n // 1000))} হাজার")
+        n %= 1000
+    if n >= 100:
+        parts.append(f"{_BN_ONES.get(n // 100, str(n // 100))} শত")
+        n %= 100
+    if n > 0:
+        parts.append(_BN_ONES.get(n, str(n)))
+    return " ".join(parts) if parts else "শূন্য"
+
+
+def _num_to_words_en(n: int) -> str:
+    """Convert integer to English spoken words using inflect."""
+    import inflect
+    p = inflect.engine()
+    return p.number_to_words(n)
+
+
+def _int_from_comma_str(s: str) -> int:
+    """Parse '6,17,700' or '50,000' to int."""
+    return int(s.replace(",", ""))
+
+
+def prepare_numbers_for_tts(text: str, lang: str) -> str:
+    """Convert domain-specific number patterns to spoken words for TTS.
+
+    Handles: percentages, fees, ranks, cutoffs, years, LPA, lakh/crore, k suffix, decimals.
+    Only normalizes TTS text — chat text must remain unchanged.
+
+    Args:
+        text: Text after normalize_for_tts() but before apply_lexicon().
+        lang: BCP-47 language tag ("hi-IN", "bn-IN", "en-IN").
+    """
+    # Determine language family
+    if lang.startswith("bn"):
+        num_fn = _num_to_words_bn
+        percent_word = "ভাগ"  # "percent" in Bengali
+        rupee_word = "টাকা"
+        suffix_hi = False
+    elif lang.startswith("hi"):
+        num_fn = _num_to_words_hi
+        percent_word = "प्रतिशत"
+        rupee_word = "रुपये"
+        suffix_hi = True
+    else:
+        num_fn = _num_to_words_en
+        percent_word = "percent"
+        rupee_word = "rupees"
+        suffix_hi = False
+
+    result = text
+
+    # 1. Percentages: "91%" → "ninety-one percent" / "iyannabbe pratishat"
+    def _replace_percent(m):
+        num_str = m.group(1).rstrip(".")
+        try:
+            if "." in num_str:
+                # Decimal percentage: "93.6%" → "ninety-three point six percent"
+                whole, dec = num_str.split(".", 1)
+                whole_words = num_fn(int(whole))
+                dec_words = " ".join(num_fn(int(d)) for d in dec)
+                return f"{whole_words} point {dec_words} {percent_word}"
+            return f"{num_fn(int(num_str))} {percent_word}"
+        except (ValueError, KeyError):
+            return m.group(0)
+
+    result = re.sub(r"(\d+\.?\d*)\s*%", _replace_percent, result)
+
+    # 2. Fees with ₹ or Rs: "₹6,17,700" → spoken + "rupees"
+    def _replace_fee(m):
+        num_str = m.group(1).replace(",", "")
+        try:
+            return f" {num_fn(int(num_str))} {rupee_word}"
+        except (ValueError, KeyError):
+            return m.group(0)
+
+    result = re.sub(r"[₹Rs]+\s*(\d[\d,]+)", _replace_fee, result)
+
+    # 3. Cutoff ranges: "45000-55000" or "45,000 – 55,000" (BEFORE rank to avoid interference)
+    def _replace_range(m):
+        a_str = m.group(1).replace(",", "")
+        b_str = m.group(2).replace(",", "")
+        try:
+            a = int(a_str.rstrip("k")) * (1000 if a_str.lower().endswith("k") else 1)
+            b = int(b_str.rstrip("k")) * (1000 if b_str.lower().endswith("k") else 1)
+            if lang.startswith("hi"):
+                return f"{num_fn(a)} से {num_fn(b)} के बीच"
+            elif lang.startswith("bn"):
+                return f"{num_fn(a)} থেকে {num_fn(b)} এর মধ্যে"
+            else:
+                return f"{num_fn(a)} to {num_fn(b)}"
+        except (ValueError, KeyError):
+            return m.group(0)
+
+    result = re.sub(r"(\d[\d,]*k?)\s*[-–]\s*(\d[\d,]*k?)", _replace_range, result)
+
+    # 4. Ranks: "50000 rank" or "rank 50000" or "rank 50k"
+    def _replace_rank_num(m):
+        num_str = m.group(1).replace(",", "").lower()
+        try:
+            if num_str.endswith("k"):
+                n = int(float(num_str[:-1]) * 1000)
+            else:
+                n = int(num_str)
+            return num_fn(n)
+        except (ValueError, KeyError):
+            return m.group(0)
+
+    result = re.sub(r"(\d[\d,]*k?)\s*(?:rank|cutoff|cutoff rank)", _replace_rank_num, result, flags=re.IGNORECASE)
+    result = re.sub(r"(?:rank|cutoff)\s+(\d[\d,]*k?)", _replace_rank_num, result, flags=re.IGNORECASE)
+
+    # 5. LPA: "4.25 LPA" → "4.25 L P A" (lexicon handles abbreviation)
+    # Just ensure the number is readable — lexicon will expand LPA
+
+    # 6. Lakh/Crore: "1.5 lakh" → "one point five lakh"
+    def _replace_lakh_crore(m):
+        num_str = m.group(1).replace(",", "")
+        unit = m.group(2).lower()
+        try:
+            if "." in num_str:
+                whole, dec = num_str.split(".", 1)
+                whole_words = num_fn(int(whole))
+                dec_words = " ".join(num_fn(int(d)) for d in dec)
+                num_words = f"{whole_words} point {dec_words}"
+            else:
+                num_words = num_fn(int(num_str))
+            if lang.startswith("hi"):
+                unit_hi = "लाख" if "lakh" in unit else "करोड़"
+                return f"{num_words} {unit_hi}"
+            elif lang.startswith("bn"):
+                unit_bn = "লাখ" if "lakh" in unit else "কোটি"
+                return f"{num_words} {unit_bn}"
+            return f"{num_words} {unit}"
+        except (ValueError, KeyError):
+            return m.group(0)
+
+    result = re.sub(r"(\d[\d,.]*)\s*(lakh|crore)", _replace_lakh_crore, result, flags=re.IGNORECASE)
+
+    # 7. k suffix: "50k" → "fifty thousand"
+    def _replace_k_suffix(m):
+        try:
+            n = int(float(m.group(1)) * 1000)
+            return num_fn(n)
+        except (ValueError, KeyError):
+            return m.group(0)
+
+    result = re.sub(r"\b(\d+\.?\d*)k\b", _replace_k_suffix, result, flags=re.IGNORECASE)
+
+    # 8. Standalone large numbers (5+ digits, not phone numbers): "4816" → spoken
+    def _replace_large_num(m):
+        num_str = m.group(1).replace(",", "")
+        try:
+            n = int(num_str)
+            if n >= 1000:
+                return num_fn(n)
+        except (ValueError, KeyError):
+            pass
+        return m.group(0)
+
+    # Only match numbers that are clearly NOT phone numbers (not 10 digits, not starting with 0/9)
+    result = re.sub(r"\b(\d[\d,]{3,})\b", _replace_large_num, result)
+
+    # 9. Years: "2024" → "twenty twenty-four" / "do hazaar chaubees"
+    def _replace_year(m):
+        year = int(m.group(1))
+        try:
+            if lang.startswith("hi"):
+                return _num_to_words_hi(year)
+            elif lang.startswith("bn"):
+                return _num_to_words_bn(year)
+            else:
+                # English: "twenty twenty-four"
+                import inflect
+                p = inflect.engine()
+                return p.number_to_words(year)
+        except Exception:
+            return m.group(0)
+
+    result = re.sub(r"\b((?:19|20)\d{2})\b", _replace_year, result)
+
     return result
 
 

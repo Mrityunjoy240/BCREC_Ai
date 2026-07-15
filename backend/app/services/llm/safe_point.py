@@ -21,6 +21,8 @@ _BANGLISH_WORDS = frozenset({
     "achen", "achena", "achhen", "achhena", "tar", "take", "na",
     "ar", "ebong", "ba", "jodi", "thake", "thakena",
     "thakle", "pare", "pari", "hote", "hocche", "hoyechhe",
+    # PRIORITY 3: Add Bengali postpositions and common words
+    "te", "e", "ta", "holo", "ache", "naki", "ki", "kore",
 })
 
 logger = logging.getLogger(__name__)
@@ -113,6 +115,32 @@ def _is_unknown_response(text: str) -> bool:
     return any(re.search(p, text, re.IGNORECASE) for p in patterns)
 
 
+def _is_cot_leak(text: str) -> bool:
+    """Detect chain-of-thought reasoning that leaked into the response."""
+    patterns = [
+        r"^(?:Okay|Ok|Alright),?\s+the\s+user\s+is\s+",
+        r"^(?:Okay|Ok|Alright),?\s+(?:let|I'll|I\s+need|First\s+I)",
+        r"^Let\s+me\s+(?:think|recall|check|see|understand)",
+        r"^I\s+need\s+to\s+(?:understand|check|recall|find)",
+        r"^First\s+I'll\s+",
+        r"^The\s+user\s+(?:is\s+asking|wants|needs)",
+        r"^(?:Hmm|Let's\s+see|So\s+the\s+user)",
+    ]
+    return any(re.search(p, text, re.IGNORECASE | re.MULTILINE) for p in patterns)
+
+
+def _strip_cot(text: str) -> str:
+    """Remove chain-of-thought reasoning from the beginning of response."""
+    # If the response starts with CoT patterns, try to extract the actual answer
+    lines = text.split('\n')
+    for i, line in enumerate(lines):
+        if not _is_cot_leak(line.strip()):
+            # Found the actual answer
+            return '\n'.join(lines[i:]).strip()
+    # If all lines are CoT, return empty (will trigger fallback)
+    return ""
+
+
 class DemoLogger:
     MAX_LOG_ENTRIES = 1000
 
@@ -161,6 +189,21 @@ async def safe_generate_response(service, query: str, session_id: str, lang: str
         return result
 
     if lang == "bn":
+        # Allow farewells, common English words, and admission typos in Bengali sessions
+        allowed_words = {
+            # Farewells
+            "bye", "goodbye", "thanks", "thank you", "thanku", "ok", "okay",
+            "yes", "no", "hmm", "hm", "okay bye", "ok bye", "bye bye",
+            # Common admission typos
+            "admisson", "admissin", "scholership", "plcement", "hostle",
+            "eligiblity", "cuttof", "cutofft", "councelling", "brach", "collage",
+            # Single-word college terms
+            "fee", "fees", "placement", "hostel", "cutoff", "admission",
+            "scholarship", "principal", "naac", "nba", "aicte",
+        }
+        q_lower = query.strip().lower()
+        if q_lower in allowed_words:
+            return None  # Let through to LLM for polite response
         if not _bengali_confidence_ok(query):
             _demo_logger.log(
                 session_id,
@@ -208,6 +251,9 @@ def _bengali_confidence_ok(query: str) -> bool:
         "fee", "fees", "admission", "placement", "hostel", "faculty",
         "bcrec", "principal", "hod", "department", "library", "lab",
         "sports", "scholarship", "cutoff", "seat", "seats",
+        # PRIORITY 3: Add exam/score related keywords
+        "rank", "wbjee", "jee", "pcm", "marks", "percentage", "score",
+        "eligibility", "counselling", "counseling", "branch", "course",
     }
     if any(w in _college_kw for w in words):
         return True
@@ -226,6 +272,24 @@ def post_process_response(service, query: str, result: dict, lang: str) -> dict:
     is_fallback = (
         answer == UNKNOWN_RESPONSE or answer == BENGALI_LOW_CONFIDENCE or answer == TIMEOUT_FALLBACK
     )
+
+    # CoT sanitization: strip chain-of-thought reasoning that leaked into response
+    if _is_cot_leak(answer):
+        stripped = _strip_cot(answer)
+        if stripped:
+            answer = stripped
+            voice = stripped
+            result["answer"] = answer
+            result["voice_text"] = voice
+            result["source"] = result.get("source", "") + "+cot_stripped"
+        else:
+            # All CoT, no actual answer - trigger fallback
+            answer = UNKNOWN_RESPONSE
+            voice = UNKNOWN_RESPONSE
+            result["answer"] = answer
+            result["voice_text"] = voice
+            result["source"] = result.get("source", "") + "+safe_point_cot"
+            is_fallback = True
 
     if _is_unknown_response(answer):
         answer = UNKNOWN_RESPONSE

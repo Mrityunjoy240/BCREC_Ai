@@ -42,6 +42,7 @@ from livekit.agents import (
     voice,
     vad,
 )
+from livekit.agents.types import APIConnectOptions
 from livekit.plugins import silero
 
 from app.database import get_db, init_db
@@ -128,17 +129,24 @@ def apply_lexicon(text: str, lang: str) -> str:
     """Apply permanent pronunciation rules."""
     processed = text
 
-    # 1. Expand technical acronyms based on LEXICON
-    for word, phonetic in sorted(LEXICON.items(), key=lambda x: -len(x[0])):
-        processed = re.sub(rf"\b{re.escape(word)}\b", phonetic, processed)
+    # For Hindi/Bengali: keep acronyms as-is (Sarvam handles them natively)
+    # Only expand in English to avoid breaking Indic pronunciation
+    if lang not in ("hi-IN", "bn-IN"):
+        # Expand technical acronyms based on LEXICON
+        for word, phonetic in sorted(LEXICON.items(), key=lambda x: -len(x[0])):
+            processed = re.sub(rf"\b{re.escape(word)}\b", phonetic, processed)
 
-    # 2. Normalize AML to AIML for consistency
-    processed = re.sub(r"\bAML\b", "A I M L", processed, flags=re.IGNORECASE)
+        # Normalize AML to AIML for consistency
+        processed = re.sub(r"\bAML\b", "A I M L", processed, flags=re.IGNORECASE)
 
-    # 3. Handle phone numbers digit-by-digit for English/Hindi
+    # 3. Handle phone numbers digit-by-digit
     if lang == "bn-IN":
         processed = convert_phone_numbers(processed)
+    elif lang == "hi-IN":
+        # Hindi: keep phone numbers as-is (Sarvam reads digits naturally in Hindi)
+        pass
     else:
+        # English: digit-by-digit for clarity
         # Landline: 0343-2501353 -> 0 3 4 3 2 5 0 1 3 5 3
         processed = re.sub(
             r"\b(\d{3,4})-(\d{7})\b",
@@ -169,7 +177,7 @@ class BCRECGroqLLM(llm.LLM):
         *,
         chat_ctx: llm.ChatContext,
         tools: List[llm.Tool] | None = None,
-        conn_options: llm.APIConnectOptions = agents.DEFAULT_API_CONNECT_OPTIONS,
+        conn_options: APIConnectOptions = agents.DEFAULT_API_CONNECT_OPTIONS,
         parallel_tool_calls: agents.NotGivenOr[bool] = agents.NOT_GIVEN,
         tool_choice: agents.NotGivenOr[llm.ToolChoice] = agents.NOT_GIVEN,
         extra_kwargs: agents.NotGivenOr[Dict[str, Any]] = agents.NOT_GIVEN,
@@ -225,6 +233,7 @@ class BCRECGroqStream(llm.LLMStream):
         logger.info(f"LLM Query: '{query[:100]}...' History: {len(history)} turns")
 
         first_chunk = True
+        response_parts = []
         async for chunk in self._service.stream_response(
             query, session_id=self._session_id, conversation_history=history[:-1]
         ):
@@ -232,12 +241,23 @@ class BCRECGroqStream(llm.LLMStream):
                 ttft = round((time.time() - t0) * 1000)
                 logger.info(f"TURN TTFT={ttft}ms (user speech â†’ LLM first token)")
                 first_chunk = False
+            response_parts.append(chunk)
             self._event_ch.send_nowait(
                 llm.ChatChunk(id=self._id, delta=llm.ChoiceDelta(role="assistant", content=chunk))
             )
 
         turn_total = round((time.time() - t0) * 1000)
+        full_response = "".join(response_parts)
         logger.info(f"TURN COMPLETE total={turn_total}ms (user speech â†’ LLM done)")
+
+        telemetry = get_telemetry()
+        telemetry.log_llm_complete(
+            self._session_id,
+            turn_number=0,
+            response=full_response,
+            latency_ms=turn_total,
+        )
+
         self._event_ch.close()
 
 
@@ -284,7 +304,7 @@ class SarvamSTT(stt.STT):
         buffer: utils.AudioBuffer,
         *,
         language: str | None = None,
-        conn_options: llm.APIConnectOptions,
+        conn_options: APIConnectOptions,
     ) -> stt.SpeechEvent:
         _stt_t0 = time.perf_counter()
         try:
@@ -324,7 +344,7 @@ class SarvamTTS(tts.TTS):
         self.service = get_sarvam_service(os.getenv("SARVAM_API_KEY"))
 
     def synthesize(
-        self, text: str, *, conn_options: llm.APIConnectOptions = agents.DEFAULT_API_CONNECT_OPTIONS
+        self, text: str, *, conn_options: APIConnectOptions = agents.DEFAULT_API_CONNECT_OPTIONS
     ) -> tts.ChunkedStream:
         logger.info(f"SarvamTTS.synthesize called for: {text[:50]}...")
         return SarvamChunkedStream(
@@ -355,6 +375,8 @@ class SarvamChunkedStream(tts.ChunkedStream):
 
         # Apply entity_dict TTS normalization, then lexicon and phone formatting before TTS
         text = normalize_for_tts(text.strip())
+        from app.services.normalization.normalizer import prepare_numbers_for_tts
+        text = prepare_numbers_for_tts(text, lang)
         text = apply_lexicon(text, lang)
 
         # Pick speaker from shared map
@@ -373,47 +395,30 @@ class SarvamChunkedStream(tts.ChunkedStream):
             mime_type="audio/pcm",
         )
 
-        res = await self.service.text_to_speech(
+        # Use streaming TTS — audio chunks arrive and play immediately
+        total_bytes = 0
+        _play_t0 = time.perf_counter()
+        async for chunk in self.service.text_to_speech_streamed(
             text, speaker=speaker, language=lang, normalize=False
-        )
+        ):
+            if chunk:
+                # Strip WAV header from each chunk if present
+                audio_data = chunk
+                if audio_data.startswith(b"RIFF"):
+                    i = 12
+                    while i < len(audio_data) - 8:
+                        chunk_id = audio_data[i:i+4]
+                        chunk_size = int.from_bytes(audio_data[i+4:i+8], "little")
+                        if chunk_id == b"data":
+                            audio_data = audio_data[i+8:i+8+chunk_size]
+                            break
+                        i += 8 + chunk_size
+                emitter.push(audio_data)
+                total_bytes += len(audio_data)
 
-        if res.get("success"):
-            data = res["audio_bytes"]
-
-            # Find the actual audio data chunk in WAV (don't hardcode 44-byte header)
-            if data.startswith(b"RIFF"):
-                # Skip "RIFF" + size + "WAVE" = 12 bytes, then iterate chunks
-                i = 12
-                while i < len(data) - 8:
-                    chunk_id = data[i : i + 4]
-                    chunk_size = int.from_bytes(data[i + 4 : i + 8], "little")
-                    if chunk_id == b"data":
-                        data = data[i + 8 : i + 8 + chunk_size]
-                        break
-                    i += 8 + chunk_size
-                else:
-                    # Fallback: strip first 44 bytes (standard PCM header)
-                    data = data[44:]
-
-            _tts_ms = (time.perf_counter() - _tts_t0) * 1000
-            logger.info(f"[PERF] TTS ............. {_tts_ms:>7.1f} ms  text={text[:40]}")
-
-            # Push in 100ms chunks (4800 bytes @ 24000Hz 16-bit mono)
-            chunk_size = 4800
-            _play_t0 = time.perf_counter()
-            for j in range(0, len(data), chunk_size):
-                chunk = data[j : j + chunk_size]
-                if len(chunk) < chunk_size:
-                    chunk = chunk.ljust(chunk_size, b"\x00")
-                emitter.push(chunk)
-
-            _play_ms = (time.perf_counter() - _play_t0) * 1000
-            logger.info(
-                f"[PERF] Playback ........ {_play_ms:>7.1f} ms  ({len(data) // 24000 // 2}s audio)"
-            )
-        else:
-            _tts_ms = (time.perf_counter() - _tts_t0) * 1000
-            logger.error(f"[PERF] TTS ............. {_tts_ms:>7.1f} ms  FAILED: {res.get('error')}")
+        _tts_ms = (time.perf_counter() - _tts_t0) * 1000
+        _play_ms = (time.perf_counter() - _play_t0) * 1000
+        logger.info(f"[PERF] TTS+Playback .... {_tts_ms:>7.1f} ms  ({total_bytes // 24000 // 2}s audio, streaming)")
 
         emitter.end_input()
 
@@ -467,7 +472,7 @@ VOICE TELEPHONY RULES (ADDITIONAL):
         vad=vad_inst,
         turn_handling={
             "interruption": {"enabled": True, "mode": "vad", "min_words": 2},
-            "endpointing": {"min_delay": 0.5, "max_delay": 4.0},
+            "endpointing": {"min_delay": 0.3, "max_delay": 2.0},
         },
     )
 
@@ -497,7 +502,7 @@ VOICE TELEPHONY RULES (ADDITIONAL):
     await asyncio.sleep(0.5)
     logger.info("Sending greeting...")
     # Greeting: interruptible, concise, language-preserving (defaults to English on first visit)
-    greeting = "Hello! BCREC AI assistant here. How can I help you today?"
+    greeting = "Hello! Welcome to BCREC. I can help you with admissions, fees, placements, or anything about the college. What would you like to know?"
     try:
         from app.services.llm.safe_point import DEMO_SAFEPOINT, get_greeting
 

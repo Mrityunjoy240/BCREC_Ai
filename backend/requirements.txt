@@ -20,3 +20,15 @@ pandas
 openpyxl
 cachetools
 fasttext-wheel  # Windows-compatible fasttext for language detection
+
+# Voice / Telephony
+twilio
+inflect
+livekit-agents>=1.5,<1.6
+livekit-plugins-silero>=1.5,<1.6
+
+# Vector store / RAG
+langchain-chroma
+langchain-huggingface
+chromadb
+sentence-transformers

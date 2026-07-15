@@ -747,6 +747,28 @@ DEPT_CODE_MAP: Dict[str, str] = {
     "cybersecurity": "CY",
     "mba": "MBA",
     "mca": "MCA",
+    # Hindi abbreviations
+    "सीएससी": "CSE", "सीएसई": "CSE",
+    "एसी": "ECE", "ईएससी": "ECE",
+    "ईई": "EE", "एमई": "ME", "सीई": "CE",
+    "एआईएमएल": "AIML", "डीएस": "DS",
+    "आई टी": "IT",
+    # Bengali abbreviations
+    "ইসিই": "ECE", "ইই": "EE", "এমই": "ME",
+    "সিই": "CE", "সিএসই": "CSE", "এআইএমএল": "AIML",
+}
+
+# Hindi keyword normalization — converts Hindi domain terms to English BEFORE handlers
+HINDI_KEYWORD_MAP = {
+    "फैकल्टी": "faculty", "प्रोफेसर": "professor",
+    "प्लेसमेंट": "placement", "नौकरी": "job",
+    "कटऑफ": "cutoff", "फीस": "fee", "फी": "fee",
+    "हॉस्टल": "hostel", "स्कॉलरशिप": "scholarship",
+    "एडमिशन": "admission", "भर्ती": "admission",
+    "अटेंडेंस": "attendance", "बैकलॉग": "backlog",
+    "वैकेंटी": "vacancy", "सीट": "seat", "सीटें": "seats",
+    "सबसे अच्छा": "best", "बेस्ट": "best",
+    "डिपार्टमेंट": "department", "विभाग": "department",
 }
 
 # ---------------------------------------------------------------------------
@@ -821,6 +843,16 @@ TTS STYLE:
 - Phone numbers with dashes: 0343-2501353.
 - No markdown, bullet lists, tables, or emoji. Plain sentences only.
 - Use abbreviations: CSE, IT, ECE, EE, ME, CE, CSD, AIML. Not both abbreviation and full name.
+
+ABSOLUTE VOICE RULES (BREAKING THESE IS A BUG):
+1. NEVER generate more than 3 sentences. Period. No exceptions.
+2. NEVER use markdown: no **, no ###, no -, no |, no tables, no bullet lists.
+3. NEVER use emojis.
+4. If you don't have structured data for a query, say ONE sentence: "I don't have that information right now." Do NOT guess or hallucinate.
+5. NEVER explain how you work. NEVER say "as an AI", "according to my knowledge", "I think".
+6. For "tell me about X" questions: give ONE fact, then ask "Would you like to know more?"
+7. Responses over 50 words are TOO LONG for voice. Cut them down.
+8. For Hindi responses: use ONLY spoken Hindi words. Never use Devanagari script.
 
 PROFANITY & ABUSE:
 - If user swears or is angry: acknowledge briefly ("I understand your concern") and professionally redirect.
@@ -1269,6 +1301,23 @@ def _num_to_bengali(n: int) -> str:
     return _NUM_WORDS_BN.get(n, str(n))
 
 
+@dataclass
+class ConversationResult:
+    """Result from conversation processing pipeline."""
+    answer: str
+    source: str = "llm_tools"
+    lang: str = "en"
+    latency_ms: float = 0
+    short_circuited: bool = False
+    hallucination_validated: bool = True
+    tokens: dict = None
+    cache_hit: bool = False
+
+    def __post_init__(self):
+        if self.tokens is None:
+            self.tokens = {"prompt": 0, "completion": 0}
+
+
 class GroqService:
     """
     Clean Hybrid RAG service: JSON (Precision) + Vector Store (Context).
@@ -1287,6 +1336,9 @@ class GroqService:
         # Session language state — tracks persistent language per session
         # Language is NOT redetected on every message; short follow-ups inherit.
         self._session_langs: Dict[str, str] = {}
+
+        # Sessions that have already been greeted (prevent greeting repeats)
+        self._greeted_sessions: Set[str] = set()
 
         # Sessions that should skip ambiguous-word validation this turn
         # (used by yes/no continuation to avoid re-clarifying the same word)
@@ -3357,6 +3409,23 @@ USER QUESTION: {query}
                 return "Department Heads: " + "; ".join(hod_list[:6]) + "."
             return self._lang_hod_unknown(lang)
 
+        # --- Faculty quality (general, before name resolution) ---
+        if re.search(r"\b(faculty|faculty.*quality|faculty.*kaisa|faculty.*kaisi|faculty.*kaise|प्रोफेसर|शिक्षक)\b", q):
+            if not re.search(r"\b(name|kaun|kaunsa|kaunsi|dr\.?|prof\.?)\b", q):
+                logger.info(f"HANDLER: faculty_quality matched for query='{q[:60]}'")
+                dept_code = self._extract_dept_code(q)
+                if dept_code:
+                    if lang == "hi":
+                        return f"{dept_code} department ka faculty bahut experienced hai. Research papers bhi publish kiye hain."
+                    if lang == "bn":
+                        return f"{dept_code} department-র faculty খুব experienced। Research papersও publish করেছে।"
+                    return f"The {dept_code} department has experienced faculty with published research papers."
+                if lang == "hi":
+                    return "BCREC mein 208+ faculty members hain 15 departments mein. Sab experienced hain."
+                if lang == "bn":
+                    return "BCREC-তে ১৫টি department-তে ২০৮+ faculty member আছে। সবাই experienced।"
+                return "BCREC has 208+ faculty members across 15 departments. All are experienced."
+
         # --- Faculty name resolution ---
         if re.search(r"\b(professor|faculty|teacher|sir|madam|dr\.?|prof\.?)\b", q):
             logger.info(f"HANDLER: faculty matched for query='{q[:60]}'")
@@ -4476,6 +4545,14 @@ USER QUESTION: {query}
                 )
                 query = norm_log.normalized_text
 
+            # 0.4 Hindi keyword normalization — converts Hindi domain terms to English
+            # so ALL English handlers work with Hindi text automatically
+            if re.search(r'[\u0900-\u097F\u0980-\u09FF]', query):
+                for hindi, english in HINDI_KEYWORD_MAP.items():
+                    if hindi in query:
+                        query = query.replace(hindi, english)
+                logger.info(f"[{session_id}] Hindi normalized: '{query[:60]}'")
+
             # 0.45 Hinglish/Banglish normalization — common abbreviations used in texting
             # "q" before admission-related words = "kyu" (why) in Hindi
             if re.search(r'\bq\b', query) and re.search(r'\b(admission|join|lu|loon|loonga)\b', query, re.IGNORECASE):
@@ -4638,6 +4715,22 @@ USER QUESTION: {query}
 
             # 2. Deterministic greeting
             if self._is_greeting(query):
+                # Dedup: if already greeted, return short response
+                if session_id in self._greeted_sessions:
+                    short_greeting = {
+                        "en": "Hello! I'm here to help. What would you like to know about BCREC?",
+                        "hi": "Namaste! Aapko BCREC ke baare mein kya jaanna hai?",
+                        "bn": "নমস্কার! আপনি BCREC সম্পর্কে কী জানতে চান?",
+                    }.get(lang, "Hello! I'm here to help. What would you like to know about BCREC?")
+                    self._append_session_turn(session_id, query, short_greeting)
+                    return {
+                        "answer": short_greeting, "voice_text": short_greeting,
+                        "source": "greeting_dedup", "model": "none",
+                        "latency_ms": round((time.time() - start) * 1000),
+                        "hallucination_validated": True,
+                        "tokens": {"prompt": 0, "completion": 0}, "cache_hit": False,
+                    }
+
                 greeting_answer = {
                     "en": "Hello. How can I help you with admissions, fees, courses, or hostel details?",
                     "hi": "नमस्ते। मैं admissions, fees, courses, और hostel details में मदद कर सकता हूँ।",
@@ -4654,10 +4747,8 @@ USER QUESTION: {query}
                     detected_intent="greeting",
                 )
                 self._append_session_turn(session_id, query, greeting_answer)
+                self._greeted_sessions.add(session_id)
                 return {
-                    "answer": greeting_answer,
-                    "voice_text": greeting_answer,
-                    "source": "greeting_deterministic",
                     "model": "none",
                     "latency_ms": latency_ms,
                     "hallucination_validated": True,
@@ -4868,6 +4959,13 @@ USER QUESTION: {query}
                 )
                 query = norm_log.normalized_text
 
+            # 0.4 Hindi keyword normalization — converts Hindi domain terms to English
+            if re.search(r'[\u0900-\u097F\u0980-\u09FF]', query):
+                for hindi, english in HINDI_KEYWORD_MAP.items():
+                    if hindi in query:
+                        query = query.replace(hindi, english)
+                logger.info(f"[{session_id}] Hindi normalized (stream): '{query[:60]}'")
+
             # 0.5 Transcript validation — reject STT noise / fragments
             validation_result = self._validate_transcript(query, session_id)
             if validation_result is not None:
@@ -5013,6 +5111,17 @@ USER QUESTION: {query}
 
             # Resolve tool calls (non-streaming, up to 4 turns), then stream final answer
             answer = await self._call_llm_with_tools(messages, session_id, query, t0, lang)
+
+            # Safety net: truncate long responses for voice
+            words = answer.split()
+            if len(words) > 80:
+                import re as _re
+                sentences = _re.split(r'(?<=[.!?।])\s+', answer)
+                if len(sentences) >= 2:
+                    answer = sentences[0] + " " + sentences[1]
+                else:
+                    answer = " ".join(words[:60]) + "."
+                logger.info(f"TRUNCATED: response to {len(answer.split())} words")
 
             # Stream the answer word by word
             for word in answer.split():
